@@ -1,10 +1,12 @@
 import { NPPESProvider } from "./types";
 
 const NPPES_BASE = "https://npiregistry.cms.hhs.gov/api/?version=2.1";
+const FETCH_TIMEOUT_MS = 10_000;
 
 interface NPPESResponse {
-  result_count: number;
-  results: NPPESResult[];
+  result_count?: number;
+  results?: NPPESResult[];
+  Errors?: { description: string; field: string; number: string }[];
 }
 
 interface NPPESResult {
@@ -15,7 +17,7 @@ interface NPPESResult {
     last_name?: string;
     organization_name?: string;
     credential?: string;
-    gender?: string;
+    sex?: string;
     enumeration_date?: string;
     name_prefix?: string;
     status: string;
@@ -102,19 +104,34 @@ function parseResult(r: NPPESResult): NPPESProvider {
       zip: practiceAddress?.postal_code?.substring(0, 5) || "",
     },
     phone: practiceAddress?.telephone_number || "",
-    gender: r.basic?.gender || "",
+    gender: r.basic?.sex || "",
     entityType: isOrg ? "organization" : "individual",
   };
 }
 
 export async function lookupByNPI(npi: string): Promise<NPPESProvider | null> {
-  const res = await fetch(`${NPPES_BASE}&number=${encodeURIComponent(npi)}`);
-  if (!res.ok) throw new Error(`NPPES API error: ${res.status}`);
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
 
-  const data: NPPESResponse = await res.json();
-  if (!data.result_count || !data.results?.length) return null;
+  try {
+    const res = await fetch(`${NPPES_BASE}&number=${encodeURIComponent(npi)}`, {
+      signal: controller.signal,
+      cache: "no-store",
+    });
+    if (!res.ok) throw new Error(`NPPES API error: ${res.status}`);
 
-  return parseResult(data.results[0]);
+    const data: NPPESResponse = await res.json();
+
+    if (data.Errors?.length) {
+      throw new Error(`NPPES: ${data.Errors[0].description}`);
+    }
+
+    if (!data.result_count || !data.results?.length) return null;
+
+    return parseResult(data.results[0]);
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
 export async function searchByName(
@@ -130,13 +147,26 @@ export async function searchByName(
   params.set("limit", "20");
   params.set("enumeration_type", "NPI-1"); // individuals only
 
-  const res = await fetch(
-    `https://npiregistry.cms.hhs.gov/api/?${params.toString()}`
-  );
-  if (!res.ok) throw new Error(`NPPES API error: ${res.status}`);
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
 
-  const data: NPPESResponse = await res.json();
-  if (!data.result_count || !data.results?.length) return [];
+  try {
+    const res = await fetch(
+      `https://npiregistry.cms.hhs.gov/api/?${params.toString()}`,
+      { signal: controller.signal, cache: "no-store" }
+    );
+    if (!res.ok) throw new Error(`NPPES API error: ${res.status}`);
 
-  return data.results.map(parseResult);
+    const data: NPPESResponse = await res.json();
+
+    if (data.Errors?.length) {
+      throw new Error(`NPPES: ${data.Errors[0].description}`);
+    }
+
+    if (!data.result_count || !data.results?.length) return [];
+
+    return data.results.map(parseResult);
+  } finally {
+    clearTimeout(timer);
+  }
 }
