@@ -35,26 +35,19 @@ export default function HomePage() {
   const [isScanning, setIsScanning] = useState(false);
   const [scanError, setScanError] = useState("");
 
-  const handleScan = async (e: React.FormEvent) => {
+  const handleScan = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsScanning(true);
     setScanError("");
+    setIsScanning(true);
 
-    try {
-      if (searchMode === "npi") {
-        // Direct NPI scan — go straight to results
-        router.push(`/scan/${npi}`);
-      } else {
-        // Name search — go to search results page
-        const params = new URLSearchParams();
-        params.set("last_name", lastName.trim());
-        if (firstName.trim()) params.set("first_name", firstName.trim());
-        if (state) params.set("state", state);
-        router.push(`/search?${params.toString()}`);
-      }
-    } catch {
-      setScanError("Something went wrong. Please try again.");
-      setIsScanning(false);
+    if (searchMode === "npi") {
+      router.push(`/scan/${npi}`);
+    } else {
+      const params = new URLSearchParams();
+      params.set("last_name", lastName.trim());
+      if (firstName.trim()) params.set("first_name", firstName.trim());
+      if (state) params.set("state", state);
+      router.push(`/search?${params.toString()}`);
     }
   };
 
