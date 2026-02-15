@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   Search,
   Zap,
@@ -25,18 +26,36 @@ const US_STATES = [
 ];
 
 export default function HomePage() {
+  const router = useRouter();
   const [searchMode, setSearchMode] = useState<SearchMode>("npi");
   const [npi, setNpi] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [state, setState] = useState("");
   const [isScanning, setIsScanning] = useState(false);
+  const [scanError, setScanError] = useState("");
 
   const handleScan = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsScanning(true);
-    // TODO: Wire up to API
-    setTimeout(() => setIsScanning(false), 2000);
+    setScanError("");
+
+    try {
+      if (searchMode === "npi") {
+        // Direct NPI scan — go straight to results
+        router.push(`/scan/${npi}`);
+      } else {
+        // Name search — go to search results page
+        const params = new URLSearchParams();
+        params.set("last_name", lastName.trim());
+        if (firstName.trim()) params.set("first_name", firstName.trim());
+        if (state) params.set("state", state);
+        router.push(`/search?${params.toString()}`);
+      }
+    } catch {
+      setScanError("Something went wrong. Please try again.");
+      setIsScanning(false);
+    }
   };
 
   const isValid =
@@ -200,6 +219,11 @@ export default function HomePage() {
                   ? "Don't know your NPI? Switch to name search above."
                   : "For best results, include the state."}
               </p>
+              {scanError && (
+                <p className="mt-2 text-center text-xs text-red-400">
+                  {scanError}
+                </p>
+              )}
             </div>
           </div>
 
