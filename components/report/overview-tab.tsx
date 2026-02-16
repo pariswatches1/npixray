@@ -34,6 +34,9 @@ export function OverviewTab({ data }: { data: ScanResult }) {
         <p className="mt-3 text-sm text-[var(--text-secondary)]">
           Based on {data.billing.totalMedicarePatients} Medicare patients &bull;{" "}
           {data.provider.specialty}
+          {data.dataSource === "cms" && (
+            <> &bull; Real CMS billing data</>
+          )}
         </p>
       </div>
 

@@ -279,9 +279,11 @@ function generateActionPlan(
 }
 
 export function calculateScanResult(
-  provider: NPPESProvider
+  provider: NPPESProvider,
+  realBilling?: ProviderBillingData
 ): ScanResult {
-  const billing = simulateBillingData(provider);
+  const billing = realBilling || simulateBillingData(provider);
+  const dataSource: "cms" | "estimated" = realBilling ? "cms" : "estimated";
   const bench = getBenchmark(provider.specialty);
 
   const codingGap = calcCodingGap(billing);
@@ -372,5 +374,6 @@ export function calculateScanResult(
     awvGap,
     actionPlan,
     scannedAt: new Date().toISOString(),
+    dataSource,
   };
 }
