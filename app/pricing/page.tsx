@@ -9,6 +9,7 @@ import {
   Shield,
   Star,
 } from "lucide-react";
+import { TrackPageView } from "@/components/analytics/track-pageview";
 
 export const metadata: Metadata = {
   title: "Pricing",
@@ -83,6 +84,7 @@ const TIERS = [
 export default function PricingPage() {
   return (
     <>
+      <TrackPageView event="pricing_viewed" />
       {/* Hero */}
       <section className="relative overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gold/[0.03] rounded-full blur-3xl" />

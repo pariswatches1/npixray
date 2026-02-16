@@ -16,6 +16,7 @@ import {
   Brain,
   TrendingUp,
 } from "lucide-react";
+import { TrackPageView } from "@/components/analytics/track-pageview";
 
 // ────────────────────────────────────────────────────────────
 // Guide data — all content lives here for easy maintenance
@@ -593,6 +594,7 @@ export default async function GuidePage({
 
   return (
     <article className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+      <TrackPageView event="guide_viewed" label={slug} />
       {/* Breadcrumb */}
       <nav className="mb-8" aria-label="Breadcrumb">
         <Link

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { promises as fs } from "fs";
 import path from "path";
+import { sendWelcomeEmail } from "@/lib/email";
 
 const LEADS_FILE = path.join(process.cwd(), "data", "leads.json");
 
@@ -11,6 +12,7 @@ interface Lead {
   specialty: string;
   totalMissedRevenue: number;
   timestamp: string;
+  emailSent?: boolean;
 }
 
 async function readLeads(): Promise<Lead[]> {
@@ -53,6 +55,7 @@ export async function POST(request: NextRequest) {
       specialty: specialty || "",
       totalMissedRevenue: totalMissedRevenue || 0,
       timestamp: new Date().toISOString(),
+      emailSent: false,
     };
 
     const leads = await readLeads();
@@ -69,7 +72,38 @@ export async function POST(request: NextRequest) {
 
     await writeLeads(leads);
 
-    return NextResponse.json({ success: true, message: "Lead saved." });
+    // Send welcome email (non-blocking — lead is already saved)
+    let emailSent = false;
+    try {
+      emailSent = await sendWelcomeEmail({
+        to: lead.email,
+        providerName: lead.providerName,
+        npi: lead.npi,
+        specialty: lead.specialty,
+        totalMissedRevenue: lead.totalMissedRevenue,
+      });
+
+      // Update lead with email status
+      if (emailSent) {
+        const updatedLeads = await readLeads();
+        const idx = updatedLeads.findIndex(
+          (l) => l.email === lead.email && l.npi === lead.npi
+        );
+        if (idx >= 0) {
+          updatedLeads[idx].emailSent = true;
+          await writeLeads(updatedLeads);
+        }
+      }
+    } catch (emailErr) {
+      console.error("[leads] Email sending failed:", emailErr);
+      // Lead is still saved — email failure is non-critical
+    }
+
+    return NextResponse.json({
+      success: true,
+      message: "Lead saved.",
+      emailSent,
+    });
   } catch (err) {
     console.error("Leads API error:", err);
     return NextResponse.json(
