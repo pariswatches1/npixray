@@ -20,6 +20,7 @@ import { OverviewTab } from "@/components/report/overview-tab";
 import { ProgramsTab } from "@/components/report/programs-tab";
 import { CodingTab } from "@/components/report/coding-tab";
 import { ActionPlanTab } from "@/components/report/action-plan-tab";
+import { EmailCaptureModal, EmailCaptureInline } from "@/components/report/email-capture";
 
 type Tab = "overview" | "programs" | "coding" | "action-plan";
 
@@ -180,14 +181,22 @@ export default function ScanResultPage() {
         {activeTab === "action-plan" && <ActionPlanTab data={data} />}
       </div>
 
+      {/* Email Capture — Inline */}
+      <div className="mt-12">
+        <EmailCaptureInline data={data} />
+      </div>
+
       {/* Footer note */}
-      <div className="mt-12 mb-8 rounded-lg border border-dark-50/50 bg-dark-300/30 p-4 text-center">
+      <div className="mt-6 mb-8 rounded-lg border border-dark-50/50 bg-dark-300/30 p-4 text-center">
         <p className="text-xs text-[var(--text-secondary)]">
           Analysis based on CMS Medicare Physician &amp; Other Practitioners
           public data and specialty benchmarks. Revenue estimates are
           illustrative and may vary based on practice-specific factors.
         </p>
       </div>
+
+      {/* Email Capture — Modal (appears after 5s) */}
+      <EmailCaptureModal data={data} />
     </div>
   );
 }

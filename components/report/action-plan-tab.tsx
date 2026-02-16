@@ -6,6 +6,7 @@ import {
   DollarSign,
   ArrowUpRight,
 } from "lucide-react";
+import Link from "next/link";
 import { ScanResult } from "@/lib/types";
 
 function formatCurrency(n: number): string {
@@ -134,13 +135,13 @@ export function ActionPlanTab({ data }: { data: ScanResult }) {
           Upgrade to NPIxray Intelligence for patient-level eligibility lists,
           AI coding analysis, and implementation support.
         </p>
-        <a
+        <Link
           href="/pricing"
           className="inline-flex items-center gap-2 rounded-xl bg-gold px-6 py-3 text-sm font-semibold text-dark transition-all hover:bg-gold-300 hover:shadow-lg hover:shadow-gold/20"
         >
           View Plans
           <ArrowUpRight className="h-4 w-4" />
-        </a>
+        </Link>
       </div>
     </div>
   );
