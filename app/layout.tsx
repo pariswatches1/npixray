@@ -63,6 +63,35 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      name: "NPIxray",
+      url: "https://npixray.com",
+      description:
+        "AI-powered revenue intelligence platform for medical practices. Uses free CMS public data to identify missed revenue opportunities.",
+      logo: "https://npixray.com/og-image.png",
+    },
+    {
+      "@type": "WebApplication",
+      name: "NPIxray NPI Scanner",
+      url: "https://npixray.com",
+      applicationCategory: "HealthcareApplication",
+      operatingSystem: "Web",
+      description:
+        "Free NPI scanner that analyzes Medicare billing data to find missed revenue from E&M coding gaps, CCM, RPM, BHI, and AWV programs.",
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "USD",
+        description: "Free NPI scan with unlimited usage",
+      },
+    },
+  ],
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -71,6 +100,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={dmSans.variable}>
       <body className="font-sans antialiased min-h-screen flex flex-col">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <GoogleAnalytics />
         <Header />
         <main className="flex-1">{children}</main>

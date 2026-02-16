@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import {
@@ -14,6 +14,7 @@ import {
   ClipboardList,
   Loader2,
   AlertCircle,
+  RefreshCw,
 } from "lucide-react";
 import { ScanResult } from "@/lib/types";
 import { trackEvent } from "@/lib/analytics";
@@ -33,6 +34,91 @@ const TABS: { id: Tab; label: string; icon: React.ComponentType<{ className?: st
   { id: "action-plan", label: "Action Plan", icon: ClipboardList },
 ];
 
+// ─── Skeleton Loading ───
+function ScanSkeleton({ npi }: { npi: string }) {
+  return (
+    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
+      <div className="animate-pulse">
+        {/* Back link placeholder */}
+        <div className="h-4 w-20 bg-dark-50/30 rounded mb-6" />
+
+        {/* Header skeleton */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+          <div className="flex-1">
+            <div className="h-8 w-64 bg-dark-50/30 rounded-lg mb-3" />
+            <div className="flex gap-4">
+              <div className="h-4 w-32 bg-dark-50/20 rounded" />
+              <div className="h-4 w-28 bg-dark-50/20 rounded" />
+              <div className="h-4 w-24 bg-dark-50/20 rounded" />
+            </div>
+          </div>
+          <div className="text-right">
+            <div className="h-3 w-20 bg-dark-50/20 rounded mb-2 ml-auto" />
+            <div className="h-10 w-40 bg-gold/10 rounded-lg ml-auto" />
+          </div>
+        </div>
+
+        {/* Tab bar skeleton */}
+        <div className="border-b border-dark-50/50 mb-8">
+          <div className="flex gap-1 -mb-px">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="h-10 w-28 bg-dark-50/20 rounded-t-lg" />
+            ))}
+          </div>
+        </div>
+
+        {/* Content skeleton - stat cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+          {[1, 2, 3, 4].map((i) => (
+            <div
+              key={i}
+              className="rounded-xl border border-dark-50/30 bg-dark-400/30 p-5"
+            >
+              <div className="h-3 w-24 bg-dark-50/20 rounded mb-3" />
+              <div className="h-8 w-20 bg-dark-50/30 rounded-lg mb-2" />
+              <div className="h-2 w-full bg-dark-50/10 rounded" />
+            </div>
+          ))}
+        </div>
+
+        {/* Content skeleton - chart area */}
+        <div className="rounded-xl border border-dark-50/30 bg-dark-400/30 p-6 mb-6">
+          <div className="h-5 w-40 bg-dark-50/20 rounded mb-4" />
+          <div className="h-48 w-full bg-dark-50/10 rounded-lg" />
+        </div>
+
+        {/* Content skeleton - action items */}
+        <div className="space-y-3">
+          {[1, 2, 3].map((i) => (
+            <div
+              key={i}
+              className="rounded-xl border border-dark-50/30 bg-dark-400/30 p-4 flex items-center gap-4"
+            >
+              <div className="h-10 w-10 bg-dark-50/20 rounded-lg flex-shrink-0" />
+              <div className="flex-1">
+                <div className="h-4 w-48 bg-dark-50/20 rounded mb-2" />
+                <div className="h-3 w-72 bg-dark-50/10 rounded" />
+              </div>
+              <div className="h-6 w-16 bg-gold/10 rounded" />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Status text */}
+      <div className="mt-8 flex flex-col items-center gap-3">
+        <Loader2 className="h-6 w-6 text-gold animate-spin" />
+        <div className="text-center">
+          <p className="text-sm font-medium">Scanning NPI {npi}</p>
+          <p className="text-xs text-[var(--text-secondary)] mt-1">
+            Looking up provider &amp; analyzing revenue patterns...
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function ScanResultPage() {
   const params = useParams();
   const npi = params.npi as string;
@@ -41,47 +127,40 @@ export default function ScanResultPage() {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<Tab>("overview");
 
-  useEffect(() => {
-    async function runScan() {
-      try {
-        const res = await fetch(`/api/scan?npi=${encodeURIComponent(npi)}`);
-        const json = await res.json();
-        if (!res.ok) {
-          setError(json.error || "Scan failed");
-          return;
-        }
-        setData(json.result);
-        trackEvent({
-          action: "npi_scan",
-          category: "scan",
-          label: npi,
-          value: json.result?.totalMissedRevenue,
-        });
-      } catch {
-        setError("Network error. Please try again.");
-      } finally {
-        setLoading(false);
+  const runScan = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    setData(null);
+
+    try {
+      const res = await fetch(`/api/scan?npi=${encodeURIComponent(npi)}`);
+      const json = await res.json();
+      if (!res.ok) {
+        setError(json.error || "Scan failed. The server returned an error.");
+        return;
       }
+      setData(json.result);
+      trackEvent({
+        action: "npi_scan",
+        category: "scan",
+        label: npi,
+        value: json.result?.totalMissedRevenue,
+      });
+    } catch {
+      setError(
+        "Unable to reach the server. Check your internet connection and try again."
+      );
+    } finally {
+      setLoading(false);
     }
-    runScan();
   }, [npi]);
 
+  useEffect(() => {
+    runScan();
+  }, [runScan]);
+
   if (loading) {
-    return (
-      <div className="min-h-[60vh] flex flex-col items-center justify-center gap-4">
-        <div className="relative">
-          <div className="h-16 w-16 rounded-2xl border border-gold/20 bg-gold/5 flex items-center justify-center">
-            <Loader2 className="h-8 w-8 text-gold animate-spin" />
-          </div>
-        </div>
-        <div className="text-center">
-          <p className="text-lg font-semibold">Scanning NPI {npi}</p>
-          <p className="text-sm text-[var(--text-secondary)] mt-1">
-            Looking up provider &amp; analyzing revenue patterns...
-          </p>
-        </div>
-      </div>
-    );
+    return <ScanSkeleton npi={npi} />;
   }
 
   if (error || !data) {
@@ -92,17 +171,26 @@ export default function ScanResultPage() {
         </div>
         <div className="text-center max-w-md">
           <p className="text-lg font-semibold">Scan Failed</p>
-          <p className="text-sm text-[var(--text-secondary)] mt-1">
+          <p className="text-sm text-[var(--text-secondary)] mt-2 leading-relaxed">
             {error || "Unable to complete scan."}
           </p>
         </div>
-        <Link
-          href="/"
-          className="mt-4 inline-flex items-center gap-2 rounded-lg bg-gold px-6 py-2.5 text-sm font-semibold text-dark hover:bg-gold-300 transition-colors"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Try Again
-        </Link>
+        <div className="mt-4 flex flex-col sm:flex-row gap-3">
+          <button
+            onClick={runScan}
+            className="inline-flex items-center justify-center gap-2 rounded-lg bg-gold px-6 py-2.5 text-sm font-semibold text-dark hover:bg-gold-300 transition-colors"
+          >
+            <RefreshCw className="h-4 w-4" />
+            Retry Scan
+          </button>
+          <Link
+            href="/"
+            className="inline-flex items-center justify-center gap-2 rounded-lg border border-dark-50 px-6 py-2.5 text-sm font-medium text-[var(--text-secondary)] hover:border-gold/30 hover:text-gold transition-all"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Try a Different NPI
+          </Link>
+        </div>
       </div>
     );
   }

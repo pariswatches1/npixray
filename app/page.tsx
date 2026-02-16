@@ -14,9 +14,34 @@ import {
   Users,
   FileText,
   ChevronRight,
+  ChevronDown,
+  HelpCircle,
 } from "lucide-react";
 
 type SearchMode = "npi" | "name";
+
+const FAQS = [
+  {
+    q: "What is an NPI number?",
+    a: "An NPI (National Provider Identifier) is a unique 10-digit number assigned to every healthcare provider in the United States by CMS. It's used for billing, claims, and identification across all health plans. Every doctor, nurse practitioner, and healthcare organization has one.",
+  },
+  {
+    q: "Is this really free?",
+    a: "Yes, 100% free with no limits. Our NPI scanner uses publicly available CMS Medicare data that the government publishes for transparency. There's no login required, no credit card, and you can scan as many NPIs as you want. We offer paid tiers for deeper analysis, but the scan is free forever.",
+  },
+  {
+    q: "Where does the data come from?",
+    a: "We use two public government data sources: the NPPES NPI Registry for provider information (name, specialty, location) and the CMS Medicare Physician & Other Practitioners dataset for billing patterns. This dataset contains over 10 million records covering 1.2M+ providers. No private patient data is ever used.",
+  },
+  {
+    q: "How accurate are the revenue estimates?",
+    a: "Our estimates are based on specialty benchmarks derived from national Medicare averages across 1.2M+ providers. They're directionally accurate for identifying gaps, but your actual numbers will vary based on your payer mix, patient panel, documentation practices, and geographic location. Think of it as a diagnostic tool, not an exact audit.",
+  },
+  {
+    q: "Is my data private?",
+    a: "We only use publicly available CMS data that the government publishes for anyone to access. We don't access any private patient records, EHR data, or protected health information (PHI). Your NPI scan results are generated on the fly and aren't stored or shared with third parties.",
+  },
+];
 
 const US_STATES = [
   "AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA",
@@ -34,6 +59,7 @@ export default function HomePage() {
   const [state, setState] = useState("");
   const [isScanning, setIsScanning] = useState(false);
   const [scanError, setScanError] = useState("");
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   const handleScan = (e: React.FormEvent) => {
     e.preventDefault();
@@ -404,6 +430,69 @@ export default function HomePage() {
                 <div className="mt-1 text-xs text-[var(--text-secondary)] uppercase tracking-wider">
                   {stat.label}
                 </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="border-t border-dark-50/50">
+        {/* FAQPage JSON-LD */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              mainEntity: FAQS.map((faq) => ({
+                "@type": "Question",
+                name: faq.q,
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: faq.a,
+                },
+              })),
+            }),
+          }}
+        />
+
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 sm:py-28">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/5 px-4 py-1.5 mb-6">
+              <HelpCircle className="h-3.5 w-3.5 text-gold" />
+              <span className="text-xs font-medium text-gold">FAQ</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
+              Frequently Asked <span className="text-gold">Questions</span>
+            </h2>
+          </div>
+
+          <div className="max-w-3xl mx-auto space-y-3">
+            {FAQS.map((faq, i) => (
+              <div
+                key={i}
+                className="rounded-xl border border-dark-50/80 bg-dark-400/50 overflow-hidden"
+              >
+                <button
+                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                  className="w-full flex items-center justify-between p-5 text-left hover:bg-dark-300/50 transition-colors"
+                  aria-expanded={openFaq === i}
+                >
+                  <span className="font-semibold pr-4">{faq.q}</span>
+                  <ChevronDown
+                    className={`h-5 w-5 text-gold flex-shrink-0 transition-transform duration-200 ${
+                      openFaq === i ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+                {openFaq === i && (
+                  <div className="px-5 pb-5 -mt-1">
+                    <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
+                      {faq.a}
+                    </p>
+                  </div>
+                )}
               </div>
             ))}
           </div>
