@@ -5,9 +5,9 @@ export function Footer() {
   return (
     <footer className="border-t border-dark-50/50 bg-dark-300">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
           {/* Brand */}
-          <div className="md:col-span-1">
+          <div className="col-span-2 md:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-4">
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gold/10 border border-gold/20">
                 <Zap className="h-4 w-4 text-gold" />
@@ -40,20 +40,40 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Resources */}
-          <div>
+          {/* Guides */}
+          <div className="col-span-2 md:col-span-2">
             <h3 className="text-sm font-semibold text-gold mb-4 uppercase tracking-wider">
-              Resources
+              Billing Guides
             </h3>
-            <ul className="space-y-2.5">
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2.5">
               <li>
-                <Link href="/guides" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
-                  Billing Guides
+                <Link href="/guides/ccm-billing-99490" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
+                  CCM Billing (99490)
                 </Link>
               </li>
               <li>
-                <Link href="/reports" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
-                  State Reports
+                <Link href="/guides/rpm-billing-99453-99458" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
+                  RPM Billing (99453-99458)
+                </Link>
+              </li>
+              <li>
+                <Link href="/guides/awv-billing-g0438-g0439" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
+                  AWV Billing (G0438/G0439)
+                </Link>
+              </li>
+              <li>
+                <Link href="/guides/bhi-billing-99484" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
+                  BHI Billing (99484)
+                </Link>
+              </li>
+              <li>
+                <Link href="/guides/em-coding-optimization" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
+                  E&M Coding Guide
+                </Link>
+              </li>
+              <li>
+                <Link href="/guides" className="text-sm text-gold hover:text-gold-300 transition-colors font-medium">
+                  View All Guides →
                 </Link>
               </li>
             </ul>
