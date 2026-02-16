@@ -18,9 +18,10 @@ import { join } from "path";
 import { Writable } from "stream";
 import { pipeline } from "stream/promises";
 
-// CMS data.cms.gov bulk download endpoint
+// CMS data.cms.gov direct CSV download (Medicare Physician & Other Practitioners by Provider and Service)
+// This is the CY2023 release (most recent as of 2025). File: MUP_PHY_R25_P05_V20_D23_Prov_Svc.csv
 const CMS_DOWNLOAD_URL =
-  "https://data.cms.gov/provider-summary-by-type-of-service/medicare-physician-other-practitioners/medicare-physician-other-practitioners-by-provider-and-service/api/1/datastore/query/0/0/download?format=csv";
+  "https://data.cms.gov/sites/default/files/2025-04/e3f823f8-db5b-4cc7-ba04-e7ae92b99757/MUP_PHY_R25_P05_V20_D23_Prov_Svc.csv";
 
 const OUTPUT_DIR = join(process.cwd(), "data", "cms-raw");
 const OUTPUT_FILE = join(OUTPUT_DIR, "medicare-physician-services.csv");
@@ -171,7 +172,7 @@ async function main() {
   console.log(`  Time: ${formatDuration(elapsed)}`);
   console.log(`  Speed: ${formatBytes(finalSize / (elapsed / 1000))}/s\n`);
 
-  // Quick validation: read first line to check headers
+  // Quick validation: read first line to check it's CSV, not HTML
   const { createReadStream } = await import("fs");
   const { createInterface } = await import("readline");
   const rl = createInterface({
@@ -180,6 +181,16 @@ async function main() {
   });
 
   for await (const line of rl) {
+    // Check if we got HTML instead of CSV (wrong URL or redirect)
+    if (line.trim().startsWith("<!") || line.trim().startsWith("<html")) {
+      rl.close();
+      console.log("\n  ✗ ERROR: Downloaded file is HTML, not CSV!");
+      console.log("  The download URL may have changed. Check data.cms.gov for the latest link.");
+      console.log("  Deleting invalid file...\n");
+      unlinkSync(OUTPUT_FILE);
+      process.exit(1);
+    }
+
     const headers = line.split(",").slice(0, 5);
     console.log(`  Header preview: ${headers.join(", ")}...`);
     rl.close();
