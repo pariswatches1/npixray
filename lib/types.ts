@@ -107,6 +107,8 @@ export interface ScanResult {
   awvGap: ProgramGap;
   actionPlan: ActionItem[];
   scannedAt: string;
+  /** Whether this scan used real CMS data or specialty-based estimates */
+  dataSource: "cms" | "estimated";
 }
 
 export interface ActionItem {

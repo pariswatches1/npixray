@@ -15,6 +15,8 @@ import {
   Loader2,
   AlertCircle,
   RefreshCw,
+  Database,
+  Sparkles,
 } from "lucide-react";
 import { ScanResult } from "@/lib/types";
 import { trackEvent } from "@/lib/analytics";
@@ -230,6 +232,18 @@ export default function ScanResultPage() {
                 <Hash className="h-3.5 w-3.5 text-gold/60" />
                 NPI {data.provider.npi}
               </span>
+              {/* Data Source Badge */}
+              {data.dataSource === "cms" ? (
+                <span className="inline-flex items-center gap-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-0.5 text-xs font-medium text-emerald-400">
+                  <Database className="h-3 w-3" />
+                  Real CMS Data
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-1 rounded-full border border-gold/30 bg-gold/10 px-2.5 py-0.5 text-xs font-medium text-gold">
+                  <Sparkles className="h-3 w-3" />
+                  Specialty Estimates
+                </span>
+              )}
             </div>
           </div>
 
@@ -294,9 +308,20 @@ export default function ScanResultPage() {
       {/* Footer note */}
       <div className="mt-6 mb-8 rounded-lg border border-dark-50/50 bg-dark-300/30 p-4 text-center">
         <p className="text-xs text-[var(--text-secondary)]">
-          Analysis based on CMS Medicare Physician &amp; Other Practitioners
-          public data and specialty benchmarks. Revenue estimates are
-          illustrative and may vary based on practice-specific factors.
+          {data.dataSource === "cms" ? (
+            <>
+              Analysis based on this provider&apos;s actual CMS Medicare Physician
+              &amp; Other Practitioners billing data. Revenue estimates use real
+              service counts compared to specialty benchmarks and may vary based
+              on practice-specific factors.
+            </>
+          ) : (
+            <>
+              Analysis based on specialty benchmarks derived from CMS Medicare
+              Physician &amp; Other Practitioners public data. Revenue estimates
+              are illustrative and may vary based on practice-specific factors.
+            </>
+          )}
         </p>
       </div>
 

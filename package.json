@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "cms:download": "npx tsx data/scripts/download-cms.ts",
+    "cms:process": "npx tsx data/scripts/process-cms.ts"
   },
   "dependencies": {
     "lucide-react": "^0.469.0",

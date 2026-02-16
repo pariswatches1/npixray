@@ -1,6 +1,7 @@
 import { lookupByNPI } from "@/lib/npi-api";
 import { calculateScanResult } from "@/lib/revenue-calc";
 import { NPPESProvider, ScanResult } from "@/lib/types";
+import { lookupCMSData, cmsToBillingData } from "@/lib/cms-data";
 
 /**
  * Creates a simulated provider when NPPES lookup returns no results.
@@ -74,8 +75,13 @@ export function createDemoProvider(npi: string): NPPESProvider {
 
 /**
  * Performs a full scan for a given NPI.
- * Looks up the provider via NPPES, falls back to a deterministic demo provider,
- * then runs the revenue gap calculation.
+ *
+ * Data pipeline:
+ *   1. Look up provider via NPPES API (real name, specialty, address)
+ *   2. Check for real CMS billing data on disk
+ *   3. If CMS data found → use real billing data (dataSource: "cms")
+ *   4. If no CMS data → simulate billing from specialty benchmarks (dataSource: "estimated")
+ *   5. Falls back to demo provider if NPPES returns nothing
  */
 export async function performScan(npi: string): Promise<ScanResult> {
   let provider = await lookupByNPI(npi);
@@ -84,5 +90,15 @@ export async function performScan(npi: string): Promise<ScanResult> {
     provider = createDemoProvider(npi);
   }
 
+  // Check for real CMS billing data
+  const cmsData = lookupCMSData(npi);
+
+  if (cmsData) {
+    // Use real CMS data — convert to ProviderBillingData and pass to calculator
+    const realBilling = cmsToBillingData(cmsData, provider.specialty);
+    return calculateScanResult(provider, realBilling);
+  }
+
+  // No CMS data available — fall back to simulated billing
   return calculateScanResult(provider);
 }
