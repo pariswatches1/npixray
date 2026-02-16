@@ -15,7 +15,7 @@
  *   Rndrng_NPI              — Provider NPI
  *   Rndrng_Prvdr_Last_Org_Name  — Last name / org name
  *   Rndrng_Prvdr_First_Name — First name
- *   Rndrng_Prvdr_Crdnls     — Credentials
+ *   Rndrng_Prvdr_Crdntls     — Credentials
  *   Rndrng_Prvdr_Type       — Specialty / provider type
  *   Rndrng_Prvdr_State_Abrvtn — State abbreviation
  *   Rndrng_Prvdr_City       — City
@@ -203,7 +203,7 @@ async function main() {
         "Rndrng_NPI",
         "HCPCS_Cd",
         "Tot_Srvcs",
-        "Tot_Mdcr_Pymt_Amt",
+        "Avg_Mdcr_Pymt_Amt",
       ];
       const missing = required.filter((r) => !(r in headerMap));
       if (missing.length > 0) {
@@ -234,8 +234,9 @@ async function main() {
 
     const hcpcsCode = (fields[headerMap["HCPCS_Cd"]] || "").trim();
     const services = parseFloat(fields[headerMap["Tot_Srvcs"]] || "0") || 0;
-    const payment =
-      parseFloat(fields[headerMap["Tot_Mdcr_Pymt_Amt"]] || "0") || 0;
+    const avgPayment =
+      parseFloat(fields[headerMap["Avg_Mdcr_Pymt_Amt"]] || "0") || 0;
+    const payment = avgPayment * services; // total = avg per service × service count
     const beneficiaries =
       parseFloat(fields[headerMap["Tot_Benes"]] || "0") || 0;
 
@@ -246,7 +247,7 @@ async function main() {
         npi,
         lastName: fields[headerMap["Rndrng_Prvdr_Last_Org_Name"]] || "",
         firstName: fields[headerMap["Rndrng_Prvdr_First_Name"]] || "",
-        credential: fields[headerMap["Rndrng_Prvdr_Crdnls"]] || "",
+        credential: fields[headerMap["Rndrng_Prvdr_Crdntls"]] || "",
         specialty: fields[headerMap["Rndrng_Prvdr_Type"]] || "",
         state: fields[headerMap["Rndrng_Prvdr_State_Abrvtn"]] || "",
         city: fields[headerMap["Rndrng_Prvdr_City"]] || "",
