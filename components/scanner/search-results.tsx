@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import {
@@ -10,8 +10,12 @@ import {
   ChevronRight,
   Loader2,
   SearchX,
+  RefreshCw,
+  AlertTriangle,
+  Info,
 } from "lucide-react";
 import { NPPESProvider } from "@/lib/types";
+import { trackEvent } from "@/lib/analytics";
 
 export function SearchResults() {
   const searchParams = useSearchParams();
@@ -23,29 +27,42 @@ export function SearchResults() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    async function search() {
-      try {
-        const params = new URLSearchParams();
-        params.set("last_name", lastName);
-        if (firstName) params.set("first_name", firstName);
-        if (state) params.set("state", state);
+  const search = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    setResults([]);
 
-        const res = await fetch(`/api/npi?${params.toString()}`);
-        const json = await res.json();
-        if (!res.ok) {
-          setError(json.error || "Search failed");
-          return;
-        }
-        setResults(json.results || []);
-      } catch {
-        setError("Network error. Please try again.");
-      } finally {
-        setLoading(false);
+    try {
+      const params = new URLSearchParams();
+      params.set("last_name", lastName);
+      if (firstName) params.set("first_name", firstName);
+      if (state) params.set("state", state);
+
+      const res = await fetch(`/api/npi?${params.toString()}`);
+      const json = await res.json();
+      if (!res.ok) {
+        setError(json.error || "Search failed. Please try again.");
+        return;
       }
+      setResults(json.results || []);
+      trackEvent({
+        action: "provider_search",
+        category: "search",
+        label: `${firstName} ${lastName} ${state}`.trim(),
+        value: (json.results || []).length,
+      });
+    } catch {
+      setError(
+        "Unable to reach the NPPES Registry. Check your internet connection and try again."
+      );
+    } finally {
+      setLoading(false);
     }
-    search();
   }, [lastName, firstName, state]);
+
+  useEffect(() => {
+    search();
+  }, [search]);
 
   return (
     <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-12">
@@ -64,6 +81,7 @@ export function SearchResults() {
         {state && ` in ${state}`}
       </p>
 
+      {/* Loading State */}
       {loading && (
         <div className="flex flex-col items-center justify-center py-16 gap-3">
           <Loader2 className="h-8 w-8 text-gold animate-spin" />
@@ -73,27 +91,103 @@ export function SearchResults() {
         </div>
       )}
 
-      {error && (
-        <div className="text-center py-16">
-          <p className="text-red-400">{error}</p>
+      {/* Error State */}
+      {!loading && error && (
+        <div className="flex flex-col items-center justify-center py-16 gap-4">
+          <div className="h-14 w-14 rounded-2xl border border-red-500/20 bg-red-500/5 flex items-center justify-center">
+            <AlertTriangle className="h-7 w-7 text-red-400" />
+          </div>
+          <div className="text-center max-w-md">
+            <p className="font-semibold mb-1">Search Failed</p>
+            <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
+              {error}
+            </p>
+          </div>
+          <div className="flex gap-3">
+            <button
+              onClick={search}
+              className="inline-flex items-center gap-2 rounded-lg bg-gold px-5 py-2.5 text-sm font-semibold text-dark hover:bg-gold-300 transition-colors"
+            >
+              <RefreshCw className="h-4 w-4" />
+              Retry Search
+            </button>
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 rounded-lg border border-dark-50 px-5 py-2.5 text-sm font-medium text-[var(--text-secondary)] hover:border-gold/30 hover:text-gold transition-all"
+            >
+              New Search
+            </Link>
+          </div>
         </div>
       )}
 
+      {/* No Results State */}
       {!loading && !error && results.length === 0 && (
-        <div className="flex flex-col items-center justify-center py-16 gap-3">
-          <SearchX className="h-10 w-10 text-[var(--text-secondary)]" />
-          <p className="text-[var(--text-secondary)]">
-            No providers found. Try adjusting your search.
-          </p>
+        <div className="flex flex-col items-center justify-center py-16 gap-4">
+          <div className="h-14 w-14 rounded-2xl border border-dark-50/50 bg-dark-400/50 flex items-center justify-center">
+            <SearchX className="h-7 w-7 text-[var(--text-secondary)]" />
+          </div>
+          <div className="text-center max-w-md">
+            <p className="font-semibold mb-1">No Providers Found</p>
+            <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
+              We couldn&apos;t find any providers matching your search.
+            </p>
+          </div>
+          <div className="mt-2 rounded-xl border border-dark-50/80 bg-dark-400/50 p-4 max-w-sm w-full">
+            <p className="text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider mb-3">
+              Try these tips:
+            </p>
+            <ul className="space-y-2 text-sm text-[var(--text-secondary)]">
+              <li className="flex items-start gap-2">
+                <span className="text-gold mt-0.5">&#x2022;</span>
+                Double-check the spelling of the name
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-gold mt-0.5">&#x2022;</span>
+                Try searching by last name only
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-gold mt-0.5">&#x2022;</span>
+                Remove the state filter to search nationally
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-gold mt-0.5">&#x2022;</span>
+                If you know the NPI, search by number instead
+              </li>
+            </ul>
+          </div>
+          <Link
+            href="/"
+            className="mt-2 inline-flex items-center gap-2 rounded-lg bg-gold px-5 py-2.5 text-sm font-semibold text-dark hover:bg-gold-300 transition-colors"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            New Search
+          </Link>
         </div>
       )}
 
-      {!loading && results.length > 0 && (
+      {/* Results List */}
+      {!loading && !error && results.length > 0 && (
         <div className="space-y-3">
-          <p className="text-xs text-[var(--text-secondary)] mb-4">
-            {results.length} provider{results.length !== 1 ? "s" : ""} found —
-            select one to scan
-          </p>
+          {/* Results count + too many results hint */}
+          <div className="flex flex-col gap-2 mb-4">
+            <p className="text-xs text-[var(--text-secondary)]">
+              {results.length} provider{results.length !== 1 ? "s" : ""} found
+              {" "}&mdash; select one to scan
+            </p>
+
+            {results.length >= 20 && (
+              <div className="flex items-start gap-2 rounded-lg border border-gold/20 bg-gold/5 p-3">
+                <Info className="h-4 w-4 text-gold flex-shrink-0 mt-0.5" />
+                <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
+                  Showing the first 20 matches. For more specific results, try
+                  adding a <strong className="text-white">state filter</strong> or include
+                  a <strong className="text-white">first name</strong>.
+                </p>
+              </div>
+            )}
+          </div>
+
           {results.map((provider) => (
             <Link
               key={provider.npi}
