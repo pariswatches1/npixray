@@ -1,22 +1,25 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Users, DollarSign, UserCheck, BarChart3, Heart, Activity, Brain, Clipboard } from "lucide-react";
 import {
-  Zap,
-  ArrowLeft,
-  ArrowRight,
-  TrendingUp,
-  Users,
-  BarChart3,
-  CheckCircle2,
-  DollarSign,
-  BookOpen,
-} from "lucide-react";
-import {
-  getSpecialtyBySlug,
-  getAllSpecialtySlugs,
-  getBenchmarkForSlug,
-} from "@/lib/specialty-data";
+  getAllBenchmarks,
+  getBenchmarkBySpecialty,
+  getSpecialtyProviders,
+  formatCurrency,
+  formatNumber,
+  specialtyToSlug,
+} from "@/lib/db-queries";
+import { Breadcrumbs } from "@/components/seo/breadcrumbs";
+import { StatCard } from "@/components/seo/stat-card";
+import { ProviderTable } from "@/components/seo/provider-table";
+import { ScanCTA } from "@/components/seo/scan-cta";
+
+export const dynamic = 'force-dynamic';
+
+function findSpecialtyBySlug(slug: string) {
+  const benchmarks = getAllBenchmarks();
+  return benchmarks.find((b) => specialtyToSlug(b.specialty) === slug) ?? null;
+}
 
 export async function generateMetadata({
   params,
@@ -24,21 +27,17 @@ export async function generateMetadata({
   params: Promise<{ specialty: string }>;
 }): Promise<Metadata> {
   const { specialty: slug } = await params;
-  const specialty = getSpecialtyBySlug(slug);
-  if (!specialty) return { title: "Specialty Not Found" };
+  const benchmark = findSpecialtyBySlug(slug);
+  if (!benchmark) return { title: "Specialty Not Found | NPIxray" };
 
   return {
-    title: `${specialty.name} Revenue Benchmarks — E&M Coding, CCM, RPM, AWV Data | NPIxray`,
-    description: specialty.description,
+    title: `${benchmark.specialty} Medicare Analysis — ${formatNumber(benchmark.provider_count)} Providers | NPIxray`,
+    description: `Medicare revenue analysis for ${benchmark.specialty}: ${formatNumber(benchmark.provider_count)} providers, ${formatCurrency(benchmark.avg_total_payment)} avg payment, ${(benchmark.ccm_adoption_rate * 100).toFixed(0)}% CCM adoption. See E&M coding and care management data.`,
     openGraph: {
-      title: `${specialty.name} Revenue Benchmarks | NPIxray`,
-      description: `National Medicare revenue benchmarks for ${specialty.name}: $${(specialty.avgMissedRevenue / 1000).toFixed(0)}K average missed revenue, ${specialty.totalProviders.toLocaleString()} providers nationally.`,
+      title: `${benchmark.specialty} Medicare Analysis | NPIxray`,
+      description: `National Medicare data for ${benchmark.specialty}: ${formatNumber(benchmark.provider_count)} providers with ${formatCurrency(benchmark.avg_total_payment)} average total payment.`,
     },
   };
-}
-
-export function generateStaticParams() {
-  return getAllSpecialtySlugs().map((specialty) => ({ specialty }));
 }
 
 export default async function SpecialtyPage({
@@ -47,279 +46,189 @@ export default async function SpecialtyPage({
   params: Promise<{ specialty: string }>;
 }) {
   const { specialty: slug } = await params;
-  const specialty = getSpecialtyBySlug(slug);
-  if (!specialty) notFound();
+  const benchmark = findSpecialtyBySlug(slug);
+  if (!benchmark) notFound();
 
-  const benchmark = getBenchmarkForSlug(slug);
+  const providers = getSpecialtyProviders(benchmark.specialty, 50);
+
+  // E&M distribution data
+  const emTotal = benchmark.pct_99213 + benchmark.pct_99214 + benchmark.pct_99215;
+  const emData = [
+    { code: "99213", pct: benchmark.pct_99213, color: "bg-amber-500", label: "Level 3" },
+    { code: "99214", pct: benchmark.pct_99214, color: "bg-gold", label: "Level 4" },
+    { code: "99215", pct: benchmark.pct_99215, color: "bg-emerald-500", label: "Level 5" },
+  ];
+
+  // Program adoption data
+  const programs = [
+    { name: "CCM", fullName: "Chronic Care Management", rate: benchmark.ccm_adoption_rate, target: 0.15, icon: Heart, color: "text-rose-400" },
+    { name: "RPM", fullName: "Remote Patient Monitoring", rate: benchmark.rpm_adoption_rate, target: 0.10, icon: Activity, color: "text-blue-400" },
+    { name: "BHI", fullName: "Behavioral Health Integration", rate: benchmark.bhi_adoption_rate, target: 0.10, icon: Brain, color: "text-purple-400" },
+    { name: "AWV", fullName: "Annual Wellness Visits", rate: benchmark.awv_adoption_rate, target: 0.70, icon: Clipboard, color: "text-emerald-400" },
+  ];
 
   return (
     <>
-      {/* Header */}
       <section className="relative overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gold/[0.03] rounded-full blur-3xl" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-8 pb-12 sm:pt-12 sm:pb-16">
-          <nav className="mb-6">
-            <Link
-              href="/specialties"
-              className="inline-flex items-center gap-1.5 text-sm text-[var(--text-secondary)] hover:text-gold transition-colors"
-            >
-              <ArrowLeft className="h-3.5 w-3.5" />
-              All Specialties
-            </Link>
-          </nav>
+          <Breadcrumbs
+            items={[
+              { label: "Specialties", href: "/specialties" },
+              { label: benchmark.specialty },
+            ]}
+          />
 
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
-            {specialty.name}
+          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-2">
+            {benchmark.specialty}
           </h1>
-          <p className="text-lg text-[var(--text-secondary)] max-w-3xl leading-relaxed">
-            {specialty.description}
+          <p className="text-lg text-[var(--text-secondary)]">
+            Medicare Revenue Analysis
           </p>
 
-          {/* Stats Row */}
+          {/* Stats Grid */}
           <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-4">
-            <div className="rounded-xl border border-gold/20 bg-gold/5 p-4 text-center">
-              <p className="text-2xl font-bold font-mono text-gold">
-                ${(specialty.avgMissedRevenue / 1000).toFixed(0)}K
-              </p>
-              <p className="text-[10px] text-[var(--text-secondary)] uppercase tracking-wider mt-1">
-                Avg Missed/Year
-              </p>
-            </div>
-            <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-4 text-center">
-              <p className="text-2xl font-bold font-mono text-gold">
-                {(specialty.totalProviders / 1000).toFixed(0)}K
-              </p>
-              <p className="text-[10px] text-[var(--text-secondary)] uppercase tracking-wider mt-1">
-                US Providers
-              </p>
-            </div>
-            {benchmark && (
-              <>
-                <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-4 text-center">
-                  <p className="text-2xl font-bold font-mono text-gold">
-                    {benchmark.avgMedicarePatients}
-                  </p>
-                  <p className="text-[10px] text-[var(--text-secondary)] uppercase tracking-wider mt-1">
-                    Avg Patients
-                  </p>
-                </div>
-                <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-4 text-center">
-                  <p className="text-2xl font-bold font-mono text-gold">
-                    {benchmark.avgChronicConditions.toFixed(1)}
-                  </p>
-                  <p className="text-[10px] text-[var(--text-secondary)] uppercase tracking-wider mt-1">
-                    Avg Chronic Dx
-                  </p>
-                </div>
-              </>
-            )}
+            <StatCard
+              label="Provider Count"
+              value={formatNumber(benchmark.provider_count)}
+              icon={Users}
+            />
+            <StatCard
+              label="Avg Medicare Patients"
+              value={formatNumber(benchmark.avg_medicare_patients)}
+              icon={UserCheck}
+            />
+            <StatCard
+              label="Avg Total Payment"
+              value={formatCurrency(benchmark.avg_total_payment)}
+              icon={DollarSign}
+            />
+            <StatCard
+              label="Avg Revenue/Patient"
+              value={formatCurrency(benchmark.avg_revenue_per_patient)}
+              icon={DollarSign}
+              sub="per Medicare beneficiary"
+            />
           </div>
         </div>
       </section>
 
-      {/* Overview */}
+      {/* E&M Distribution */}
       <section className="border-t border-dark-50/50 py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl">
-            <h2 className="text-2xl font-bold mb-4">
-              Specialty <span className="text-gold">Overview</span>
-            </h2>
-            <p className="text-[var(--text-secondary)] leading-relaxed">
-              {specialty.overview}
-            </p>
-
-            {/* Key Insight Box */}
-            <div className="mt-6 rounded-xl border border-gold/20 bg-gold/5 p-5">
-              <p className="text-sm leading-relaxed">
-                <span className="font-semibold text-gold">Key Insight: </span>
-                <span className="text-[var(--text-secondary)]">
-                  {specialty.keyInsight}
-                </span>
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* E&M Coding Benchmark */}
-      {benchmark && (
-        <section className="border-t border-dark-50/50 py-12 sm:py-16">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl font-bold mb-8">
-              E&M Coding <span className="text-gold">Distribution</span>
-            </h2>
-            <p className="text-sm text-[var(--text-secondary)] mb-6 max-w-2xl">
-              National benchmark for {specialty.name} E&M code distribution.
-              Compare your practice against these targets to identify coding
-              optimization opportunities.
-            </p>
-
-            <div className="grid grid-cols-3 gap-4 max-w-xl">
-              {[
-                { code: "99213", pct: benchmark.pct99213, rate: "$92", color: "bg-amber-500" },
-                { code: "99214", pct: benchmark.pct99214, rate: "$130", color: "bg-gold" },
-                { code: "99215", pct: benchmark.pct99215, rate: "$176", color: "bg-emerald-500" },
-              ].map((item) => (
-                <div
-                  key={item.code}
-                  className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5 text-center"
-                >
-                  <p className="text-lg font-bold font-mono">{item.code}</p>
-                  <div className="mt-3 w-full bg-dark-500 rounded-full h-4 mb-2">
-                    <div
-                      className={`${item.color} h-4 rounded-full`}
-                      style={{ width: `${item.pct * 100}%` }}
-                    />
-                  </div>
-                  <p className="text-2xl font-bold font-mono text-gold">
-                    {(item.pct * 100).toFixed(0)}%
-                  </p>
-                  <p className="text-[10px] text-[var(--text-secondary)] mt-1">
-                    {item.rate}/visit
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Revenue Gap Breakdown */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold mb-8">
-            Revenue Gap <span className="text-gold">Breakdown</span>
+          <h2 className="text-2xl font-bold mb-2">
+            E&M Coding <span className="text-gold">Distribution</span>
           </h2>
-          <div className="space-y-4 max-w-3xl">
-            {specialty.topRevenueGaps.map((gap, i) => (
-              <div
-                key={gap.name}
-                className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5"
-              >
-                <div className="flex items-start justify-between mb-2">
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs font-mono text-gold/50">#{i + 1}</span>
-                    <h3 className="font-semibold">{gap.name}</h3>
-                  </div>
-                  <span className="text-lg font-bold font-mono text-gold flex-shrink-0 ml-4">
-                    ${(gap.avgGap / 1000).toFixed(1)}K/yr
-                  </span>
-                </div>
-                <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
-                  {gap.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Care Management Adoption */}
-      {benchmark && (
-        <section className="border-t border-dark-50/50 py-12 sm:py-16">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl font-bold mb-8">
-              Care Management <span className="text-gold">Adoption Rates</span>
-            </h2>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl">
-              {[
-                { label: "CCM", rate: benchmark.ccmAdoptionRate, target: 0.15 },
-                { label: "RPM", rate: benchmark.rpmAdoptionRate, target: 0.10 },
-                { label: "BHI", rate: benchmark.bhiAdoptionRate, target: 0.10 },
-                { label: "AWV", rate: benchmark.awvAdoptionRate, target: 0.70 },
-              ].map((item) => (
-                <div
-                  key={item.label}
-                  className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5 text-center"
-                >
-                  <p className="text-sm font-semibold text-[var(--text-secondary)] mb-2">
-                    {item.label}
-                  </p>
-                  <p className="text-2xl font-bold font-mono text-gold">
-                    {(item.rate * 100).toFixed(0)}%
-                  </p>
-                  <div className="mt-2 w-full bg-dark-500 rounded-full h-2">
-                    <div
-                      className="bg-gold h-2 rounded-full"
-                      style={{ width: `${Math.min((item.rate / item.target) * 100, 100)}%` }}
-                    />
-                  </div>
-                  <p className="text-[9px] text-[var(--text-secondary)] mt-1">
-                    Target: {(item.target * 100).toFixed(0)}%
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Common Conditions */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold mb-6">
-            Common <span className="text-gold">Chronic Conditions</span>
-          </h2>
-          <div className="flex flex-wrap gap-3">
-            {specialty.commonConditions.map((condition) => (
-              <span
-                key={condition}
-                className="rounded-lg border border-dark-50/80 bg-dark-400/50 px-4 py-2.5 text-sm"
-              >
-                {condition}
-              </span>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Related Guides */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-            <BookOpen className="h-4 w-4 text-gold" />
-            Recommended Billing Guides
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl">
-            {specialty.relatedGuides.map((guide) => (
-              <Link
-                key={guide.slug}
-                href={`/guides/${guide.slug}`}
-                className="group rounded-xl border border-dark-50/80 bg-dark-400/30 p-4 hover:border-gold/20 transition-colors"
-              >
-                <p className="text-sm font-semibold group-hover:text-gold transition-colors">
-                  {guide.title}
-                </p>
-                <p className="text-xs text-[var(--text-secondary)] mt-1 flex items-center gap-1">
-                  Read guide
-                  <ArrowRight className="h-3 w-3 group-hover:translate-x-0.5 transition-transform" />
-                </p>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="border-t border-dark-50/50">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 sm:py-20 text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4">
-            {specialty.name} Provider?{" "}
-            <span className="text-gold">See Your Gaps</span>
-          </h2>
-          <p className="text-[var(--text-secondary)] max-w-xl mx-auto mb-8">
-            These are national averages. Scan your NPI to see how your billing
-            compares to {specialty.name} benchmarks and get a personalized
-            revenue roadmap.
+          <p className="text-sm text-[var(--text-secondary)] mb-8 max-w-2xl">
+            How {benchmark.specialty} providers distribute their E&M visits
+            across complexity levels. Higher-level codes (99214, 99215)
+            indicate more complex patient encounters.
           </p>
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 rounded-xl bg-gold px-8 py-4 text-base font-semibold text-dark transition-all hover:bg-gold-300 hover:shadow-lg hover:shadow-gold/20"
-          >
-            <Zap className="h-5 w-5" />
-            Scan Your NPI — Free
-          </Link>
+
+          <div className="max-w-2xl space-y-6">
+            {emData.map((item) => {
+              const pctDisplay = emTotal > 0
+                ? ((item.pct / emTotal) * 100).toFixed(1)
+                : (item.pct * 100).toFixed(1);
+              const barWidth = emTotal > 0
+                ? (item.pct / emTotal) * 100
+                : item.pct * 100;
+              return (
+                <div key={item.code}>
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-3">
+                      <span className="text-lg font-bold font-mono">{item.code}</span>
+                      <span className="text-sm text-[var(--text-secondary)]">{item.label}</span>
+                    </div>
+                    <span className="text-lg font-bold font-mono text-gold">
+                      {pctDisplay}%
+                    </span>
+                  </div>
+                  <div className="w-full bg-dark-500 rounded-full h-4">
+                    <div
+                      className={`${item.color} h-4 rounded-full transition-all`}
+                      style={{ width: `${Math.min(barWidth, 100)}%` }}
+                    />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
+      </section>
+
+      {/* Program Adoption Rates */}
+      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-bold mb-2">
+            Program <span className="text-gold">Adoption Rates</span>
+          </h2>
+          <p className="text-sm text-[var(--text-secondary)] mb-8 max-w-2xl">
+            Care management program adoption among {benchmark.specialty} providers
+            compared to target benchmarks.
+          </p>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl">
+            {programs.map((program) => {
+              const ratePct = (program.rate * 100).toFixed(1);
+              const targetPct = (program.target * 100).toFixed(0);
+              const fillPct = Math.min((program.rate / program.target) * 100, 100);
+              return (
+                <div
+                  key={program.name}
+                  className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5"
+                >
+                  <div className="flex items-center gap-2 mb-3">
+                    <program.icon className={`h-5 w-5 ${program.color}`} />
+                    <div>
+                      <p className="font-semibold text-sm">{program.name}</p>
+                      <p className="text-[10px] text-[var(--text-secondary)]">
+                        {program.fullName}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="w-full bg-dark-500 rounded-full h-3 mb-2">
+                    <div
+                      className="bg-gold h-3 rounded-full transition-all"
+                      style={{ width: `${fillPct}%` }}
+                    />
+                  </div>
+                  <div className="flex justify-between text-xs">
+                    <span className="text-gold font-mono font-semibold">
+                      {ratePct}%
+                    </span>
+                    <span className="text-[var(--text-secondary)]">
+                      Target: {targetPct}%
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Top Providers */}
+      {providers.length > 0 && (
+        <section className="border-t border-dark-50/50 py-12 sm:py-16">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <h2 className="text-2xl font-bold mb-2">
+              Top <span className="text-gold">{benchmark.specialty}</span> Providers
+            </h2>
+            <p className="text-sm text-[var(--text-secondary)] mb-8">
+              Top 50 {benchmark.specialty} providers by Medicare payment volume.
+            </p>
+            <ProviderTable
+              providers={providers}
+              showCity={true}
+              showSpecialty={false}
+            />
+          </div>
+        </section>
+      )}
+
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-16">
+        <ScanCTA />
       </section>
     </>
   );

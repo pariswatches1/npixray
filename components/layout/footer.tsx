@@ -21,59 +21,69 @@ export function Footer() {
             </p>
           </div>
 
-          {/* Product */}
+          {/* Tools */}
           <div>
             <h3 className="text-sm font-semibold text-gold mb-4 uppercase tracking-wider">
-              Product
+              Tools
             </h3>
             <ul className="space-y-2.5">
               <li>
-                <Link href="/" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
-                  NPI Scanner
+                <Link href="/tools/revenue-calculator" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
+                  Revenue Calculator
                 </Link>
               </li>
               <li>
-                <Link href="/pricing" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
-                  Pricing
+                <Link href="/tools/npi-lookup" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
+                  NPI Lookup
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
-                  About
+                <Link href="/tools/em-audit" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
+                  E&M Audit Tool
+                </Link>
+              </li>
+              <li>
+                <Link href="/tools/ccm-calculator" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
+                  CCM Calculator
+                </Link>
+              </li>
+              <li>
+                <Link href="/tools" className="text-sm text-gold hover:text-gold-300 transition-colors font-medium">
+                  All 10 Tools →
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Guides */}
+          {/* Data */}
           <div>
             <h3 className="text-sm font-semibold text-gold mb-4 uppercase tracking-wider">
-              Guides
+              Data
             </h3>
             <ul className="space-y-2.5">
               <li>
-                <Link href="/guides/ccm-billing-99490" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
-                  CCM Billing (99490)
+                <Link href="/codes" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
+                  Billing Codes
                 </Link>
               </li>
               <li>
-                <Link href="/guides/rpm-billing-99453-99458" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
-                  RPM Billing
+                <Link href="/insights" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
+                  Data Insights
                 </Link>
               </li>
               <li>
-                <Link href="/guides/awv-billing-g0438-g0439" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
-                  AWV Billing
+                <Link href="/rankings" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
+                  Provider Rankings
                 </Link>
               </li>
               <li>
-                <Link href="/guides/em-coding-optimization" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
-                  E&M Coding
+                <Link href="/compare" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
+                  Compare Specialties
                 </Link>
               </li>
               <li>
-                <Link href="/guides" className="text-sm text-gold hover:text-gold-300 transition-colors font-medium">
-                  All Guides →
+                <Link href="/api-docs" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
+                  Public API
                 </Link>
               </li>
             </ul>
@@ -153,6 +163,11 @@ export function Footer() {
           <p className="text-xs text-[var(--text-secondary)]">
             &copy; {new Date().getFullYear()} NPIxray. All rights reserved.
           </p>
+          <div className="flex items-center gap-4">
+            <Link href="/about" className="text-xs text-[var(--text-secondary)] hover:text-gold transition-colors">About</Link>
+            <Link href="/pricing" className="text-xs text-[var(--text-secondary)] hover:text-gold transition-colors">Pricing</Link>
+            <Link href="/guides" className="text-xs text-[var(--text-secondary)] hover:text-gold transition-colors">Guides</Link>
+          </div>
           <p className="text-xs text-[var(--text-secondary)]">
             Data sourced from CMS.gov public datasets. Not medical advice.
           </p>
