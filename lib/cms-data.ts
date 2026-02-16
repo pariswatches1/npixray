@@ -73,8 +73,8 @@ function getDb(): ReturnType<typeof import("better-sqlite3")> | null {
   }
 
   try {
-    // Dynamic import for better-sqlite3 (native module)
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    // Dynamic require for better-sqlite3 (native C++ module)
+    // eslint-disable-next-line
     const Database = require("better-sqlite3");
     _db = new Database(DB_PATH, { readonly: true });
     // Performance settings for read-only access
