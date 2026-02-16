@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { X, Mail, Send, CheckCircle2 } from "lucide-react";
 import { ScanResult } from "@/lib/types";
+import { trackEvent } from "@/lib/analytics";
 
 function formatCurrency(n: number): string {
   if (n >= 1000000) return `$${(n / 1000000).toFixed(1)}M`;
@@ -61,6 +62,12 @@ export function EmailCaptureModal({ data }: { data: ScanResult }) {
     const result = await submitLead(email, data);
     if (result.success) {
       setStatus("success");
+      trackEvent({
+        action: "email_captured",
+        category: "lead",
+        label: "modal",
+        value: data.totalMissedRevenue,
+      });
       sessionStorage.setItem(`npixray-lead-${data.provider.npi}`, email);
       setTimeout(() => setDismissed(true), 2000);
     } else {
@@ -179,6 +186,12 @@ export function EmailCaptureInline({ data }: { data: ScanResult }) {
     const result = await submitLead(email, data);
     if (result.success) {
       setStatus("success");
+      trackEvent({
+        action: "email_captured",
+        category: "lead",
+        label: "inline",
+        value: data.totalMissedRevenue,
+      });
       sessionStorage.setItem(`npixray-lead-${data.provider.npi}`, email);
     } else {
       setStatus("error");

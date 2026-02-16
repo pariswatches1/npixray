@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/api/", "/scan/"],
+        disallow: ["/api/", "/scan/", "/admin/"],
       },
     ],
     sitemap: "https://npixray.com/sitemap.xml",

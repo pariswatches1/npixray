@@ -3,6 +3,7 @@ import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
+import { GoogleAnalytics } from "@/components/analytics/google-analytics";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -70,6 +71,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={dmSans.variable}>
       <body className="font-sans antialiased min-h-screen flex flex-col">
+        <GoogleAnalytics />
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />

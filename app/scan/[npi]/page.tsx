@@ -16,11 +16,13 @@ import {
   AlertCircle,
 } from "lucide-react";
 import { ScanResult } from "@/lib/types";
+import { trackEvent } from "@/lib/analytics";
 import { OverviewTab } from "@/components/report/overview-tab";
 import { ProgramsTab } from "@/components/report/programs-tab";
 import { CodingTab } from "@/components/report/coding-tab";
 import { ActionPlanTab } from "@/components/report/action-plan-tab";
 import { EmailCaptureModal, EmailCaptureInline } from "@/components/report/email-capture";
+import { ShareResults } from "@/components/report/share-results";
 
 type Tab = "overview" | "programs" | "coding" | "action-plan";
 
@@ -49,6 +51,12 @@ export default function ScanResultPage() {
           return;
         }
         setData(json.result);
+        trackEvent({
+          action: "npi_scan",
+          category: "scan",
+          label: npi,
+          value: json.result?.totalMissedRevenue,
+        });
       } catch {
         setError("Network error. Please try again.");
       } finally {
@@ -181,8 +189,17 @@ export default function ScanResultPage() {
         {activeTab === "action-plan" && <ActionPlanTab data={data} />}
       </div>
 
+      {/* Share Results */}
+      <div className="mt-8">
+        <ShareResults
+          npi={npi}
+          providerName={data.provider.fullName}
+          missedRevenue={data.totalMissedRevenue}
+        />
+      </div>
+
       {/* Email Capture — Inline */}
-      <div className="mt-12">
+      <div className="mt-6">
         <EmailCaptureInline data={data} />
       </div>
 
