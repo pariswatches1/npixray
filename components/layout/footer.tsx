@@ -5,7 +5,7 @@ export function Footer() {
   return (
     <footer className="border-t border-dark-50/50 bg-dark-300">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-6 gap-8">
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-4">
@@ -37,15 +37,20 @@ export function Footer() {
                   Pricing
                 </Link>
               </li>
+              <li>
+                <Link href="/about" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
+                  About
+                </Link>
+              </li>
             </ul>
           </div>
 
           {/* Guides */}
-          <div className="col-span-2 md:col-span-2">
+          <div>
             <h3 className="text-sm font-semibold text-gold mb-4 uppercase tracking-wider">
-              Billing Guides
+              Guides
             </h3>
-            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2.5">
+            <ul className="space-y-2.5">
               <li>
                 <Link href="/guides/ccm-billing-99490" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
                   CCM Billing (99490)
@@ -53,41 +58,90 @@ export function Footer() {
               </li>
               <li>
                 <Link href="/guides/rpm-billing-99453-99458" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
-                  RPM Billing (99453-99458)
+                  RPM Billing
                 </Link>
               </li>
               <li>
                 <Link href="/guides/awv-billing-g0438-g0439" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
-                  AWV Billing (G0438/G0439)
-                </Link>
-              </li>
-              <li>
-                <Link href="/guides/bhi-billing-99484" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
-                  BHI Billing (99484)
+                  AWV Billing
                 </Link>
               </li>
               <li>
                 <Link href="/guides/em-coding-optimization" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
-                  E&M Coding Guide
+                  E&M Coding
                 </Link>
               </li>
               <li>
                 <Link href="/guides" className="text-sm text-gold hover:text-gold-300 transition-colors font-medium">
-                  View All Guides →
+                  All Guides →
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Company */}
+          {/* Top States */}
           <div>
             <h3 className="text-sm font-semibold text-gold mb-4 uppercase tracking-wider">
-              Company
+              Top States
             </h3>
             <ul className="space-y-2.5">
               <li>
-                <Link href="/about" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
-                  About
+                <Link href="/states/california" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
+                  California
+                </Link>
+              </li>
+              <li>
+                <Link href="/states/florida" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
+                  Florida
+                </Link>
+              </li>
+              <li>
+                <Link href="/states/texas" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
+                  Texas
+                </Link>
+              </li>
+              <li>
+                <Link href="/states/new-york" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
+                  New York
+                </Link>
+              </li>
+              <li>
+                <Link href="/states" className="text-sm text-gold hover:text-gold-300 transition-colors font-medium">
+                  All 50 States →
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Specialties */}
+          <div>
+            <h3 className="text-sm font-semibold text-gold mb-4 uppercase tracking-wider">
+              Specialties
+            </h3>
+            <ul className="space-y-2.5">
+              <li>
+                <Link href="/specialties/family-medicine" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
+                  Family Medicine
+                </Link>
+              </li>
+              <li>
+                <Link href="/specialties/cardiology" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
+                  Cardiology
+                </Link>
+              </li>
+              <li>
+                <Link href="/specialties/internal-medicine" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
+                  Internal Medicine
+                </Link>
+              </li>
+              <li>
+                <Link href="/specialties/orthopedics" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
+                  Orthopedics
+                </Link>
+              </li>
+              <li>
+                <Link href="/specialties" className="text-sm text-gold hover:text-gold-300 transition-colors font-medium">
+                  All Specialties →
                 </Link>
               </li>
             </ul>
