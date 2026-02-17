@@ -103,7 +103,7 @@ export default async function CityReportPage({
 
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-center gap-6 mb-10">
-        <ReportGrade captureRate={rate} size="md" />
+        <ReportGrade grade={gradeInfo} size="md" />
         <div className="text-center sm:text-left">
           <div className="flex items-center gap-2 mb-1">
             <MapPin className="h-5 w-5 text-gold" />
@@ -175,6 +175,7 @@ export default async function CityReportPage({
           Share
         </h2>
         <ShareButtons
+          title={`${cityName}, ${stateName} Medicare Report`}
           twitterText={`${cityName}, ${stateName} has ${formatNumber(cityStats.count)} Medicare providers with avg payment of ${formatCurrency(cityStats.avgPayment)}. See the report: https://npixray.com/reports/cities/${stateSlug}/${citySlug}`}
           linkedinText={`Medicare data for ${cityName}, ${stateName}:\n- ${formatNumber(cityStats.count)} providers\n- ${formatCurrency(cityStats.avgPayment)} avg payment\n- ${((ratio - 1) * 100).toFixed(0)}% vs state average\n\nFull report: https://npixray.com/reports/cities/${stateSlug}/${citySlug}`}
           url={`https://npixray.com/reports/cities/${stateSlug}/${citySlug}`}

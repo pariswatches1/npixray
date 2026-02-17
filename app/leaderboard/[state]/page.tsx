@@ -89,7 +89,7 @@ export default async function StateLeaderboardPage({
             </thead>
             <tbody>
               {topProviders.map((p, i) => {
-                const tier = getScoreTier(p.revenue_score);
+                const tier = getScoreTier(p.revenue_score ?? 0);
                 return (
                   <tr
                     key={p.npi}
@@ -123,7 +123,7 @@ export default async function StateLeaderboardPage({
                           border: `1px solid ${tier.color}30`,
                         }}
                       >
-                        {p.revenue_score}
+                        {p.revenue_score ?? 0}
                       </span>
                     </td>
                   </tr>

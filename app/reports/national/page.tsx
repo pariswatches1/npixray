@@ -372,6 +372,7 @@ export default async function NationalReportPage() {
             Share This Report
           </h2>
           <ShareButtons
+            title="National Medicare Revenue Report 2026"
             twitterText={shareText.twitter}
             linkedinText={shareText.linkedin}
             url="https://npixray.com/reports/national"
