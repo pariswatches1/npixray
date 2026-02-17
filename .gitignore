@@ -31,11 +31,14 @@ yarn-error.log*
 # env files
 .env*.local
 
-# CMS data (2GB+ raw file + processed per-NPI JSONs)
+# CMS data (2GB+ raw file + processed per-NPI JSONs + SQLite DB)
 /data/cms-raw/*
 !/data/cms-raw/.gitkeep
 /data/cms-processed/*
 !/data/cms-processed/.gitkeep
+/data/cms.db
+/data/cms.db-shm
+/data/cms.db-wal
 
 # vercel
 .vercel

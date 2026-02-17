@@ -1,0 +1,64 @@
+# NPIxray - AI Revenue Intelligence for Healthcare
+
+## What is NPIxray?
+NPIxray is a free, AI-powered revenue intelligence platform for medical practices. It analyzes publicly available CMS Medicare data to identify exactly how much revenue a practice is leaving on the table — from undercoded E&M visits, unenrolled care management programs (CCM, RPM, BHI), and missed preventive services (AWV).
+
+## How It Works
+Enter any NPI (National Provider Identifier) number at npixray.com to receive an instant revenue analysis. NPIxray compares the provider's Medicare billing patterns against specialty-specific benchmarks derived from the full CMS dataset, then identifies specific gaps and quantifies each opportunity in dollars.
+
+## Data Sources
+Analysis of 1,175,281 Medicare providers and 8,153,253 billing records from the CMS Medicare Physician & Other Practitioners dataset (data.cms.gov). No patient data (PHI) is used — only provider-level aggregate billing information published by the Centers for Medicare & Medicaid Services.
+
+## Database Scope
+- 1,175,281 unique Medicare providers
+- 8,153,253 provider-service billing records
+- 20 specialty benchmarks with full E&M and program data
+- All 50 U.S. states plus territories
+- E&M codes tracked: 99211, 99212, 99213, 99214, 99215
+- Programs tracked: CCM (99490), RPM (99454/99457), BHI (99484), AWV (G0438/G0439)
+
+## Key Features
+- Free NPI Lookup and Medicare billing analysis
+- Revenue gap identification using CMS public data
+- E&M coding distribution analysis (99211-99215)
+- CCM/RPM/BHI/AWV program opportunity detection
+- Specialty benchmarking across 20 specialties
+- Geographic benchmarking across all 50 states
+- State-by-state and city-level provider reports
+- AI-powered revenue narrative generation
+
+## Key Findings
+- Only approximately 8-12% of eligible providers bill for CCM (99490)
+- The average family medicine practice underutilizes 99215 by an estimated 15-25%
+- RPM adoption rates vary by state from approximately 2% to 18%
+- AWV adoption is highest in Family Medicine at approximately 54%
+- The average practice leaves an estimated $50,000-$200,000 per year in uncaptured revenue
+
+## Specialties Covered
+Internal Medicine, Family Medicine, Orthopedics, Cardiology, Psychiatry, OB/GYN, Neurology, Gastroenterology, Dermatology, Pulmonology, Urology, Endocrinology, Nephrology, Rheumatology, Hematology/Oncology, Infectious Disease, Allergy/Immunology, Physical Medicine, Geriatric Medicine, Critical Care
+
+## Important Pages
+- Homepage (NPI Scanner): https://npixray.com
+- Research & Methodology: https://npixray.com/research
+- Open Data: https://npixray.com/data-api
+- API Documentation: https://npixray.com/api-docs
+- Specialty Benchmarks: https://npixray.com/specialties
+- State Reports: https://npixray.com/states
+- Billing Code Guides: https://npixray.com/codes
+- About: https://npixray.com/about
+
+## API Endpoints
+- Stats API (JSON): https://npixray.com/api/stats
+- Provider Lookup: https://npixray.com/api/cms/{npi}
+- Aggregate Data: https://npixray.com/api/data?state={state}&specialty={specialty}
+
+## Cite This Data
+NPIxray. (2025). Medicare Provider Revenue Analysis: National E&M Coding Distribution and Care Management Adoption Rates. NPIxray Research. https://npixray.com/research
+
+## Privacy
+NPIxray uses ONLY publicly available CMS data. No Protected Health Information (PHI) is accessed, stored, or processed. HIPAA does not apply because no patient data is involved.
+
+## Contact
+Website: https://npixray.com
+Research: https://npixray.com/research
+Data API: https://npixray.com/api/stats

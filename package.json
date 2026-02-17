@@ -8,9 +8,15 @@
     "start": "next start",
     "lint": "next lint",
     "cms:download": "npx tsx data/scripts/download-cms.ts",
-    "cms:process": "npx tsx data/scripts/process-cms.ts"
+    "cms:process": "npx tsx data/scripts/process-cms.ts",
+    "cms:build-db": "npx tsx data/scripts/build-db.ts",
+    "cms:pipeline": "npm run cms:download && npm run cms:process && npm run cms:build-db",
+    "cms:migrate": "npx tsx data/scripts/migrate-to-neon.ts",
+    "cms:migrate:resume": "npx tsx data/scripts/migrate-to-neon.ts --resume"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^1.0.2",
+    "better-sqlite3": "^12.6.2",
     "lucide-react": "^0.469.0",
     "next": "^15.1.0",
     "react": "^19.0.0",
@@ -19,6 +25,7 @@
     "resend": "^6.9.2"
   },
   "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
     "@types/node": "^22.10.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
