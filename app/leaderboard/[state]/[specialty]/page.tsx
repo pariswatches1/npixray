@@ -116,7 +116,7 @@ export default async function StateSpecialtyLeaderboardPage({
             </thead>
             <tbody>
               {providers.map((p: any, i: number) => {
-                const tier = getScoreTier(p.revenue_score);
+                const tier = getScoreTier(p.revenue_score ?? 0);
                 return (
                   <tr
                     key={p.npi}
@@ -147,7 +147,7 @@ export default async function StateSpecialtyLeaderboardPage({
                           border: `1px solid ${tier.color}30`,
                         }}
                       >
-                        {p.revenue_score}
+                        {p.revenue_score ?? 0}
                       </span>
                     </td>
                   </tr>

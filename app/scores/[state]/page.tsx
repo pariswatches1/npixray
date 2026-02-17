@@ -91,7 +91,7 @@ export default async function StateScorePage({
       {topProviders.length > 0 && (
         <section className="mb-10">
           <ScoreLeaderboard
-            entries={topProviders}
+            entries={topProviders.map(p => ({ ...p, revenue_score: p.revenue_score ?? 0 }))}
             title={`Top Scoring Providers in ${name}`}
           />
         </section>
