@@ -1,0 +1,122 @@
+import { NextRequest, NextResponse } from "next/server";
+import {
+  getStateStats,
+  getAllBenchmarks,
+  getBenchmarkBySpecialty,
+  getNationalStats,
+  getAllStates,
+  stateAbbrToName,
+  slugToStateAbbr,
+  specialtyToSlug,
+} from "@/lib/db-queries";
+import { SPECIALTY_LIST } from "@/lib/benchmark-data";
+import { formatCurrency, formatNumber } from "@/lib/format";
+import { calculateGrade, estimatePerProviderGap, estimateCaptureRate } from "@/lib/report-utils";
+
+export async function GET(request: NextRequest) {
+  const { searchParams } = new URL(request.url);
+  const type = searchParams.get("type") || "national";
+  const id = searchParams.get("id") || "";
+
+  let title = "National Medicare Revenue Report 2026";
+  let grade = "B";
+  let gradeColor = "#3b82f6";
+  let statsHtml = "";
+  let sectionsHtml = "";
+
+  if (type === "state") {
+    const abbr = slugToStateAbbr(id) || id.toUpperCase();
+    const name = stateAbbrToName(abbr);
+    const stats = await getStateStats(abbr);
+    if (!stats) return NextResponse.json({ error: "State not found" }, { status: 404 });
+
+    const allStates = await getAllStates();
+    const nationalAvg = allStates.reduce((a, b) => a + b.avgPayment, 0) / allStates.length;
+    const rate = Math.min(Math.round((stats.avgPayment / (nationalAvg * 1.3)) * 75 + 15), 95);
+    const gi = calculateGrade(rate);
+    grade = gi.grade;
+    title = `${name} Medicare Revenue Report Card 2026`;
+
+    const gap = estimatePerProviderGap(stats.avgPayment);
+    statsHtml = `
+      <tr><td>Total Providers</td><td>${formatNumber(stats.totalProviders)}</td></tr>
+      <tr><td>Total Medicare Payment</td><td>${formatCurrency(stats.totalPayment)}</td></tr>
+      <tr><td>Avg Payment/Provider</td><td>${formatCurrency(stats.avgPayment)}</td></tr>
+      <tr><td>Est. Avg Revenue Gap</td><td>${formatCurrency(gap)}</td></tr>
+      <tr><td>Revenue Capture Score</td><td>${rate}%</td></tr>
+    `;
+  } else if (type === "specialty") {
+    const specialty = SPECIALTY_LIST.find((s) => specialtyToSlug(s) === id) || id;
+    const benchmark = await getBenchmarkBySpecialty(specialty);
+    if (!benchmark) return NextResponse.json({ error: "Specialty not found" }, { status: 404 });
+
+    const rate = estimateCaptureRate(benchmark.ccm_adoption_rate, benchmark.rpm_adoption_rate, benchmark.bhi_adoption_rate, benchmark.awv_adoption_rate, benchmark.pct_99214, benchmark.pct_99215);
+    const gi = calculateGrade(rate);
+    grade = gi.grade;
+    title = `${specialty} Medicare Revenue Report Card 2026`;
+
+    const gap = estimatePerProviderGap(benchmark.avg_total_payment);
+    statsHtml = `
+      <tr><td>Total Providers</td><td>${formatNumber(benchmark.provider_count)}</td></tr>
+      <tr><td>Avg Medicare Payment</td><td>${formatCurrency(benchmark.avg_total_payment)}</td></tr>
+      <tr><td>Est. Avg Revenue Gap</td><td>${formatCurrency(gap)}</td></tr>
+      <tr><td>CCM Adoption</td><td>${benchmark.ccm_adoption_rate.toFixed(1)}%</td></tr>
+      <tr><td>RPM Adoption</td><td>${benchmark.rpm_adoption_rate.toFixed(1)}%</td></tr>
+      <tr><td>E&M 99214 Rate</td><td>${benchmark.pct_99214.toFixed(1)}%</td></tr>
+    `;
+  } else {
+    const national = await getNationalStats();
+    statsHtml = `
+      <tr><td>Total Providers</td><td>${formatNumber(national?.totalProviders || 0)}</td></tr>
+      <tr><td>Total Medicare Payment</td><td>${formatCurrency(national?.totalPayment || 0)}</td></tr>
+      <tr><td>Total Services</td><td>${formatNumber(national?.totalServices || 0)}</td></tr>
+    `;
+  }
+
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>${title}</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #1a1a2e; background: #fff; padding: 40px; max-width: 800px; margin: 0 auto; }
+    .header { border-bottom: 3px solid #E8A824; padding-bottom: 20px; margin-bottom: 30px; }
+    .header h1 { font-size: 28px; margin-bottom: 5px; }
+    .header .subtitle { color: #666; font-size: 14px; }
+    .grade { display: inline-flex; align-items: center; justify-content: center; width: 60px; height: 60px; border-radius: 50%; border: 3px solid #E8A824; font-size: 32px; font-weight: bold; color: #E8A824; float: right; }
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+    td { padding: 10px 15px; border-bottom: 1px solid #eee; }
+    td:first-child { font-weight: 600; width: 60%; }
+    td:last-child { text-align: right; color: #E8A824; font-weight: 600; }
+    .footer { margin-top: 40px; padding-top: 20px; border-top: 2px solid #eee; font-size: 12px; color: #999; }
+    .footer a { color: #E8A824; text-decoration: none; }
+    @media print {
+      body { padding: 20px; }
+      .no-print { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="grade">${grade}</div>
+    <h1>${title}</h1>
+    <p class="subtitle">Generated by NPIxray | Data from CMS Medicare Physician & Other Practitioners</p>
+  </div>
+  <table>${statsHtml}</table>
+  ${sectionsHtml}
+  <div class="footer">
+    <p>Data source: CMS Medicare Physician & Other Practitioners dataset</p>
+    <p>Scan your NPI for a free revenue analysis: <a href="https://npixray.com">npixray.com</a></p>
+    <p class="no-print" style="margin-top:10px;">Press Ctrl+P (Cmd+P on Mac) to save as PDF</p>
+  </div>
+</body>
+</html>`;
+
+  return new NextResponse(html, {
+    headers: {
+      "Content-Type": "text/html",
+      "Cache-Control": "public, s-maxage=86400",
+    },
+  });
+}

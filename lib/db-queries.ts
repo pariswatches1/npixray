@@ -165,7 +165,7 @@ export async function getStateStats(stateAbbr: string): Promise<StateStats | nul
   const rows = await sql.query(`
     SELECT state, COUNT(*) AS "totalProviders", SUM(total_medicare_payment) AS "totalPayment",
            SUM(total_services) AS "totalServices", AVG(total_medicare_payment) AS "avgPayment"
-    FROM providers WHERE state = $1
+    FROM providers WHERE state = $1 GROUP BY state
   `, [stateAbbr]);
   return (rows[0] as StateStats) ?? null;
 }

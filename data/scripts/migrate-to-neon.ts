@@ -307,7 +307,8 @@ async function main() {
             rpm_99454_services, rpm_99457_services, rpm_payment,
             bhi_99484_services, bhi_99484_payment,
             awv_g0438_services, awv_g0439_services, awv_payment
-          ) VALUES ${placeholders}`,
+          ) VALUES ${placeholders}
+          ON CONFLICT (npi) DO NOTHING`,
           values
         ),
       `Provider batch at offset ${offset}`
@@ -376,7 +377,8 @@ async function main() {
       () =>
         sql.query(
           `INSERT INTO provider_codes (npi, hcpcs_code, services, payment, beneficiaries)
-           VALUES ${placeholders}`,
+           VALUES ${placeholders}
+           ON CONFLICT (npi, hcpcs_code) DO NOTHING`,
           values
         ),
       `Batch at offset ${offset}`
@@ -403,13 +405,13 @@ async function main() {
   console.log("  Step 6: Creating indexes...\n");
 
   const indexes = [
-    { name: "idx_providers_specialty", sql: "CREATE INDEX idx_providers_specialty ON providers(specialty)" },
-    { name: "idx_providers_state", sql: "CREATE INDEX idx_providers_state ON providers(state)" },
-    { name: "idx_providers_city", sql: "CREATE INDEX idx_providers_city ON providers(city)" },
-    { name: "idx_providers_name", sql: "CREATE INDEX idx_providers_name ON providers(last_name, first_name)" },
-    { name: "idx_providers_state_city", sql: "CREATE INDEX idx_providers_state_city ON providers(state, city)" },
-    { name: "idx_codes_npi", sql: "CREATE INDEX idx_codes_npi ON provider_codes(npi)" },
-    { name: "idx_codes_hcpcs", sql: "CREATE INDEX idx_codes_hcpcs ON provider_codes(hcpcs_code)" },
+    { name: "idx_providers_specialty", sql: "CREATE INDEX IF NOT EXISTS idx_providers_specialty ON providers(specialty)" },
+    { name: "idx_providers_state", sql: "CREATE INDEX IF NOT EXISTS idx_providers_state ON providers(state)" },
+    { name: "idx_providers_city", sql: "CREATE INDEX IF NOT EXISTS idx_providers_city ON providers(city)" },
+    { name: "idx_providers_name", sql: "CREATE INDEX IF NOT EXISTS idx_providers_name ON providers(last_name, first_name)" },
+    { name: "idx_providers_state_city", sql: "CREATE INDEX IF NOT EXISTS idx_providers_state_city ON providers(state, city)" },
+    { name: "idx_codes_npi", sql: "CREATE INDEX IF NOT EXISTS idx_codes_npi ON provider_codes(npi)" },
+    { name: "idx_codes_hcpcs", sql: "CREATE INDEX IF NOT EXISTS idx_codes_hcpcs ON provider_codes(hcpcs_code)" },
   ];
 
   for (const idx of indexes) {
