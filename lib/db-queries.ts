@@ -100,6 +100,7 @@ export interface ProviderRow {
   awv_g0438_services: number;
   awv_g0439_services: number;
   awv_payment: number;
+  revenue_score?: number;
 }
 
 export interface CodeRow {
@@ -391,4 +392,107 @@ export function formatNumber(n: number): string {
   if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
   if (n >= 1_000) return `${(n / 1_000).toFixed(0)}K`;
   return n.toLocaleString();
+}
+
+// ── Score & leaderboard queries ─────────────────────────
+
+/**
+ * Count distinct codes billed by a provider.
+ */
+export function getProviderCodeCount(npi: string): number {
+  const db = getDb();
+  if (!db) return 0;
+  const row = db.prepare("SELECT COUNT(*) as cnt FROM provider_codes WHERE npi = ?").get(npi) as any;
+  return row?.cnt ?? 0;
+}
+
+/**
+ * Get top-scoring providers, optionally filtered by state or specialty.
+ * Uses a computed revenue score (higher total_medicare_payment + care mgmt adoption = higher rank).
+ */
+export function getTopScoringProviders(
+  filters: { state?: string; specialty?: string },
+  limit = 20
+): ProviderRow[] {
+  const db = getDb();
+  if (!db) return [];
+  const conditions: string[] = [];
+  const params: any[] = [];
+  if (filters.state) { conditions.push("state = ?"); params.push(filters.state); }
+  if (filters.specialty) { conditions.push("specialty = ?"); params.push(filters.specialty); }
+  const where = conditions.length ? `WHERE ${conditions.join(" AND ")}` : "";
+  params.push(limit);
+  return db.prepare(`
+    SELECT * FROM providers ${where}
+    ORDER BY total_medicare_payment DESC LIMIT ?
+  `).all(...params) as ProviderRow[];
+}
+
+/**
+ * Get average "score" (avg total_medicare_payment as proxy) optionally filtered.
+ */
+export function getAverageScore(filters?: { state?: string; specialty?: string }): number {
+  const db = getDb();
+  if (!db) return 0;
+  const conditions: string[] = [];
+  const params: any[] = [];
+  if (filters?.state) { conditions.push("state = ?"); params.push(filters.state); }
+  if (filters?.specialty) { conditions.push("specialty = ?"); params.push(filters.specialty); }
+  const where = conditions.length ? `WHERE ${conditions.join(" AND ")}` : "";
+  const row = db.prepare(`
+    SELECT AVG(total_medicare_payment) as avg_score FROM providers ${where}
+  `).get(...params) as any;
+  return Math.round(row?.avg_score ?? 0);
+}
+
+/**
+ * Get distribution of providers across payment buckets for histogram display.
+ */
+export function getScoreDistribution(
+  filters?: { state?: string; specialty?: string }
+): { bucket: number; count: number }[] {
+  const db = getDb();
+  if (!db) return [];
+  const conditions: string[] = [];
+  const params: any[] = [];
+  if (filters?.state) { conditions.push("state = ?"); params.push(filters.state); }
+  if (filters?.specialty) { conditions.push("specialty = ?"); params.push(filters.specialty); }
+  const where = conditions.length ? `WHERE ${conditions.join(" AND ")}` : "";
+  // Create 10 buckets based on payment percentiles
+  const rows = db.prepare(`
+    SELECT
+      CAST((total_medicare_payment / (
+        CASE WHEN (SELECT MAX(total_medicare_payment) FROM providers) > 0
+        THEN (SELECT MAX(total_medicare_payment) FROM providers) / 10.0
+        ELSE 1 END
+      )) AS INTEGER) * 10 as bucket,
+      COUNT(*) as count
+    FROM providers ${where}
+    GROUP BY bucket ORDER BY bucket
+  `).all(...params) as any[];
+  return rows.map((r: any) => ({ bucket: Math.min(r.bucket, 90), count: r.count }));
+}
+
+/**
+ * Get all states ranked by average payment (score proxy).
+ */
+export function getStateScoreRankings(): { state: string; avgScore: number; providerCount: number }[] {
+  const db = getDb();
+  if (!db) return [];
+  return db.prepare(`
+    SELECT state, AVG(total_medicare_payment) as avgScore, COUNT(*) as providerCount
+    FROM providers WHERE state != '' GROUP BY state ORDER BY avgScore DESC
+  `).all() as any[];
+}
+
+/**
+ * Get all specialties ranked by average payment (score proxy).
+ */
+export function getSpecialtyScoreRankings(): { specialty: string; avgScore: number; providerCount: number }[] {
+  const db = getDb();
+  if (!db) return [];
+  return db.prepare(`
+    SELECT specialty, AVG(total_medicare_payment) as avgScore, COUNT(*) as providerCount
+    FROM providers WHERE specialty != '' GROUP BY specialty HAVING providerCount >= 10 ORDER BY avgScore DESC
+  `).all() as any[];
 }
