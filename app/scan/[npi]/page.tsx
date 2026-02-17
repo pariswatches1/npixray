@@ -30,14 +30,17 @@ import { CodingTab } from "@/components/report/coding-tab";
 import { ActionPlanTab } from "@/components/report/action-plan-tab";
 import { EmailCaptureModal, EmailCaptureInline } from "@/components/report/email-capture";
 import { ShareResults } from "@/components/report/share-results";
+import { CompetitionTab } from "@/components/report/competition-tab";
+import { Users } from "lucide-react";
 
-type Tab = "overview" | "programs" | "coding" | "action-plan";
+type Tab = "overview" | "programs" | "coding" | "action-plan" | "competition";
 
 const TABS: { id: Tab; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
   { id: "overview", label: "Overview", icon: LayoutDashboard },
   { id: "programs", label: "Programs", icon: Layers },
   { id: "coding", label: "Coding", icon: BarChart3 },
   { id: "action-plan", label: "Action Plan", icon: ClipboardList },
+  { id: "competition", label: "Competition", icon: Users },
 ];
 
 // ─── Skeleton Loading ───
@@ -344,6 +347,7 @@ export default function ScanResultPage() {
         {activeTab === "programs" && <ProgramsTab data={data} />}
         {activeTab === "coding" && <CodingTab data={data} />}
         {activeTab === "action-plan" && <ActionPlanTab data={data} />}
+        {activeTab === "competition" && <CompetitionTab npi={data.provider.npi} />}
       </div>
 
       {/* Share Results */}
