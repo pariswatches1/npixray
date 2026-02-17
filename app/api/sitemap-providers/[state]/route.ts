@@ -3,17 +3,14 @@ import { getProvidersByState, slugToStateAbbr } from "@/lib/db-queries";
 
 /**
  * Per-state provider sitemap.
- * /sitemap-providers-ca.xml → all providers in California
+ * /api/sitemap-providers/ca → all providers in California
  * Each sitemap limited to 50,000 URLs per Google spec.
  */
 export async function GET(
   request: NextRequest,
-  // eslint-disable-next-line
-  context: any
+  { params }: { params: Promise<{ state: string }> }
 ) {
-  // Extract state from the URL path or params
-  const resolvedParams = context?.params ? await context.params : {};
-  const stateSlug = resolvedParams.state || "";
+  const { state: stateSlug } = await params;
 
   if (!stateSlug) {
     return new NextResponse("State parameter required", { status: 400 });
@@ -21,7 +18,7 @@ export async function GET(
 
   const stateAbbr = slugToStateAbbr(stateSlug) || stateSlug.toUpperCase();
 
-  const providers = getProvidersByState(stateAbbr);
+  const providers = await getProvidersByState(stateAbbr);
 
   if (!providers.length) {
     return new NextResponse("Not found", { status: 404 });

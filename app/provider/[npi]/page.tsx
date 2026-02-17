@@ -41,7 +41,7 @@ export async function generateMetadata({
   params: Promise<{ npi: string }>;
 }): Promise<Metadata> {
   const { npi } = await params;
-  const provider = getProvider(npi);
+  const provider = await getProvider(npi);
   if (!provider) return { title: "Provider Not Found" };
 
   const fullName = `Dr. ${provider.first_name} ${provider.last_name}`;
@@ -66,11 +66,11 @@ export default async function ProviderProfilePage({
   params: Promise<{ npi: string }>;
 }) {
   const { npi } = await params;
-  const provider = getProvider(npi);
+  const provider = await getProvider(npi);
   if (!provider) notFound();
 
-  const codes = getProviderCodes(npi, 10);
-  const relatedProviders = getRelatedProviders(
+  const codes = await getProviderCodes(npi, 10);
+  const relatedProviders = await getRelatedProviders(
     provider.specialty,
     provider.city,
     provider.state,

@@ -13,8 +13,8 @@ export async function GET() {
   const baseUrl = "https://npixray.com";
   const urls: string[] = [];
 
-  const states = getDistinctStates();
-  const specialties = getDistinctSpecialties();
+  const states = await getDistinctStates();
+  const specialties = await getDistinctSpecialties();
 
   for (const stateAbbr of states) {
     const stateSlug = stateToSlug(stateAbbr);
@@ -25,7 +25,7 @@ export async function GET() {
     );
 
     // City pages
-    const cities = getDistinctCities(stateAbbr, 5);
+    const cities = await getDistinctCities(stateAbbr, 5);
     for (const city of cities) {
       const cSlug = cityToSlug(city);
       urls.push(

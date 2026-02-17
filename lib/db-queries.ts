@@ -1,29 +1,13 @@
 /**
  * Centralized database query layer for all SEO pages.
- * Provides fast, cached queries against the CMS SQLite database.
+ * Uses Neon Postgres (@neondatabase/serverless) for serverless-compatible queries.
  */
 
-import { existsSync } from "fs";
-import { join } from "path";
+import { neon } from "@neondatabase/serverless";
 
-const DB_PATH = join(process.cwd(), "data", "cms.db");
-
-// eslint-disable-next-line
-let _db: any = null;
-
-function getDb(): any {
-  if (_db) return _db;
-  if (!existsSync(DB_PATH)) return null;
-  try {
-    // eslint-disable-next-line
-    const Database = require("better-sqlite3");
-    _db = new Database(DB_PATH, { readonly: true });
-    _db.pragma("journal_mode = WAL");
-    _db.pragma("cache_size = -32000");
-    return _db;
-  } catch {
-    return null;
-  }
+function getSql() {
+  if (!process.env.DATABASE_URL) return null;
+  return neon(process.env.DATABASE_URL);
 }
 
 // ── State helpers ────────────────────────────────────────
@@ -127,24 +111,31 @@ export interface BenchmarkRow {
 }
 
 // Provider lookups
-export function getProvider(npi: string): ProviderRow | null {
-  const db = getDb();
-  if (!db) return null;
-  return db.prepare("SELECT * FROM providers WHERE npi = ?").get(npi) as ProviderRow | undefined ?? null;
+export async function getProvider(npi: string): Promise<ProviderRow | null> {
+  const sql = getSql();
+  if (!sql) return null;
+  const rows = await sql.query("SELECT * FROM providers WHERE npi = $1", [npi]);
+  return (rows[0] as ProviderRow) ?? null;
 }
 
-export function getProviderCodes(npi: string, limit = 10): CodeRow[] {
-  const db = getDb();
-  if (!db) return [];
-  return db.prepare("SELECT * FROM provider_codes WHERE npi = ? ORDER BY payment DESC LIMIT ?").all(npi, limit) as CodeRow[];
+export async function getProviderCodes(npi: string, limit = 10): Promise<CodeRow[]> {
+  const sql = getSql();
+  if (!sql) return [];
+  const rows = await sql.query(
+    "SELECT * FROM provider_codes WHERE npi = $1 ORDER BY payment DESC LIMIT $2",
+    [npi, limit]
+  );
+  return rows as CodeRow[];
 }
 
-export function getRelatedProviders(specialty: string, city: string, state: string, excludeNpi: string, limit = 5): ProviderRow[] {
-  const db = getDb();
-  if (!db) return [];
-  return db.prepare(
-    "SELECT * FROM providers WHERE specialty = ? AND city = ? AND state = ? AND npi != ? ORDER BY total_medicare_payment DESC LIMIT ?"
-  ).all(specialty, city, state, excludeNpi, limit) as ProviderRow[];
+export async function getRelatedProviders(specialty: string, city: string, state: string, excludeNpi: string, limit = 5): Promise<ProviderRow[]> {
+  const sql = getSql();
+  if (!sql) return [];
+  const rows = await sql.query(
+    "SELECT * FROM providers WHERE specialty = $1 AND city = $2 AND state = $3 AND npi != $4 ORDER BY total_medicare_payment DESC LIMIT $5",
+    [specialty, city, state, excludeNpi, limit]
+  );
+  return rows as ProviderRow[];
 }
 
 // ── State queries ────────────────────────────────────────
@@ -157,134 +148,154 @@ export interface StateStats {
   avgPayment: number;
 }
 
-export function getAllStates(): StateStats[] {
-  const db = getDb();
-  if (!db) return [];
-  return db.prepare(`
-    SELECT state, COUNT(*) as totalProviders, SUM(total_medicare_payment) as totalPayment,
-           SUM(total_services) as totalServices, AVG(total_medicare_payment) as avgPayment
-    FROM providers WHERE state != '' GROUP BY state ORDER BY totalProviders DESC
-  `).all() as StateStats[];
+export async function getAllStates(): Promise<StateStats[]> {
+  const sql = getSql();
+  if (!sql) return [];
+  const rows = await sql.query(`
+    SELECT state, COUNT(*) AS "totalProviders", SUM(total_medicare_payment) AS "totalPayment",
+           SUM(total_services) AS "totalServices", AVG(total_medicare_payment) AS "avgPayment"
+    FROM providers WHERE state != '' GROUP BY state ORDER BY "totalProviders" DESC
+  `);
+  return rows as StateStats[];
 }
 
-export function getStateStats(stateAbbr: string): StateStats | null {
-  const db = getDb();
-  if (!db) return null;
-  return db.prepare(`
-    SELECT state, COUNT(*) as totalProviders, SUM(total_medicare_payment) as totalPayment,
-           SUM(total_services) as totalServices, AVG(total_medicare_payment) as avgPayment
-    FROM providers WHERE state = ?
-  `).get(stateAbbr) as StateStats | undefined ?? null;
+export async function getStateStats(stateAbbr: string): Promise<StateStats | null> {
+  const sql = getSql();
+  if (!sql) return null;
+  const rows = await sql.query(`
+    SELECT state, COUNT(*) AS "totalProviders", SUM(total_medicare_payment) AS "totalPayment",
+           SUM(total_services) AS "totalServices", AVG(total_medicare_payment) AS "avgPayment"
+    FROM providers WHERE state = $1
+  `, [stateAbbr]);
+  return (rows[0] as StateStats) ?? null;
 }
 
-export function getStateSpecialties(stateAbbr: string, limit = 20): { specialty: string; count: number; avgPayment: number }[] {
-  const db = getDb();
-  if (!db) return [];
-  return db.prepare(`
-    SELECT specialty, COUNT(*) as count, AVG(total_medicare_payment) as avgPayment
-    FROM providers WHERE state = ? AND specialty != '' GROUP BY specialty ORDER BY count DESC LIMIT ?
-  `).all(stateAbbr, limit) as any[];
+export async function getStateSpecialties(stateAbbr: string, limit = 20): Promise<{ specialty: string; count: number; avgPayment: number }[]> {
+  const sql = getSql();
+  if (!sql) return [];
+  const rows = await sql.query(`
+    SELECT specialty, COUNT(*) AS "count", AVG(total_medicare_payment) AS "avgPayment"
+    FROM providers WHERE state = $1 AND specialty != '' GROUP BY specialty ORDER BY "count" DESC LIMIT $2
+  `, [stateAbbr, limit]);
+  return rows as { specialty: string; count: number; avgPayment: number }[];
 }
 
-export function getStateCities(stateAbbr: string, limit = 30): { city: string; count: number; avgPayment: number }[] {
-  const db = getDb();
-  if (!db) return [];
-  return db.prepare(`
-    SELECT city, COUNT(*) as count, AVG(total_medicare_payment) as avgPayment
-    FROM providers WHERE state = ? AND city != '' GROUP BY city HAVING count >= 5 ORDER BY count DESC LIMIT ?
-  `).all(stateAbbr, limit) as any[];
+export async function getStateCities(stateAbbr: string, limit = 30): Promise<{ city: string; count: number; avgPayment: number }[]> {
+  const sql = getSql();
+  if (!sql) return [];
+  const rows = await sql.query(`
+    SELECT city, COUNT(*) AS "count", AVG(total_medicare_payment) AS "avgPayment"
+    FROM providers WHERE state = $1 AND city != '' GROUP BY city HAVING COUNT(*) >= 5 ORDER BY "count" DESC LIMIT $2
+  `, [stateAbbr, limit]);
+  return rows as { city: string; count: number; avgPayment: number }[];
 }
 
-export function getStateTopProviders(stateAbbr: string, limit = 50): ProviderRow[] {
-  const db = getDb();
-  if (!db) return [];
-  return db.prepare(
-    "SELECT * FROM providers WHERE state = ? ORDER BY total_medicare_payment DESC LIMIT ?"
-  ).all(stateAbbr, limit) as ProviderRow[];
+export async function getStateTopProviders(stateAbbr: string, limit = 50): Promise<ProviderRow[]> {
+  const sql = getSql();
+  if (!sql) return [];
+  const rows = await sql.query(
+    "SELECT * FROM providers WHERE state = $1 ORDER BY total_medicare_payment DESC LIMIT $2",
+    [stateAbbr, limit]
+  );
+  return rows as ProviderRow[];
 }
 
 // ── City queries ─────────────────────────────────────────
 
-export function getCityStats(stateAbbr: string, city: string): { count: number; avgPayment: number; totalPayment: number } | null {
-  const db = getDb();
-  if (!db) return null;
-  return db.prepare(`
-    SELECT COUNT(*) as count, AVG(total_medicare_payment) as avgPayment, SUM(total_medicare_payment) as totalPayment
-    FROM providers WHERE state = ? AND LOWER(city) = LOWER(?)
-  `).get(stateAbbr, city) as any ?? null;
+export async function getCityStats(stateAbbr: string, city: string): Promise<{ count: number; avgPayment: number; totalPayment: number } | null> {
+  const sql = getSql();
+  if (!sql) return null;
+  const rows = await sql.query(`
+    SELECT COUNT(*) AS "count", AVG(total_medicare_payment) AS "avgPayment", SUM(total_medicare_payment) AS "totalPayment"
+    FROM providers WHERE state = $1 AND city ILIKE $2
+  `, [stateAbbr, city]);
+  return (rows[0] as { count: number; avgPayment: number; totalPayment: number }) ?? null;
 }
 
-export function getCityProviders(stateAbbr: string, city: string, limit = 100): ProviderRow[] {
-  const db = getDb();
-  if (!db) return [];
-  return db.prepare(
-    "SELECT * FROM providers WHERE state = ? AND LOWER(city) = LOWER(?) ORDER BY total_medicare_payment DESC LIMIT ?"
-  ).all(stateAbbr, city, limit) as ProviderRow[];
+export async function getCityProviders(stateAbbr: string, city: string, limit = 100): Promise<ProviderRow[]> {
+  const sql = getSql();
+  if (!sql) return [];
+  const rows = await sql.query(
+    "SELECT * FROM providers WHERE state = $1 AND city ILIKE $2 ORDER BY total_medicare_payment DESC LIMIT $3",
+    [stateAbbr, city, limit]
+  );
+  return rows as ProviderRow[];
 }
 
-export function getCitySpecialties(stateAbbr: string, city: string): { specialty: string; count: number; avgPayment: number }[] {
-  const db = getDb();
-  if (!db) return [];
-  return db.prepare(`
-    SELECT specialty, COUNT(*) as count, AVG(total_medicare_payment) as avgPayment
-    FROM providers WHERE state = ? AND LOWER(city) = LOWER(?) AND specialty != '' GROUP BY specialty ORDER BY count DESC
-  `).all(stateAbbr, city) as any[];
+export async function getCitySpecialties(stateAbbr: string, city: string): Promise<{ specialty: string; count: number; avgPayment: number }[]> {
+  const sql = getSql();
+  if (!sql) return [];
+  const rows = await sql.query(`
+    SELECT specialty, COUNT(*) AS "count", AVG(total_medicare_payment) AS "avgPayment"
+    FROM providers WHERE state = $1 AND city ILIKE $2 AND specialty != '' GROUP BY specialty ORDER BY "count" DESC
+  `, [stateAbbr, city]);
+  return rows as { specialty: string; count: number; avgPayment: number }[];
 }
 
-export function getCityNameFromDb(stateAbbr: string, slug: string): string | null {
-  const db = getDb();
-  if (!db) return null;
-  const row = db.prepare(
-    "SELECT city FROM providers WHERE state = ? AND LOWER(REPLACE(REPLACE(city, ' ', '-'), '.', '')) = LOWER(?) LIMIT 1"
-  ).get(stateAbbr, slug) as any;
-  return row?.city ?? null;
+export async function getCityNameFromDb(stateAbbr: string, slug: string): Promise<string | null> {
+  const sql = getSql();
+  if (!sql) return null;
+  const rows = await sql.query(
+    "SELECT city FROM providers WHERE state = $1 AND LOWER(REPLACE(REPLACE(city, ' ', '-'), '.', '')) = LOWER($2) LIMIT 1",
+    [stateAbbr, slug]
+  );
+  return (rows[0] as { city: string })?.city ?? null;
 }
 
 // ── Specialty queries ────────────────────────────────────
 
-export function getAllBenchmarks(): BenchmarkRow[] {
-  const db = getDb();
-  if (!db) return [];
-  return db.prepare("SELECT * FROM benchmarks ORDER BY provider_count DESC").all() as BenchmarkRow[];
+export async function getAllBenchmarks(): Promise<BenchmarkRow[]> {
+  const sql = getSql();
+  if (!sql) return [];
+  const rows = await sql.query("SELECT * FROM benchmarks ORDER BY provider_count DESC");
+  return rows as BenchmarkRow[];
 }
 
-export function getBenchmarkBySpecialty(specialty: string): BenchmarkRow | null {
-  const db = getDb();
-  if (!db) return null;
-  return db.prepare("SELECT * FROM benchmarks WHERE specialty = ?").get(specialty) as BenchmarkRow | undefined ?? null;
+export async function getBenchmarkBySpecialty(specialty: string): Promise<BenchmarkRow | null> {
+  const sql = getSql();
+  if (!sql) return null;
+  const rows = await sql.query("SELECT * FROM benchmarks WHERE specialty = $1", [specialty]);
+  return (rows[0] as BenchmarkRow) ?? null;
 }
 
-export function getSpecialtyProviders(specialty: string, limit = 50): ProviderRow[] {
-  const db = getDb();
-  if (!db) return [];
-  return db.prepare(
-    "SELECT * FROM providers WHERE specialty = ? ORDER BY total_medicare_payment DESC LIMIT ?"
-  ).all(specialty, limit) as ProviderRow[];
+export async function getSpecialtyProviders(specialty: string, limit = 50): Promise<ProviderRow[]> {
+  const sql = getSql();
+  if (!sql) return [];
+  const rows = await sql.query(
+    "SELECT * FROM providers WHERE specialty = $1 ORDER BY total_medicare_payment DESC LIMIT $2",
+    [specialty, limit]
+  );
+  return rows as ProviderRow[];
 }
 
-export function getSpecialtyByState(specialty: string, stateAbbr: string): { count: number; avgPayment: number; totalPayment: number } | null {
-  const db = getDb();
-  if (!db) return null;
-  return db.prepare(`
-    SELECT COUNT(*) as count, AVG(total_medicare_payment) as avgPayment, SUM(total_medicare_payment) as totalPayment
-    FROM providers WHERE specialty = ? AND state = ?
-  `).get(specialty, stateAbbr) as any ?? null;
+export async function getSpecialtyByState(specialty: string, stateAbbr: string): Promise<{ count: number; avgPayment: number; totalPayment: number } | null> {
+  const sql = getSql();
+  if (!sql) return null;
+  const rows = await sql.query(`
+    SELECT COUNT(*) AS "count", AVG(total_medicare_payment) AS "avgPayment", SUM(total_medicare_payment) AS "totalPayment"
+    FROM providers WHERE specialty = $1 AND state = $2
+  `, [specialty, stateAbbr]);
+  return (rows[0] as { count: number; avgPayment: number; totalPayment: number }) ?? null;
 }
 
-export function getSpecialtyStateProviders(specialty: string, stateAbbr: string, limit = 50): ProviderRow[] {
-  const db = getDb();
-  if (!db) return [];
-  return db.prepare(
-    "SELECT * FROM providers WHERE specialty = ? AND state = ? ORDER BY total_medicare_payment DESC LIMIT ?"
-  ).all(specialty, stateAbbr, limit) as ProviderRow[];
+export async function getSpecialtyStateProviders(specialty: string, stateAbbr: string, limit = 50): Promise<ProviderRow[]> {
+  const sql = getSql();
+  if (!sql) return [];
+  const rows = await sql.query(
+    "SELECT * FROM providers WHERE specialty = $1 AND state = $2 ORDER BY total_medicare_payment DESC LIMIT $3",
+    [specialty, stateAbbr, limit]
+  );
+  return rows as ProviderRow[];
 }
 
-export function getCitySpecialtyProviders(stateAbbr: string, city: string, specialty: string, limit = 50): ProviderRow[] {
-  const db = getDb();
-  if (!db) return [];
-  return db.prepare(
-    "SELECT * FROM providers WHERE state = ? AND LOWER(city) = LOWER(?) AND specialty = ? ORDER BY total_medicare_payment DESC LIMIT ?"
-  ).all(stateAbbr, city, specialty, limit) as ProviderRow[];
+export async function getCitySpecialtyProviders(stateAbbr: string, city: string, specialty: string, limit = 50): Promise<ProviderRow[]> {
+  const sql = getSql();
+  if (!sql) return [];
+  const rows = await sql.query(
+    "SELECT * FROM providers WHERE state = $1 AND city ILIKE $2 AND specialty = $3 ORDER BY total_medicare_payment DESC LIMIT $4",
+    [stateAbbr, city, specialty, limit]
+  );
+  return rows as ProviderRow[];
 }
 
 // ── Code queries ─────────────────────────────────────────
@@ -298,85 +309,104 @@ export interface CodeStats {
   avgServicesPerProvider: number;
 }
 
-export function getTopCodes(limit = 200): CodeStats[] {
-  const db = getDb();
-  if (!db) return [];
-  return db.prepare(`
-    SELECT hcpcs_code, COUNT(DISTINCT npi) as totalProviders, SUM(services) as totalServices,
-           SUM(payment) as totalPayment, AVG(payment / NULLIF(services, 0)) as avgPayment,
-           AVG(services) as avgServicesPerProvider
-    FROM provider_codes GROUP BY hcpcs_code ORDER BY totalServices DESC LIMIT ?
-  `).all(limit) as CodeStats[];
+export async function getTopCodes(limit = 200): Promise<CodeStats[]> {
+  const sql = getSql();
+  if (!sql) return [];
+  const rows = await sql.query(`
+    SELECT hcpcs_code, COUNT(DISTINCT npi) AS "totalProviders", SUM(services) AS "totalServices",
+           SUM(payment) AS "totalPayment", AVG(payment / NULLIF(services, 0)) AS "avgPayment",
+           AVG(services) AS "avgServicesPerProvider"
+    FROM provider_codes GROUP BY hcpcs_code ORDER BY "totalServices" DESC LIMIT $1
+  `, [limit]);
+  return rows as CodeStats[];
 }
 
-export function getCodeStats(code: string): CodeStats | null {
-  const db = getDb();
-  if (!db) return null;
-  return db.prepare(`
-    SELECT hcpcs_code, COUNT(DISTINCT npi) as totalProviders, SUM(services) as totalServices,
-           SUM(payment) as totalPayment, AVG(payment / NULLIF(services, 0)) as avgPayment,
-           AVG(services) as avgServicesPerProvider
-    FROM provider_codes WHERE hcpcs_code = ?
-  `).get(code) as CodeStats | undefined ?? null;
+export async function getCodeStats(code: string): Promise<CodeStats | null> {
+  const sql = getSql();
+  if (!sql) return null;
+  const rows = await sql.query(`
+    SELECT hcpcs_code, COUNT(DISTINCT npi) AS "totalProviders", SUM(services) AS "totalServices",
+           SUM(payment) AS "totalPayment", AVG(payment / NULLIF(services, 0)) AS "avgPayment",
+           AVG(services) AS "avgServicesPerProvider"
+    FROM provider_codes WHERE hcpcs_code = $1
+  `, [code]);
+  return (rows[0] as CodeStats) ?? null;
 }
 
-export function getCodeTopSpecialties(code: string, limit = 10): { specialty: string; providers: number; totalServices: number }[] {
-  const db = getDb();
-  if (!db) return [];
-  return db.prepare(`
-    SELECT p.specialty, COUNT(DISTINCT pc.npi) as providers, SUM(pc.services) as totalServices
+export async function getCodeTopSpecialties(code: string, limit = 10): Promise<{ specialty: string; providers: number; totalServices: number }[]> {
+  const sql = getSql();
+  if (!sql) return [];
+  const rows = await sql.query(`
+    SELECT p.specialty, COUNT(DISTINCT pc.npi) AS "providers", SUM(pc.services) AS "totalServices"
     FROM provider_codes pc JOIN providers p ON pc.npi = p.npi
-    WHERE pc.hcpcs_code = ? AND p.specialty != '' GROUP BY p.specialty ORDER BY totalServices DESC LIMIT ?
-  `).all(code, limit) as any[];
+    WHERE pc.hcpcs_code = $1 AND p.specialty != '' GROUP BY p.specialty ORDER BY "totalServices" DESC LIMIT $2
+  `, [code, limit]);
+  return rows as { specialty: string; providers: number; totalServices: number }[];
 }
 
 // ── Aggregate queries ────────────────────────────────────
 
-export function getNationalStats(): { totalProviders: number; totalPayment: number; totalServices: number; totalCodes: number } | null {
-  const db = getDb();
-  if (!db) return null;
-  const providers = db.prepare("SELECT COUNT(*) as c, SUM(total_medicare_payment) as p, SUM(total_services) as s FROM providers").get() as any;
-  const codes = db.prepare("SELECT COUNT(*) as c FROM provider_codes").get() as any;
+export async function getNationalStats(): Promise<{ totalProviders: number; totalPayment: number; totalServices: number; totalCodes: number } | null> {
+  const sql = getSql();
+  if (!sql) return null;
+  const providerRows = await sql.query(
+    'SELECT COUNT(*) AS "totalProviders", SUM(total_medicare_payment) AS "totalPayment", SUM(total_services) AS "totalServices" FROM providers'
+  );
+  const codeRows = await sql.query(
+    'SELECT COUNT(*) AS "totalCodes" FROM provider_codes'
+  );
+  const p = providerRows[0] as { totalProviders: number; totalPayment: number; totalServices: number } | undefined;
+  const c = codeRows[0] as { totalCodes: number } | undefined;
+  if (!p || !c) return null;
   return {
-    totalProviders: providers.c,
-    totalPayment: providers.p,
-    totalServices: providers.s,
-    totalCodes: codes.c,
+    totalProviders: p.totalProviders,
+    totalPayment: p.totalPayment,
+    totalServices: p.totalServices,
+    totalCodes: c.totalCodes,
   };
 }
 
-export function getTopProvidersByPayment(limit = 100): ProviderRow[] {
-  const db = getDb();
-  if (!db) return [];
-  return db.prepare("SELECT * FROM providers ORDER BY total_medicare_payment DESC LIMIT ?").all(limit) as ProviderRow[];
+export async function getTopProvidersByPayment(limit = 100): Promise<ProviderRow[]> {
+  const sql = getSql();
+  if (!sql) return [];
+  const rows = await sql.query(
+    "SELECT * FROM providers ORDER BY total_medicare_payment DESC LIMIT $1",
+    [limit]
+  );
+  return rows as ProviderRow[];
 }
 
 // ── Distinct value queries for sitemap/static generation ─
 
-export function getDistinctStates(): string[] {
-  const db = getDb();
-  if (!db) return [];
-  return (db.prepare("SELECT DISTINCT state FROM providers WHERE state != '' ORDER BY state").all() as any[]).map(r => r.state);
+export async function getDistinctStates(): Promise<string[]> {
+  const sql = getSql();
+  if (!sql) return [];
+  const rows = await sql.query("SELECT DISTINCT state FROM providers WHERE state != '' ORDER BY state");
+  return rows.map((r: any) => r.state as string);
 }
 
-export function getDistinctSpecialties(): string[] {
-  const db = getDb();
-  if (!db) return [];
-  return (db.prepare("SELECT DISTINCT specialty FROM benchmarks ORDER BY provider_count DESC").all() as any[]).map(r => r.specialty);
+export async function getDistinctSpecialties(): Promise<string[]> {
+  const sql = getSql();
+  if (!sql) return [];
+  const rows = await sql.query("SELECT DISTINCT specialty FROM benchmarks ORDER BY provider_count DESC");
+  return rows.map((r: any) => r.specialty as string);
 }
 
-export function getDistinctCities(stateAbbr: string, minProviders = 5): string[] {
-  const db = getDb();
-  if (!db) return [];
-  return (db.prepare(
-    "SELECT city FROM providers WHERE state = ? AND city != '' GROUP BY city HAVING COUNT(*) >= ? ORDER BY COUNT(*) DESC"
-  ).all(stateAbbr, minProviders) as any[]).map(r => r.city);
+export async function getDistinctCities(stateAbbr: string, minProviders = 5): Promise<string[]> {
+  const sql = getSql();
+  if (!sql) return [];
+  const rows = await sql.query(
+    "SELECT city FROM providers WHERE state = $1 AND city != '' GROUP BY city HAVING COUNT(*) >= $2 ORDER BY COUNT(*) DESC",
+    [stateAbbr, minProviders]
+  );
+  return rows.map((r: any) => r.city as string);
 }
 
-export function getProvidersByState(stateAbbr: string): { npi: string }[] {
-  const db = getDb();
-  if (!db) return [];
-  return db.prepare("SELECT npi FROM providers WHERE state = ?").all(stateAbbr) as any[];
+export async function getProvidersByState(stateAbbr: string): Promise<{ npi: string }[]> {
+  const sql = getSql();
+  if (!sql) return [];
+  const rows = await sql.query("SELECT npi FROM providers WHERE state = $1", [stateAbbr]);
+  return rows as { npi: string }[];
 }
 
 // ── Formatting helpers ───────────────────────────────────

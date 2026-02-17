@@ -5,7 +5,8 @@ export function Footer() {
   return (
     <footer className="border-t border-dark-50/50 bg-dark-300">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-2 md:grid-cols-6 gap-8">
+        {/* Row 1: Brand + main sections */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-4">
@@ -33,6 +34,11 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/tools/roi-calculator" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
+                  ROI Calculator
+                </Link>
+              </li>
+              <li>
                 <Link href="/tools/npi-lookup" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
                   NPI Lookup
                 </Link>
@@ -43,13 +49,8 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/tools/ccm-calculator" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
-                  CCM Calculator
-                </Link>
-              </li>
-              <li>
                 <Link href="/tools" className="text-sm text-gold hover:text-gold-300 transition-colors font-medium">
-                  All 10 Tools →
+                  All Tools →
                 </Link>
               </li>
             </ul>
@@ -84,6 +85,77 @@ export function Footer() {
               <li>
                 <Link href="/api-docs" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
                   Public API
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Row 2: Compare, Solutions, States, Specialties */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-8 pt-8 border-t border-dark-50/30">
+          {/* Compare */}
+          <div>
+            <h3 className="text-sm font-semibold text-gold mb-4 uppercase tracking-wider">
+              Compare
+            </h3>
+            <ul className="space-y-2.5">
+              <li>
+                <Link href="/vs/chartspan" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
+                  vs ChartSpan
+                </Link>
+              </li>
+              <li>
+                <Link href="/vs/signallamp" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
+                  vs SignalLamp
+                </Link>
+              </li>
+              <li>
+                <Link href="/alternatives" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
+                  Alternatives
+                </Link>
+              </li>
+              <li>
+                <Link href="/switch" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
+                  Switch to NPIxray
+                </Link>
+              </li>
+              <li>
+                <Link href="/vs" className="text-sm text-gold hover:text-gold-300 transition-colors font-medium">
+                  All Comparisons →
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Solutions */}
+          <div>
+            <h3 className="text-sm font-semibold text-gold mb-4 uppercase tracking-wider">
+              Solutions
+            </h3>
+            <ul className="space-y-2.5">
+              <li>
+                <Link href="/solutions/solo-practice" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
+                  Solo Practices
+                </Link>
+              </li>
+              <li>
+                <Link href="/solutions/group-practice" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
+                  Group Practices
+                </Link>
+              </li>
+              <li>
+                <Link href="/solutions/billing-companies" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
+                  Billing Companies
+                </Link>
+              </li>
+              <li>
+                <Link href="/solutions/practice-managers" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
+                  Practice Managers
+                </Link>
+              </li>
+              <li>
+                <Link href="/solutions" className="text-sm text-gold hover:text-gold-300 transition-colors font-medium">
+                  All Solutions →
                 </Link>
               </li>
             </ul>

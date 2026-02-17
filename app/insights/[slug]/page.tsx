@@ -183,10 +183,10 @@ function RelatedLinks({ links }: { links: { href: string; label: string }[] }) {
 
 // ── Content renderers ─────────────────────────────────────
 
-function MedicareBillingOverview() {
-  const stats = getNationalStats();
-  const benchmarks = getAllBenchmarks();
-  const codes = getTopCodes(10);
+async function MedicareBillingOverview() {
+  const stats = await getNationalStats();
+  const benchmarks = await getAllBenchmarks();
+  const codes = await getTopCodes(10);
 
   return (
     <>
@@ -226,8 +226,8 @@ function MedicareBillingOverview() {
   );
 }
 
-function HighestPayingSpecialties() {
-  const benchmarks = getAllBenchmarks()
+async function HighestPayingSpecialties() {
+  const benchmarks = (await getAllBenchmarks())
     .sort((a, b) => b.avg_total_payment - a.avg_total_payment);
   const maxPayment = benchmarks[0]?.avg_total_payment ?? 1;
 
@@ -263,8 +263,8 @@ function HighestPayingSpecialties() {
   );
 }
 
-function MostCommonBillingCodes() {
-  const codes = getTopCodes(25);
+async function MostCommonBillingCodes() {
+  const codes = await getTopCodes(25);
   const maxServices = codes[0]?.totalServices ?? 1;
 
   return (
@@ -298,8 +298,8 @@ function MostCommonBillingCodes() {
   );
 }
 
-function CcmAdoptionRates() {
-  const benchmarks = getAllBenchmarks()
+async function CcmAdoptionRates() {
+  const benchmarks = (await getAllBenchmarks())
     .sort((a, b) => b.ccm_adoption_rate - a.ccm_adoption_rate);
   const avgRate = benchmarks.reduce((s, b) => s + b.ccm_adoption_rate, 0) / benchmarks.length;
 
@@ -333,8 +333,8 @@ function CcmAdoptionRates() {
   );
 }
 
-function RpmAdoptionRates() {
-  const benchmarks = getAllBenchmarks()
+async function RpmAdoptionRates() {
+  const benchmarks = (await getAllBenchmarks())
     .sort((a, b) => b.rpm_adoption_rate - a.rpm_adoption_rate);
   const avgRate = benchmarks.reduce((s, b) => s + b.rpm_adoption_rate, 0) / benchmarks.length;
 
@@ -367,8 +367,8 @@ function RpmAdoptionRates() {
   );
 }
 
-function AwvCompletionRates() {
-  const benchmarks = getAllBenchmarks()
+async function AwvCompletionRates() {
+  const benchmarks = (await getAllBenchmarks())
     .sort((a, b) => b.awv_adoption_rate - a.awv_adoption_rate);
   const avgRate = benchmarks.reduce((s, b) => s + b.awv_adoption_rate, 0) / benchmarks.length;
 
@@ -401,8 +401,8 @@ function AwvCompletionRates() {
   );
 }
 
-function BhiScreeningRates() {
-  const benchmarks = getAllBenchmarks()
+async function BhiScreeningRates() {
+  const benchmarks = (await getAllBenchmarks())
     .sort((a, b) => b.bhi_adoption_rate - a.bhi_adoption_rate);
   const avgRate = benchmarks.reduce((s, b) => s + b.bhi_adoption_rate, 0) / benchmarks.length;
 
@@ -435,8 +435,8 @@ function BhiScreeningRates() {
   );
 }
 
-function EmCodingPatterns() {
-  const benchmarks = getAllBenchmarks()
+async function EmCodingPatterns() {
+  const benchmarks = (await getAllBenchmarks())
     .sort((a, b) => b.pct_99214 - a.pct_99214);
 
   return (
@@ -480,8 +480,8 @@ function EmCodingPatterns() {
   );
 }
 
-function MedicareRevenueByState() {
-  const states = getAllStates()
+async function MedicareRevenueByState() {
+  const states = (await getAllStates())
     .sort((a, b) => b.totalPayment - a.totalPayment);
   const maxPayment = states[0]?.totalPayment ?? 1;
 
@@ -516,8 +516,8 @@ function MedicareRevenueByState() {
   );
 }
 
-function RevenueGapBySpecialty() {
-  const benchmarks = getAllBenchmarks();
+async function RevenueGapBySpecialty() {
+  const benchmarks = await getAllBenchmarks();
   // Estimate revenue gap from care management underadoption
   const withGap = benchmarks.map((b) => {
     const ccmGap = Math.max(0.15 - b.ccm_adoption_rate, 0) * b.avg_medicare_patients * 62;
@@ -564,8 +564,8 @@ function RevenueGapBySpecialty() {
   );
 }
 
-function TopBillingProviders() {
-  const providers = getTopProvidersByPayment(50);
+async function TopBillingProviders() {
+  const providers = await getTopProvidersByPayment(50);
 
   return (
     <>
@@ -584,8 +584,8 @@ function TopBillingProviders() {
   );
 }
 
-function RuralVsUrbanBilling() {
-  const states = getAllStates();
+async function RuralVsUrbanBilling() {
+  const states = await getAllStates();
   // Proxy: states with fewer providers tend to be more rural
   const sorted = [...states].sort((a, b) => a.totalProviders - b.totalProviders);
   const rural = sorted.slice(0, Math.floor(sorted.length / 2));
@@ -648,8 +648,8 @@ function RuralVsUrbanBilling() {
   );
 }
 
-function NewPatientVsEstablished() {
-  const codes = getTopCodes(200);
+async function NewPatientVsEstablished() {
+  const codes = await getTopCodes(200);
   // Find new patient codes (99201-99205) and established (99211-99215)
   const newPatientCodes = ["99201", "99202", "99203", "99204", "99205"];
   const estPatientCodes = ["99211", "99212", "99213", "99214", "99215"];
@@ -702,8 +702,8 @@ function NewPatientVsEstablished() {
   );
 }
 
-function ProcedureVsEvaluation() {
-  const benchmarks = getAllBenchmarks();
+async function ProcedureVsEvaluation() {
+  const benchmarks = await getAllBenchmarks();
   // Use avg_total_services vs E&M percentages as a proxy
   const sorted = [...benchmarks].sort((a, b) => {
     const aEmPct = a.pct_99213 + a.pct_99214 + a.pct_99215;
@@ -746,9 +746,9 @@ function ProcedureVsEvaluation() {
   );
 }
 
-function MedicarePaymentTrends() {
-  const codes = getTopCodes(50);
-  const benchmarks = getAllBenchmarks();
+async function MedicarePaymentTrends() {
+  const codes = await getTopCodes(50);
+  const benchmarks = await getAllBenchmarks();
 
   // Payment distribution analysis
   const highValueCodes = codes.filter((c) => c.avgPayment > 200);
@@ -808,7 +808,7 @@ function MedicarePaymentTrends() {
 
 // ── Render router ──────────────────────────────────────────
 
-function InsightContent({ slug }: { slug: string }) {
+async function InsightContent({ slug }: { slug: string }) {
   switch (slug) {
     case "medicare-billing-overview":
       return <MedicareBillingOverview />;

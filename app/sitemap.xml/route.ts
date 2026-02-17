@@ -7,13 +7,13 @@ import { getDistinctStates } from "@/lib/db-queries";
  * Each sub-sitemap handles up to 50,000 URLs per Google spec.
  */
 export async function GET() {
-  const states = getDistinctStates();
+  const states = await getDistinctStates();
   const baseUrl = "https://npixray.com";
 
   const providerSitemaps = states
     .map(
       (state) =>
-        `  <sitemap><loc>${baseUrl}/sitemap-providers-${state.toLowerCase()}.xml</loc></sitemap>`
+        `  <sitemap><loc>${baseUrl}/api/sitemap-providers/${state.toLowerCase()}</loc></sitemap>`
     )
     .join("\n");
 
@@ -26,6 +26,9 @@ export async function GET() {
   <sitemap><loc>${baseUrl}/sitemap-tools.xml</loc></sitemap>
   <sitemap><loc>${baseUrl}/sitemap-insights.xml</loc></sitemap>
   <sitemap><loc>${baseUrl}/sitemap-rankings.xml</loc></sitemap>
+  <sitemap><loc>${baseUrl}/sitemap-compare.xml</loc></sitemap>
+  <sitemap><loc>${baseUrl}/sitemap-solutions.xml</loc></sitemap>
+  <sitemap><loc>${baseUrl}/sitemap-answers.xml</loc></sitemap>
 ${providerSitemaps}
 </sitemapindex>`;
 

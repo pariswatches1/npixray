@@ -7,7 +7,7 @@ export async function GET() {
   const urls: string[] = [];
 
   // Top providers by state
-  const states = getDistinctStates();
+  const states = await getDistinctStates();
   for (const s of states) {
     urls.push(
       `  <url><loc>${baseUrl}/rankings/top-providers/${stateToSlug(s)}</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>`
@@ -15,7 +15,7 @@ export async function GET() {
   }
 
   // Comparison pages - generate combos from specialties
-  const specialties = getDistinctSpecialties();
+  const specialties = await getDistinctSpecialties();
   for (let i = 0; i < specialties.length; i++) {
     for (let j = i + 1; j < specialties.length; j++) {
       const slug = `${specialtyToSlug(specialties[i])}-vs-${specialtyToSlug(specialties[j])}`;

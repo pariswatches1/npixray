@@ -4,7 +4,7 @@ import { getTopCodes } from "@/lib/db-queries";
 /** Billing codes sitemap */
 export async function GET() {
   const baseUrl = "https://npixray.com";
-  const codes = getTopCodes(200);
+  const codes = await getTopCodes(200);
 
   const urls = codes
     .map(

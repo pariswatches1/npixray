@@ -16,8 +16,8 @@ import { ScanCTA } from "@/components/seo/scan-cta";
 
 export const dynamic = 'force-dynamic';
 
-function findSpecialtyBySlug(slug: string) {
-  const benchmarks = getAllBenchmarks();
+async function findSpecialtyBySlug(slug: string) {
+  const benchmarks = await getAllBenchmarks();
   return benchmarks.find((b) => specialtyToSlug(b.specialty) === slug) ?? null;
 }
 
@@ -27,7 +27,7 @@ export async function generateMetadata({
   params: Promise<{ specialty: string }>;
 }): Promise<Metadata> {
   const { specialty: slug } = await params;
-  const benchmark = findSpecialtyBySlug(slug);
+  const benchmark = await findSpecialtyBySlug(slug);
   if (!benchmark) return { title: "Specialty Not Found | NPIxray" };
 
   return {
@@ -46,10 +46,10 @@ export default async function SpecialtyPage({
   params: Promise<{ specialty: string }>;
 }) {
   const { specialty: slug } = await params;
-  const benchmark = findSpecialtyBySlug(slug);
+  const benchmark = await findSpecialtyBySlug(slug);
   if (!benchmark) notFound();
 
-  const providers = getSpecialtyProviders(benchmark.specialty, 50);
+  const providers = await getSpecialtyProviders(benchmark.specialty, 50);
 
   // E&M distribution data
   const emTotal = benchmark.pct_99213 + benchmark.pct_99214 + benchmark.pct_99215;

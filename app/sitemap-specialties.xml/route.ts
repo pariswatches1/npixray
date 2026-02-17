@@ -4,7 +4,7 @@ import { getDistinctSpecialties, specialtyToSlug } from "@/lib/db-queries";
 /** Specialties sitemap */
 export async function GET() {
   const baseUrl = "https://npixray.com";
-  const specialties = getDistinctSpecialties();
+  const specialties = await getDistinctSpecialties();
 
   const urls = specialties
     .map(

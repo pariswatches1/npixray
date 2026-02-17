@@ -28,6 +28,9 @@ export async function GET() {
     { loc: "/rankings/top-cities", priority: "0.8", changefreq: "monthly" },
     { loc: "/compare", priority: "0.8", changefreq: "monthly" },
     { loc: "/api-docs", priority: "0.6", changefreq: "monthly" },
+    { loc: "/research", priority: "0.8", changefreq: "monthly" },
+    { loc: "/data-api", priority: "0.7", changefreq: "monthly" },
+    { loc: "/search", priority: "0.7", changefreq: "weekly" },
   ];
 
   const urls = pages
