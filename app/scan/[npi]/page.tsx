@@ -19,6 +19,10 @@ import {
   Sparkles,
 } from "lucide-react";
 import { ScanResult } from "@/lib/types";
+import { calculateRevenueScoreFromScan, estimatePercentile } from "@/lib/revenue-score";
+import { RevenueScoreGauge } from "@/components/score/revenue-score-gauge";
+import { ScoreBreakdown } from "@/components/score/score-breakdown";
+import { ScoreBadgeEmbed } from "@/components/score/score-badge-embed";
 import { trackEvent } from "@/lib/analytics";
 import { OverviewTab } from "@/components/report/overview-tab";
 import { ProgramsTab } from "@/components/report/programs-tab";
@@ -260,6 +264,38 @@ export default function ScanResultPage() {
           </div>
         </div>
       </div>
+
+      {/* ── Revenue Score ──────────────────────────────── */}
+      {(() => {
+        const scoreResult = calculateRevenueScoreFromScan(data);
+        const percentile = estimatePercentile(scoreResult.overall);
+        return (
+          <div className="rounded-2xl border border-dark-50/80 bg-dark-400/30 p-6 mb-8">
+            <div className="flex flex-col sm:flex-row items-center gap-6">
+              <RevenueScoreGauge
+                score={scoreResult.overall}
+                size="lg"
+                animate={true}
+                percentile={percentile}
+                specialty={data.provider.specialty}
+              />
+              <div className="flex-1 w-full space-y-4">
+                <ScoreBreakdown breakdown={scoreResult.breakdown} />
+                <button
+                  onClick={() => setActiveTab("action-plan")}
+                  className="text-xs text-gold hover:underline"
+                >
+                  How to improve your score →
+                </button>
+              </div>
+            </div>
+            {/* Badge embed */}
+            <div className="mt-6 pt-4 border-t border-dark-50/30">
+              <ScoreBadgeEmbed npi={data.provider.npi} score={scoreResult.overall} />
+            </div>
+          </div>
+        );
+      })()}
 
       {/* Tab Navigation */}
       <div className="border-b border-dark-50/50 mb-8">

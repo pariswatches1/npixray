@@ -164,7 +164,8 @@ async function main() {
       bhi_99484_payment INTEGER NOT NULL DEFAULT 0,
       awv_g0438_services INTEGER NOT NULL DEFAULT 0,
       awv_g0439_services INTEGER NOT NULL DEFAULT 0,
-      awv_payment INTEGER NOT NULL DEFAULT 0
+      awv_payment INTEGER NOT NULL DEFAULT 0,
+      revenue_score INTEGER
     )
   `);
 

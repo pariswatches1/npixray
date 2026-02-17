@@ -30,6 +30,7 @@ export async function GET() {
   <sitemap><loc>${baseUrl}/sitemap-solutions.xml</loc></sitemap>
   <sitemap><loc>${baseUrl}/sitemap-answers.xml</loc></sitemap>
   <sitemap><loc>${baseUrl}/sitemap-reports.xml</loc></sitemap>
+  <sitemap><loc>${baseUrl}/sitemap-scores.xml</loc></sitemap>
 ${providerSitemaps}
 </sitemapindex>`;
 

@@ -84,6 +84,7 @@ export interface ProviderRow {
   awv_g0438_services: number;
   awv_g0439_services: number;
   awv_payment: number;
+  revenue_score: number | null;
 }
 
 export interface CodeRow {
@@ -407,6 +408,120 @@ export async function getProvidersByState(stateAbbr: string): Promise<{ npi: str
   if (!sql) return [];
   const rows = await sql.query("SELECT npi FROM providers WHERE state = $1", [stateAbbr]);
   return rows as { npi: string }[];
+}
+
+// ── Revenue Score queries ───────────────────────────────
+
+export async function getProviderCodeCount(npi: string): Promise<number> {
+  const sql = getSql();
+  if (!sql) return 0;
+  const rows = await sql.query(
+    'SELECT COUNT(DISTINCT hcpcs_code) AS "cnt" FROM provider_codes WHERE npi = $1',
+    [npi]
+  );
+  return Number((rows[0] as any)?.cnt ?? 0);
+}
+
+export async function getScoreDistribution(
+  filter?: { state?: string; specialty?: string }
+): Promise<{ bucket: number; count: number }[]> {
+  const sql = getSql();
+  if (!sql) return [];
+  let where = "WHERE revenue_score IS NOT NULL";
+  const params: any[] = [];
+  if (filter?.state) {
+    params.push(filter.state);
+    where += ` AND state = $${params.length}`;
+  }
+  if (filter?.specialty) {
+    params.push(filter.specialty);
+    where += ` AND specialty = $${params.length}`;
+  }
+  const rows = await sql.query(
+    `SELECT (revenue_score / 10) * 10 AS "bucket", COUNT(*) AS "count"
+     FROM providers ${where}
+     GROUP BY "bucket" ORDER BY "bucket"`,
+    params
+  );
+  return rows.map((r: any) => ({ bucket: Number(r.bucket), count: Number(r.count) }));
+}
+
+export async function getAverageScore(
+  filter?: { state?: string; specialty?: string }
+): Promise<number> {
+  const sql = getSql();
+  if (!sql) return 0;
+  let where = "WHERE revenue_score IS NOT NULL";
+  const params: any[] = [];
+  if (filter?.state) {
+    params.push(filter.state);
+    where += ` AND state = $${params.length}`;
+  }
+  if (filter?.specialty) {
+    params.push(filter.specialty);
+    where += ` AND specialty = $${params.length}`;
+  }
+  const rows = await sql.query(
+    `SELECT AVG(revenue_score) AS "avg" FROM providers ${where}`,
+    params
+  );
+  return Number((rows[0] as any)?.avg ?? 0);
+}
+
+export async function getTopScoringProviders(
+  filter?: { state?: string; specialty?: string },
+  limit = 50
+): Promise<{ npi: string; specialty: string; state: string; city: string; revenue_score: number }[]> {
+  const sql = getSql();
+  if (!sql) return [];
+  let where = "WHERE revenue_score IS NOT NULL";
+  const params: any[] = [];
+  if (filter?.state) {
+    params.push(filter.state);
+    where += ` AND state = $${params.length}`;
+  }
+  if (filter?.specialty) {
+    params.push(filter.specialty);
+    where += ` AND specialty = $${params.length}`;
+  }
+  params.push(limit);
+  const rows = await sql.query(
+    `SELECT npi, specialty, state, city, revenue_score
+     FROM providers ${where}
+     ORDER BY revenue_score DESC LIMIT $${params.length}`,
+    params
+  );
+  return rows as any[];
+}
+
+export async function getStateScoreRankings(): Promise<{ state: string; avgScore: number; providerCount: number }[]> {
+  const sql = getSql();
+  if (!sql) return [];
+  const rows = await sql.query(
+    `SELECT state, AVG(revenue_score) AS "avgScore", COUNT(*) AS "providerCount"
+     FROM providers WHERE revenue_score IS NOT NULL AND state != ''
+     GROUP BY state ORDER BY "avgScore" DESC`
+  );
+  return rows.map((r: any) => ({
+    state: r.state,
+    avgScore: Number(r.avgScore),
+    providerCount: Number(r.providerCount),
+  }));
+}
+
+export async function getSpecialtyScoreRankings(): Promise<{ specialty: string; avgScore: number; providerCount: number }[]> {
+  const sql = getSql();
+  if (!sql) return [];
+  const rows = await sql.query(
+    `SELECT specialty, AVG(revenue_score) AS "avgScore", COUNT(*) AS "providerCount"
+     FROM providers WHERE revenue_score IS NOT NULL AND specialty != ''
+     GROUP BY specialty HAVING COUNT(*) >= 100 ORDER BY "avgScore" DESC`
+  );
+  return rows.map((r: any) => ({
+    specialty: r.specialty,
+    avgScore: Number(r.avgScore),
+    providerCount: Number(r.providerCount),
+  }));
 }
 
 // ── Formatting helpers ───────────────────────────────────

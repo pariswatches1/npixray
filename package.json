@@ -12,7 +12,8 @@
     "cms:build-db": "npx tsx data/scripts/build-db.ts",
     "cms:pipeline": "npm run cms:download && npm run cms:process && npm run cms:build-db",
     "cms:migrate": "npx tsx data/scripts/migrate-to-neon.ts",
-    "cms:migrate:resume": "npx tsx data/scripts/migrate-to-neon.ts --resume"
+    "cms:migrate:resume": "npx tsx data/scripts/migrate-to-neon.ts --resume",
+    "scores:calculate": "npx tsx data/scripts/calculate-scores.ts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.0.2",
