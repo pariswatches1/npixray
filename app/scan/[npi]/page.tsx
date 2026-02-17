@@ -297,6 +297,25 @@ export default function ScanResultPage() {
         );
       })()}
 
+      {/* AI Coach CTA */}
+      <Link
+        href={`/coach/${data.provider.npi}`}
+        className="group flex items-center gap-4 rounded-2xl border border-gold/20 bg-gold/5 p-5 transition-all hover:border-gold/40 hover:bg-gold/10"
+      >
+        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gold/10 border border-gold/20 flex-shrink-0 group-hover:bg-gold/20 transition-colors">
+          <Sparkles className="h-6 w-6 text-gold" />
+        </div>
+        <div className="flex-1 min-w-0">
+          <h3 className="text-sm font-bold text-white group-hover:text-gold transition-colors">
+            Ask AI Revenue Coach About Your Results
+          </h3>
+          <p className="text-xs text-[var(--text-secondary)] mt-0.5">
+            Get personalized advice based on your actual billing data — &ldquo;How do I capture that missed CCM revenue?&rdquo;
+          </p>
+        </div>
+        <ArrowLeft className="h-5 w-5 text-gold rotate-180 flex-shrink-0 group-hover:translate-x-1 transition-transform" />
+      </Link>
+
       {/* Tab Navigation */}
       <div className="border-b border-dark-50/50 mb-8">
         <nav className="flex gap-1 -mb-px overflow-x-auto" aria-label="Report tabs">

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Menu, X, Zap } from "lucide-react";
+import { Menu, X, Zap, Sparkles } from "lucide-react";
 
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -40,6 +40,13 @@ export function Header() {
               className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors"
             >
               About
+            </Link>
+            <Link
+              href="/coach"
+              className="inline-flex items-center gap-1.5 text-sm text-gold font-medium hover:text-gold-300 transition-colors"
+            >
+              <Sparkles className="h-3.5 w-3.5" />
+              AI Coach
             </Link>
             <Link
               href="/"
@@ -84,6 +91,14 @@ export function Header() {
               className="block text-sm text-[var(--text-secondary)] hover:text-gold transition-colors py-1"
             >
               About
+            </Link>
+            <Link
+              href="/coach"
+              onClick={() => setMobileOpen(false)}
+              className="flex items-center gap-1.5 text-sm text-gold font-medium py-1"
+            >
+              <Sparkles className="h-3.5 w-3.5" />
+              AI Coach
             </Link>
             <Link
               href="/"
