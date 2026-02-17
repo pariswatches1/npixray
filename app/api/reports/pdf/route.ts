@@ -173,12 +173,12 @@ function buildPrintButton(): string {
   return `<button class="print-btn no-print" onclick="window.print()">Print / Save as PDF</button>`;
 }
 
-function buildStateReport(stateAbbr: string): string | null {
-  const stats = getStateStats(stateAbbr);
+async function buildStateReport(stateAbbr: string): Promise<string | null> {
+  const stats = await getStateStats(stateAbbr);
   if (!stats || !stats.totalProviders) return null;
 
   const stateName = stateAbbrToName(stateAbbr);
-  const allStates = getAllStates();
+  const allStates = await getAllStates();
   const score = stateScore(stats, allStates);
   const grade = computeGrade(score);
 
@@ -292,8 +292,8 @@ function buildStateReport(stateAbbr: string): string | null {
   `;
 }
 
-function buildSpecialtyReport(specialtySlug: string): string | null {
-  const benchmarks = getAllBenchmarks();
+async function buildSpecialtyReport(specialtySlug: string): Promise<string | null> {
+  const benchmarks = await getAllBenchmarks();
   const benchmark = benchmarks.find((b) => specialtyToSlug(b.specialty) === specialtySlug) ?? null;
   if (!benchmark) return null;
 
@@ -456,10 +456,10 @@ function buildSpecialtyReport(specialtySlug: string): string | null {
   `;
 }
 
-function buildNationalReport(): string | null {
-  const national = getNationalStats();
-  const allStates = getAllStates();
-  const benchmarks = getAllBenchmarks();
+async function buildNationalReport(): Promise<string | null> {
+  const national = await getNationalStats();
+  const allStates = await getAllStates();
+  const benchmarks = await getAllBenchmarks();
 
   if (!national || allStates.length === 0) return null;
 
@@ -612,18 +612,18 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({ error: "Missing 'id' parameter (state abbreviation or slug)" }, { status: 400 });
       }
       const abbr = slugToStateAbbr(id) || id.toUpperCase();
-      html = buildStateReport(abbr);
+      html = await buildStateReport(abbr);
       break;
     }
     case "specialty": {
       if (!id) {
         return NextResponse.json({ error: "Missing 'id' parameter (specialty slug)" }, { status: 400 });
       }
-      html = buildSpecialtyReport(id);
+      html = await buildSpecialtyReport(id);
       break;
     }
     case "national": {
-      html = buildNationalReport();
+      html = await buildNationalReport();
       break;
     }
     default:

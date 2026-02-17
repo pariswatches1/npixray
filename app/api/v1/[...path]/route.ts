@@ -179,7 +179,7 @@ function searchProviders(name: string, state?: string, specialty?: string, limit
 
 // ── Score distribution helper ──────────────────────────────
 
-function getScoreDistribution(state?: string, specialty?: string): { bucket: string; count: number }[] {
+async function getScoreDistribution(state?: string, specialty?: string): Promise<{ bucket: string; count: number }[]> {
   try {
     const { existsSync: ex } = require("fs");
     const { join: j } = require("path");
@@ -199,7 +199,7 @@ function getScoreDistribution(state?: string, specialty?: string): { bucket: str
     ).all(...params) as ProviderRow[];
     db.close();
 
-    const benchmarks = getAllBenchmarks();
+    const benchmarks = await getAllBenchmarks();
     const benchmarkMap = new Map<string, BenchmarkRow>();
     for (const b of benchmarks) benchmarkMap.set(b.specialty, b);
 
@@ -250,12 +250,12 @@ export async function GET(
   try {
     // ── GET /api/v1/provider/[npi] ─────────────────────────
     if (segment0 === "provider" && segment1 && /^\d{10}$/.test(segment1)) {
-      const provider = getProvider(segment1);
+      const provider = await getProvider(segment1);
       if (!provider) {
         return errorResponse("Provider not found", 404, rateLimit);
       }
 
-      const benchmarks = getAllBenchmarks();
+      const benchmarks = await getAllBenchmarks();
       const benchmark = benchmarks.find((b) => b.specialty === provider.specialty) ?? null;
 
       // /provider/[npi]/full — Pro only
@@ -272,7 +272,7 @@ export async function GET(
           return errorResponse("Pro API key required for /codes endpoint. Get one at npixray.com/developers", 403, rateLimit);
         }
         const limit = Math.min(parseInt(searchParams.get("limit") || "50", 10), 200);
-        const codes = getProviderCodes(segment1, limit);
+        const codes = await getProviderCodes(segment1, limit);
         return jsonResponse({
           data: {
             npi: provider.npi,
@@ -303,7 +303,7 @@ export async function GET(
       }
 
       const results = searchProviders(name, state || undefined, specialty || undefined, limit);
-      const benchmarks = getAllBenchmarks();
+      const benchmarks = await getAllBenchmarks();
       const benchmarkMap = new Map<string, BenchmarkRow>();
       for (const b of benchmarks) benchmarkMap.set(b.specialty, b);
 
@@ -317,7 +317,7 @@ export async function GET(
     if (segment0 === "benchmarks") {
       // /benchmarks/[specialty]
       if (segment1) {
-        const allBenchmarks = getAllBenchmarks();
+        const allBenchmarks = await getAllBenchmarks();
         const match = allBenchmarks.find(
           (b) => specialtyToSlug(b.specialty) === segment1 || b.specialty.toLowerCase() === segment1.toLowerCase()
         );
@@ -328,7 +328,7 @@ export async function GET(
       }
 
       // /benchmarks — list all
-      const allBenchmarks = getAllBenchmarks();
+      const allBenchmarks = await getAllBenchmarks();
       return jsonResponse({
         data: allBenchmarks,
         total: allBenchmarks.length,
@@ -339,13 +339,13 @@ export async function GET(
     if (segment0 === "stats") {
       if (segment1) {
         const stateAbbr = segment1.toUpperCase();
-        const stats = getStateStats(stateAbbr);
+        const stats = await getStateStats(stateAbbr);
         if (!stats || !stats.totalProviders) {
           return errorResponse("State not found", 404, rateLimit);
         }
 
-        const specialties = getStateSpecialties(stateAbbr, 20);
-        const cities = getStateCities(stateAbbr, 20);
+        const specialties = await getStateSpecialties(stateAbbr, 20);
+        const cities = await getStateCities(stateAbbr, 20);
 
         return jsonResponse({
           data: {
@@ -370,7 +370,7 @@ export async function GET(
       }
 
       // /stats — all states
-      const allStates = getAllStates();
+      const allStates = await getAllStates();
       return jsonResponse({
         data: allStates.map((s) => ({
           state: s.state,
@@ -396,15 +396,15 @@ export async function GET(
         return errorResponse("Provide 2-10 comma-separated NPIs", 400, rateLimit);
       }
 
-      const benchmarks = getAllBenchmarks();
+      const benchmarks = await getAllBenchmarks();
       const benchmarkMap = new Map<string, BenchmarkRow>();
       for (const b of benchmarks) benchmarkMap.set(b.specialty, b);
 
-      const providers = npis.map((npi) => {
-        const p = getProvider(npi);
+      const providers = await Promise.all(npis.map(async (npi) => {
+        const p = await getProvider(npi);
         if (!p) return { npi, error: "Not found" };
         return fullProviderResponse(p, benchmarkMap.get(p.specialty) ?? null);
-      });
+      }));
 
       return jsonResponse({ data: providers }, 200, rateLimit);
     }
@@ -423,12 +423,12 @@ export async function GET(
         return errorResponse("State is required: /market/[state]/[city]/[specialty]", 400, rateLimit);
       }
 
-      const stateStats = getStateStats(state);
+      const stateStats = await getStateStats(state);
       if (!stateStats || !stateStats.totalProviders) {
         return errorResponse("State not found", 404, rateLimit);
       }
 
-      const benchmarks = getAllBenchmarks();
+      const benchmarks = await getAllBenchmarks();
       const benchmarkMap = new Map<string, BenchmarkRow>();
       for (const b of benchmarks) benchmarkMap.set(b.specialty, b);
 
@@ -436,14 +436,14 @@ export async function GET(
       if (city && specialty) {
         // Import getCitySpecialtyProviders
         const { getCitySpecialtyProviders } = require("@/lib/db-queries");
-        providers = getCitySpecialtyProviders(state, city, specialty, 100);
+        providers = await getCitySpecialtyProviders(state, city, specialty, 100);
       } else if (city) {
-        providers = getCityProviders(state, city, 100);
+        providers = await getCityProviders(state, city, 100);
       } else if (specialty) {
         const { getSpecialtyStateProviders } = require("@/lib/db-queries");
-        providers = getSpecialtyStateProviders(specialty, state, 100);
+        providers = await getSpecialtyStateProviders(specialty, state, 100);
       } else {
-        providers = getStateTopProviders(state, 100);
+        providers = await getStateTopProviders(state, 100);
       }
 
       const adoption = calculateAdoptionRates(providers);
@@ -490,7 +490,7 @@ export async function GET(
       const state = segment1?.toUpperCase() || undefined;
       const specialty = segment2 ? decodeURIComponent(segment2) : undefined;
 
-      const distribution = getScoreDistribution(state, specialty);
+      const distribution = await getScoreDistribution(state, specialty);
       return jsonResponse({
         data: {
           state: state || null,
@@ -503,7 +503,7 @@ export async function GET(
 
     // ── GET /api/v1/specialties — list all specialties ──────
     if (segment0 === "specialties") {
-      const specs = getDistinctSpecialties();
+      const specs = await getDistinctSpecialties();
       return jsonResponse({
         data: specs,
         total: specs.length,

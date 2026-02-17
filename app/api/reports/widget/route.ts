@@ -47,12 +47,12 @@ function specialtyGrade(b: BenchmarkRow): { letter: string; color: string } {
   return { letter: "F", color: "#ef4444" };
 }
 
-function buildStateWidget(stateAbbr: string): string | null {
-  const stats = getStateStats(stateAbbr);
+async function buildStateWidget(stateAbbr: string): Promise<string | null> {
+  const stats = await getStateStats(stateAbbr);
   if (!stats || !stats.totalProviders) return null;
 
   const stateName = stateAbbrToName(stateAbbr);
-  const allStates = getAllStates();
+  const allStates = await getAllStates();
   const grade = stateGrade(stats, allStates);
   const slug = stateToSlug(stateAbbr);
 
@@ -68,8 +68,8 @@ function buildStateWidget(stateAbbr: string): string | null {
   });
 }
 
-function buildSpecialtyWidget(specialtySlug: string): string | null {
-  const benchmarks = getAllBenchmarks();
+async function buildSpecialtyWidget(specialtySlug: string): Promise<string | null> {
+  const benchmarks = await getAllBenchmarks();
   const benchmark = benchmarks.find((b) => specialtyToSlug(b.specialty) === specialtySlug) ?? null;
   if (!benchmark) return null;
 
@@ -254,14 +254,14 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({ error: "Missing 'id' parameter" }, { status: 400 });
       }
       const abbr = slugToStateAbbr(id) || id.toUpperCase();
-      html = buildStateWidget(abbr);
+      html = await buildStateWidget(abbr);
       break;
     }
     case "specialty": {
       if (!id) {
         return NextResponse.json({ error: "Missing 'id' parameter" }, { status: 400 });
       }
-      html = buildSpecialtyWidget(id);
+      html = await buildSpecialtyWidget(id);
       break;
     }
     default:

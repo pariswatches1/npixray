@@ -55,7 +55,7 @@ export default async function SpecialtyLeaderboardPage({
   ]);
 
   // Get unique states from top providers for "by state" links
-  const statesInTop = [...new Set(topProviders.map((p) => p.state))].filter(Boolean);
+  const statesInTop: string[] = [...new Set(topProviders.map((p: any) => p.state as string))].filter(Boolean) as string[];
 
   return (
     <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
@@ -140,7 +140,7 @@ export default async function SpecialtyLeaderboardPage({
             {name} Leaderboard by State
           </h2>
           <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2 mb-8">
-            {statesInTop.map((st) => (
+            {statesInTop.map((st: string) => (
               <Link
                 key={st}
                 href={`/leaderboard/${stateToSlug(st)}/${slug}`}

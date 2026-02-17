@@ -55,7 +55,7 @@ export async function GET(
 
   // Optionally include benchmark data
   const includeBenchmark = request.nextUrl.searchParams.get("benchmark");
-  let benchmark = null;
+  let benchmark: any = null;
   if (includeBenchmark === "1" || includeBenchmark === "true") {
     benchmark = lookupCMSBenchmark(provider.specialty);
   }

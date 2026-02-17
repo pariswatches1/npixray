@@ -87,7 +87,7 @@ export async function POST(request: NextRequest) {
       }
 
       // Try to get provider data from DB
-      const dbProvider = getProvider(item.npi);
+      const dbProvider = await getProvider(item.npi);
 
       const entry: InviteEntry = {
         code: generateCode(),
