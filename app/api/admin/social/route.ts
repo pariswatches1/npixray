@@ -153,9 +153,9 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const allStates = getAllStates();
-  const benchmarks = getAllBenchmarks();
-  const national = getNationalStats();
+  const allStates = await getAllStates();
+  const benchmarks = await getAllBenchmarks();
+  const national = await getNationalStats();
 
   const posts: SocialPost[] = [];
 

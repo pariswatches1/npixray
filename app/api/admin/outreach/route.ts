@@ -111,7 +111,7 @@ export async function GET(request: NextRequest) {
   }
 
   // Build benchmark map
-  const benchmarks = getAllBenchmarks();
+  const benchmarks = await getAllBenchmarks();
   const benchmarkMap = new Map<string, BenchmarkRow>();
   for (const b of benchmarks) {
     benchmarkMap.set(b.specialty, b);
@@ -216,7 +216,7 @@ export async function GET(request: NextRequest) {
   }
 
   // Get available filter options
-  const states = getAllStates().map((s) => ({ abbr: s.state, name: stateAbbrToName(s.state) }));
+  const states = (await getAllStates()).map((s) => ({ abbr: s.state, name: stateAbbrToName(s.state) }));
   const specialties = benchmarks.map((b) => b.specialty).sort();
 
   return NextResponse.json({
