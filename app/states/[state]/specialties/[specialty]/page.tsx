@@ -23,8 +23,8 @@ export const dynamic = 'force-dynamic';
  * Reverse-lookup a specialty slug to the actual specialty name
  * by checking all benchmarks. Falls back to title-casing the slug.
  */
-async function slugToSpecialtyName(slug: string): Promise<string | null> {
-  const benchmarks = await getAllBenchmarks();
+function slugToSpecialtyName(slug: string): string | null {
+  const benchmarks = getAllBenchmarks();
   for (const b of benchmarks) {
     if (specialtyToSlug(b.specialty) === slug) return b.specialty;
   }
@@ -40,10 +40,10 @@ export async function generateMetadata({
   const abbr = slugToStateAbbr(stateSlug);
   if (!abbr) return { title: "Not Found" };
 
-  const specialtyName = await slugToSpecialtyName(specSlug);
+  const specialtyName = slugToSpecialtyName(specSlug);
   if (!specialtyName) return { title: "Not Found" };
 
-  const stats = await getSpecialtyByState(specialtyName, abbr);
+  const stats = getSpecialtyByState(specialtyName, abbr);
   if (!stats || !stats.count) return { title: "Not Found" };
 
   const stateName = stateAbbrToName(abbr);
@@ -66,17 +66,17 @@ export default async function StateSpecialtyPage({
   const abbr = slugToStateAbbr(stateSlug);
   if (!abbr) notFound();
 
-  const specialtyName = await slugToSpecialtyName(specSlug);
+  const specialtyName = slugToSpecialtyName(specSlug);
   if (!specialtyName) notFound();
 
-  const stats = await getSpecialtyByState(specialtyName, abbr);
+  const stats = getSpecialtyByState(specialtyName, abbr);
   if (!stats || !stats.count) notFound();
 
   const stateName = stateAbbrToName(abbr);
-  const providers = await getSpecialtyStateProviders(specialtyName, abbr, 50);
+  const providers = getSpecialtyStateProviders(specialtyName, abbr, 50);
 
   // Compare to national average from benchmarks
-  const benchmarks = await getAllBenchmarks();
+  const benchmarks = getAllBenchmarks();
   const nationalBenchmark = benchmarks.find(
     (b) => specialtyToSlug(b.specialty) === specSlug
   );

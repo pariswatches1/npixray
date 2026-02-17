@@ -26,8 +26,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function CodesIndexPage() {
-  const codes = await getTopCodes(200);
+export default function CodesIndexPage() {
+  const codes = getTopCodes(200);
 
   const totalServices = codes.reduce((sum, c) => sum + c.totalServices, 0);
   const totalProviders = codes.reduce((sum, c) => sum + c.totalProviders, 0);

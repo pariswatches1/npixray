@@ -46,7 +46,7 @@ export default async function TopProvidersByStatePage({
   if (!abbr) notFound();
 
   const stateName = stateAbbrToName(abbr);
-  const providers = await getStateTopProviders(abbr, 100);
+  const providers = getStateTopProviders(abbr, 100);
 
   if (!providers.length) notFound();
 

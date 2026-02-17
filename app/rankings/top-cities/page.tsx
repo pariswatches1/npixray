@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Building2, ArrowRight } from "lucide-react";
-import { neon } from "@neondatabase/serverless";
+import { existsSync } from "fs";
+import { join } from "path";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { ScanCTA } from "@/components/seo/scan-cta";
 import {
@@ -39,23 +40,35 @@ interface CityRow {
   avgPayment: number;
 }
 
-async function getTopCities(limit = 100): Promise<CityRow[]> {
-  if (!process.env.DATABASE_URL) return [];
-  const sql = neon(process.env.DATABASE_URL);
-  const rows = await sql.query(
-    `SELECT city, state, COUNT(*) as count, AVG(total_medicare_payment) as "avgPayment"
-     FROM providers
-     WHERE city != ''
-     GROUP BY city, state
-     ORDER BY count DESC
-     LIMIT $1`,
-    [limit]
-  );
-  return rows as CityRow[];
+function getDb() {
+  const dbPath = join(process.cwd(), "data", "cms.db");
+  if (!existsSync(dbPath)) return null;
+  // eslint-disable-next-line
+  const Database = require("better-sqlite3");
+  return new Database(dbPath, { readonly: true });
 }
 
-export default async function TopCitiesPage() {
-  const cities = await getTopCities(100);
+function getTopCities(limit = 100): CityRow[] {
+  const db = getDb();
+  if (!db) return [];
+  try {
+    return db
+      .prepare(
+        `SELECT city, state, COUNT(*) as count, AVG(total_medicare_payment) as avgPayment
+         FROM providers
+         WHERE city != ''
+         GROUP BY city, state
+         ORDER BY count DESC
+         LIMIT ?`
+      )
+      .all(limit) as CityRow[];
+  } finally {
+    db.close();
+  }
+}
+
+export default function TopCitiesPage() {
+  const cities = getTopCities(100);
 
   return (
     <>

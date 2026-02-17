@@ -26,8 +26,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function SpecialtiesIndexPage() {
-  const benchmarks = await getAllBenchmarks();
+export default function SpecialtiesIndexPage() {
+  const benchmarks = getAllBenchmarks();
 
   const totalProviders = benchmarks.reduce((sum, b) => sum + b.provider_count, 0);
 

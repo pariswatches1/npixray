@@ -1,197 +1,221 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { BarChart3, TrendingDown, Users, DollarSign } from "lucide-react";
+import { Breadcrumbs } from "@/components/seo/breadcrumbs";
+import { ScanCTA } from "@/components/seo/scan-cta";
+import { ReportTabs } from "@/components/reports/report-tabs";
 import {
-  FileText,
-  MapPin,
-  Stethoscope,
-  Globe,
-  ArrowRight,
-  BarChart3,
-} from "lucide-react";
-import { getAllStates, getAllBenchmarks, stateAbbrToName, stateToSlug, specialtyToSlug } from "@/lib/db-queries";
-import { formatCurrency, formatNumber } from "@/lib/format";
-import { calculateGrade, estimateCaptureRate, estimatePerProviderGap } from "@/lib/report-utils";
-import { SPECIALTY_LIST, STATE_LIST } from "@/lib/benchmark-data";
-import { ReportGrade } from "@/components/reports/report-grade";
+  getAllStates,
+  getAllBenchmarks,
+  getStateTopProviders,
+  stateAbbrToName,
+  stateToSlug,
+  specialtyToSlug,
+  formatCurrency,
+  formatNumber,
+} from "@/lib/db-queries";
+import {
+  calculateGrade,
+  calculateCaptureRate,
+  estimateMissedRevenueFromBenchmark,
+} from "@/lib/report-utils";
+import { BENCHMARKS } from "@/lib/benchmark-data";
+import { STATE_LIST } from "@/lib/benchmark-data";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Medicare Revenue Report Cards 2026 | NPIxray",
+  title: "Medicare Revenue Report Cards 2026 — States, Specialties & National | NPIxray",
   description:
-    "Free data-driven report cards grading every US state and medical specialty on Medicare revenue capture. Based on 1.175M providers and 8.15M billing records.",
+    "2026 Medicare Revenue Report Cards grading every U.S. state and medical specialty on revenue capture efficiency. See missed revenue estimates, program adoption rates, and E&M coding analysis from CMS data.",
+  keywords: [
+    "Medicare revenue report card",
+    "state Medicare grading",
+    "specialty revenue analysis",
+    "Medicare missed revenue",
+    "healthcare revenue report",
+    "CMS data analysis 2026",
+  ],
   openGraph: {
     title: "Medicare Revenue Report Cards 2026 | NPIxray",
     description:
-      "See how your state and specialty grade on Medicare revenue capture.",
-    url: "https://npixray.com/reports",
+      "Every state and specialty graded on Medicare revenue capture. See who's leaving money on the table.",
   },
-  alternates: { canonical: "https://npixray.com/reports" },
 };
 
-export default async function ReportsIndexPage() {
-  const [states, benchmarks] = await Promise.all([
-    getAllStates(),
-    getAllBenchmarks(),
-  ]);
+export default function ReportsIndexPage() {
+  const allStates = getAllStates();
+  const allBenchmarks = getAllBenchmarks();
 
-  const stateCards = states
+  // Build state cards with grades
+  const stateCards = allStates
+    .filter((s) => STATE_LIST.some((sl) => sl.abbr === s.state))
     .map((s) => {
-      const name = stateAbbrToName(s.state);
-      const gap = estimatePerProviderGap(s.avgPayment);
-      // Simple capture estimate based on avg payment relative to national
-      const nationalAvg = states.reduce((a, b) => a + b.avgPayment, 0) / states.length;
-      const rate = Math.min(Math.round((s.avgPayment / (nationalAvg * 1.3)) * 75 + 15), 95);
-      const gradeInfo = calculateGrade(rate);
-      return { abbr: s.state, name, providers: s.totalProviders, avgPayment: s.avgPayment, gap, rate, ...gradeInfo };
-    })
-    .sort((a, b) => b.rate - a.rate);
-
-  const specialtyCards = benchmarks
-    .map((b) => {
-      const rate = estimateCaptureRate(
-        b.ccm_adoption_rate,
-        b.rpm_adoption_rate,
-        b.bhi_adoption_rate,
-        b.awv_adoption_rate,
-        b.pct_99214,
-        b.pct_99215
+      const providers = getStateTopProviders(s.state, 200);
+      const captureRate = providers.length > 0
+        ? calculateCaptureRate(providers, allBenchmarks)
+        : 0.55;
+      const grade = calculateGrade(captureRate);
+      const missedRevenue = estimateMissedRevenueFromBenchmark(
+        s.totalProviders,
+        s.avgPayment
       );
-      const gap = estimatePerProviderGap(b.avg_total_payment);
-      const gradeInfo = calculateGrade(rate);
-      return { specialty: b.specialty, providers: b.provider_count, avgPayment: b.avg_total_payment, gap, rate, ...gradeInfo };
+
+      return {
+        abbr: s.state,
+        name: stateAbbrToName(s.state),
+        slug: stateToSlug(s.state),
+        grade: grade.grade,
+        gradeColor: `${grade.color} ${grade.borderColor}`,
+        providers: s.totalProviders,
+        missedRevenue,
+      };
     })
-    .sort((a, b) => b.rate - a.rate);
+    .sort((a, b) => {
+      const gradeOrder: Record<string, number> = { A: 0, B: 1, C: 2, D: 3, F: 4 };
+      return (gradeOrder[a.grade] ?? 5) - (gradeOrder[b.grade] ?? 5);
+    });
+
+  // Build specialty cards with grades
+  const specialtyCards = allBenchmarks.map((b) => {
+    const benchmark = BENCHMARKS[b.specialty];
+    // Estimate grade from adoption rates and coding patterns
+    const ccmScore = Math.min((b.ccm_adoption_rate || 0) / 0.1, 1);
+    const rpmScore = Math.min((b.rpm_adoption_rate || 0) / 0.05, 1);
+    const awvScore = Math.min((b.awv_adoption_rate || 0) / 0.5, 1);
+    const emScore = Math.min((b.pct_99214 || 0) / 0.6, 1);
+    const captureRate = (ccmScore * 0.25 + rpmScore * 0.15 + awvScore * 0.25 + emScore * 0.35) * 0.85;
+    const grade = calculateGrade(captureRate);
+
+    const missedRevenue = estimateMissedRevenueFromBenchmark(
+      b.provider_count,
+      b.avg_total_payment,
+      b.specialty
+    );
+
+    return {
+      specialty: b.specialty,
+      slug: specialtyToSlug(b.specialty),
+      grade: grade.grade,
+      gradeColor: `${grade.color} ${grade.borderColor}`,
+      providers: b.provider_count,
+      avgPayment: b.avg_total_payment,
+      missedRevenue,
+    };
+  }).sort((a, b) => {
+    const gradeOrder: Record<string, number> = { A: 0, B: 1, C: 2, D: 3, F: 4 };
+    return (gradeOrder[a.grade] ?? 5) - (gradeOrder[b.grade] ?? 5);
+  });
+
+  const totalProviders = allStates.reduce((sum, s) => sum + s.totalProviders, 0);
+  const totalMissedRevenue = stateCards.reduce((sum, s) => sum + s.missedRevenue, 0);
 
   return (
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+    <>
       {/* Hero */}
-      <div className="text-center mb-12">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold/10 text-gold text-sm font-semibold mb-4">
-          <FileText className="h-4 w-4" />
-          2026 Report Cards
-        </div>
-        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">
-          Medicare Revenue Report Cards
-        </h1>
-        <p className="text-lg text-[var(--text-secondary)] max-w-2xl mx-auto">
-          Data-driven grades for every US state and medical specialty. Based on
-          analysis of 1,175,281 Medicare providers and 8.15M billing records.
-        </p>
-      </div>
+      <section className="relative overflow-hidden">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gold/[0.03] rounded-full blur-3xl" />
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-8 pb-12 sm:pt-12 sm:pb-16">
+          <Breadcrumbs items={[{ label: "Report Cards" }]} />
 
-      {/* National Report CTA */}
-      <Link
-        href="/reports/national"
-        className="block rounded-2xl border border-gold/30 bg-gold/5 p-6 sm:p-8 mb-12 group hover:border-gold/50 transition-colors"
-      >
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Globe className="h-8 w-8 text-gold" />
-            <div>
-              <h2 className="text-xl font-bold group-hover:text-gold transition-colors">
-                National Medicare Revenue Report 2026
-              </h2>
-              <p className="text-sm text-[var(--text-secondary)]">
-                Comprehensive analysis across all 50 states and {benchmarks.length}+ specialties
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/5 px-4 py-1.5 mb-8">
+              <BarChart3 className="h-3.5 w-3.5 text-gold" />
+              <span className="text-xs font-medium text-gold">
+                2026 CMS Data Analysis
+              </span>
+            </div>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight max-w-4xl mx-auto leading-[1.1]">
+              Medicare Revenue{" "}
+              <span className="text-gold">Report Cards</span>{" "}
+              2026
+            </h1>
+            <p className="mt-6 text-lg text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed">
+              Every state and specialty graded on Medicare revenue capture
+              efficiency. Built from CMS public data covering{" "}
+              {formatNumber(totalProviders)} providers.
+            </p>
+          </div>
+
+          {/* Summary stats */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-3xl mx-auto">
+            <div className="rounded-xl border border-dark-50/50 bg-dark-300 p-4 text-center">
+              <Users className="h-5 w-5 text-gold mx-auto mb-2" />
+              <p className="text-xl font-bold font-mono text-gold">
+                {formatNumber(totalProviders)}
+              </p>
+              <p className="text-[10px] text-[var(--text-secondary)] uppercase tracking-wider mt-1">
+                Providers Analyzed
+              </p>
+            </div>
+            <div className="rounded-xl border border-dark-50/50 bg-dark-300 p-4 text-center">
+              <BarChart3 className="h-5 w-5 text-gold mx-auto mb-2" />
+              <p className="text-xl font-bold font-mono text-gold">
+                {stateCards.length}
+              </p>
+              <p className="text-[10px] text-[var(--text-secondary)] uppercase tracking-wider mt-1">
+                States Graded
+              </p>
+            </div>
+            <div className="rounded-xl border border-dark-50/50 bg-dark-300 p-4 text-center">
+              <DollarSign className="h-5 w-5 text-gold mx-auto mb-2" />
+              <p className="text-xl font-bold font-mono text-gold">
+                {specialtyCards.length}
+              </p>
+              <p className="text-[10px] text-[var(--text-secondary)] uppercase tracking-wider mt-1">
+                Specialties
+              </p>
+            </div>
+            <div className="rounded-xl border border-dark-50/50 bg-dark-300 p-4 text-center">
+              <TrendingDown className="h-5 w-5 text-red-400 mx-auto mb-2" />
+              <p className="text-xl font-bold font-mono text-red-400">
+                {formatCurrency(totalMissedRevenue)}
+              </p>
+              <p className="text-[10px] text-[var(--text-secondary)] uppercase tracking-wider mt-1">
+                Est. Missed Revenue
               </p>
             </div>
           </div>
-          <ArrowRight className="h-5 w-5 text-gold group-hover:translate-x-1 transition-transform" />
-        </div>
-      </Link>
-
-      {/* State Report Cards */}
-      <section className="mb-16">
-        <div className="flex items-center gap-3 mb-6">
-          <MapPin className="h-6 w-6 text-gold" />
-          <h2 className="text-2xl font-bold">State Report Cards</h2>
-          <span className="text-sm text-[var(--text-secondary)]">
-            ({stateCards.length} states)
-          </span>
-        </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
-          {stateCards.map((s) => (
-            <Link
-              key={s.abbr}
-              href={`/reports/states/${stateToSlug(s.abbr)}`}
-              className="group rounded-xl border border-dark-50/80 bg-dark-400/30 p-4 hover:border-gold/20 transition-colors"
-            >
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-lg font-bold">{s.abbr}</span>
-                <span
-                  className={`text-lg font-bold ${s.color}`}
-                >
-                  {s.grade}
-                </span>
-              </div>
-              <p className="text-xs text-[var(--text-secondary)] truncate">
-                {s.name}
-              </p>
-              <p className="text-xs text-[var(--text-secondary)]">
-                {formatNumber(s.providers)} providers
-              </p>
-              <p className="text-xs text-gold mt-1">
-                ~{formatCurrency(s.gap)}/provider gap
-              </p>
-            </Link>
-          ))}
         </div>
       </section>
 
-      {/* Specialty Report Cards */}
-      <section className="mb-16">
-        <div className="flex items-center gap-3 mb-6">
-          <Stethoscope className="h-6 w-6 text-gold" />
-          <h2 className="text-2xl font-bold">Specialty Report Cards</h2>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {specialtyCards.map((s) => (
-            <Link
-              key={s.specialty}
-              href={`/reports/specialties/${specialtyToSlug(s.specialty)}`}
-              className="group rounded-xl border border-dark-50/80 bg-dark-400/30 p-5 hover:border-gold/20 transition-colors"
-            >
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="font-semibold group-hover:text-gold transition-colors truncate mr-3">
-                  {s.specialty}
-                </h3>
-                <span
-                  className={`text-2xl font-bold ${s.color} flex-shrink-0`}
-                >
-                  {s.grade}
-                </span>
-              </div>
-              <div className="flex items-center gap-4 text-xs text-[var(--text-secondary)]">
-                <span>{formatNumber(s.providers)} providers</span>
-                <span>Avg {formatCurrency(s.avgPayment)}</span>
-              </div>
-              <p className="text-xs text-gold mt-2">
-                ~{formatCurrency(s.gap)} avg gap/provider
-              </p>
-            </Link>
-          ))}
+      {/* Tabs and content */}
+      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <ReportTabs states={stateCards} specialties={specialtyCards} />
         </div>
       </section>
 
-      {/* Embed CTA */}
-      <div className="rounded-2xl border border-dark-50/80 bg-dark-400/30 p-8 text-center">
-        <BarChart3 className="h-8 w-8 text-gold mx-auto mb-4" />
-        <h2 className="text-xl font-bold mb-2">
-          Embed Report Cards on Your Website
-        </h2>
-        <p className="text-sm text-[var(--text-secondary)] mb-4 max-w-md mx-auto">
-          Add Medicare revenue data to your blog or healthcare website with our
-          free embeddable widgets.
-        </p>
-        <Link
-          href="/reports/embed"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gold text-dark font-semibold text-sm hover:bg-gold-300 transition-colors"
-        >
-          Get Embed Code
-          <ArrowRight className="h-4 w-4" />
-        </Link>
-      </div>
-    </div>
+      {/* CTA */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-16">
+        <ScanCTA />
+      </section>
+
+      {/* JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Dataset",
+            name: "Medicare Revenue Report Cards 2026",
+            description:
+              "Annual grading of U.S. states and medical specialties on Medicare revenue capture efficiency based on CMS public data.",
+            url: "https://npixray.com/reports",
+            creator: {
+              "@type": "Organization",
+              name: "NPIxray",
+              url: "https://npixray.com",
+            },
+            datePublished: "2026-01-15",
+            license: "https://creativecommons.org/publicdomain/zero/1.0/",
+            temporalCoverage: "2024/2025",
+            spatialCoverage: {
+              "@type": "Place",
+              name: "United States",
+            },
+          }),
+        }}
+      />
+    </>
   );
 }

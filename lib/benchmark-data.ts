@@ -298,6 +298,14 @@ export const BENCHMARKS: Record<string, SpecialtyBenchmark> = {
 
 export const SPECIALTY_LIST = Object.keys(BENCHMARKS);
 
+/**
+ * Convert a specialty name to a URL-safe slug.
+ * Client-safe version (no Node.js deps) matching the logic in db-queries.ts.
+ */
+export function specialtyToSlug(specialty: string): string {
+  return specialty.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/-+$/, "").replace(/^-+/, "");
+}
+
 export const STATE_LIST: { abbr: string; name: string }[] = [
   { abbr: "AL", name: "Alabama" },
   { abbr: "AK", name: "Alaska" },

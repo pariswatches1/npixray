@@ -20,9 +20,7 @@ import {
 import {
   getProvider,
   getProviderCodes,
-  getProviderCodeCount,
   getRelatedProviders,
-  getBenchmarkBySpecialty,
   formatCurrency,
   formatNumber,
   stateAbbrToName,
@@ -30,10 +28,6 @@ import {
   stateToSlug,
   cityToSlug,
 } from "@/lib/db-queries";
-import { calculateRevenueScore, estimatePercentile } from "@/lib/revenue-score";
-import { RevenueScoreGauge } from "@/components/score/revenue-score-gauge";
-import { ScoreBreakdown } from "@/components/score/score-breakdown";
-import { ScoreBadgeEmbed } from "@/components/score/score-badge-embed";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { ScanCTA } from "@/components/seo/scan-cta";
 
@@ -47,7 +41,7 @@ export async function generateMetadata({
   params: Promise<{ npi: string }>;
 }): Promise<Metadata> {
   const { npi } = await params;
-  const provider = await getProvider(npi);
+  const provider = getProvider(npi);
   if (!provider) return { title: "Provider Not Found" };
 
   const fullName = `Dr. ${provider.first_name} ${provider.last_name}`;
@@ -72,21 +66,17 @@ export default async function ProviderProfilePage({
   params: Promise<{ npi: string }>;
 }) {
   const { npi } = await params;
-  const provider = await getProvider(npi);
+  const provider = getProvider(npi);
   if (!provider) notFound();
 
-  const [codes, codeCount, benchmark, relatedProviders] = await Promise.all([
-    getProviderCodes(npi, 10),
-    getProviderCodeCount(npi),
-    getBenchmarkBySpecialty(provider.specialty),
-    getRelatedProviders(provider.specialty, provider.city, provider.state, npi, 5),
-  ]);
-
-  // Compute Revenue Score
-  const scoreResult = benchmark
-    ? calculateRevenueScore(provider, benchmark, codeCount)
-    : null;
-  const percentile = scoreResult ? estimatePercentile(scoreResult.overall) : null;
+  const codes = getProviderCodes(npi, 10);
+  const relatedProviders = getRelatedProviders(
+    provider.specialty,
+    provider.city,
+    provider.state,
+    npi,
+    5
+  );
 
   const fullName = `Dr. ${provider.first_name} ${provider.last_name}`;
   const stateName = stateAbbrToName(provider.state);
@@ -228,24 +218,6 @@ export default async function ProviderProfilePage({
             </span>
           </div>
         </div>
-
-        {/* ── Revenue Score ──────────────────────────────── */}
-        {scoreResult && (
-          <div className="rounded-2xl border border-dark-50/80 bg-dark-400/30 p-6 mb-10">
-            <div className="flex flex-col sm:flex-row items-center gap-6">
-              <RevenueScoreGauge
-                score={scoreResult.overall}
-                size="md"
-                animate={false}
-                percentile={percentile ?? undefined}
-                specialty={provider.specialty}
-              />
-              <div className="flex-1 w-full">
-                <ScoreBreakdown breakdown={scoreResult.breakdown} />
-              </div>
-            </div>
-          </div>
-        )}
 
         {/* ── Stats Grid ─────────────────────────────────── */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
@@ -567,13 +539,6 @@ export default async function ProviderProfilePage({
             </Link>
           </div>
         </section>
-
-        {/* ── Score Badge Embed ──────────────────────────── */}
-        {scoreResult && (
-          <section className="mb-10">
-            <ScoreBadgeEmbed npi={npi} score={scoreResult.overall} />
-          </section>
-        )}
 
         {/* ── CTA ────────────────────────────────────────── */}
         <ScanCTA providerName={fullName} />

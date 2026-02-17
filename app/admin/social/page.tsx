@@ -1,217 +1,376 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Twitter, Linkedin, Copy, Check, Filter } from "lucide-react";
-import { STATE_LIST, SPECIALTY_LIST, BENCHMARKS } from "@/lib/benchmark-data";
-import { stateToSlug, specialtyToSlug } from "@/lib/db-queries";
+import { useState, useEffect, useCallback, useMemo } from "react";
+import {
+  Lock,
+  LogIn,
+  Loader2,
+  Copy,
+  Check,
+  Twitter,
+  Linkedin,
+  Globe,
+  MapPin,
+  Stethoscope,
+  RefreshCw,
+  Hash,
+} from "lucide-react";
 
-interface Post {
-  platform: "twitter" | "linkedin";
+interface SocialPost {
+  id: string;
   category: "state" | "specialty" | "national";
-  name: string;
-  text: string;
+  label: string;
+  twitter: string;
+  linkedin: string;
+  twitterChars: number;
+  linkedinChars: number;
 }
 
-export default function SocialPage() {
-  const [password, setPassword] = useState("");
-  const [authenticated, setAuthenticated] = useState(false);
-  const [error, setError] = useState("");
-  const [filter, setFilter] = useState<"all" | "state" | "specialty" | "national">("all");
-  const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
+type TabType = "national" | "states" | "specialties";
 
-  const handleLogin = async () => {
-    const res = await fetch("/api/admin/auth", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ password }),
-    });
-    if (res.ok) {
+export default function AdminSocialPage() {
+  const [authenticated, setAuthenticated] = useState(false);
+  const [password, setPassword] = useState("");
+  const [authLoading, setAuthLoading] = useState(false);
+  const [authError, setAuthError] = useState("");
+
+  const [posts, setPosts] = useState<SocialPost[]>([]);
+  const [counts, setCounts] = useState({ national: 0, states: 0, specialties: 0 });
+  const [loading, setLoading] = useState(false);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<TabType>("national");
+
+  const fetchPosts = useCallback(async () => {
+    setLoading(true);
+    try {
+      const res = await fetch("/api/admin/social");
+      if (res.status === 401) {
+        setAuthenticated(false);
+        return;
+      }
+      const json = await res.json();
+      setPosts(json.posts || []);
+      setCounts(json.counts || { national: 0, states: 0, specialties: 0 });
+    } catch {
+      // silently fail
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  // Try auto-auth on mount
+  useEffect(() => {
+    fetch("/api/admin/social")
+      .then((res) => {
+        if (res.ok) {
+          setAuthenticated(true);
+          return res.json();
+        }
+        return null;
+      })
+      .then((json) => {
+        if (json) {
+          setPosts(json.posts || []);
+          setCounts(json.counts || { national: 0, states: 0, specialties: 0 });
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const handleAuth = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setAuthLoading(true);
+    setAuthError("");
+
+    try {
+      const res = await fetch("/api/admin/auth", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password }),
+      });
+
+      if (!res.ok) {
+        setAuthError("Invalid password");
+        return;
+      }
+
       setAuthenticated(true);
-      setError("");
-    } else {
-      setError("Invalid password");
+      setPassword("");
+      fetchPosts();
+    } catch {
+      setAuthError("Network error");
+    } finally {
+      setAuthLoading(false);
     }
   };
 
-  const copyText = async (text: string, idx: number) => {
-    await navigator.clipboard.writeText(text);
-    setCopiedIdx(idx);
-    setTimeout(() => setCopiedIdx(null), 2000);
+  const handleCopy = async (text: string, id: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch {
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textarea);
+    }
+    setCopiedId(id);
+    setTimeout(() => setCopiedId(null), 2000);
   };
+
+  const filteredPosts = useMemo(() => {
+    if (activeTab === "national") return posts.filter((p) => p.category === "national");
+    if (activeTab === "states") return posts.filter((p) => p.category === "state");
+    return posts.filter((p) => p.category === "specialty");
+  }, [posts, activeTab]);
+
+  // ── Auth gate ──────────────────────────────────────────
 
   if (!authenticated) {
     return (
-      <div className="min-h-screen flex items-center justify-center px-4">
+      <div className="min-h-[70vh] flex items-center justify-center px-4">
         <div className="w-full max-w-sm">
-          <h1 className="text-2xl font-bold mb-6 text-center">
-            Social Content Generator
-          </h1>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && handleLogin()}
-            placeholder="Admin password"
-            className="w-full p-3 rounded-lg bg-dark-400 border border-dark-50/80 mb-3"
-          />
-          {error && (
-            <p className="text-red-400 text-sm mb-3">{error}</p>
-          )}
-          <button
-            onClick={handleLogin}
-            className="w-full py-3 rounded-lg bg-gold text-dark font-semibold"
-          >
-            Login
-          </button>
+          <div className="text-center mb-8">
+            <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gold/10 border border-gold/20 mb-4">
+              <Lock className="h-7 w-7 text-gold" />
+            </div>
+            <h1 className="text-2xl font-bold">Social Content Generator</h1>
+            <p className="text-sm text-[var(--text-secondary)] mt-1">
+              Enter the admin password to generate social posts
+            </p>
+          </div>
+
+          <form onSubmit={handleAuth}>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Admin password"
+              className="w-full rounded-xl border border-dark-50 bg-dark-500 py-3.5 px-4 text-sm placeholder:text-[var(--text-secondary)]/50 focus:border-gold/50 focus:ring-1 focus:ring-gold/30 outline-none transition-all mb-4"
+              autoFocus
+            />
+            {authError && (
+              <p className="text-xs text-red-400 mb-3">{authError}</p>
+            )}
+            <button
+              type="submit"
+              disabled={authLoading}
+              className="w-full flex items-center justify-center gap-2 rounded-xl bg-gold py-3.5 text-sm font-semibold text-dark transition-all hover:bg-gold-300 disabled:opacity-50"
+            >
+              {authLoading ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <LogIn className="h-4 w-4" />
+              )}
+              Sign In
+            </button>
+          </form>
         </div>
       </div>
     );
   }
 
-  // Generate posts
-  const posts: Post[] = [];
+  // ── Main content ───────────────────────────────────────
 
-  // State posts
-  STATE_LIST.forEach((s) => {
-    const slug = stateToSlug(s.abbr);
-    const url = `https://npixray.com/reports/states/${slug}`;
-
-    posts.push({
-      platform: "twitter",
-      category: "state",
-      name: s.name,
-      text: `${s.name} Medicare providers are leaving significant revenue uncaptured. See the data-driven report card with real CMS data.\n\n${url}\n\n#MedicareBilling #HealthcareRevenue`,
-    });
-
-    posts.push({
-      platform: "linkedin",
-      category: "state",
-      name: s.name,
-      text: `New data: ${s.name} Medicare providers may be leaving significant revenue on the table.\n\nOur analysis of CMS public data reveals opportunities in E&M coding optimization and care management program adoption (CCM, RPM, BHI, AWV).\n\nFull report card with real data: ${url}\n\n#MedicareBilling #HealthcareRevenue #RevenueOptimization`,
-    });
-  });
-
-  // Specialty posts
-  SPECIALTY_LIST.forEach((sp) => {
-    const slug = specialtyToSlug(sp);
-    const url = `https://npixray.com/reports/specialties/${slug}`;
-    const b = BENCHMARKS[sp];
-    const avgGap = b ? `$${Math.round(b.avgTotalPayment * 0.18 / 1000)}K` : "$15K-35K";
-
-    posts.push({
-      platform: "twitter",
-      category: "specialty",
-      name: sp,
-      text: `${sp} practices miss an avg of ~${avgGap}/year in billable Medicare revenue. Data from 1.175M providers.\n\n${url}\n\n#${sp.replace(/[\s\/]+/g, "")} #MedicareBilling`,
-    });
-
-    posts.push({
-      platform: "linkedin",
-      category: "specialty",
-      name: sp,
-      text: `Interesting data for ${sp} practices:\n\nAnalysis of ${b ? b.providerCount.toLocaleString() : "thousands of"} Medicare providers shows an estimated average revenue gap of ~${avgGap} per practice.\n\nThe biggest opportunities: care management programs and E&M coding optimization.\n\nFull report: ${url}\n\n#MedicareBilling #${sp.replace(/[\s\/]+/g, "")} #HealthcareRevenue`,
-    });
-  });
-
-  // National posts
-  const nationalUrl = "https://npixray.com/reports/national";
-  posts.push(
-    {
-      platform: "twitter",
-      category: "national",
-      name: "National",
-      text: `US Medicare providers are leaving billions in revenue uncaptured. State-by-state breakdown from 1.175M providers.\n\n${nationalUrl}\n\n#MedicareBilling #HealthcareRevenue`,
-    },
-    {
-      platform: "linkedin",
-      category: "national",
-      name: "National",
-      text: `New analysis: US Medicare providers leave billions uncaptured annually.\n\nKey findings from 1,175,281 providers:\n- CCM adoption: only ~4% of eligible providers\n- RPM adoption: ~2%\n- Average E&M undercoding gap: $15K-35K/provider\n\n50-state ranking + specialty analysis: ${nationalUrl}\n\n#MedicareBilling #HealthcareRevenue #CMS`,
-    },
-    {
-      platform: "twitter",
-      category: "national",
-      name: "National - CCM Focus",
-      text: `Only ~4% of Medicare providers bill CCM (99490). At $62/patient/month, that's massive uncaptured revenue.\n\nSee the full analysis: ${nationalUrl}`,
-    },
-    {
-      platform: "linkedin",
-      category: "national",
-      name: "National - RPM Focus",
-      text: `Remote Patient Monitoring (RPM) adoption among Medicare providers is still under 3%.\n\nWith 99457/99458 reimbursing $50-100/patient/month, practices with chronic care patients are missing significant revenue.\n\nData from 1.175M providers: ${nationalUrl}`,
-    }
-  );
-
-  const filtered = filter === "all" ? posts : posts.filter((p) => p.category === filter);
+  const tabs: { key: TabType; label: string; icon: typeof Globe; count: number }[] = [
+    { key: "national", label: "National", icon: Globe, count: counts.national },
+    { key: "states", label: "States", icon: MapPin, count: counts.states },
+    { key: "specialties", label: "Specialties", icon: Stethoscope, count: counts.specialties },
+  ];
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-8">
-      <h1 className="text-2xl font-bold mb-2">Social Content Generator</h1>
-      <p className="text-sm text-[var(--text-secondary)] mb-6">
-        {posts.length} posts ready to copy ({STATE_LIST.length * 2} state +{" "}
-        {SPECIALTY_LIST.length * 2} specialty + 4 national)
-      </p>
+    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-8">
+        <div>
+          <h1 className="text-2xl sm:text-3xl font-bold">
+            Social <span className="text-gold">Content Generator</span>
+          </h1>
+          <p className="text-sm text-[var(--text-secondary)] mt-1">
+            Ready-to-post content for Twitter and LinkedIn
+          </p>
+        </div>
+        <button
+          onClick={fetchPosts}
+          disabled={loading}
+          className="flex items-center gap-2 rounded-lg border border-dark-50 px-4 py-2 text-sm text-[var(--text-secondary)] hover:text-gold hover:border-gold/30 transition-all disabled:opacity-50"
+        >
+          <RefreshCw className={`h-4 w-4 ${loading ? "animate-spin" : ""}`} />
+          Refresh
+        </button>
+      </div>
 
-      {/* Filter */}
-      <div className="flex items-center gap-2 mb-6 flex-wrap">
-        <Filter className="h-4 w-4 text-[var(--text-secondary)]" />
-        {(["all", "state", "specialty", "national"] as const).map((f) => (
-          <button
-            key={f}
-            onClick={() => setFilter(f)}
-            className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
-              filter === f
-                ? "bg-gold/10 text-gold border border-gold/30"
-                : "border border-dark-50/80 hover:border-gold/20"
-            }`}
-          >
-            {f.charAt(0).toUpperCase() + f.slice(1)}
-          </button>
-        ))}
-        <span className="text-xs text-[var(--text-secondary)] ml-2">
-          ({filtered.length} posts)
-        </span>
+      {/* Stats */}
+      <div className="grid grid-cols-3 gap-4 mb-8">
+        <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gold/10">
+              <Globe className="h-4 w-4 text-gold" />
+            </div>
+            <p className="text-sm text-[var(--text-secondary)]">National</p>
+          </div>
+          <p className="text-3xl font-bold font-mono text-gold">{counts.national}</p>
+        </div>
+        <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gold/10">
+              <MapPin className="h-4 w-4 text-gold" />
+            </div>
+            <p className="text-sm text-[var(--text-secondary)]">State Posts</p>
+          </div>
+          <p className="text-3xl font-bold font-mono text-gold">{counts.states}</p>
+        </div>
+        <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gold/10">
+              <Stethoscope className="h-4 w-4 text-gold" />
+            </div>
+            <p className="text-sm text-[var(--text-secondary)]">Specialty Posts</p>
+          </div>
+          <p className="text-3xl font-bold font-mono text-gold">{counts.specialties}</p>
+        </div>
+      </div>
+
+      {/* Tabs */}
+      <div className="flex gap-2 mb-8 border-b border-dark-50/50 pb-4">
+        {tabs.map((tab) => {
+          const Icon = tab.icon;
+          return (
+            <button
+              key={tab.key}
+              onClick={() => setActiveTab(tab.key)}
+              className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
+                activeTab === tab.key
+                  ? "bg-gold text-dark"
+                  : "bg-dark-500 border border-dark-50 text-[var(--text-secondary)] hover:border-gold/30"
+              }`}
+            >
+              <Icon className="h-4 w-4" />
+              {tab.label}
+              <span className={`text-xs px-1.5 py-0.5 rounded ${
+                activeTab === tab.key
+                  ? "bg-dark/20 text-dark"
+                  : "bg-dark-400 text-[var(--text-secondary)]"
+              }`}>
+                {tab.count}
+              </span>
+            </button>
+          );
+        })}
       </div>
 
       {/* Posts */}
-      <div className="space-y-3">
-        {filtered.map((post, i) => (
-          <div
-            key={i}
-            className="rounded-xl border border-dark-50/80 bg-dark-400/30 p-4"
-          >
-            <div className="flex items-center justify-between mb-2">
-              <div className="flex items-center gap-2">
-                {post.platform === "twitter" ? (
-                  <Twitter className="h-4 w-4 text-blue-400" />
-                ) : (
-                  <Linkedin className="h-4 w-4 text-blue-500" />
-                )}
-                <span className="text-xs font-semibold uppercase tracking-wider text-[var(--text-secondary)]">
-                  {post.name}
-                </span>
-                <span className="text-xs text-[var(--text-secondary)]">
-                  ({post.text.length} chars)
-                </span>
+      {loading ? (
+        <div className="flex items-center justify-center py-20">
+          <Loader2 className="h-8 w-8 animate-spin text-gold" />
+        </div>
+      ) : filteredPosts.length === 0 ? (
+        <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-12 text-center">
+          <Hash className="h-12 w-12 text-[var(--text-secondary)]/30 mx-auto mb-4" />
+          <p className="text-[var(--text-secondary)]">No data available.</p>
+          <p className="text-sm text-[var(--text-secondary)]/60 mt-1">
+            Make sure the CMS database is loaded with provider data.
+          </p>
+        </div>
+      ) : (
+        <div className="space-y-6">
+          {filteredPosts.map((post) => (
+            <div
+              key={post.id}
+              className="rounded-xl border border-dark-50/80 bg-dark-400/50 overflow-hidden"
+            >
+              {/* Post header */}
+              <div className="flex items-center gap-3 px-5 py-3 border-b border-dark-50/50 bg-dark-500/30">
+                {post.category === "national" && <Globe className="h-4 w-4 text-gold" />}
+                {post.category === "state" && <MapPin className="h-4 w-4 text-gold" />}
+                {post.category === "specialty" && <Stethoscope className="h-4 w-4 text-gold" />}
+                <span className="font-semibold text-sm">{post.label}</span>
               </div>
-              <button
-                onClick={() => copyText(post.text, i)}
-                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-gold/10 text-gold text-xs hover:bg-gold/20 transition-colors"
-              >
-                {copiedIdx === i ? (
-                  <Check className="h-3 w-3" />
-                ) : (
-                  <Copy className="h-3 w-3" />
-                )}
-                {copiedIdx === i ? "Copied!" : "Copy"}
-              </button>
+
+              <div className="p-5 space-y-5">
+                {/* Twitter */}
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-2">
+                      <Twitter className="h-4 w-4 text-sky-400" />
+                      <span className="text-xs font-medium text-sky-400 uppercase tracking-wider">
+                        Twitter / X
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <span className={`text-xs font-mono ${
+                        post.twitterChars > 280 ? "text-red-400" : "text-[var(--text-secondary)]"
+                      }`}>
+                        {post.twitterChars}/280
+                      </span>
+                      <button
+                        onClick={() => handleCopy(post.twitter, `${post.id}-twitter`)}
+                        className="flex items-center gap-1.5 rounded-md border border-dark-50 px-3 py-1.5 text-xs text-[var(--text-secondary)] hover:text-gold hover:border-gold/30 transition-all"
+                      >
+                        {copiedId === `${post.id}-twitter` ? (
+                          <>
+                            <Check className="h-3 w-3 text-green-400" />
+                            <span className="text-green-400">Copied</span>
+                          </>
+                        ) : (
+                          <>
+                            <Copy className="h-3 w-3" />
+                            Copy
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                  <div className="bg-dark-500/50 rounded-lg p-3 border border-dark-50/30">
+                    <p className="text-sm text-[var(--text-secondary)] whitespace-pre-wrap leading-relaxed">
+                      {post.twitter}
+                    </p>
+                  </div>
+                </div>
+
+                {/* LinkedIn */}
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-2">
+                      <Linkedin className="h-4 w-4 text-blue-500" />
+                      <span className="text-xs font-medium text-blue-500 uppercase tracking-wider">
+                        LinkedIn
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <span className="text-xs font-mono text-[var(--text-secondary)]">
+                        {post.linkedinChars} chars
+                      </span>
+                      <button
+                        onClick={() => handleCopy(post.linkedin, `${post.id}-linkedin`)}
+                        className="flex items-center gap-1.5 rounded-md border border-dark-50 px-3 py-1.5 text-xs text-[var(--text-secondary)] hover:text-gold hover:border-gold/30 transition-all"
+                      >
+                        {copiedId === `${post.id}-linkedin` ? (
+                          <>
+                            <Check className="h-3 w-3 text-green-400" />
+                            <span className="text-green-400">Copied</span>
+                          </>
+                        ) : (
+                          <>
+                            <Copy className="h-3 w-3" />
+                            Copy
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                  <div className="bg-dark-500/50 rounded-lg p-3 border border-dark-50/30">
+                    <p className="text-sm text-[var(--text-secondary)] whitespace-pre-wrap leading-relaxed">
+                      {post.linkedin}
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
-            <p className="text-sm text-[var(--text-secondary)] whitespace-pre-line">
-              {post.text}
-            </p>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

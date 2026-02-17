@@ -1,33 +1,63 @@
-import { calculateGrade } from "@/lib/report-utils";
+import type { GradeResult } from "@/lib/report-utils";
 
 interface ReportGradeProps {
-  captureRate: number;
+  grade: GradeResult;
   size?: "sm" | "md" | "lg";
+  showLabel?: boolean;
+  label?: string;
 }
 
-export function ReportGrade({ captureRate, size = "lg" }: ReportGradeProps) {
-  const { grade, color, bgColor, label } = calculateGrade(captureRate);
+const sizeMap = {
+  sm: {
+    container: "h-16 w-16",
+    letter: "text-3xl",
+    badge: "text-[8px] px-2 py-0.5 -bottom-1.5",
+    border: "border-2",
+  },
+  md: {
+    container: "h-24 w-24",
+    letter: "text-5xl",
+    badge: "text-[10px] px-3 py-0.5 -bottom-2",
+    border: "border-4",
+  },
+  lg: {
+    container: "h-32 w-32",
+    letter: "text-6xl",
+    badge: "text-xs px-4 py-1 -bottom-2.5",
+    border: "border-4",
+  },
+};
 
-  const sizeClasses = {
-    sm: "h-12 w-12 text-xl",
-    md: "h-20 w-20 text-4xl",
-    lg: "h-28 w-28 text-6xl",
-  };
+export function ReportGrade({
+  grade,
+  size = "md",
+  showLabel = true,
+  label,
+}: ReportGradeProps) {
+  const s = sizeMap[size];
 
   return (
-    <div className="flex flex-col items-center gap-2">
-      <div
-        className={`${sizeClasses[size]} rounded-full border-2 ${bgColor} flex items-center justify-center font-bold ${color}`}
-      >
-        {grade}
-      </div>
-      {size !== "sm" && (
-        <div className="text-center">
-          <p className={`text-sm font-semibold ${color}`}>{label}</p>
-          <p className="text-xs text-[var(--text-secondary)]">
-            Revenue Capture Score: {captureRate}%
-          </p>
+    <div className="flex flex-col items-center gap-3">
+      <div className="relative flex-shrink-0">
+        <div
+          className={`relative flex ${s.container} items-center justify-center rounded-full ${s.border} ${grade.borderColor} bg-dark-400`}
+        >
+          <span className={`${s.letter} font-bold ${grade.color}`}>
+            {grade.grade}
+          </span>
+          {showLabel && (
+            <span
+              className={`absolute ${s.badge} left-1/2 -translate-x-1/2 rounded-full ${grade.bgColor} font-bold uppercase tracking-wider text-dark whitespace-nowrap`}
+            >
+              {grade.label}
+            </span>
+          )}
         </div>
+      </div>
+      {label && (
+        <p className="text-sm text-[var(--text-secondary)] font-medium text-center">
+          {label}
+        </p>
       )}
     </div>
   );

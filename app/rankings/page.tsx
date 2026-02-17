@@ -38,8 +38,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RankingsHubPage() {
-  const states = await getAllStates();
+export default function RankingsHubPage() {
+  const states = getAllStates();
 
   const rankingCategories = [
     {

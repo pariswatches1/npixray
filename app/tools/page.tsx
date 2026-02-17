@@ -11,7 +11,6 @@ import {
   CalendarCheck,
   ClipboardCheck,
   BarChart3,
-  Gauge,
   Wrench,
   ArrowRight,
   Zap,
@@ -142,16 +141,6 @@ const TOOLS = [
     bgColor: "bg-indigo-500/10",
     borderColor: "border-indigo-500/20",
   },
-  {
-    slug: "score-compare",
-    title: "Score Compare",
-    description:
-      "Compare Revenue Scores for 2-5 providers side by side. See how different practices stack up across all scoring dimensions.",
-    icon: Gauge,
-    color: "text-gold",
-    bgColor: "bg-gold/10",
-    borderColor: "border-gold/20",
-  },
 ];
 
 const jsonLd = {
@@ -190,7 +179,7 @@ export default function ToolsIndexPage() {
             <div className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/5 px-4 py-1.5 mb-8">
               <Wrench className="h-3.5 w-3.5 text-gold" />
               <span className="text-xs font-medium text-gold">
-                11 Free Tools
+                10 Free Tools
               </span>
             </div>
 

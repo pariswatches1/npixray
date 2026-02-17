@@ -33,7 +33,7 @@ export async function generateMetadata({
   const parts = slug.split("-vs-");
   if (parts.length !== 2) return { title: "Comparison Not Found" };
 
-  const benchmarks = await getAllBenchmarks();
+  const benchmarks = getAllBenchmarks();
   const nameA = slugToSpecialtyName(parts[0], benchmarks);
   const nameB = slugToSpecialtyName(parts[1], benchmarks);
 
@@ -67,7 +67,7 @@ export default async function ComparisonPage({
   const parts = slug.split("-vs-");
   if (parts.length !== 2) notFound();
 
-  const benchmarks = await getAllBenchmarks();
+  const benchmarks = getAllBenchmarks();
   const nameA = slugToSpecialtyName(parts[0], benchmarks);
   const nameB = slugToSpecialtyName(parts[1], benchmarks);
 

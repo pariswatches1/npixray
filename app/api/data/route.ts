@@ -1,5 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
-import { neon } from "@neondatabase/serverless";
+import { existsSync } from "fs";
+import { join } from "path";
+
+const DB_PATH = join(process.cwd(), "data", "cms.db");
+
+// eslint-disable-next-line
+function getDb(): any {
+  if (!existsSync(DB_PATH)) return null;
+  try {
+    // eslint-disable-next-line
+    const Database = require("better-sqlite3");
+    return new Database(DB_PATH, { readonly: true });
+  } catch {
+    return null;
+  }
+}
 
 const VALID_STATE_RE = /^[A-Z]{2}$/;
 
@@ -23,63 +38,69 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  if (!process.env.DATABASE_URL) {
+  const db = getDb();
+  if (!db) {
     return NextResponse.json(
-      { error: "Data not available. The database has not been configured." },
+      { error: "Data not available. The CMS database has not been initialized." },
       { status: 503 }
     );
   }
 
-  const sql = neon(process.env.DATABASE_URL);
-
   try {
-    let rows: AggregateResult[];
+    let result: AggregateResult;
 
     if (state && specialty) {
       // Filter by both state and specialty
-      rows = await sql.query(
-        `SELECT COUNT(*) as providers,
-                AVG(total_medicare_payment) as "avgPayment",
-                SUM(total_medicare_payment) as "totalPayment",
-                SUM(total_services) as "totalServices"
-         FROM providers
-         WHERE state = $1 AND specialty = $2`,
-        [state, specialty]
-      ) as AggregateResult[];
+      const row = db
+        .prepare(
+          `SELECT COUNT(*) as providers,
+                  AVG(total_medicare_payment) as avgPayment,
+                  SUM(total_medicare_payment) as totalPayment,
+                  SUM(total_services) as totalServices
+           FROM providers
+           WHERE state = ? AND specialty = ?`
+        )
+        .get(state, specialty) as AggregateResult;
+      result = row;
     } else if (state) {
       // Filter by state only
-      rows = await sql.query(
-        `SELECT COUNT(*) as providers,
-                AVG(total_medicare_payment) as "avgPayment",
-                SUM(total_medicare_payment) as "totalPayment",
-                SUM(total_services) as "totalServices"
-         FROM providers
-         WHERE state = $1`,
-        [state]
-      ) as AggregateResult[];
+      const row = db
+        .prepare(
+          `SELECT COUNT(*) as providers,
+                  AVG(total_medicare_payment) as avgPayment,
+                  SUM(total_medicare_payment) as totalPayment,
+                  SUM(total_services) as totalServices
+           FROM providers
+           WHERE state = ?`
+        )
+        .get(state) as AggregateResult;
+      result = row;
     } else if (specialty) {
       // Filter by specialty only
-      rows = await sql.query(
-        `SELECT COUNT(*) as providers,
-                AVG(total_medicare_payment) as "avgPayment",
-                SUM(total_medicare_payment) as "totalPayment",
-                SUM(total_services) as "totalServices"
-         FROM providers
-         WHERE specialty = $1`,
-        [specialty]
-      ) as AggregateResult[];
+      const row = db
+        .prepare(
+          `SELECT COUNT(*) as providers,
+                  AVG(total_medicare_payment) as avgPayment,
+                  SUM(total_medicare_payment) as totalPayment,
+                  SUM(total_services) as totalServices
+           FROM providers
+           WHERE specialty = ?`
+        )
+        .get(specialty) as AggregateResult;
+      result = row;
     } else {
       // National stats (no filters)
-      rows = await sql.query(
-        `SELECT COUNT(*) as providers,
-                AVG(total_medicare_payment) as "avgPayment",
-                SUM(total_medicare_payment) as "totalPayment",
-                SUM(total_services) as "totalServices"
-         FROM providers`
-      ) as AggregateResult[];
+      const row = db
+        .prepare(
+          `SELECT COUNT(*) as providers,
+                  AVG(total_medicare_payment) as avgPayment,
+                  SUM(total_medicare_payment) as totalPayment,
+                  SUM(total_services) as totalServices
+           FROM providers`
+        )
+        .get() as AggregateResult;
+      result = row;
     }
-
-    const result = rows[0];
 
     // Handle case where no data matches
     if (!result || result.providers === 0) {

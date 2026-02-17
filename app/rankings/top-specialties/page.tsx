@@ -30,8 +30,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function TopSpecialtiesPage() {
-  const benchmarks = (await getAllBenchmarks()).sort(
+export default function TopSpecialtiesPage() {
+  const benchmarks = getAllBenchmarks().sort(
     (a, b) => b.avg_total_payment - a.avg_total_payment
   );
 

@@ -22,7 +22,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { code } = await params;
   const codeUpper = code.toUpperCase();
-  const stats = await getCodeStats(codeUpper);
+  const stats = getCodeStats(codeUpper);
   if (!stats || !stats.totalProviders) return { title: "Code Not Found | NPIxray" };
 
   return {
@@ -42,10 +42,10 @@ export default async function CodePage({
 }) {
   const { code } = await params;
   const codeUpper = code.toUpperCase();
-  const stats = await getCodeStats(codeUpper);
+  const stats = getCodeStats(codeUpper);
   if (!stats || !stats.totalProviders) notFound();
 
-  const topSpecialties = await getCodeTopSpecialties(codeUpper, 15);
+  const topSpecialties = getCodeTopSpecialties(codeUpper, 15);
 
   return (
     <>

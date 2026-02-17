@@ -28,10 +28,10 @@ export async function generateMetadata({
   const abbr = slugToStateAbbr(stateSlug);
   if (!abbr) return { title: "City Not Found" };
 
-  const cityName = await getCityNameFromDb(abbr, citySlug);
+  const cityName = getCityNameFromDb(abbr, citySlug);
   if (!cityName) return { title: "City Not Found" };
 
-  const stats = await getCityStats(abbr, cityName);
+  const stats = getCityStats(abbr, cityName);
   if (!stats || !stats.count) return { title: "City Not Found" };
 
   const stateName = stateAbbrToName(abbr);
@@ -54,15 +54,15 @@ export default async function CityPage({
   const abbr = slugToStateAbbr(stateSlug);
   if (!abbr) notFound();
 
-  const cityName = await getCityNameFromDb(abbr, citySlug);
+  const cityName = getCityNameFromDb(abbr, citySlug);
   if (!cityName) notFound();
 
-  const stats = await getCityStats(abbr, cityName);
+  const stats = getCityStats(abbr, cityName);
   if (!stats || !stats.count) notFound();
 
   const stateName = stateAbbrToName(abbr);
-  const specialties = await getCitySpecialties(abbr, cityName);
-  const providers = await getCityProviders(abbr, cityName, 100);
+  const specialties = getCitySpecialties(abbr, cityName);
+  const providers = getCityProviders(abbr, cityName, 100);
 
   return (
     <>
