@@ -485,7 +485,7 @@ response = requests.get(
     headers=headers
 )
 full = response.json()["data"]
-print(f"Missed Revenue: ${full['estimated_missed_revenue']:,}")`}</CodeBlock>
+print("Missed Revenue:", locale.currency(full['estimated_missed_revenue'], grouping=True))`}</CodeBlock>
 
             <h3 className="text-sm font-semibold mt-6 mb-2">JavaScript / Node.js</h3>
             <CodeBlock language="javascript">{`// Free tier
