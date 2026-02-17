@@ -19,6 +19,10 @@ import {
   Sparkles,
 } from "lucide-react";
 import { ScanResult } from "@/lib/types";
+import { calculateRevenueScoreFromScan, estimatePercentile } from "@/lib/revenue-score";
+import { RevenueScoreGauge } from "@/components/score/revenue-score-gauge";
+import { ScoreBreakdown } from "@/components/score/score-breakdown";
+import { ScoreBadgeEmbed } from "@/components/score/score-badge-embed";
 import { trackEvent } from "@/lib/analytics";
 import { OverviewTab } from "@/components/report/overview-tab";
 import { ProgramsTab } from "@/components/report/programs-tab";
@@ -26,14 +30,17 @@ import { CodingTab } from "@/components/report/coding-tab";
 import { ActionPlanTab } from "@/components/report/action-plan-tab";
 import { EmailCaptureModal, EmailCaptureInline } from "@/components/report/email-capture";
 import { ShareResults } from "@/components/report/share-results";
+import { CompetitionTab } from "@/components/report/competition-tab";
+import { Users } from "lucide-react";
 
-type Tab = "overview" | "programs" | "coding" | "action-plan";
+type Tab = "overview" | "programs" | "coding" | "action-plan" | "competition";
 
 const TABS: { id: Tab; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
   { id: "overview", label: "Overview", icon: LayoutDashboard },
   { id: "programs", label: "Programs", icon: Layers },
   { id: "coding", label: "Coding", icon: BarChart3 },
   { id: "action-plan", label: "Action Plan", icon: ClipboardList },
+  { id: "competition", label: "Competition", icon: Users },
 ];
 
 // ─── Skeleton Loading ───
@@ -261,6 +268,57 @@ export default function ScanResultPage() {
         </div>
       </div>
 
+      {/* ── Revenue Score ──────────────────────────────── */}
+      {(() => {
+        const scoreResult = calculateRevenueScoreFromScan(data);
+        const percentile = estimatePercentile(scoreResult.overall);
+        return (
+          <div className="rounded-2xl border border-dark-50/80 bg-dark-400/30 p-6 mb-8">
+            <div className="flex flex-col sm:flex-row items-center gap-6">
+              <RevenueScoreGauge
+                score={scoreResult.overall}
+                size="lg"
+                animate={true}
+                percentile={percentile}
+                specialty={data.provider.specialty}
+              />
+              <div className="flex-1 w-full space-y-4">
+                <ScoreBreakdown breakdown={scoreResult.breakdown} />
+                <button
+                  onClick={() => setActiveTab("action-plan")}
+                  className="text-xs text-gold hover:underline"
+                >
+                  How to improve your score →
+                </button>
+              </div>
+            </div>
+            {/* Badge embed */}
+            <div className="mt-6 pt-4 border-t border-dark-50/30">
+              <ScoreBadgeEmbed npi={data.provider.npi} score={scoreResult.overall} />
+            </div>
+          </div>
+        );
+      })()}
+
+      {/* AI Coach CTA */}
+      <Link
+        href={`/coach/${data.provider.npi}`}
+        className="group flex items-center gap-4 rounded-2xl border border-gold/20 bg-gold/5 p-5 transition-all hover:border-gold/40 hover:bg-gold/10"
+      >
+        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gold/10 border border-gold/20 flex-shrink-0 group-hover:bg-gold/20 transition-colors">
+          <Sparkles className="h-6 w-6 text-gold" />
+        </div>
+        <div className="flex-1 min-w-0">
+          <h3 className="text-sm font-bold text-white group-hover:text-gold transition-colors">
+            Ask AI Revenue Coach About Your Results
+          </h3>
+          <p className="text-xs text-[var(--text-secondary)] mt-0.5">
+            Get personalized advice based on your actual billing data — &ldquo;How do I capture that missed CCM revenue?&rdquo;
+          </p>
+        </div>
+        <ArrowLeft className="h-5 w-5 text-gold rotate-180 flex-shrink-0 group-hover:translate-x-1 transition-transform" />
+      </Link>
+
       {/* Tab Navigation */}
       <div className="border-b border-dark-50/50 mb-8">
         <nav className="flex gap-1 -mb-px overflow-x-auto" aria-label="Report tabs">
@@ -289,6 +347,7 @@ export default function ScanResultPage() {
         {activeTab === "programs" && <ProgramsTab data={data} />}
         {activeTab === "coding" && <CodingTab data={data} />}
         {activeTab === "action-plan" && <ActionPlanTab data={data} />}
+        {activeTab === "competition" && <CompetitionTab npi={data.provider.npi} />}
       </div>
 
       {/* Share Results */}

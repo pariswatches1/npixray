@@ -23,8 +23,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default function StatesIndexPage() {
-  const states = getAllStates();
+export default async function StatesIndexPage() {
+  const states = await getAllStates();
 
   const totalProviders = states.reduce((sum, s) => sum + s.totalProviders, 0);
   const totalPayment = states.reduce((sum, s) => sum + s.totalPayment, 0);
