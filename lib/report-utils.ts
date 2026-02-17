@@ -82,24 +82,30 @@ export interface ShareText {
 }
 
 export function generateShareText(
-  type: "state" | "specialty" | "city",
+  type: "state" | "specialty" | "city" | "national",
   name: string,
-  missedRevenue: string,
-  grade: string
+  missedRevenueOrOpts: string | { missedRevenue: string },
+  grade?: string
 ): ShareText {
+  const missedRevenue = typeof missedRevenueOrOpts === "string"
+    ? missedRevenueOrOpts
+    : missedRevenueOrOpts.missedRevenue;
+  const gradeStr = grade || "N/A";
   const typeLabel =
     type === "state"
       ? "state"
       : type === "specialty"
         ? "specialty"
-        : "city";
+        : type === "national"
+          ? "nation"
+          : "city";
 
-  const twitter = `${name} gets a "${grade}" on its 2026 Medicare Revenue Report Card. ${missedRevenue} in estimated missed revenue across the ${typeLabel}. See the full analysis from @NPIxray:`;
+  const twitter = `${name} gets a "${gradeStr}" on its 2026 Medicare Revenue Report Card. ${missedRevenue} in estimated missed revenue across the ${typeLabel}. See the full analysis from @NPIxray:`;
 
   const linkedin = `I just reviewed the 2026 Medicare Revenue Report Card for ${name}.
 
 Key findings:
-- Overall Grade: ${grade}
+- Overall Grade: ${gradeStr}
 - Estimated Missed Revenue: ${missedRevenue}
 - Low adoption of care management programs (CCM, RPM, BHI, AWV)
 
@@ -329,4 +335,46 @@ export function calculateEMDistribution(providers: ProviderRow[]): {
     pct99214: total214 / totalEM,
     pct99215: total215 / totalEM,
   };
+}
+
+// ── Per-provider gap estimation ─────────────────────────────
+
+/**
+ * Estimate per-provider revenue gap from average payment.
+ * Assumes ~65% capture rate; returns estimated missed revenue per provider.
+ */
+export function estimatePerProviderGap(avgPayment: number): number {
+  const captureRate = 0.65;
+  const potentialPerProvider = avgPayment / captureRate;
+  const gap = potentialPerProvider - avgPayment;
+  return Math.round(gap * 0.4); // conservative multiplier
+}
+
+/**
+ * Estimate capture rate from benchmark adoption rates and E&M percentages.
+ * Returns 0-1 representing what percentage of potential revenue is captured.
+ */
+export function estimateCaptureRate(
+  ccmAdoption: number,
+  rpmAdoption: number,
+  bhiAdoption: number,
+  awvAdoption: number,
+  pct99214: number,
+  pct99215: number
+): number {
+  // E&M coding efficiency (higher 99214/99215 = better capture)
+  const emScore = Math.min((pct99214 || 0) + (pct99215 || 0) * 1.5, 1.0);
+
+  // Care management adoption (weighted average)
+  const cmScore =
+    (ccmAdoption || 0) * 0.3 +
+    (rpmAdoption || 0) * 0.25 +
+    (awvAdoption || 0) * 0.25 +
+    (bhiAdoption || 0) * 0.2;
+
+  // Weighted: 50% E&M, 50% care management
+  const raw = emScore * 0.5 + cmScore * 0.5;
+
+  // Scale to realistic range (0.35 - 0.95)
+  return Math.max(0.35, Math.min(0.95, raw * 0.6 + 0.35));
 }
