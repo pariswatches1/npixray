@@ -113,6 +113,34 @@ export function cityToSlug(city: string): string {
   return city.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/-+$/, "").replace(/^-+/, "");
 }
 
+/**
+ * Reverse-lookup a specialty slug to the actual specialty name.
+ * First checks benchmarks, then falls back to the providers table
+ * (which has many more specialties like Nurse Practitioner, etc.)
+ */
+export async function slugToSpecialtyName(slug: string): Promise<string | null> {
+  // First check benchmarks (fast, in-memory)
+  const benchmarks = await getAllBenchmarks();
+  for (const b of benchmarks) {
+    if (specialtyToSlug(b.specialty) === slug) return b.specialty;
+  }
+
+  // Fall back to providers table for specialties not in benchmarks
+  const allSpecialties: any[] = USE_NEON
+    ? await queryAll("SELECT DISTINCT specialty FROM providers WHERE specialty != '' ORDER BY specialty")
+    : (() => {
+        const db = getDb();
+        if (!db) return [];
+        return db.prepare("SELECT DISTINCT specialty FROM providers WHERE specialty != '' ORDER BY specialty").all();
+      })();
+
+  for (const row of allSpecialties) {
+    if (specialtyToSlug(row.specialty) === slug) return row.specialty;
+  }
+
+  return null;
+}
+
 // ── Interfaces ───────────────────────────────────────────
 
 export interface ProviderRow {
