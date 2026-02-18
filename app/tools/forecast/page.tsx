@@ -19,6 +19,9 @@ export const metadata: Metadata = {
     "12-month revenue projection",
     "healthcare revenue calculator",
   ],
+  alternates: {
+    canonical: "https://npixray.com/tools/forecast",
+  },
   openGraph: {
     title: "Revenue Forecast Calculator | NPIxray",
     description:

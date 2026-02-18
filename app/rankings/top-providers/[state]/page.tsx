@@ -29,6 +29,9 @@ export async function generateMetadata({
   return {
     title: `Top 100 Medicare Providers in ${name} | NPIxray`,
     description: `See the top 100 highest-earning Medicare providers in ${name}, ranked by total Medicare payments. View revenue data, patient counts, and specialties.`,
+    alternates: {
+      canonical: `https://npixray.com/rankings/top-providers/${slug}`,
+    },
     openGraph: {
       title: `Top 100 Medicare Providers in ${name} | NPIxray`,
       description: `Top 100 Medicare providers in ${name} ranked by total payments.`,

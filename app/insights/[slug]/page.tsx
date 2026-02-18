@@ -34,6 +34,7 @@ import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { StatCard } from "@/components/seo/stat-card";
 import { ProviderTable } from "@/components/seo/provider-table";
 import { ScanCTA } from "@/components/seo/scan-cta";
+import { RelatedLinks as SiteRelatedLinks } from "@/components/seo/related-links";
 
 export const dynamic = 'force-dynamic';
 
@@ -137,6 +138,9 @@ export async function generateMetadata({
   return {
     title: `${config.title} — Medicare Data Report | NPIxray`,
     description: config.description,
+    alternates: {
+      canonical: `https://npixray.com/insights/${slug}`,
+    },
     openGraph: {
       title: `${config.title} | NPIxray`,
       description: config.description,
@@ -928,6 +932,9 @@ export default async function InsightPage({
           />
         </div>
       </section>
+
+      {/* Site-Wide Related Links */}
+      <SiteRelatedLinks pageType="insight" currentSlug={slug} />
 
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-16">
         <ScanCTA />

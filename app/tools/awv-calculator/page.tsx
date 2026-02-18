@@ -16,6 +16,9 @@ export const metadata: Metadata = {
     "AWV completion rate",
     "Medicare wellness visit revenue",
   ],
+  alternates: {
+    canonical: "https://npixray.com/tools/awv-calculator",
+  },
   openGraph: {
     title: "AWV Revenue Calculator | NPIxray",
     description:

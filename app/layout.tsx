@@ -57,6 +57,9 @@ export const metadata: Metadata = {
       "Free AI-powered revenue analysis for medical practices. See exactly how much revenue you're leaving on the table.",
     images: ["/og-image.png"],
   },
+  alternates: {
+    canonical: "https://npixray.com",
+  },
   robots: {
     index: true,
     follow: true,

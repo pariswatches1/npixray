@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { ScanCTA } from "@/components/seo/scan-cta";
+import { RelatedLinks } from "@/components/seo/related-links";
 import {
   CompetitorComparison,
   type CompetitorData,
@@ -782,6 +783,9 @@ export default async function VsPage({
       </div>
 
       <CompetitorComparison competitor={competitor} faqs={faqs} />
+
+      {/* Related Links */}
+      <RelatedLinks pageType="compare" currentSlug={slug} />
 
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-16">
         <ScanCTA />

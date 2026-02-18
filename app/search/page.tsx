@@ -1,6 +1,16 @@
+import type { Metadata } from "next";
 import { Suspense } from "react";
 import { Loader2 } from "lucide-react";
 import { SearchResults } from "@/components/scanner/search-results";
+
+export const metadata: Metadata = {
+  title: "Search Medicare Providers | NPIxray",
+  description:
+    "Search 1.175M+ Medicare providers by name, specialty, or location. View billing data and revenue analysis instantly.",
+  alternates: {
+    canonical: "https://npixray.com/search",
+  },
+};
 
 function SearchFallback() {
   return (

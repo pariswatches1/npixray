@@ -26,6 +26,9 @@ export const metadata: Metadata = {
     "largest healthcare cities",
     "city Medicare data",
   ],
+  alternates: {
+    canonical: "https://npixray.com/rankings/top-cities",
+  },
   openGraph: {
     title: "Top 100 Medicare Cities by Provider Count | NPIxray",
     description:

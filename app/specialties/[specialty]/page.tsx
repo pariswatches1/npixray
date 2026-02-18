@@ -13,6 +13,7 @@ import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { StatCard } from "@/components/seo/stat-card";
 import { ProviderTable } from "@/components/seo/provider-table";
 import { ScanCTA } from "@/components/seo/scan-cta";
+import { RelatedLinks } from "@/components/seo/related-links";
 
 export const dynamic = 'force-dynamic';
 
@@ -33,6 +34,9 @@ export async function generateMetadata({
   return {
     title: `${benchmark.specialty} Medicare Analysis — ${formatNumber(benchmark.provider_count)} Providers | NPIxray`,
     description: `Medicare revenue analysis for ${benchmark.specialty}: ${formatNumber(benchmark.provider_count)} providers, ${formatCurrency(benchmark.avg_total_payment)} avg payment, ${(benchmark.ccm_adoption_rate * 100).toFixed(0)}% CCM adoption. See E&M coding and care management data.`,
+    alternates: {
+      canonical: `https://npixray.com/specialties/${slug}`,
+    },
     openGraph: {
       title: `${benchmark.specialty} Medicare Analysis | NPIxray`,
       description: `National Medicare data for ${benchmark.specialty}: ${formatNumber(benchmark.provider_count)} providers with ${formatCurrency(benchmark.avg_total_payment)} average total payment.`,
@@ -304,6 +308,9 @@ export default async function SpecialtyPage({
           </div>
         </section>
       )}
+
+      {/* Related Links */}
+      <RelatedLinks pageType="specialty" currentSlug={slug} context={{ specialty: slug }} />
 
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-16">
         <ScanCTA />

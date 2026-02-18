@@ -16,6 +16,9 @@ export const metadata: Metadata = {
     "specialty revenue comparison",
     "practice performance benchmark",
   ],
+  alternates: {
+    canonical: "https://npixray.com/tools/practice-benchmark",
+  },
   openGraph: {
     title: "Practice Benchmark Tool | NPIxray",
     description:

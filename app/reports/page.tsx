@@ -35,6 +35,9 @@ export const metadata: Metadata = {
     "healthcare revenue report",
     "CMS data analysis 2026",
   ],
+  alternates: {
+    canonical: "https://npixray.com/reports",
+  },
   openGraph: {
     title: "Medicare Revenue Report Cards 2026 | NPIxray",
     description:

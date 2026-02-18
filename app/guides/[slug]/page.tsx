@@ -17,6 +17,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { TrackPageView } from "@/components/analytics/track-pageview";
+import { RelatedLinks } from "@/components/seo/related-links";
 
 // ────────────────────────────────────────────────────────────
 // Guide data — all content lives here for easy maintenance
@@ -565,6 +566,9 @@ export async function generateMetadata({
   return {
     title: guide.metaTitle,
     description: guide.metaDescription,
+    alternates: {
+      canonical: `https://npixray.com/guides/${slug}`,
+    },
     openGraph: {
       title: guide.metaTitle,
       description: guide.metaDescription,
@@ -822,32 +826,9 @@ export default async function GuidePage({
         </Link>
       </div>
 
-      {/* Related Guides */}
-      <div className="mt-12 pt-8 border-t border-dark-50/50">
-        <h3 className="text-sm font-semibold uppercase tracking-wider text-[var(--text-secondary)] mb-4">
-          Continue Reading
-        </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {Object.entries(GUIDES)
-            .filter(([key]) => key !== slug)
-            .slice(0, 2)
-            .map(([key, related]) => (
-              <Link
-                key={key}
-                href={`/guides/${key}`}
-                className="group rounded-xl border border-dark-50/80 bg-dark-400/30 p-4 hover:border-gold/20 transition-colors"
-              >
-                <p className="text-sm font-semibold group-hover:text-gold transition-colors mb-1">
-                  {related.title}
-                </p>
-                <p className="text-xs text-[var(--text-secondary)] flex items-center gap-2">
-                  <span className="font-mono text-gold">{related.revenue}</span>
-                  <span>·</span>
-                  <span>{related.readTime}</span>
-                </p>
-              </Link>
-            ))}
-        </div>
+      {/* Related Links */}
+      <div className="mt-12">
+        <RelatedLinks pageType="guide" currentSlug={slug} />
       </div>
     </article>
   );

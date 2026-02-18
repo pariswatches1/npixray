@@ -23,6 +23,9 @@ export const metadata: Metadata = {
     "specialty benchmarks",
     "healthcare specialty comparison",
   ],
+  alternates: {
+    canonical: "https://npixray.com/rankings/top-specialties",
+  },
   openGraph: {
     title: "Top Medicare Specialties by Revenue — Rankings | NPIxray",
     description:

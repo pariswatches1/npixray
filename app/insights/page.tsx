@@ -34,6 +34,9 @@ export const metadata: Metadata = {
     "Medicare payment trends",
     "care management adoption",
   ],
+  alternates: {
+    canonical: "https://npixray.com/insights",
+  },
   openGraph: {
     title: "Medicare Data Insights & Reports | NPIxray",
     description:

@@ -39,6 +39,9 @@ export async function generateMetadata({
   return {
     title: `${specialtyName} in ${stateName} — ${formatNumber(stats.count)} Providers | NPIxray`,
     description: `${specialtyName} Medicare data in ${stateName}: ${formatNumber(stats.count)} providers, ${formatCurrency(stats.totalPayment)} total payments, ${formatCurrency(stats.avgPayment)} average per provider.`,
+    alternates: {
+      canonical: `https://npixray.com/states/${stateSlug}/specialties/${specSlug}`,
+    },
     openGraph: {
       title: `${specialtyName} in ${stateName} | NPIxray`,
       description: `Explore ${specialtyName} Medicare billing data for ${formatNumber(stats.count)} providers in ${stateName}.`,

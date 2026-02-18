@@ -12,6 +12,7 @@ import {
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { StatCard } from "@/components/seo/stat-card";
 import { ScanCTA } from "@/components/seo/scan-cta";
+import { RelatedLinks } from "@/components/seo/related-links";
 
 export const dynamic = 'force-dynamic';
 
@@ -28,6 +29,9 @@ export async function generateMetadata({
   return {
     title: `CPT ${codeUpper} — Medicare Billing Data: ${formatNumber(stats.totalServices)} claims, ${formatCurrency(stats.avgPayment)} avg payment | NPIxray`,
     description: `Medicare billing data for CPT/HCPCS code ${codeUpper}: ${formatNumber(stats.totalProviders)} providers, ${formatNumber(stats.totalServices)} total services, ${formatCurrency(stats.totalPayment)} total payments. See which specialties bill this code most.`,
+    alternates: {
+      canonical: `https://npixray.com/codes/${code}`,
+    },
     openGraph: {
       title: `CPT ${codeUpper} Medicare Data | NPIxray`,
       description: `${formatNumber(stats.totalProviders)} providers bill ${codeUpper} to Medicare with ${formatNumber(stats.totalServices)} total services and ${formatCurrency(stats.avgPayment)} average payment per service.`,
@@ -176,6 +180,9 @@ export default async function CodePage({
           </Link>
         </div>
       </section>
+
+      {/* Related Links */}
+      <RelatedLinks pageType="code" currentSlug={code} />
 
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-16">
         <ScanCTA />

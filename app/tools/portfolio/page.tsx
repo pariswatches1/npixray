@@ -17,6 +17,9 @@ export const metadata: Metadata = {
     "medical practice ROI",
     "acquisition portfolio tool",
   ],
+  alternates: {
+    canonical: "https://npixray.com/tools/portfolio",
+  },
   openGraph: {
     title: "Practice Portfolio Analysis | NPIxray",
     description:

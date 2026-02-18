@@ -16,6 +16,7 @@ import {
   TrendingUp,
   Heart,
 } from "lucide-react";
+import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 
 export const metadata: Metadata = {
   title: "Build on NPIxray — Healthcare Data API for Developers | NPIxray",
@@ -30,6 +31,9 @@ export const metadata: Metadata = {
     "CMS data API",
     "build with Medicare data",
   ],
+  alternates: {
+    canonical: "https://npixray.com/developers",
+  },
   openGraph: {
     title: "Build on NPIxray — Healthcare Data API for Developers",
     description:
@@ -103,6 +107,7 @@ const SHOWCASE = [
 export default function DevelopersPage() {
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+      <Breadcrumbs items={[{ label: "Developers" }]} />
       {/* Hero */}
       <div className="text-center mb-20">
         <div className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/5 px-4 py-1.5 mb-6">

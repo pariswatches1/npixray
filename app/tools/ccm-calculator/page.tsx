@@ -16,6 +16,9 @@ export const metadata: Metadata = {
     "CCM revenue potential",
     "chronic care management revenue",
   ],
+  alternates: {
+    canonical: "https://npixray.com/tools/ccm-calculator",
+  },
   openGraph: {
     title: "CCM Revenue Calculator | NPIxray",
     description:

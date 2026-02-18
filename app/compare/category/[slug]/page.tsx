@@ -1968,6 +1968,9 @@ export async function generateMetadata({
   return {
     title: cat.metaTitle,
     description: cat.metaDescription,
+    alternates: {
+      canonical: `https://npixray.com/compare/category/${slug}`,
+    },
     openGraph: {
       title: cat.metaTitle,
       description: cat.metaDescription,

@@ -5,6 +5,7 @@ import {
   getAllBenchmarks,
   specialtyToSlug,
 } from "@/lib/db-queries";
+import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 
 export const dynamic = 'force-dynamic';
 
@@ -19,6 +20,9 @@ export const metadata: Metadata = {
     "E&M coding comparison",
     "healthcare specialty data",
   ],
+  alternates: {
+    canonical: "https://npixray.com/compare",
+  },
   openGraph: {
     title: "Medicare Specialty Comparisons | NPIxray",
     description:
@@ -69,6 +73,7 @@ export default async function CompareHubPage() {
       <section className="relative overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gold/[0.03] rounded-full blur-3xl" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-20 pb-12 sm:pt-28 sm:pb-16">
+          <Breadcrumbs items={[{ label: "Compare Specialties" }]} />
           <div className="text-center">
             <div className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/5 px-4 py-1.5 mb-8">
               <ArrowLeftRight className="h-3.5 w-3.5 text-gold" />

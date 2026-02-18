@@ -31,6 +31,9 @@ export const metadata: Metadata = {
     "RPM adoption data",
     "E&M coding data",
   ],
+  alternates: {
+    canonical: "https://npixray.com/data-api",
+  },
   openGraph: {
     title: "NPIxray Open Data — Medicare Provider Statistics",
     description:

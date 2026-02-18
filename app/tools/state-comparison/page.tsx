@@ -15,6 +15,9 @@ export const metadata: Metadata = {
     "Medicare payment rates by state",
     "healthcare billing by state",
   ],
+  alternates: {
+    canonical: "https://npixray.com/tools/state-comparison",
+  },
   openGraph: {
     title: "State Comparison Tool | NPIxray",
     description:
