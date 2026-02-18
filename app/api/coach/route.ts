@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 import { BENCHMARKS } from "@/lib/benchmark-data";
 
-const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
+const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
 
 interface ChatMessage {
   role: "user" | "assistant";
@@ -122,7 +122,7 @@ ${specialty ? `8. The user's specialty is ${specialty}. Reference ${specialty} b
 }
 
 export async function POST(request: NextRequest) {
-  if (!ANTHROPIC_API_KEY) {
+  if (!GOOGLE_API_KEY) {
     return new Response(
       JSON.stringify({ error: "Coach API not configured" }),
       { status: 500, headers: { "Content-Type": "application/json" } }
@@ -145,36 +145,40 @@ export async function POST(request: NextRequest) {
 
     const systemPrompt = buildSystemPrompt(scanData, specialty);
 
-    // Call Claude API with streaming
-    const response = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": ANTHROPIC_API_KEY,
-        "anthropic-version": "2023-06-01",
-      },
-      body: JSON.stringify({
-        model: "claude-sonnet-4-5-20250929",
-        max_tokens: 1024,
-        system: systemPrompt,
-        messages: trimmedMessages.map((m) => ({
-          role: m.role,
-          content: m.content,
-        })),
-        stream: true,
-      }),
-    });
+    // Call Gemini API with streaming (SSE mode)
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:streamGenerateContent?alt=sse&key=${GOOGLE_API_KEY}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          system_instruction: {
+            parts: [{ text: systemPrompt }],
+          },
+          contents: trimmedMessages.map((m) => ({
+            role: m.role === "assistant" ? "model" : "user",
+            parts: [{ text: m.content }],
+          })),
+          generationConfig: {
+            maxOutputTokens: 1024,
+          },
+        }),
+      }
+    );
 
     if (!response.ok) {
       const errText = await response.text();
-      console.error("[coach] Claude API error:", response.status, errText);
+      console.error("[coach] Gemini API error:", response.status, errText);
       return new Response(
         JSON.stringify({ error: "AI service error" }),
         { status: 502, headers: { "Content-Type": "application/json" } }
       );
     }
 
-    // Stream the response back
+    // Stream the response back — parse Gemini SSE format and re-emit
+    // in the same { text: "..." } format the frontend expects
     const encoder = new TextEncoder();
     const stream = new ReadableStream({
       async start(controller) {
@@ -198,12 +202,11 @@ export async function POST(request: NextRequest) {
 
                 try {
                   const event = JSON.parse(data);
-                  if (
-                    event.type === "content_block_delta" &&
-                    event.delta?.type === "text_delta"
-                  ) {
+                  // Gemini SSE format: { candidates: [{ content: { parts: [{ text: "..." }] } }] }
+                  const text = event?.candidates?.[0]?.content?.parts?.[0]?.text;
+                  if (text) {
                     controller.enqueue(
-                      encoder.encode(`data: ${JSON.stringify({ text: event.delta.text })}\n\n`)
+                      encoder.encode(`data: ${JSON.stringify({ text })}\n\n`)
                     );
                   }
                 } catch {
