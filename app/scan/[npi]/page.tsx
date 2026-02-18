@@ -31,14 +31,16 @@ import { ActionPlanTab } from "@/components/report/action-plan-tab";
 import { EmailCaptureModal, EmailCaptureInline } from "@/components/report/email-capture";
 import { ShareResults } from "@/components/report/share-results";
 import { CompetitionTab } from "@/components/report/competition-tab";
-import { Users } from "lucide-react";
+import { ForecastTab } from "@/components/report/forecast-tab";
+import { Users, TrendingUp } from "lucide-react";
 
-type Tab = "overview" | "programs" | "coding" | "action-plan" | "competition";
+type Tab = "overview" | "programs" | "coding" | "action-plan" | "competition" | "forecast";
 
 const TABS: { id: Tab; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
   { id: "overview", label: "Overview", icon: LayoutDashboard },
   { id: "programs", label: "Programs", icon: Layers },
   { id: "coding", label: "Coding", icon: BarChart3 },
+  { id: "forecast", label: "12-Mo Forecast", icon: TrendingUp },
   { id: "action-plan", label: "Action Plan", icon: ClipboardList },
   { id: "competition", label: "Competition", icon: Users },
 ];
@@ -346,6 +348,7 @@ export default function ScanResultPage() {
         {activeTab === "overview" && <OverviewTab data={data} />}
         {activeTab === "programs" && <ProgramsTab data={data} />}
         {activeTab === "coding" && <CodingTab data={data} />}
+        {activeTab === "forecast" && <ForecastTab data={data} />}
         {activeTab === "action-plan" && <ActionPlanTab data={data} />}
         {activeTab === "competition" && <CompetitionTab npi={data.provider.npi} />}
       </div>
