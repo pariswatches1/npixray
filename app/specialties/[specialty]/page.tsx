@@ -113,6 +113,84 @@ export default async function SpecialtyPage({
         </div>
       </section>
 
+      {/* Data-Driven Specialty Intro */}
+      <section className="border-t border-dark-50/50 py-10 sm:py-14">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="prose prose-invert max-w-3xl text-[var(--text-secondary)] leading-relaxed space-y-4 text-[15px]">
+            <p>
+              {benchmark.specialty} is one of the most active Medicare specialties in the United States
+              {benchmark.provider_count >= 10000
+                ? `, with ${formatNumber(benchmark.provider_count)} providers billing Medicare nationally.`
+                : benchmark.provider_count >= 1000
+                ? `, represented by ${formatNumber(benchmark.provider_count)} providers across the country.`
+                : `, with a focused cohort of ${formatNumber(benchmark.provider_count)} providers participating in Medicare.`}
+              {' '}The average {benchmark.specialty} provider treats{' '}
+              {formatNumber(benchmark.avg_medicare_patients)} Medicare beneficiaries and receives{' '}
+              {formatCurrency(benchmark.avg_total_payment)} in total annual Medicare payments
+              {benchmark.avg_revenue_per_patient > 500
+                ? `, translating to ${formatCurrency(benchmark.avg_revenue_per_patient)} per patient — a figure that signals high-acuity care and complex case management.`
+                : benchmark.avg_revenue_per_patient > 200
+                ? `, yielding ${formatCurrency(benchmark.avg_revenue_per_patient)} per beneficiary on average.`
+                : `, averaging ${formatCurrency(benchmark.avg_revenue_per_patient)} per beneficiary — a level that may indicate room for improved reimbursement through more precise documentation and coding.`}
+            </p>
+
+            <p>
+              Evaluation and Management coding patterns reveal how {benchmark.specialty} providers
+              characterize visit complexity.{' '}
+              {(() => {
+                const pct213 = emTotal > 0 ? (benchmark.pct_99213 / emTotal) * 100 : benchmark.pct_99213 * 100;
+                const pct214 = emTotal > 0 ? (benchmark.pct_99214 / emTotal) * 100 : benchmark.pct_99214 * 100;
+                const pct215 = emTotal > 0 ? (benchmark.pct_99215 / emTotal) * 100 : benchmark.pct_99215 * 100;
+                if (pct214 > 50) {
+                  return `The dominant code is 99214 at ${pct214.toFixed(1)}% of E&M visits, reflecting moderate-to-high complexity encounters that are typical when managing established patients with multiple chronic conditions. Meanwhile, 99213 accounts for ${pct213.toFixed(1)}% and high-complexity 99215 visits represent ${pct215.toFixed(1)}% of the mix.`;
+                } else if (pct213 > 50) {
+                  return `The most frequently billed code is 99213 at ${pct213.toFixed(1)}%, suggesting a large share of straightforward follow-up visits. Only ${pct214.toFixed(1)}% of encounters are coded as 99214, and ${pct215.toFixed(1)}% as 99215 — which may indicate under-coding if the patient population carries significant chronic disease burden.`;
+                } else if (pct215 > 20) {
+                  return `Notably, 99215 makes up ${pct215.toFixed(1)}% of E&M visits — well above most specialties — indicating that ${benchmark.specialty} providers frequently manage highly complex patients. The remaining mix is ${pct214.toFixed(1)}% at 99214 and ${pct213.toFixed(1)}% at 99213.`;
+                } else {
+                  return `The E&M mix shows ${pct214.toFixed(1)}% of visits coded as 99214, ${pct213.toFixed(1)}% as 99213, and ${pct215.toFixed(1)}% as 99215. This distribution is worth reviewing against actual patient complexity to ensure documentation supports appropriate reimbursement levels.`;
+                }
+              })()}
+            </p>
+
+            <p>
+              {(() => {
+                const ccmPct = (benchmark.ccm_adoption_rate * 100);
+                const rpmPct = (benchmark.rpm_adoption_rate * 100);
+                const bhiPct = (benchmark.bhi_adoption_rate * 100);
+                const awvPct = (benchmark.awv_adoption_rate * 100);
+                const lowPrograms = [
+                  ...(ccmPct < 10 ? [`Chronic Care Management (${ccmPct.toFixed(1)}%)`] : []),
+                  ...(rpmPct < 5 ? [`Remote Patient Monitoring (${rpmPct.toFixed(1)}%)`] : []),
+                  ...(bhiPct < 5 ? [`Behavioral Health Integration (${bhiPct.toFixed(1)}%)`] : []),
+                ];
+                const parts: string[] = [];
+
+                if (lowPrograms.length > 0) {
+                  parts.push(`Care management program adoption presents a significant revenue opportunity for ${benchmark.specialty} practices. ${lowPrograms.join(', ')} ${lowPrograms.length === 1 ? 'remains' : 'remain'} substantially underutilized relative to the eligible patient population.`);
+                } else {
+                  parts.push(`${benchmark.specialty} shows relatively strong adoption across care management programs compared to many specialties.`);
+                }
+
+                if (awvPct < 50) {
+                  parts.push(` Annual Wellness Visit adoption sits at just ${awvPct.toFixed(1)}%, well below the 70% target — meaning a majority of eligible Medicare beneficiaries are not receiving this preventive service, and practices are missing a straightforward billing opportunity.`);
+                } else if (awvPct < 70) {
+                  parts.push(` Annual Wellness Visit adoption is at ${awvPct.toFixed(1)}%, approaching but still below the 70% target benchmark.`);
+                } else {
+                  parts.push(` Annual Wellness Visits are well-adopted at ${awvPct.toFixed(1)}%, exceeding the 70% target.`);
+                }
+
+                if (ccmPct < 10 || rpmPct < 5) {
+                  parts.push(` Providers who implement these programs can unlock substantial per-patient monthly revenue while improving chronic disease outcomes — NPIxray can help identify exactly which patients qualify.`);
+                }
+
+                return parts.join('');
+              })()}
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* E&M Distribution */}
       <section className="border-t border-dark-50/50 py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
