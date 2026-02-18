@@ -33,6 +33,8 @@ import {
 import { calculateRevenueScore, estimatePercentile, getScoreTier } from "@/lib/revenue-score";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { ScanCTA } from "@/components/seo/scan-cta";
+import { ClaimProfile } from "@/components/provider/claim-profile";
+import { ShareButtons } from "@/components/reports/share-buttons";
 
 export const dynamic = 'force-dynamic';
 
@@ -57,6 +59,9 @@ export async function generateMetadata({
     openGraph: {
       title: `${fullName} — ${provider.specialty} | NPIxray`,
       description: `Medicare billing profile for ${fullName} in ${city}, ${state}. ${formatNumber(provider.total_beneficiaries)} patients, ${formatCurrency(provider.total_medicare_payment)} total payment.`,
+    },
+    twitter: {
+      card: "summary_large_image",
     },
   };
 }
@@ -312,6 +317,19 @@ export default async function ProviderProfilePage({
                 </div>
               </div>
             </div>
+          </div>
+        )}
+
+        {/* ── Claim Profile + Share ────────────────────────── */}
+        <ClaimProfile npi={npi} providerName={fullName} />
+        {scoreResult && (
+          <div className="mb-8">
+            <ShareButtons
+              url={`/provider/${npi}`}
+              twitterText={`My Medicare Revenue Score is ${scoreResult.overall}/100 (${scoreResult.label}) on NPIxray 📊`}
+              linkedinText={`Just discovered my practice's Revenue Score on NPIxray — scored ${scoreResult.overall}/100 (${scoreResult.label}). Interesting breakdown of E&M coding patterns, program adoption, and revenue efficiency.`}
+              title="Share Your Revenue Score"
+            />
           </div>
         )}
 
