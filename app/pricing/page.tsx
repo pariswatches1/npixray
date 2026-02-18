@@ -5,16 +5,19 @@ import {
   BarChart3,
   Users,
   Check,
-  ArrowRight,
   Shield,
   Star,
 } from "lucide-react";
 import { TrackPageView } from "@/components/analytics/track-pageview";
+import { PricingCTA } from "@/components/pricing/pricing-cta";
 
 export const metadata: Metadata = {
   title: "Pricing",
   description:
     "NPIxray pricing plans — from free NPI scans to full care management platform. Capture missed revenue at every level.",
+  alternates: {
+    canonical: "https://npixray.com/pricing",
+  },
 };
 
 const TIERS = [
@@ -26,6 +29,7 @@ const TIERS = [
     icon: Zap,
     cta: "Scan Now",
     ctaHref: "/",
+    planId: "free",
     highlight: false,
     features: [
       "Unlimited NPI scans",
@@ -44,6 +48,7 @@ const TIERS = [
     icon: BarChart3,
     cta: "Get Started",
     ctaHref: "#",
+    planId: "intelligence",
     highlight: true,
     badge: "Most Popular",
     features: [
@@ -66,6 +71,7 @@ const TIERS = [
     icon: Users,
     cta: "Contact Sales",
     ctaHref: "#",
+    planId: "care",
     highlight: false,
     features: [
       "Everything in Intelligence, plus:",
@@ -199,17 +205,11 @@ export default function PricingPage() {
                 </p>
 
                 {/* CTA Button */}
-                <Link
-                  href={tier.ctaHref}
-                  className={`flex items-center justify-center gap-2 rounded-xl py-3.5 text-sm font-semibold transition-all mb-8 ${
-                    tier.highlight
-                      ? "bg-gold text-dark hover:bg-gold-300 hover:shadow-lg hover:shadow-gold/20"
-                      : "border border-dark-50 text-[var(--text-secondary)] hover:border-gold/30 hover:text-gold"
-                  }`}
-                >
-                  {tier.cta}
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
+                <PricingCTA
+                  planId={tier.planId}
+                  label={tier.cta}
+                  highlight={tier.highlight}
+                />
 
                 {/* Features */}
                 <ul className="space-y-3 flex-1">
