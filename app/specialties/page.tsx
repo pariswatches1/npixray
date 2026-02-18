@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import Link from "next/link";
 import { Stethoscope, ArrowRight, Users, DollarSign, Heart, Activity, Brain, Clipboard } from "lucide-react";
 import { getAllBenchmarks, formatCurrency, formatNumber, specialtyToSlug } from "@/lib/db-queries";
@@ -8,7 +8,7 @@ import { ScanCTA } from "@/components/seo/scan-cta";
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: "Medicare Revenue by Specialty — 20 Specialties Analyzed | NPIxray",
+  title: "Medicare Revenue by Specialty â€” 20 Specialties Analyzed | NPIxray",
   description:
     "Medicare revenue analysis for 20+ medical specialties. See provider counts, average payments, E&M coding distributions, and CCM/RPM/AWV adoption rates by specialty.",
   keywords: [
@@ -26,8 +26,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default function SpecialtiesIndexPage() {
-  const benchmarks = getAllBenchmarks();
+export default async function SpecialtiesIndexPage() {
+  const benchmarks = await getAllBenchmarks();
 
   const totalProviders = benchmarks.reduce((sum, b) => sum + b.provider_count, 0);
 

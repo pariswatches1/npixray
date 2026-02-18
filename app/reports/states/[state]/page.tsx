@@ -63,7 +63,7 @@ export async function generateMetadata({
   const abbr = slugToStateAbbr(slug);
   if (!abbr) return { title: "State Not Found | NPIxray" };
 
-  const stats = getStateStats(abbr);
+  const stats = await getStateStats(abbr);
   if (!stats || !stats.totalProviders) return { title: "State Not Found | NPIxray" };
 
   const name = stateAbbrToName(abbr);
@@ -94,14 +94,16 @@ export default async function StateReportPage({
   const abbr = slugToStateAbbr(slug);
   if (!abbr) notFound();
 
-  const stats = getStateStats(abbr);
+  const stats = await getStateStats(abbr);
   if (!stats || !stats.totalProviders) notFound();
 
   const stateName = stateAbbrToName(abbr);
-  const specialties = getStateSpecialties(abbr, 20);
-  const cities = getStateCities(abbr, 20);
-  const providers = getStateTopProviders(abbr, 200);
-  const allBenchmarks = getAllBenchmarks();
+  const [specialties, cities, providers, allBenchmarks] = await Promise.all([
+    getStateSpecialties(abbr, 20),
+    getStateCities(abbr, 20),
+    getStateTopProviders(abbr, 200),
+    getAllBenchmarks(),
+  ]);
 
   // Calculate grade
   const captureRate = providers.length > 0

@@ -30,7 +30,7 @@ export async function generateMetadata({
   const abbr = slugToStateAbbr(slug);
   if (!abbr) return { title: "State Not Found" };
 
-  const stats = getStateStats(abbr);
+  const stats = await getStateStats(abbr);
   if (!stats || !stats.totalProviders) return { title: "State Not Found" };
 
   const name = stateAbbrToName(abbr);
@@ -53,13 +53,15 @@ export default async function StatePage({
   const abbr = slugToStateAbbr(slug);
   if (!abbr) notFound();
 
-  const stats = getStateStats(abbr);
+  const stats = await getStateStats(abbr);
   if (!stats || !stats.totalProviders) notFound();
 
   const stateName = stateAbbrToName(abbr);
-  const specialties = getStateSpecialties(abbr, 20);
-  const cities = getStateCities(abbr, 30);
-  const providers = getStateTopProviders(abbr, 50);
+  const [specialties, cities, providers] = await Promise.all([
+    getStateSpecialties(abbr, 20),
+    getStateCities(abbr, 30),
+    getStateTopProviders(abbr, 50),
+  ]);
 
   return (
     <>
