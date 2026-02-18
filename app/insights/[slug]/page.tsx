@@ -144,6 +144,14 @@ export async function generateMetadata({
   };
 }
 
+// ── Shared types for pre-fetched data ───────────────────────
+
+type Benchmarks = Awaited<ReturnType<typeof getAllBenchmarks>>;
+type States = Awaited<ReturnType<typeof getAllStates>>;
+type Codes = Awaited<ReturnType<typeof getTopCodes>>;
+type NationalStats = Awaited<ReturnType<typeof getNationalStats>>;
+type TopProviders = Awaited<ReturnType<typeof getTopProvidersByPayment>>;
+
 // ── Helper: CSS bar ──────────────────────────────────────
 
 function Bar({ value, max, color = "bg-gold" }: { value: number; max: number; color?: string }) {
@@ -181,13 +189,9 @@ function RelatedLinks({ links }: { links: { href: string; label: string }[] }) {
   );
 }
 
-// ── Content renderers ─────────────────────────────────────
+// ── Content renderers (all receive pre-fetched data as props) ──
 
-function MedicareBillingOverview() {
-  const stats = getNationalStats();
-  const benchmarks = getAllBenchmarks();
-  const codes = getTopCodes(10);
-
+function MedicareBillingOverview({ stats, benchmarks, codes }: { stats: NationalStats; benchmarks: Benchmarks; codes: Codes }) {
   return (
     <>
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-12">
@@ -226,21 +230,20 @@ function MedicareBillingOverview() {
   );
 }
 
-function HighestPayingSpecialties() {
-  const benchmarks = getAllBenchmarks()
-    .sort((a, b) => b.avg_total_payment - a.avg_total_payment);
-  const maxPayment = benchmarks[0]?.avg_total_payment ?? 1;
+function HighestPayingSpecialties({ benchmarks }: { benchmarks: Benchmarks }) {
+  const sorted = [...benchmarks].sort((a, b) => b.avg_total_payment - a.avg_total_payment);
+  const maxPayment = sorted[0]?.avg_total_payment ?? 1;
 
   return (
     <>
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-12">
-        <StatCard label="Specialties Analyzed" value={String(benchmarks.length)} icon={Stethoscope} />
-        <StatCard label="Highest Avg Payment" value={benchmarks[0] ? formatCurrency(benchmarks[0].avg_total_payment) : "N/A"} icon={DollarSign} sub={benchmarks[0]?.specialty} />
-        <StatCard label="Total Providers" value={formatNumber(benchmarks.reduce((s, b) => s + b.provider_count, 0))} icon={Users} />
+        <StatCard label="Specialties Analyzed" value={String(sorted.length)} icon={Stethoscope} />
+        <StatCard label="Highest Avg Payment" value={sorted[0] ? formatCurrency(sorted[0].avg_total_payment) : "N/A"} icon={DollarSign} sub={sorted[0]?.specialty} />
+        <StatCard label="Total Providers" value={formatNumber(sorted.reduce((s, b) => s + b.provider_count, 0))} icon={Users} />
       </div>
       <h3 className="text-lg font-semibold mb-4">Specialties Ranked by Average Medicare Payment</h3>
       <div className="space-y-3 max-w-3xl">
-        {benchmarks.map((b, i) => (
+        {sorted.map((b, i) => (
           <div key={b.specialty} className="rounded-xl border border-dark-50/50 bg-dark-400/30 p-4">
             <div className="flex items-center justify-between mb-2">
               <Link href={`/specialties/${specialtyToSlug(b.specialty)}`} className="text-sm font-semibold hover:text-gold transition-colors">
@@ -263,8 +266,7 @@ function HighestPayingSpecialties() {
   );
 }
 
-function MostCommonBillingCodes() {
-  const codes = getTopCodes(25);
+function MostCommonBillingCodes({ codes }: { codes: Codes }) {
   const maxServices = codes[0]?.totalServices ?? 1;
 
   return (
@@ -298,21 +300,20 @@ function MostCommonBillingCodes() {
   );
 }
 
-function CcmAdoptionRates() {
-  const benchmarks = getAllBenchmarks()
-    .sort((a, b) => b.ccm_adoption_rate - a.ccm_adoption_rate);
-  const avgRate = benchmarks.reduce((s, b) => s + b.ccm_adoption_rate, 0) / benchmarks.length;
+function CcmAdoptionRates({ benchmarks }: { benchmarks: Benchmarks }) {
+  const sorted = [...benchmarks].sort((a, b) => b.ccm_adoption_rate - a.ccm_adoption_rate);
+  const avgRate = sorted.reduce((s, b) => s + b.ccm_adoption_rate, 0) / sorted.length;
 
   return (
     <>
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-12">
         <StatCard label="Avg CCM Adoption" value={`${(avgRate * 100).toFixed(1)}%`} icon={Heart} sub="across all specialties" />
-        <StatCard label="Highest Adoption" value={`${(benchmarks[0]?.ccm_adoption_rate * 100).toFixed(1)}%`} icon={TrendingUp} sub={benchmarks[0]?.specialty} />
+        <StatCard label="Highest Adoption" value={`${(sorted[0]?.ccm_adoption_rate * 100).toFixed(1)}%`} icon={TrendingUp} sub={sorted[0]?.specialty} />
         <StatCard label="Target Rate" value="15%" icon={Clipboard} sub="industry benchmark" />
       </div>
       <h3 className="text-lg font-semibold mb-4">CCM Adoption by Specialty</h3>
       <div className="space-y-3 max-w-3xl">
-        {benchmarks.map((b) => (
+        {sorted.map((b) => (
           <div key={b.specialty} className="rounded-xl border border-dark-50/50 bg-dark-400/30 p-4">
             <div className="flex items-center justify-between mb-2">
               <Link href={`/specialties/${specialtyToSlug(b.specialty)}`} className="text-sm font-semibold hover:text-gold transition-colors">{b.specialty}</Link>
@@ -333,21 +334,20 @@ function CcmAdoptionRates() {
   );
 }
 
-function RpmAdoptionRates() {
-  const benchmarks = getAllBenchmarks()
-    .sort((a, b) => b.rpm_adoption_rate - a.rpm_adoption_rate);
-  const avgRate = benchmarks.reduce((s, b) => s + b.rpm_adoption_rate, 0) / benchmarks.length;
+function RpmAdoptionRates({ benchmarks }: { benchmarks: Benchmarks }) {
+  const sorted = [...benchmarks].sort((a, b) => b.rpm_adoption_rate - a.rpm_adoption_rate);
+  const avgRate = sorted.reduce((s, b) => s + b.rpm_adoption_rate, 0) / sorted.length;
 
   return (
     <>
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-12">
         <StatCard label="Avg RPM Adoption" value={`${(avgRate * 100).toFixed(1)}%`} icon={Activity} sub="across all specialties" />
-        <StatCard label="Highest Adoption" value={`${(benchmarks[0]?.rpm_adoption_rate * 100).toFixed(1)}%`} icon={TrendingUp} sub={benchmarks[0]?.specialty} />
+        <StatCard label="Highest Adoption" value={`${(sorted[0]?.rpm_adoption_rate * 100).toFixed(1)}%`} icon={TrendingUp} sub={sorted[0]?.specialty} />
         <StatCard label="Target Rate" value="10%" icon={Clipboard} sub="industry benchmark" />
       </div>
       <h3 className="text-lg font-semibold mb-4">RPM Adoption by Specialty</h3>
       <div className="space-y-3 max-w-3xl">
-        {benchmarks.map((b) => (
+        {sorted.map((b) => (
           <div key={b.specialty} className="rounded-xl border border-dark-50/50 bg-dark-400/30 p-4">
             <div className="flex items-center justify-between mb-2">
               <Link href={`/specialties/${specialtyToSlug(b.specialty)}`} className="text-sm font-semibold hover:text-gold transition-colors">{b.specialty}</Link>
@@ -367,21 +367,20 @@ function RpmAdoptionRates() {
   );
 }
 
-function AwvCompletionRates() {
-  const benchmarks = getAllBenchmarks()
-    .sort((a, b) => b.awv_adoption_rate - a.awv_adoption_rate);
-  const avgRate = benchmarks.reduce((s, b) => s + b.awv_adoption_rate, 0) / benchmarks.length;
+function AwvCompletionRates({ benchmarks }: { benchmarks: Benchmarks }) {
+  const sorted = [...benchmarks].sort((a, b) => b.awv_adoption_rate - a.awv_adoption_rate);
+  const avgRate = sorted.reduce((s, b) => s + b.awv_adoption_rate, 0) / sorted.length;
 
   return (
     <>
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-12">
         <StatCard label="Avg AWV Rate" value={`${(avgRate * 100).toFixed(1)}%`} icon={Clipboard} sub="across all specialties" />
-        <StatCard label="Highest Rate" value={`${(benchmarks[0]?.awv_adoption_rate * 100).toFixed(1)}%`} icon={TrendingUp} sub={benchmarks[0]?.specialty} />
+        <StatCard label="Highest Rate" value={`${(sorted[0]?.awv_adoption_rate * 100).toFixed(1)}%`} icon={TrendingUp} sub={sorted[0]?.specialty} />
         <StatCard label="Target Rate" value="70%" icon={Clipboard} sub="recommended benchmark" />
       </div>
       <h3 className="text-lg font-semibold mb-4">AWV Completion by Specialty</h3>
       <div className="space-y-3 max-w-3xl">
-        {benchmarks.map((b) => (
+        {sorted.map((b) => (
           <div key={b.specialty} className="rounded-xl border border-dark-50/50 bg-dark-400/30 p-4">
             <div className="flex items-center justify-between mb-2">
               <Link href={`/specialties/${specialtyToSlug(b.specialty)}`} className="text-sm font-semibold hover:text-gold transition-colors">{b.specialty}</Link>
@@ -401,21 +400,20 @@ function AwvCompletionRates() {
   );
 }
 
-function BhiScreeningRates() {
-  const benchmarks = getAllBenchmarks()
-    .sort((a, b) => b.bhi_adoption_rate - a.bhi_adoption_rate);
-  const avgRate = benchmarks.reduce((s, b) => s + b.bhi_adoption_rate, 0) / benchmarks.length;
+function BhiScreeningRates({ benchmarks }: { benchmarks: Benchmarks }) {
+  const sorted = [...benchmarks].sort((a, b) => b.bhi_adoption_rate - a.bhi_adoption_rate);
+  const avgRate = sorted.reduce((s, b) => s + b.bhi_adoption_rate, 0) / sorted.length;
 
   return (
     <>
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-12">
         <StatCard label="Avg BHI Rate" value={`${(avgRate * 100).toFixed(1)}%`} icon={Brain} sub="across all specialties" />
-        <StatCard label="Highest Rate" value={`${(benchmarks[0]?.bhi_adoption_rate * 100).toFixed(1)}%`} icon={TrendingUp} sub={benchmarks[0]?.specialty} />
+        <StatCard label="Highest Rate" value={`${(sorted[0]?.bhi_adoption_rate * 100).toFixed(1)}%`} icon={TrendingUp} sub={sorted[0]?.specialty} />
         <StatCard label="Target Rate" value="10%" icon={Clipboard} sub="industry benchmark" />
       </div>
       <h3 className="text-lg font-semibold mb-4">BHI Screening by Specialty</h3>
       <div className="space-y-3 max-w-3xl">
-        {benchmarks.map((b) => (
+        {sorted.map((b) => (
           <div key={b.specialty} className="rounded-xl border border-dark-50/50 bg-dark-400/30 p-4">
             <div className="flex items-center justify-between mb-2">
               <Link href={`/specialties/${specialtyToSlug(b.specialty)}`} className="text-sm font-semibold hover:text-gold transition-colors">{b.specialty}</Link>
@@ -435,9 +433,8 @@ function BhiScreeningRates() {
   );
 }
 
-function EmCodingPatterns() {
-  const benchmarks = getAllBenchmarks()
-    .sort((a, b) => b.pct_99214 - a.pct_99214);
+function EmCodingPatterns({ benchmarks }: { benchmarks: Benchmarks }) {
+  const sorted = [...benchmarks].sort((a, b) => b.pct_99214 - a.pct_99214);
 
   return (
     <>
@@ -448,7 +445,7 @@ function EmCodingPatterns() {
       </div>
       <h3 className="text-lg font-semibold mb-4">E&M Distribution by Specialty</h3>
       <div className="space-y-4 max-w-3xl">
-        {benchmarks.map((b) => {
+        {sorted.map((b) => {
           const total = b.pct_99213 + b.pct_99214 + b.pct_99215;
           const p13 = total > 0 ? (b.pct_99213 / total) * 100 : 0;
           const p14 = total > 0 ? (b.pct_99214 / total) * 100 : 0;
@@ -480,21 +477,20 @@ function EmCodingPatterns() {
   );
 }
 
-function MedicareRevenueByState() {
-  const states = getAllStates()
-    .sort((a, b) => b.totalPayment - a.totalPayment);
-  const maxPayment = states[0]?.totalPayment ?? 1;
+function MedicareRevenueByState({ states }: { states: States }) {
+  const sorted = [...states].sort((a, b) => b.totalPayment - a.totalPayment);
+  const maxPayment = sorted[0]?.totalPayment ?? 1;
 
   return (
     <>
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-12">
-        <StatCard label="States Tracked" value={String(states.length)} icon={MapPin} />
-        <StatCard label="Total Payment" value={formatCurrency(states.reduce((s, st) => s + st.totalPayment, 0))} icon={DollarSign} />
-        <StatCard label="Total Providers" value={formatNumber(states.reduce((s, st) => s + st.totalProviders, 0))} icon={Users} />
+        <StatCard label="States Tracked" value={String(sorted.length)} icon={MapPin} />
+        <StatCard label="Total Payment" value={formatCurrency(sorted.reduce((s, st) => s + st.totalPayment, 0))} icon={DollarSign} />
+        <StatCard label="Total Providers" value={formatNumber(sorted.reduce((s, st) => s + st.totalProviders, 0))} icon={Users} />
       </div>
       <h3 className="text-lg font-semibold mb-4">States Ranked by Total Medicare Payment</h3>
       <div className="space-y-3 max-w-3xl">
-        {states.slice(0, 25).map((st, i) => (
+        {sorted.slice(0, 25).map((st, i) => (
           <div key={st.state} className="rounded-xl border border-dark-50/50 bg-dark-400/30 p-4">
             <div className="flex items-center justify-between mb-2">
               <Link href={`/states/${stateToSlug(st.state)}`} className="text-sm font-semibold hover:text-gold transition-colors">
@@ -516,8 +512,7 @@ function MedicareRevenueByState() {
   );
 }
 
-function RevenueGapBySpecialty() {
-  const benchmarks = getAllBenchmarks();
+function RevenueGapBySpecialty({ benchmarks }: { benchmarks: Benchmarks }) {
   // Estimate revenue gap from care management underadoption
   const withGap = benchmarks.map((b) => {
     const ccmGap = Math.max(0.15 - b.ccm_adoption_rate, 0) * b.avg_medicare_patients * 62;
@@ -564,9 +559,7 @@ function RevenueGapBySpecialty() {
   );
 }
 
-function TopBillingProviders() {
-  const providers = getTopProvidersByPayment(50);
-
+function TopBillingProviders({ providers }: { providers: TopProviders }) {
   return (
     <>
       <div className="grid grid-cols-2 gap-4 mb-12">
@@ -584,8 +577,7 @@ function TopBillingProviders() {
   );
 }
 
-function RuralVsUrbanBilling() {
-  const states = getAllStates();
+function RuralVsUrbanBilling({ states }: { states: States }) {
   // Proxy: states with fewer providers tend to be more rural
   const sorted = [...states].sort((a, b) => a.totalProviders - b.totalProviders);
   const rural = sorted.slice(0, Math.floor(sorted.length / 2));
@@ -648,8 +640,7 @@ function RuralVsUrbanBilling() {
   );
 }
 
-function NewPatientVsEstablished() {
-  const codes = getTopCodes(200);
+function NewPatientVsEstablished({ codes }: { codes: Codes }) {
   // Find new patient codes (99201-99205) and established (99211-99215)
   const newPatientCodes = ["99201", "99202", "99203", "99204", "99205"];
   const estPatientCodes = ["99211", "99212", "99213", "99214", "99215"];
@@ -702,8 +693,7 @@ function NewPatientVsEstablished() {
   );
 }
 
-function ProcedureVsEvaluation() {
-  const benchmarks = getAllBenchmarks();
+function ProcedureVsEvaluation({ benchmarks }: { benchmarks: Benchmarks }) {
   // Use avg_total_services vs E&M percentages as a proxy
   const sorted = [...benchmarks].sort((a, b) => {
     const aEmPct = a.pct_99213 + a.pct_99214 + a.pct_99215;
@@ -746,14 +736,13 @@ function ProcedureVsEvaluation() {
   );
 }
 
-function MedicarePaymentTrends() {
-  const codes = getTopCodes(50);
-  const benchmarks = getAllBenchmarks();
-
+function MedicarePaymentTrends({ codes, benchmarks }: { codes: Codes; benchmarks: Benchmarks }) {
   // Payment distribution analysis
   const highValueCodes = codes.filter((c) => c.avgPayment > 200);
   const midValueCodes = codes.filter((c) => c.avgPayment >= 50 && c.avgPayment <= 200);
   const lowValueCodes = codes.filter((c) => c.avgPayment < 50);
+
+  const sortedBenchmarks = [...benchmarks].sort((a, b) => b.avg_total_payment - a.avg_total_payment);
 
   return (
     <>
@@ -784,7 +773,7 @@ function MedicarePaymentTrends() {
       )}
       <h3 className="text-lg font-semibold mb-4">Payment by Specialty (Avg per Provider)</h3>
       <div className="space-y-3 max-w-3xl">
-        {benchmarks.sort((a, b) => b.avg_total_payment - a.avg_total_payment).slice(0, 10).map((b, i) => (
+        {sortedBenchmarks.slice(0, 10).map((b, i) => (
           <div key={b.specialty} className="rounded-xl border border-dark-50/50 bg-dark-400/30 p-4">
             <div className="flex items-center justify-between mb-2">
               <Link href={`/specialties/${specialtyToSlug(b.specialty)}`} className="text-sm font-semibold hover:text-gold transition-colors">
@@ -793,7 +782,7 @@ function MedicarePaymentTrends() {
               </Link>
               <span className="text-sm font-bold font-mono text-gold">{formatCurrency(b.avg_total_payment)}</span>
             </div>
-            <Bar value={b.avg_total_payment} max={benchmarks[0]?.avg_total_payment ?? 1} />
+            <Bar value={b.avg_total_payment} max={sortedBenchmarks[0]?.avg_total_payment ?? 1} />
           </div>
         ))}
       </div>
@@ -806,40 +795,60 @@ function MedicarePaymentTrends() {
   );
 }
 
-// ── Render router ──────────────────────────────────────────
+// ── Render router (receives pre-fetched data) ───────────────
 
-function InsightContent({ slug }: { slug: string }) {
+function InsightContent({
+  slug,
+  benchmarks,
+  states,
+  codes10,
+  codes25,
+  codes50,
+  codes200,
+  nationalStats,
+  topProviders,
+}: {
+  slug: string;
+  benchmarks: Benchmarks;
+  states: States;
+  codes10: Codes;
+  codes25: Codes;
+  codes50: Codes;
+  codes200: Codes;
+  nationalStats: NationalStats;
+  topProviders: TopProviders;
+}) {
   switch (slug) {
     case "medicare-billing-overview":
-      return <MedicareBillingOverview />;
+      return <MedicareBillingOverview stats={nationalStats} benchmarks={benchmarks} codes={codes10} />;
     case "highest-paying-specialties":
-      return <HighestPayingSpecialties />;
+      return <HighestPayingSpecialties benchmarks={benchmarks} />;
     case "most-common-billing-codes":
-      return <MostCommonBillingCodes />;
+      return <MostCommonBillingCodes codes={codes25} />;
     case "ccm-adoption-rates":
-      return <CcmAdoptionRates />;
+      return <CcmAdoptionRates benchmarks={benchmarks} />;
     case "rpm-adoption-rates":
-      return <RpmAdoptionRates />;
+      return <RpmAdoptionRates benchmarks={benchmarks} />;
     case "awv-completion-rates":
-      return <AwvCompletionRates />;
+      return <AwvCompletionRates benchmarks={benchmarks} />;
     case "bhi-screening-rates":
-      return <BhiScreeningRates />;
+      return <BhiScreeningRates benchmarks={benchmarks} />;
     case "em-coding-patterns":
-      return <EmCodingPatterns />;
+      return <EmCodingPatterns benchmarks={benchmarks} />;
     case "medicare-revenue-by-state":
-      return <MedicareRevenueByState />;
+      return <MedicareRevenueByState states={states} />;
     case "revenue-gap-by-specialty":
-      return <RevenueGapBySpecialty />;
+      return <RevenueGapBySpecialty benchmarks={benchmarks} />;
     case "top-billing-providers":
-      return <TopBillingProviders />;
+      return <TopBillingProviders providers={topProviders} />;
     case "rural-vs-urban-billing":
-      return <RuralVsUrbanBilling />;
+      return <RuralVsUrbanBilling states={states} />;
     case "new-patient-vs-established":
-      return <NewPatientVsEstablished />;
+      return <NewPatientVsEstablished codes={codes200} />;
     case "procedure-vs-evaluation":
-      return <ProcedureVsEvaluation />;
+      return <ProcedureVsEvaluation benchmarks={benchmarks} />;
     case "medicare-payment-trends":
-      return <MedicarePaymentTrends />;
+      return <MedicarePaymentTrends codes={codes50} benchmarks={benchmarks} />;
     default:
       return null;
   }
@@ -857,6 +866,20 @@ export default async function InsightPage({
   if (!config) notFound();
 
   const Icon = config.icon;
+
+  // Pre-fetch ALL data at the async page level so sub-components
+  // receive resolved data (not Promises). This fixes the missing-await
+  // bug that caused 404s in production with Neon PostgreSQL.
+  const [benchmarks, states, codes10, codes25, codes50, codes200, nationalStats, topProviders] = await Promise.all([
+    getAllBenchmarks(),
+    getAllStates(),
+    getTopCodes(10),
+    getTopCodes(25),
+    getTopCodes(50),
+    getTopCodes(200),
+    getNationalStats(),
+    getTopProvidersByPayment(50),
+  ]);
 
   return (
     <>
@@ -892,7 +915,17 @@ export default async function InsightPage({
 
       <section className="border-t border-dark-50/50 py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <InsightContent slug={slug} />
+          <InsightContent
+            slug={slug}
+            benchmarks={benchmarks}
+            states={states}
+            codes10={codes10}
+            codes25={codes25}
+            codes50={codes50}
+            codes200={codes200}
+            nationalStats={nationalStats}
+            topProviders={topProviders}
+          />
         </div>
       </section>
 

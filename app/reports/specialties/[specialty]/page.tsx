@@ -47,8 +47,8 @@ export function generateStaticParams() {
   }));
 }
 
-function findSpecialtyBySlug(slug: string) {
-  const benchmarks = getAllBenchmarks();
+async function findSpecialtyBySlug(slug: string) {
+  const benchmarks = await getAllBenchmarks();
   return benchmarks.find((b) => specialtyToSlug(b.specialty) === slug) ?? null;
 }
 
@@ -58,7 +58,7 @@ export async function generateMetadata({
   params: Promise<{ specialty: string }>;
 }): Promise<Metadata> {
   const { specialty: slug } = await params;
-  const benchmark = findSpecialtyBySlug(slug);
+  const benchmark = await findSpecialtyBySlug(slug);
   if (!benchmark) return { title: "Specialty Not Found | NPIxray" };
 
   return {
@@ -85,11 +85,11 @@ export default async function SpecialtyReportPage({
   params: Promise<{ specialty: string }>;
 }) {
   const { specialty: slug } = await params;
-  const benchmark = findSpecialtyBySlug(slug);
+  const benchmark = await findSpecialtyBySlug(slug);
   if (!benchmark) notFound();
 
-  const providers = getSpecialtyProviders(benchmark.specialty, 200);
-  const allBenchmarks = getAllBenchmarks();
+  const providers = await getSpecialtyProviders(benchmark.specialty, 200);
+  const allBenchmarks = await getAllBenchmarks();
   const localBenchmark = BENCHMARKS[benchmark.specialty];
 
   // Calculate grade from adoption rates and coding patterns

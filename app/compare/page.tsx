@@ -54,8 +54,8 @@ function comparisonSlug(a: string, b: string): string {
   return `${specialtyToSlug(a)}-vs-${specialtyToSlug(b)}`;
 }
 
-export default function CompareHubPage() {
-  const benchmarks = getAllBenchmarks();
+export default async function CompareHubPage() {
+  const benchmarks = await getAllBenchmarks();
   const specialtyNames = new Set(benchmarks.map((b) => b.specialty));
 
   // Filter pairs to only those with available benchmarks

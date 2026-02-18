@@ -42,15 +42,15 @@ export const metadata: Metadata = {
   },
 };
 
-export default function ReportsIndexPage() {
-  const allStates = getAllStates();
-  const allBenchmarks = getAllBenchmarks();
+export default async function ReportsIndexPage() {
+  const allStates = await getAllStates();
+  const allBenchmarks = await getAllBenchmarks();
 
   // Build state cards with grades
-  const stateCards = allStates
+  const stateCards = (await Promise.all(allStates
     .filter((s) => STATE_LIST.some((sl) => sl.abbr === s.state))
-    .map((s) => {
-      const providers = getStateTopProviders(s.state, 200);
+    .map(async (s) => {
+      const providers = await getStateTopProviders(s.state, 200);
       const captureRate = providers.length > 0
         ? calculateCaptureRate(providers, allBenchmarks)
         : 0.55;
@@ -69,7 +69,7 @@ export default function ReportsIndexPage() {
         providers: s.totalProviders,
         missedRevenue,
       };
-    })
+    })))
     .sort((a, b) => {
       const gradeOrder: Record<string, number> = { A: 0, B: 1, C: 2, D: 3, F: 4 };
       return (gradeOrder[a.grade] ?? 5) - (gradeOrder[b.grade] ?? 5);
