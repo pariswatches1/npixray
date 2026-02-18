@@ -13,23 +13,12 @@ import {
   stateAbbrToName,
   stateToSlug,
   specialtyToSlug,
+  slugToSpecialtyName,
   formatCurrency,
   formatNumber,
 } from "@/lib/db-queries";
 
 export const dynamic = 'force-dynamic';
-
-/**
- * Reverse-lookup a specialty slug to the actual specialty name
- * by checking all benchmarks. Falls back to title-casing the slug.
- */
-async function slugToSpecialtyName(slug: string): Promise<string | null> {
-  const benchmarks = await getAllBenchmarks();
-  for (const b of benchmarks) {
-    if (specialtyToSlug(b.specialty) === slug) return b.specialty;
-  }
-  return null;
-}
 
 export async function generateMetadata({
   params,
