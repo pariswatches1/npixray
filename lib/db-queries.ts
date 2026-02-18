@@ -485,3 +485,44 @@ export function getSpecialtyScoreRankings(): any {
   if (!db) return [];
   return db.prepare("SELECT specialty, AVG(total_medicare_payment) as avgScore, COUNT(*) as providerCount FROM providers WHERE specialty != '' GROUP BY specialty HAVING COUNT(*) >= 10 ORDER BY avgScore DESC").all();
 }
+
+// ── Acquisition queries ─────────────────────────────────
+
+export function getAcquisitionTargets(filters: { state?: string; specialty?: string; minPatients?: number; maxRevenueScore?: number }, limit = 50): any {
+  const conds: string[] = ["total_beneficiaries > 0"];
+  const params: any[] = [];
+  if (filters.state) { conds.push("state = ?"); params.push(filters.state); }
+  if (filters.specialty) { conds.push("specialty = ?"); params.push(filters.specialty); }
+  if (filters.minPatients) { conds.push("total_beneficiaries >= ?"); params.push(filters.minPatients); }
+  const where = conds.length ? `WHERE ${conds.join(" AND ")}` : "";
+  params.push(limit);
+  const sql = `SELECT * FROM providers ${where} ORDER BY total_beneficiaries DESC LIMIT ?`;
+  if (USE_NEON) return queryAll(sql, params);
+  const db = getDb();
+  if (!db) return [];
+  return db.prepare(sql).all(...params);
+}
+
+export function getStateMarketStats(stateAbbr: string): any {
+  if (USE_NEON) return queryOne(`SELECT COUNT(*) as "totalProviders", SUM(total_medicare_payment) as "totalRevenue", AVG(total_medicare_payment) as "avgRevenue", SUM(total_beneficiaries) as "totalPatients", AVG(total_beneficiaries) as "avgPatients" FROM providers WHERE state = ? AND total_beneficiaries > 0`, [stateAbbr]).then(r => r ? { totalProviders: num(r.totalProviders ?? r.totalproviders), totalRevenue: num(r.totalRevenue ?? r.totalrevenue), avgRevenue: num(r.avgRevenue ?? r.avgrevenue), totalPatients: num(r.totalPatients ?? r.totalpatients), avgPatients: num(r.avgPatients ?? r.avgpatients) } : null);
+  const db = getDb();
+  if (!db) return null;
+  return db.prepare("SELECT COUNT(*) as totalProviders, SUM(total_medicare_payment) as totalRevenue, AVG(total_medicare_payment) as avgRevenue, SUM(total_beneficiaries) as totalPatients, AVG(total_beneficiaries) as avgPatients FROM providers WHERE state = ? AND total_beneficiaries > 0").get(stateAbbr) ?? null;
+}
+
+export function getStateSpecialtyBreakdown(stateAbbr: string): any {
+  if (USE_NEON) return queryAll(`SELECT specialty, COUNT(*) as count, AVG(total_medicare_payment) as "avgRevenue", AVG(total_beneficiaries) as "avgPatients", SUM(total_medicare_payment) as "totalRevenue" FROM providers WHERE state = ? AND specialty != '' AND total_beneficiaries > 0 GROUP BY specialty HAVING COUNT(*) >= 3 ORDER BY count DESC LIMIT 20`, [stateAbbr]).then(r => r.map((x: any) => ({ specialty: x.specialty, count: num(x.count), avgRevenue: num(x.avgRevenue ?? x.avgrevenue), avgPatients: num(x.avgPatients ?? x.avgpatients), totalRevenue: num(x.totalRevenue ?? x.totalrevenue) })));
+  const db = getDb();
+  if (!db) return [];
+  return db.prepare("SELECT specialty, COUNT(*) as count, AVG(total_medicare_payment) as avgRevenue, AVG(total_beneficiaries) as avgPatients, SUM(total_medicare_payment) as totalRevenue FROM providers WHERE state = ? AND specialty != '' AND total_beneficiaries > 0 GROUP BY specialty HAVING COUNT(*) >= 3 ORDER BY count DESC LIMIT 20").all(stateAbbr);
+}
+
+export function getMultipleProviders(npis: string[]): any {
+  if (!npis.length) return USE_NEON ? Promise.resolve([]) : [];
+  const placeholders = npis.map(() => "?").join(",");
+  const sql = `SELECT * FROM providers WHERE npi IN (${placeholders})`;
+  if (USE_NEON) return queryAll(sql, npis);
+  const db = getDb();
+  if (!db) return [];
+  return db.prepare(sql).all(...npis);
+}
