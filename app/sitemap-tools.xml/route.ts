@@ -6,7 +6,7 @@ export async function GET() {
   const tools = [
     "revenue-calculator", "npi-lookup", "code-lookup", "specialty-comparison",
     "state-comparison", "ccm-calculator", "rpm-calculator", "awv-calculator",
-    "em-audit", "practice-benchmark", "portfolio", "forecast", "widgets",
+    "em-audit", "practice-benchmark", "portfolio", "forecast", "widgets", "score-compare",
   ];
 
   const urls = tools

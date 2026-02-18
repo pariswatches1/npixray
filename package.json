@@ -9,7 +9,8 @@
     "lint": "next lint",
     "cms:download": "npx tsx data/scripts/download-cms.ts",
     "cms:process": "npx tsx data/scripts/process-cms.ts",
-    "cms:migrate": "npx tsx data/scripts/migrate-to-neon.ts"
+    "cms:migrate": "npx tsx data/scripts/migrate-to-neon.ts",
+    "scores:calculate": "npx tsx data/scripts/calculate-scores.ts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.0.2",
