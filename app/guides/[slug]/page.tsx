@@ -592,9 +592,56 @@ export default async function GuidePage({
 
   const Icon = guide.icon;
 
+  // Structured data for Google AI Overviews
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: guide.title,
+    description: guide.metaDescription,
+    url: `https://npixray.com/guides/${slug}`,
+    author: {
+      "@type": "Organization",
+      name: "NPIxray",
+      url: "https://npixray.com",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "NPIxray",
+      url: "https://npixray.com",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://npixray.com/og-image.png",
+      },
+    },
+    datePublished: "2025-01-01",
+    dateModified: "2026-02-01",
+  };
+
+  const howToJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: guide.title,
+    description: guide.metaDescription,
+    step: guide.sections.map((section, i) => ({
+      "@type": "HowToStep",
+      position: i + 1,
+      name: section.heading,
+      text: section.content.join(" "),
+    })),
+  };
+
   return (
     <article className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
       <TrackPageView event="guide_viewed" label={slug} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": [articleJsonLd, howToJsonLd],
+          }),
+        }}
+      />
       {/* Breadcrumb */}
       <nav className="mb-8" aria-label="Breadcrumb">
         <Link

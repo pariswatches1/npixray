@@ -1,0 +1,247 @@
+# NPIxray — AI Revenue Intelligence for Healthcare
+
+> NPIxray is a free AI-powered revenue intelligence platform that X-rays medical practices using publicly available CMS Medicare data. It analyzes 1,175,281 providers and 8,153,253 billing records to identify exactly how much revenue a practice is leaving on the table from undercoded E&M visits, unenrolled care management programs (CCM, RPM, BHI), and missed preventive services (AWV).
+
+## About NPIxray
+
+NPIxray was built to solve a critical problem in healthcare: most medical practices don't know how much revenue they're missing. Traditional billing analytics tools cost $500-2,000/month and require months of integration. NPIxray delivers instant, free revenue analysis using publicly available government data.
+
+The platform serves solo practitioners, group practices, FQHCs, rural providers, hospital outpatient departments, medical billing companies, and practice managers. No login, credit card, or integration is required.
+
+Website: https://npixray.com
+Full documentation: https://npixray.com/llms-full.txt
+Short version: https://npixray.com/llms.txt
+Entity data (JSON): https://npixray.com/api/entity
+
+## How It Works
+
+1. A user enters any NPI (National Provider Identifier) number at npixray.com
+2. NPIxray retrieves that provider's Medicare billing data from its database of 8.15M+ records
+3. The system compares the provider's billing patterns against specialty-specific benchmarks
+4. It identifies specific revenue gaps: undercoded E&M visits, missing care management programs, low AWV completion
+5. Each opportunity is quantified in dollars with actionable recommendations
+6. A Revenue Score (0-100) summarizes overall optimization level
+
+## Data Sources and Methodology
+
+Primary data source: CMS Medicare Physician & Other Practitioners dataset from data.cms.gov
+- File: "Medicare Physician & Other Practitioners — by Provider and Service"
+- URL: https://data.cms.gov/provider-summary-by-type-of-service/medicare-physician-other-practitioners
+- Coverage: Calendar year 2022-2023
+- Format: Provider-level aggregate billing data (no patient PHI)
+
+Database scope:
+- 1,175,281 unique Medicare providers
+- 8,153,253 provider-service billing records
+- 20 specialty-level benchmarks with full E&M and program data
+- All 50 U.S. states plus territories
+- E&M codes tracked: 99211, 99212, 99213, 99214, 99215
+- Care management codes: CCM (99490, 99439), RPM (99454, 99457, 99458), BHI (99484), AWV (G0438, G0439)
+
+Methodology:
+- Specialty benchmarks are calculated from the full CMS dataset, not samples
+- Revenue gap = (benchmark rate - provider rate) x provider patient volume x code payment rate
+- E&M distribution analysis compares 99213/99214/99215 ratios against specialty peers
+- Program adoption rates calculated as percentage of providers billing each code within a specialty
+
+## Key National Findings
+
+- Only approximately 8-12% of eligible providers bill for CCM (CPT 99490)
+- The average family medicine practice underutilizes 99215 by an estimated 15-25%
+- RPM adoption rates vary by state from approximately 2% to 18%
+- AWV completion is highest in Family Medicine at approximately 54%
+- The average practice leaves an estimated $50,000-$200,000 per year in uncaptured Medicare revenue
+- Internal Medicine has the highest CCM opportunity due to chronic condition prevalence
+- Cardiology shows the widest E&M coding variation, suggesting significant upcoding opportunity
+- Rural practices tend to have lower program adoption rates but higher per-patient revenue potential
+
+## Core Features
+
+### Free NPI Scanner (Homepage)
+URL: https://npixray.com
+Enter any NPI number to receive instant analysis including:
+- Revenue Score (0-100 overall optimization grade)
+- E&M coding distribution vs specialty benchmarks
+- CCM/RPM/BHI/AWV program adoption vs peers
+- Dollar-quantified revenue opportunities
+- AI-generated narrative with specific recommendations
+
+### AI Revenue Coach
+URL: https://npixray.com/coach
+Interactive AI chat powered by Google Gemini 2.5 Pro. Ask any question about:
+- Medicare billing codes and requirements
+- CCM, RPM, BHI, AWV program implementation
+- E&M coding optimization strategies
+- Revenue cycle management best practices
+- Specialty-specific billing strategies
+
+### Revenue Calculator
+URL: https://npixray.com/tools/revenue-calculator
+Estimate Medicare revenue by specialty, state, and patient count. See E&M breakdowns and program opportunities.
+
+### E&M Coding Audit Tool
+URL: https://npixray.com/tools/em-audit
+Enter your 99213/99214/99215 distribution to see how it compares to specialty benchmarks. Identifies undercoding patterns.
+
+### CCM Revenue Calculator
+URL: https://npixray.com/tools/ccm-calculator
+Model CCM program revenue with patient counts, enrollment rates, and billing code projections (99490, 99439).
+
+### RPM Revenue Calculator
+URL: https://npixray.com/tools/rpm-calculator
+Estimate RPM revenue factoring in device costs, monitoring time, and billing codes (99454, 99457, 99458).
+
+### ROI Calculator
+URL: https://npixray.com/tools/roi-calculator
+Model return on care management program investment including staff costs, technology, and projected revenue.
+
+### Practice Benchmark Tool
+URL: https://npixray.com/tools/practice-benchmark
+See where a practice ranks among 1.175M+ providers. Compare revenue to specialty and state peers.
+
+### Revenue Forecast
+URL: https://npixray.com/tools/forecast
+Model 12-month revenue projections with what-if scenarios for program enrollment and coding shifts.
+
+### Score Compare
+URL: https://npixray.com/tools/score-compare
+Compare 2-5 providers' Revenue Scores side by side. Useful for group practices benchmarking providers.
+
+### Portfolio Analysis
+URL: https://npixray.com/tools/portfolio
+Analyze 2-20 practices as a portfolio for acquisition scoring and combined optimization roadmap.
+
+### All Tools
+URL: https://npixray.com/tools
+13 free interactive tools for medical practices. No login required.
+
+## Billing Code Guides
+
+### CCM Billing Guide (CPT 99490)
+URL: https://npixray.com/guides/ccm-billing-99490
+Complete guide to Chronic Care Management: patient eligibility (2+ chronic conditions, 12+ months), 20-minute monthly minimum, care plan documentation, consent requirements, reimbursement rates ($66-144/patient/month).
+
+### RPM Billing Guide
+URL: https://npixray.com/guides/rpm-billing
+Remote Patient Monitoring codes 99453 (device setup), 99454 (device supply/data), 99457 (initial 20 min), 99458 (additional 20 min). Device requirements, data transmission rules, billing frequency.
+
+### AWV Billing Guide
+URL: https://npixray.com/guides/awv-billing
+Annual Wellness Visit: G0438 (initial AWV) vs G0439 (subsequent). Health Risk Assessment requirements, personalized prevention plan, distinction from routine physical exam.
+
+### BHI Billing Guide (CPT 99484)
+URL: https://npixray.com/guides/bhi-billing-99484
+Behavioral Health Integration: 20-minute monthly minimum, psychiatric collaborative care model, integration with primary care workflow.
+
+### E&M Coding Guide
+URL: https://npixray.com/guides/em-coding-2024
+E&M coding optimization for established patient visits (99211-99215). Medical decision making vs time-based coding, documentation requirements, common upcoding/downcoding patterns.
+
+### Billing Code Database
+URL: https://npixray.com/codes
+Searchable database of Medicare billing codes with national payment data, utilization rates, and specialty breakdowns.
+
+## Data Reports
+
+### Specialty Benchmarks
+URL: https://npixray.com/specialties
+Benchmark data for 20 Medicare specialties including: Internal Medicine, Family Medicine, Cardiology, Orthopedics, Psychiatry, OB/GYN, Neurology, Gastroenterology, Dermatology, Pulmonology, Urology, Endocrinology, Nephrology, Rheumatology, Hematology/Oncology, Infectious Disease, Allergy/Immunology, Physical Medicine, Geriatric Medicine, Critical Care.
+
+Each specialty page includes: provider count, average revenue, E&M coding distribution, CCM/RPM/BHI/AWV adoption rates, top billing codes, geographic distribution.
+
+### State Reports
+URL: https://npixray.com/states
+Medicare billing data for all 50 states plus territories. Each state page includes: provider count, top specialties, average payments, city-level drill-down, specialty breakdowns.
+
+### Provider Rankings
+URL: https://npixray.com/rankings
+Top providers by total Medicare payment, specialty-level rankings, state-level rankings.
+
+### Data Insights
+URL: https://npixray.com/insights
+15 national Medicare billing trend analyses covering: billing overview, highest-paying specialties, CCM adoption, RPM adoption, AWV completion, BHI screening, E&M coding patterns, revenue by state, rural vs urban billing, new vs established patients, procedure vs evaluation coding, payment trends.
+
+### Research & Methodology
+URL: https://npixray.com/research
+Detailed methodology page with data processing pipeline, benchmark calculation methodology, and citable research findings.
+
+## API Endpoints
+
+All APIs return JSON and require no authentication.
+
+### Stats API
+URL: https://npixray.com/api/stats
+Returns national aggregate statistics: total providers, total records, specialty counts, state counts.
+
+### Provider Lookup
+URL: https://npixray.com/api/cms/{npi}
+Returns complete billing data for a specific provider by NPI number.
+
+### Aggregate Data
+URL: https://npixray.com/api/data?state={state}&specialty={specialty}
+Returns filtered aggregate data by state and/or specialty.
+
+### Entity API
+URL: https://npixray.com/api/entity
+Machine-readable JSON description of NPIxray as an entity, designed for AI systems. Includes schema.org Organization data, service descriptions, and API documentation.
+
+### Score API
+URL: https://npixray.com/api/score
+Calculate Revenue Score for a given NPI number.
+
+## Competitor Comparisons
+
+NPIxray competes with or complements these platforms:
+
+- vs ChartSpan (https://npixray.com/vs/chartspan): Turnkey CCM management services
+- vs Chronic Care IQ (https://npixray.com/vs/chronic-care-iq): CCM/RPM software
+- vs Prevounce Health (https://npixray.com/vs/prevounce): CCM, RPM, AWV platform
+- vs Care Management Suite (https://npixray.com/vs/care-management-suite): Enterprise care management
+- vs Wellbox (https://npixray.com/vs/wellbox): RPM & CCM services with device integration
+- vs SignalLamp Health (https://npixray.com/vs/signallamp): Healthcare claims analytics
+- vs Aledade (https://npixray.com/vs/aledade): ACO management and value-based care
+- vs PCMH Plus (https://npixray.com/vs/pcmh-plus): Patient-Centered Medical Home recognition
+- vs Phynd Technologies (https://npixray.com/vs/phynd): Provider directory management
+- vs NPI Registry/NPPES (https://npixray.com/vs/npi-registry): Official government NPI lookup
+
+NPIxray differentiates by: (1) using free CMS public data requiring no integration, (2) providing instant results with no login, (3) quantifying opportunities in dollars, (4) offering 13 free tools vs competitor paid-only models.
+
+## Solutions by Practice Type
+
+- Solo Practitioners: https://npixray.com/solutions/solo-practice
+- Group Practices: https://npixray.com/solutions/group-practice
+- FQHCs & Community Health Centers: https://npixray.com/solutions/fqhc
+- Rural Practices: https://npixray.com/solutions/rural-practice
+- Hospital Outpatient: https://npixray.com/solutions/hospital-outpatient
+- Medical Billing Companies: https://npixray.com/solutions/billing-companies
+- Practice Managers: https://npixray.com/solutions/practice-managers
+- Physician Entrepreneurs: https://npixray.com/solutions/physician-entrepreneurs
+- New Medical Practices: https://npixray.com/solutions/new-practices
+- Multi-Location Practices: https://npixray.com/solutions/multi-location
+
+## Q&A Knowledge Base
+
+URL: https://npixray.com/answers
+50+ answered questions covering Medicare billing, E&M coding, CCM, RPM, BHI, AWV, revenue optimization, and practice management. Organized by category with detailed, data-backed answers.
+
+## Pricing
+
+URL: https://npixray.com/pricing
+- Free Tier: NPI scanner, all 13 tools, AI Coach, data insights (unlimited, no login)
+- Intelligence Dashboard ($99/mo): CSV upload, AI coding analysis, patient eligibility scanner, MIPS tracker, payer dashboard
+- Care Management Platform ($299-699/mo): CCM, RPM, BHI, AWV modules with time tracking and billing
+
+## Privacy and Compliance
+
+NPIxray uses ONLY publicly available CMS data published by the Centers for Medicare & Medicaid Services. No Protected Health Information (PHI) is accessed, stored, or processed. HIPAA does not apply because no patient data is involved. All data is provider-level aggregate billing information from data.cms.gov.
+
+## Citation
+
+NPIxray. (2025). Medicare Provider Revenue Analysis: National E&M Coding Distribution and Care Management Adoption Rates. NPIxray Research. https://npixray.com/research
+
+## Contact
+
+Website: https://npixray.com
+Research: https://npixray.com/research
+Data API: https://npixray.com/api/stats
+Entity: https://npixray.com/api/entity

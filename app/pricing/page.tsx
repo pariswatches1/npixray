@@ -81,10 +81,46 @@ const TIERS = [
   },
 ];
 
+const FAQS = [
+  {
+    q: "Is the Free NPI scan really free?",
+    a: "Yes, 100% free. No credit card, no login, no limits. Scan as many NPIs as you want.",
+  },
+  {
+    q: "Where does the data come from?",
+    a: "We use public CMS Medicare Physician & Other Practitioners data — the same dataset CMS publishes for transparency. No patient data is used.",
+  },
+  {
+    q: "How accurate are the revenue estimates?",
+    a: "Estimates are based on specialty benchmarks and national Medicare averages. Your actual numbers will depend on payer mix, patient panel, and documentation practices.",
+  },
+  {
+    q: "Can I cancel anytime?",
+    a: "Yes. No contracts, no cancellation fees. Cancel your subscription at any time from your dashboard.",
+  },
+];
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQS.map((faq) => ({
+    "@type": "Question",
+    name: faq.q,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: faq.a,
+    },
+  })),
+};
+
 export default function PricingPage() {
   return (
     <>
       <TrackPageView event="pricing_viewed" />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
       {/* Hero */}
       <section className="relative overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gold/[0.03] rounded-full blur-3xl" />
@@ -200,24 +236,7 @@ export default function PricingPage() {
           </h2>
 
           <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto text-left">
-            {[
-              {
-                q: "Is the Free NPI scan really free?",
-                a: "Yes, 100% free. No credit card, no login, no limits. Scan as many NPIs as you want.",
-              },
-              {
-                q: "Where does the data come from?",
-                a: "We use public CMS Medicare Physician & Other Practitioners data — the same dataset CMS publishes for transparency. No patient data is used.",
-              },
-              {
-                q: "How accurate are the revenue estimates?",
-                a: "Estimates are based on specialty benchmarks and national Medicare averages. Your actual numbers will depend on payer mix, patient panel, and documentation practices.",
-              },
-              {
-                q: "Can I cancel anytime?",
-                a: "Yes. No contracts, no cancellation fees. Cancel your subscription at any time from your dashboard.",
-              },
-            ].map((faq) => (
+            {FAQS.map((faq) => (
               <div
                 key={faq.q}
                 className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6"

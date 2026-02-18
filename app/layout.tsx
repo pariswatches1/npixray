@@ -64,6 +64,9 @@ export const metadata: Metadata = {
   verification: {
     google: "2djzJ-Zk-sVzyGKo2xUIm9h0ZqekPeN1PEwD2HJKu3U",
   },
+  other: {
+    "ai-content-declaration": "This site provides llms.txt at /llms.txt and /llms-full.txt for AI systems",
+  },
 };
 
 const jsonLd = {
@@ -102,6 +105,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={dmSans.variable}>
+      <head>
+        <link rel="alternate" type="text/markdown" href="/llms.txt" title="LLMs.txt — AI-readable site description" />
+        <link rel="alternate" type="text/markdown" href="/llms-full.txt" title="LLMs-full.txt — Extended AI-readable site description" />
+        <link rel="alternate" type="application/ld+json" href="/api/entity" title="Entity API — Machine-readable entity data" />
+      </head>
       <body className="font-sans antialiased min-h-screen flex flex-col">
         <script
           type="application/ld+json"
