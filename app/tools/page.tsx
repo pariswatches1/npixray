@@ -11,6 +11,7 @@ import {
   CalendarCheck,
   ClipboardCheck,
   BarChart3,
+  Briefcase,
   Wrench,
   ArrowRight,
   Zap,
@@ -141,6 +142,16 @@ const TOOLS = [
     bgColor: "bg-indigo-500/10",
     borderColor: "border-indigo-500/20",
   },
+  {
+    slug: "portfolio",
+    title: "Portfolio Analysis",
+    description:
+      "Analyze 2-20 practices as a portfolio. See combined acquisition scores, total upside revenue, and optimization roadmap.",
+    icon: Briefcase,
+    color: "text-gold",
+    bgColor: "bg-gold/10",
+    borderColor: "border-gold/20",
+  },
 ];
 
 const jsonLd = {
@@ -179,7 +190,7 @@ export default function ToolsIndexPage() {
             <div className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/5 px-4 py-1.5 mb-8">
               <Wrench className="h-3.5 w-3.5 text-gold" />
               <span className="text-xs font-medium text-gold">
-                10 Free Tools
+                11 Free Tools
               </span>
             </div>
 
