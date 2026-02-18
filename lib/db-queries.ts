@@ -49,8 +49,8 @@ function toPg(sql: string): string {
 
 async function queryAll(sql: string, params: any[] = []): Promise<any[]> {
   if (USE_NEON) {
-    const neon = await getNeonClient();
-    return neon(toPg(sql), params);
+    const neonSql = await getNeonClient();
+    return neonSql.query(toPg(sql), params);
   }
   const db = getDb();
   if (!db) return [];
@@ -59,8 +59,8 @@ async function queryAll(sql: string, params: any[] = []): Promise<any[]> {
 
 async function queryOne(sql: string, params: any[] = []): Promise<any | null> {
   if (USE_NEON) {
-    const neon = await getNeonClient();
-    const rows = await neon(toPg(sql), params);
+    const neonSql = await getNeonClient();
+    const rows = await neonSql.query(toPg(sql), params);
     return rows.length > 0 ? rows[0] : null;
   }
   const db = getDb();
