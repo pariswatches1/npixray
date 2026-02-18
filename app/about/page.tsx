@@ -122,9 +122,32 @@ const TRUST_ITEMS = [
   },
 ];
 
+const aboutFaqs = [
+  { q: "What data does NPIxray use?", a: "NPIxray uses publicly available CMS Medicare Physician & Other Practitioners data — the same dataset published by the Centers for Medicare & Medicaid Services for transparency. This includes provider-level billing patterns, CPT codes, frequencies, and payment amounts. No patient data (PHI) is ever accessed." },
+  { q: "How accurate are the revenue estimates?", a: "Revenue estimates are based on specialty benchmarks calculated from the full CMS dataset of 1.175M+ providers. While actual revenue depends on payer mix, patient panel, and documentation practices, our benchmarks represent real national averages — not surveys or projections." },
+  { q: "Is NPIxray HIPAA compliant?", a: "HIPAA does not apply to NPIxray because we never access, store, or process Protected Health Information (PHI). All data used is publicly available government data published by CMS. No Business Associate Agreement (BAA) is needed." },
+  { q: "Who built NPIxray?", a: "NPIxray was built by a team with deep experience in healthcare revenue cycle management, medical billing analytics, and health information technology. Our analysis uses the same CMS datasets relied upon by academic researchers and major healthcare consulting firms." },
+  { q: "How often is the data updated?", a: "The underlying CMS Medicare Physician & Other Practitioners dataset is published annually by CMS. NPIxray processes each new release to update benchmarks, provider data, and specialty statistics. NPI Registry data is updated more frequently." },
+  { q: "Can I use NPIxray for competitive analysis?", a: "Yes. Because NPIxray uses public CMS data, you can look up any provider's NPI to see their Medicare billing patterns. This is commonly used for competitive benchmarking, practice acquisition due diligence, and group practice performance comparisons." },
+];
+
+const aboutFaqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: aboutFaqs.map((faq) => ({
+    "@type": "Question",
+    name: faq.q,
+    acceptedAnswer: { "@type": "Answer", text: faq.a },
+  })),
+};
+
 export default function AboutPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutFaqJsonLd) }}
+      />
       {/* Hero */}
       <section className="relative overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gold/[0.03] rounded-full blur-3xl" />
@@ -209,6 +232,80 @@ export default function AboutPage() {
                   public for exactly this kind of analysis.
                 </p>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* E-E-A-T: Experience, Expertise, Authoritativeness */}
+      <section className="border-t border-dark-50/50 py-16 sm:py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            <div>
+              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-6">
+                Built by People Who Understand{" "}
+                <span className="text-gold">Healthcare Revenue</span>
+              </h2>
+              <div className="space-y-4 text-[var(--text-secondary)] leading-relaxed">
+                <p>
+                  NPIxray was created by a team with deep experience in healthcare
+                  revenue cycle management, medical billing analytics, and health
+                  information technology. We&apos;ve spent years working with
+                  practices that didn&apos;t know they were leaving money on the
+                  table — and built NPIxray to fix that at scale.
+                </p>
+                <p>
+                  Our analysis engine is grounded in the same CMS datasets used by
+                  academic researchers, health policy analysts, and the largest
+                  healthcare consulting firms. The difference: we make it free,
+                  instant, and accessible to every practice in America.
+                </p>
+                <p>
+                  Every benchmark, every revenue estimate, and every recommendation
+                  is derived from real Medicare billing data — not surveys, not
+                  estimates, not projections. When we say a specialty has an 8% CCM
+                  adoption rate, that number comes from analyzing every provider in
+                  that specialty across the entire CMS dataset.
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              {[
+                {
+                  metric: "1,175,281",
+                  label: "Medicare Providers Analyzed",
+                  detail: "Every provider in the CMS dataset, across all 50 states and territories",
+                },
+                {
+                  metric: "8,153,253",
+                  label: "Billing Records Processed",
+                  detail: "Individual provider-service line items with CPT codes, frequencies, and payments",
+                },
+                {
+                  metric: "20",
+                  label: "Specialty Benchmarks",
+                  detail: "Full E&M distribution, program adoption rates, and revenue benchmarks per specialty",
+                },
+                {
+                  metric: "50+",
+                  label: "State-Level Reports",
+                  detail: "City-level drill-downs, provider rankings, and specialty breakdowns per state",
+                },
+              ].map((item) => (
+                <div
+                  key={item.label}
+                  className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5 flex items-start gap-4"
+                >
+                  <span className="text-xl font-bold font-mono text-gold flex-shrink-0 w-24 text-right">
+                    {item.metric}
+                  </span>
+                  <div>
+                    <p className="font-semibold text-sm">{item.label}</p>
+                    <p className="text-xs text-[var(--text-secondary)] mt-0.5">{item.detail}</p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -342,6 +439,55 @@ export default function AboutPage() {
                 </p>
                 <p className="text-xs text-[var(--text-secondary)] mt-1 uppercase tracking-wider">
                   {stat.label}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ — for Google AI Overviews */}
+      <section className="border-t border-dark-50/50 py-16 sm:py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4">
+              Frequently Asked <span className="text-gold">Questions</span>
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            {[
+              {
+                q: "What data does NPIxray use?",
+                a: "NPIxray uses publicly available CMS Medicare Physician & Other Practitioners data — the same dataset published by the Centers for Medicare & Medicaid Services for transparency. This includes provider-level billing patterns, CPT codes, frequencies, and payment amounts. No patient data (PHI) is ever accessed.",
+              },
+              {
+                q: "How accurate are the revenue estimates?",
+                a: "Revenue estimates are based on specialty benchmarks calculated from the full CMS dataset of 1.175M+ providers. While actual revenue depends on payer mix, patient panel, and documentation practices, our benchmarks represent real national averages — not surveys or projections.",
+              },
+              {
+                q: "Is NPIxray HIPAA compliant?",
+                a: "HIPAA does not apply to NPIxray because we never access, store, or process Protected Health Information (PHI). All data used is publicly available government data published by CMS. No Business Associate Agreement (BAA) is needed.",
+              },
+              {
+                q: "Who built NPIxray?",
+                a: "NPIxray was built by a team with deep experience in healthcare revenue cycle management, medical billing analytics, and health information technology. Our analysis uses the same CMS datasets relied upon by academic researchers and major healthcare consulting firms.",
+              },
+              {
+                q: "How often is the data updated?",
+                a: "The underlying CMS Medicare Physician & Other Practitioners dataset is published annually by CMS. NPIxray processes each new release to update benchmarks, provider data, and specialty statistics. NPI Registry data is updated more frequently.",
+              },
+              {
+                q: "Can I use NPIxray for competitive analysis?",
+                a: "Yes. Because NPIxray uses public CMS data, you can look up any provider's NPI to see their Medicare billing patterns. This is commonly used for competitive benchmarking, practice acquisition due diligence, and group practice performance comparisons.",
+              },
+            ].map((faq) => (
+              <div
+                key={faq.q}
+                className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6"
+              >
+                <h4 className="font-semibold mb-2">{faq.q}</h4>
+                <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
+                  {faq.a}
                 </p>
               </div>
             ))}

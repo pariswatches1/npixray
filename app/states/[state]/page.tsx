@@ -89,6 +89,44 @@ export default async function StatePage({
             </div>
           </div>
 
+          {/* State Overview — Unique data-driven intro for Google ranking */}
+          <div className="mt-6 max-w-3xl text-[var(--text-secondary)] leading-relaxed space-y-3">
+            <p>
+              {stateName} has <span className="text-white font-medium">{formatNumber(stats.totalProviders)} Medicare providers</span> who
+              collectively received <span className="text-gold font-medium">{formatCurrency(stats.totalPayment)}</span> in
+              Medicare payments, averaging <span className="text-white font-medium">{formatCurrency(stats.avgPayment)} per provider</span>.
+              {stats.avgPayment > 100000
+                ? ` This places ${stateName} above the national average in per-provider Medicare revenue, suggesting a competitive healthcare market with strong reimbursement patterns.`
+                : stats.avgPayment > 60000
+                ? ` ${stateName} providers earn moderate Medicare revenue per provider, with significant opportunity to capture additional revenue through program enrollment and coding optimization.`
+                : ` With below-average per-provider Medicare revenue, ${stateName} practices may have substantial untapped potential in care management programs and E&M coding optimization.`}
+            </p>
+            {specialties.length > 0 && (
+              <p>
+                The most common specialty is{" "}
+                <span className="text-white font-medium">{specialties[0].specialty}</span>{" "}
+                with {specialties[0].count.toLocaleString()} providers
+                {specialties.length > 1 && (
+                  <>, followed by {specialties[1].specialty} ({specialties[1].count.toLocaleString()}) and {specialties.length > 2 ? `${specialties[2].specialty} (${specialties[2].count.toLocaleString()})` : ""}</>
+                )}.
+                {specialties[0].avgPayment > 100000
+                  ? ` ${specialties[0].specialty} providers in ${stateName} average ${formatCurrency(specialties[0].avgPayment)} in annual Medicare payments — a high-revenue specialty that often benefits from E&M coding optimization and care management program enrollment.`
+                  : ` ${specialties[0].specialty} providers in ${stateName} average ${formatCurrency(specialties[0].avgPayment)} annually, with room to grow through CCM, RPM, and AWV program adoption.`}
+              </p>
+            )}
+            {cities.length > 0 && (
+              <p>
+                The largest Medicare provider concentration is in{" "}
+                <span className="text-white font-medium">{cities[0].city}</span>{" "}
+                ({cities[0].count.toLocaleString()} providers)
+                {cities.length > 1 && (
+                  <>, with {cities[1].city} and {cities.length > 2 ? cities[2].city : ""} also serving as major healthcare hubs</>
+                )}.
+                {" "}Practices in these areas face competitive pressure, making revenue optimization through proper coding and program enrollment critical for financial performance.
+              </p>
+            )}
+          </div>
+
           {/* Stats Grid */}
           <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-4">
             <StatCard
