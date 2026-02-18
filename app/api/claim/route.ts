@@ -10,6 +10,24 @@ function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
+// Handle direct browser visits with a clean API info response
+export async function GET() {
+  return NextResponse.json(
+    {
+      name: "NPIxray Claim Profile API",
+      description: "Claim ownership of a provider profile on NPIxray.",
+      usage: {
+        method: "POST",
+        endpoint: "/api/claim",
+        body: { npi: "10-digit NPI number", email: "your@email.com" },
+        response: { success: true, message: "Verification email sent." },
+      },
+      docs: "https://npixray.com",
+    },
+    { status: 200 }
+  );
+}
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();
