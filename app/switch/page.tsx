@@ -16,6 +16,9 @@ export const metadata: Metadata = {
   title: "Switch to NPIxray — Migration Guides | NPIxray",
   description:
     "Ready to switch to NPIxray? Step-by-step migration guides from ChartSpan, SignalLamp, spreadsheets, manual billing analysis, and revenue consultants.",
+  alternates: {
+    canonical: "https://npixray.com/switch",
+  },
   openGraph: {
     title: "Switch to NPIxray — Migration Guides",
     description:

@@ -31,6 +31,9 @@ export const metadata: Metadata = {
     "medical billing company tools",
     "practice manager analytics",
   ],
+  alternates: {
+    canonical: "https://npixray.com/solutions",
+  },
   openGraph: {
     title: "Solutions for Every Practice Type | NPIxray",
     description:

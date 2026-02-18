@@ -817,6 +817,9 @@ export async function generateMetadata({
   return {
     title: page.metaTitle,
     description: page.metaDescription,
+    alternates: {
+      canonical: `https://npixray.com/switch/${slug}`,
+    },
     openGraph: {
       title: page.metaTitle,
       description: page.metaDescription,

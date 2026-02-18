@@ -10,11 +10,15 @@ import {
   Star,
 } from "lucide-react";
 import { TrackPageView } from "@/components/analytics/track-pageview";
+import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 
 export const metadata: Metadata = {
   title: "Pricing",
   description:
     "NPIxray pricing plans — from free NPI scans to full care management platform. Capture missed revenue at every level.",
+  alternates: {
+    canonical: "https://npixray.com/pricing",
+  },
 };
 
 const TIERS = [
@@ -126,6 +130,7 @@ export default function PricingPage() {
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gold/[0.03] rounded-full blur-3xl" />
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-20 pb-16 sm:pt-28 sm:pb-20">
+          <Breadcrumbs items={[{ label: "Pricing" }]} />
           <div className="text-center">
             <div className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/5 px-4 py-1.5 mb-8">
               <Shield className="h-3.5 w-3.5 text-gold" />

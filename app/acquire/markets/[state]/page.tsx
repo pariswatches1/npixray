@@ -45,6 +45,9 @@ export async function generateMetadata({
   return {
     title: `Medical Practice Acquisition Opportunities in ${name} 2026 | NPIxray`,
     description: `Find medical practices worth acquiring in ${name}. Revenue optimization analysis, acquisition scoring, and ROI projections for healthcare PE firms and practice aggregators.`,
+    alternates: {
+      canonical: `https://npixray.com/acquire/markets/${slug}`,
+    },
     keywords: [
       `medical practice acquisition ${name}`,
       `healthcare PE ${name}`,

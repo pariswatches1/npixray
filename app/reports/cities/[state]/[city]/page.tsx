@@ -44,6 +44,9 @@ export async function generateMetadata({
   return {
     title: `${cityName}, ${stateName} Medicare Revenue Report Card | NPIxray`,
     description: `Medicare provider analysis for ${cityName}, ${stateName}. See local provider stats, top specialties, and how this city compares to the state average.`,
+    alternates: {
+      canonical: `https://npixray.com/reports/cities/${stateSlug}/${citySlug}`,
+    },
     openGraph: {
       title: `${cityName}, ${stateName} Medicare Report Card`,
       url: `https://npixray.com/reports/cities/${stateSlug}/${citySlug}`,

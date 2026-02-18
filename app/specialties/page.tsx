@@ -19,6 +19,9 @@ export const metadata: Metadata = {
     "medical specialty revenue",
     "healthcare billing benchmarks",
   ],
+  alternates: {
+    canonical: "https://npixray.com/specialties",
+  },
   openGraph: {
     title: "Medicare Revenue Analysis by Specialty | NPIxray",
     description:

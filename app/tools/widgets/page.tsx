@@ -16,6 +16,9 @@ export const metadata: Metadata = {
     "healthcare data widget",
     "medical practice benchmark widget",
   ],
+  alternates: {
+    canonical: "https://npixray.com/tools/widgets",
+  },
   openGraph: {
     title: "Embeddable Medicare Data Widgets | NPIxray",
     description:

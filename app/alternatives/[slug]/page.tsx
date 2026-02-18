@@ -1002,6 +1002,9 @@ export async function generateMetadata({
   return {
     title: data.metaTitle,
     description: data.metaDescription,
+    alternates: {
+      canonical: `https://npixray.com/alternatives/${slug}`,
+    },
     openGraph: {
       title: data.metaTitle,
       description: data.metaDescription,

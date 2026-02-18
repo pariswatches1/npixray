@@ -17,6 +17,9 @@ export const metadata: Metadata = {
     "office visit coding analysis",
     "E&M revenue gap",
   ],
+  alternates: {
+    canonical: "https://npixray.com/tools/em-audit",
+  },
   openGraph: {
     title: "E&M Coding Audit Tool | NPIxray",
     description:

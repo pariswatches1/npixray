@@ -19,6 +19,9 @@ export const metadata: Metadata = {
     "billing code encyclopedia",
     "medical coding reference",
   ],
+  alternates: {
+    canonical: "https://npixray.com/codes",
+  },
   openGraph: {
     title: "Medicare Billing Code Encyclopedia | NPIxray",
     description:

@@ -15,6 +15,9 @@ export const metadata: Metadata = {
     "RPM revenue calculator",
     "healthcare billing calculator",
   ],
+  alternates: {
+    canonical: "https://npixray.com/tools/revenue-calculator",
+  },
   openGraph: {
     title: "Medicare Revenue Calculator | NPIxray",
     description:

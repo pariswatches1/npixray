@@ -16,6 +16,9 @@ export const metadata: Metadata = {
     "state healthcare analytics",
     "Medicare payment data",
   ],
+  alternates: {
+    canonical: "https://npixray.com/states",
+  },
   openGraph: {
     title: "Medicare Provider Analysis by State — All 50 States | NPIxray",
     description:

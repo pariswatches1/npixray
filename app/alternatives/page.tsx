@@ -25,6 +25,9 @@ export const metadata: Metadata = {
     "healthcare analytics alternatives",
     "medical billing software comparison",
   ],
+  alternates: {
+    canonical: "https://npixray.com/alternatives",
+  },
   openGraph: {
     title: "Compare NPIxray to Alternatives | NPIxray",
     description:

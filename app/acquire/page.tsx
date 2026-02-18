@@ -37,6 +37,9 @@ export const metadata: Metadata = {
     "CMS Medicare data acquisition",
     "practice revenue optimization",
   ],
+  alternates: {
+    canonical: "https://npixray.com/acquire",
+  },
   openGraph: {
     title: "Medical Practice Acquisition Intelligence | NPIxray",
     description:

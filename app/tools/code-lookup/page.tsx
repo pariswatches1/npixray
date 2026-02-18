@@ -17,6 +17,9 @@ export const metadata: Metadata = {
     "99214 payment rate",
     "G0439 payment",
   ],
+  alternates: {
+    canonical: "https://npixray.com/tools/code-lookup",
+  },
   openGraph: {
     title: "CPT/HCPCS Code Lookup | NPIxray",
     description:

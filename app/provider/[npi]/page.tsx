@@ -56,6 +56,9 @@ export async function generateMetadata({
   return {
     title: `${fullName} — ${provider.specialty} in ${city}, ${state} | Medicare Billing Data`,
     description: `View Medicare billing data for ${fullName}, ${provider.credential || provider.specialty} in ${city}, ${state}. ${formatNumber(provider.total_services)} services, ${formatCurrency(provider.total_medicare_payment)} total Medicare payment. See top billing codes, E&M distribution, and care management programs.`,
+    alternates: {
+      canonical: `https://npixray.com/provider/${npi}`,
+    },
     openGraph: {
       title: `${fullName} — ${provider.specialty} | NPIxray`,
       description: `Medicare billing profile for ${fullName} in ${city}, ${state}. ${formatNumber(provider.total_beneficiaries)} patients, ${formatCurrency(provider.total_medicare_payment)} total payment.`,

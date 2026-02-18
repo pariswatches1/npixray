@@ -13,6 +13,9 @@ export async function generateMetadata({
   return {
     title: `AI Revenue Coach for NPI ${npi} | NPIxray`,
     description: `Personalized Medicare billing advice for NPI ${npi} backed by real CMS data. Ask about revenue gaps, coding optimization, and care management programs.`,
+    alternates: {
+      canonical: `https://npixray.com/coach/${npi}`,
+    },
     robots: { index: false, follow: false },
   };
 }

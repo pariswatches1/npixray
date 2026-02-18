@@ -16,11 +16,15 @@ import {
   FileText,
   Users,
 } from "lucide-react";
+import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 
 export const metadata: Metadata = {
   title: "About NPIxray — How We Turn Public CMS Data Into Revenue Intelligence",
   description:
     "Learn how NPIxray uses free CMS Medicare public data to help medical practices identify missed revenue in coding, CCM, RPM, BHI, and AWV programs. No patient data. No PHI.",
+  alternates: {
+    canonical: "https://npixray.com/about",
+  },
   openGraph: {
     title: "About NPIxray — AI Revenue Intelligence for Medical Practices",
     description:
@@ -153,6 +157,7 @@ export default function AboutPage() {
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gold/[0.03] rounded-full blur-3xl" />
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-20 pb-12 sm:pt-28 sm:pb-16">
+          <Breadcrumbs items={[{ label: "About" }]} />
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/5 px-4 py-1.5 mb-8">
               <Zap className="h-3.5 w-3.5 text-gold" />

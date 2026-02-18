@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { ScanCTA } from "@/components/seo/scan-cta";
 import { NpiLookupTool } from "@/components/tools/npi-lookup";
+import { RelatedLinks } from "@/components/seo/related-links";
 
 export const metadata: Metadata = {
   title: "NPI Lookup Tool — Search 1.175M+ Medicare Providers",
@@ -16,6 +17,9 @@ export const metadata: Metadata = {
     "NPI registry search",
     "provider NPI finder",
   ],
+  alternates: {
+    canonical: "https://npixray.com/tools/npi-lookup",
+  },
   openGraph: {
     title: "NPI Lookup Tool | NPIxray",
     description:
@@ -66,6 +70,8 @@ export default function NpiLookupPage() {
         </div>
 
         <NpiLookupTool />
+
+        <RelatedLinks pageType="tool" currentSlug="npi-lookup" />
 
         <ScanCTA />
       </div>

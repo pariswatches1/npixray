@@ -70,6 +70,9 @@ export async function generateMetadata({
   return {
     title: `${name} Medicare Revenue Report Card 2026 | NPIxray`,
     description: `${name} earns its 2026 Medicare Revenue Report Card grade. ${formatNumber(stats.totalProviders)} providers analyzed, ${formatCurrency(stats.totalPayment)} total Medicare payments. See revenue gaps, program adoption, and E&M coding analysis.`,
+    alternates: {
+      canonical: `https://npixray.com/reports/states/${slug}`,
+    },
     keywords: [
       `${name} Medicare report card`,
       `${name} healthcare revenue`,
