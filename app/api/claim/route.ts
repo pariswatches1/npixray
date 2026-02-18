@@ -10,8 +10,17 @@ function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-// Handle direct browser visits with a clean API info response
-export async function GET() {
+// Handle direct browser visits — redirect to homepage
+// Programmatic requests (curl, fetch) get JSON API docs
+export async function GET(request: Request) {
+  const accept = request.headers.get("accept") || "";
+
+  // Browser visits — redirect to homepage
+  if (accept.includes("text/html")) {
+    return NextResponse.redirect(new URL("/", request.url));
+  }
+
+  // Programmatic API requests — return API documentation JSON
   return NextResponse.json(
     {
       name: "NPIxray Claim Profile API",
