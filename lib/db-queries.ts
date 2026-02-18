@@ -526,3 +526,41 @@ export function getMultipleProviders(npis: string[]): any {
   if (!db) return [];
   return db.prepare(sql).all(...npis);
 }
+
+// ── Profile Claims ──────────────────────────────────────────
+
+async function ensureClaimsTable(): Promise<void> {
+  const createSql = `CREATE TABLE IF NOT EXISTS profile_claims (
+    npi TEXT PRIMARY KEY,
+    email TEXT NOT NULL,
+    claimed_at TIMESTAMP DEFAULT NOW(),
+    verified BOOLEAN DEFAULT FALSE
+  )`;
+  if (USE_NEON) {
+    const neonSql = await getNeonClient();
+    await neonSql(createSql);
+    return;
+  }
+  const db = getDb();
+  if (db) db.prepare(createSql.replace("NOW()", "CURRENT_TIMESTAMP")).run();
+}
+
+export async function isProfileClaimed(npi: string): Promise<boolean> {
+  await ensureClaimsTable();
+  const row = await queryOne("SELECT npi FROM profile_claims WHERE npi = ?", [npi]);
+  return !!row;
+}
+
+export async function claimProfile(npi: string, email: string): Promise<{ success: boolean; code?: string }> {
+  await ensureClaimsTable();
+  const existing = await queryOne("SELECT npi FROM profile_claims WHERE npi = ?", [npi]);
+  if (existing) return { success: false, code: "ALREADY_CLAIMED" };
+  if (USE_NEON) {
+    const neonSql = await getNeonClient();
+    await neonSql("INSERT INTO profile_claims (npi, email, claimed_at) VALUES ($1, $2, NOW()) ON CONFLICT (npi) DO NOTHING", [npi, email]);
+  } else {
+    const db = getDb();
+    if (db) db.prepare("INSERT OR IGNORE INTO profile_claims (npi, email, claimed_at) VALUES (?, ?, CURRENT_TIMESTAMP)").run(npi, email);
+  }
+  return { success: true };
+}
