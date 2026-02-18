@@ -21,6 +21,8 @@ import {
   getProvider,
   getProviderCodes,
   getRelatedProviders,
+  getBenchmarkBySpecialty,
+  getProviderCodeCount,
   formatCurrency,
   formatNumber,
   stateAbbrToName,
@@ -28,6 +30,7 @@ import {
   stateToSlug,
   cityToSlug,
 } from "@/lib/db-queries";
+import { calculateRevenueScore, estimatePercentile, getScoreTier } from "@/lib/revenue-score";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { ScanCTA } from "@/components/seo/scan-cta";
 
@@ -77,6 +80,16 @@ export default async function ProviderProfilePage({
     npi,
     5
   );
+
+  // Revenue Score calculation
+  const [benchmark, codeCount] = await Promise.all([
+    getBenchmarkBySpecialty(provider.specialty),
+    getProviderCodeCount(npi),
+  ]);
+  const scoreResult = benchmark
+    ? calculateRevenueScore(provider, benchmark, codeCount)
+    : null;
+  const percentile = scoreResult ? estimatePercentile(scoreResult.overall) : null;
 
   const fullName = `Dr. ${provider.first_name} ${provider.last_name}`;
   const stateName = stateAbbrToName(provider.state);
@@ -218,6 +231,89 @@ export default async function ProviderProfilePage({
             </span>
           </div>
         </div>
+
+        {/* ── Revenue Score ──────────────────────────────── */}
+        {scoreResult && (
+          <div className="mb-10 rounded-2xl border border-dark-50/80 bg-dark-400/30 p-6">
+            <div className="flex flex-col sm:flex-row items-center gap-6">
+              {/* Score gauge */}
+              <div className="flex flex-col items-center gap-2">
+                <div className="relative" style={{ width: 160, height: 160 }}>
+                  <svg width={160} height={160} viewBox="0 0 160 160">
+                    {(() => {
+                      const radius = 64;
+                      const strokeWidth = 10;
+                      const circumference = 2 * Math.PI * radius;
+                      const arcFraction = 0.75;
+                      const arcLength = circumference * arcFraction;
+                      const filledLength = arcLength * (scoreResult.overall / 100);
+                      const rotation = 135;
+                      return (
+                        <>
+                          <circle cx={80} cy={80} r={radius} fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeDasharray={`${arcLength} ${circumference - arcLength}`} strokeLinecap="round" className="text-dark-50/30" transform={`rotate(${rotation} 80 80)`} />
+                          <circle cx={80} cy={80} r={radius} fill="none" stroke={scoreResult.hexColor} strokeWidth={strokeWidth} strokeDasharray={`${filledLength} ${circumference - filledLength}`} strokeLinecap="round" transform={`rotate(${rotation} 80 80)`} />
+                        </>
+                      );
+                    })()}
+                  </svg>
+                  <div className="absolute inset-0 flex flex-col items-center justify-center" style={{ paddingTop: 10 }}>
+                    <span className="font-bold font-mono leading-none" style={{ fontSize: 40, color: scoreResult.hexColor }}>
+                      {scoreResult.overall}
+                    </span>
+                    <span className="font-semibold uppercase tracking-wider mt-0.5" style={{ fontSize: 12, color: scoreResult.hexColor }}>
+                      {scoreResult.label}
+                    </span>
+                  </div>
+                </div>
+                {percentile && (
+                  <p className="text-xs text-[var(--text-secondary)]">
+                    Top <span className={`font-semibold ${scoreResult.color}`}>{100 - percentile}%</span> of {provider.specialty} providers
+                  </p>
+                )}
+              </div>
+              {/* Score breakdown bars */}
+              <div className="flex-1 w-full space-y-3">
+                <h3 className="text-sm font-semibold uppercase tracking-wider text-[var(--text-secondary)]">Revenue Score Breakdown</h3>
+                {[
+                  { label: "E&M Coding", value: scoreResult.breakdown.emCoding, weight: "25%" },
+                  { label: "Program Utilization", value: scoreResult.breakdown.programUtil, weight: "25%" },
+                  { label: "Revenue Efficiency", value: scoreResult.breakdown.revenueEfficiency, weight: "20%" },
+                  { label: "Service Diversity", value: scoreResult.breakdown.serviceDiversity, weight: "15%" },
+                  { label: "Patient Volume", value: scoreResult.breakdown.patientVolume, weight: "15%" },
+                ].map(({ label, value, weight }) => (
+                  <div key={label} className="flex items-center gap-3">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-xs text-[var(--text-secondary)] truncate">{label} <span className="text-dark-50">({weight})</span></span>
+                        <span className="text-xs font-mono font-semibold ml-2">{value}</span>
+                      </div>
+                      <div className="h-1.5 bg-dark-50/30 rounded-full overflow-hidden">
+                        <div className={`h-full rounded-full ${value >= 80 ? "bg-emerald-400" : value >= 60 ? "bg-yellow-400" : value >= 40 ? "bg-orange-400" : "bg-red-400"}`} style={{ width: `${value}%` }} />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            {/* Badge embed */}
+            <div className="mt-6 pt-4 border-t border-dark-50/30">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                <div className="flex items-center gap-2">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={`/api/badge/${npi}`} alt={`Revenue Score: ${scoreResult.overall}`} className="h-7" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-xs text-[var(--text-secondary)]">
+                    Embed this badge on your website:{" "}
+                    <code className="text-[10px] bg-dark-400/50 px-1.5 py-0.5 rounded">
+                      {`<a href="https://npixray.com/provider/${npi}"><img src="https://npixray.com/api/badge/${npi}" /></a>`}
+                    </code>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* ── Stats Grid ─────────────────────────────────── */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
