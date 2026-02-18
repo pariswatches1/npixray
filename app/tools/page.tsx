@@ -12,6 +12,7 @@ import {
   ClipboardCheck,
   BarChart3,
   Briefcase,
+  TrendingUp,
   Wrench,
   ArrowRight,
   Zap,
@@ -21,7 +22,7 @@ import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 export const metadata: Metadata = {
   title: "Free Medicare Billing Tools — Calculators & Lookups",
   description:
-    "Free interactive tools for medical practices: revenue calculators, NPI lookup, CPT code search, specialty comparisons, CCM/RPM/AWV calculators, E&M audit tool, and practice benchmarking.",
+    "Free interactive tools for medical practices: revenue calculators, NPI lookup, CPT code search, specialty comparisons, CCM/RPM/AWV calculators, E&M audit tool, revenue forecasting, and practice benchmarking.",
   keywords: [
     "Medicare billing tools",
     "NPI lookup tool",
@@ -152,6 +153,16 @@ const TOOLS = [
     bgColor: "bg-gold/10",
     borderColor: "border-gold/20",
   },
+  {
+    slug: "forecast",
+    title: "Revenue Forecast",
+    description:
+      "Model 12-month revenue projections with what-if scenarios. Adjust program enrollment, E&M coding shifts, and see cumulative impact.",
+    icon: TrendingUp,
+    color: "text-lime-400",
+    bgColor: "bg-lime-500/10",
+    borderColor: "border-lime-500/20",
+  },
 ];
 
 const jsonLd = {
@@ -190,7 +201,7 @@ export default function ToolsIndexPage() {
             <div className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/5 px-4 py-1.5 mb-8">
               <Wrench className="h-3.5 w-3.5 text-gold" />
               <span className="text-xs font-medium text-gold">
-                11 Free Tools
+                12 Free Tools
               </span>
             </div>
 
