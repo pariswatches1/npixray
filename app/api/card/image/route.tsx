@@ -34,7 +34,7 @@ export async function GET(request: NextRequest) {
   let gaps: { label: string; value: string }[] = [];
 
   try {
-    const result = await performScan(npi);
+    const { result } = await performScan(npi);
     providerName = result.provider.fullName;
     credential = result.provider.credential;
     specialty = result.provider.specialty;

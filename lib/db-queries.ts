@@ -555,6 +555,191 @@ export function getMultipleProviders(npis: string[]): any {
   return db.prepare(sql).all(...npis);
 }
 
+// ── Comparison & Differentiation Queries ────────────────────
+
+/** All states with avg payment + provider count — for national rankings */
+export function getAllStateAvgPayments(): Promise<{ state: string; avgPayment: number; providerCount: number }[]> {
+  if (USE_NEON) return queryAll(`SELECT state, AVG(total_medicare_payment) as "avgPayment", COUNT(*) as "providerCount" FROM providers WHERE state != '' GROUP BY state ORDER BY "avgPayment" DESC`).then(r => r.map((x: any) => ({ state: x.state, avgPayment: num(x.avgPayment ?? x.avgpayment), providerCount: num(x.providerCount ?? x.providercount) })));
+  const db = getDb();
+  if (!db) return Promise.resolve([]);
+  return Promise.resolve(db.prepare("SELECT state, AVG(total_medicare_payment) as avgPayment, COUNT(*) as providerCount FROM providers WHERE state != '' GROUP BY state ORDER BY avgPayment DESC").all() as any[]);
+}
+
+/** Same specialty across all states — for cross-state specialty ranking */
+export function getSpecialtyByAllStates(specialty: string): Promise<{ state: string; count: number; avgPayment: number }[]> {
+  if (USE_NEON) return queryAll(`SELECT state, COUNT(*) as count, AVG(total_medicare_payment) as "avgPayment" FROM providers WHERE specialty = ? AND state != '' GROUP BY state HAVING COUNT(*) >= 3 ORDER BY "avgPayment" DESC`, [specialty]).then(r => r.map((x: any) => ({ state: x.state, count: num(x.count), avgPayment: num(x.avgPayment ?? x.avgpayment) })));
+  const db = getDb();
+  if (!db) return Promise.resolve([]);
+  return Promise.resolve(db.prepare("SELECT state, COUNT(*) as count, AVG(total_medicare_payment) as avgPayment FROM providers WHERE specialty = ? AND state != '' GROUP BY state HAVING COUNT(*) >= 3 ORDER BY avgPayment DESC").all(specialty) as any[]);
+}
+
+/** Count of program billers vs total providers in a state */
+export function getStateProgramCounts(stateAbbr: string): Promise<{ totalProviders: number; ccmBillers: number; rpmBillers: number; bhiBillers: number; awvBillers: number }> {
+  if (USE_NEON) return (async () => {
+    const r = await queryOne(`SELECT COUNT(*) as total, SUM(CASE WHEN ccm_99490_services > 0 THEN 1 ELSE 0 END) as ccm, SUM(CASE WHEN rpm_99454_services > 0 THEN 1 ELSE 0 END) as rpm, SUM(CASE WHEN bhi_99484_services > 0 THEN 1 ELSE 0 END) as bhi, SUM(CASE WHEN awv_g0438_services > 0 OR awv_g0439_services > 0 THEN 1 ELSE 0 END) as awv FROM providers WHERE state = ?`, [stateAbbr]);
+    return { totalProviders: num(r?.total), ccmBillers: num(r?.ccm), rpmBillers: num(r?.rpm), bhiBillers: num(r?.bhi), awvBillers: num(r?.awv) };
+  })();
+  const db = getDb();
+  if (!db) return Promise.resolve({ totalProviders: 0, ccmBillers: 0, rpmBillers: 0, bhiBillers: 0, awvBillers: 0 });
+  const r = db.prepare("SELECT COUNT(*) as total, SUM(CASE WHEN ccm_99490_services > 0 THEN 1 ELSE 0 END) as ccm, SUM(CASE WHEN rpm_99454_services > 0 THEN 1 ELSE 0 END) as rpm, SUM(CASE WHEN bhi_99484_services > 0 THEN 1 ELSE 0 END) as bhi, SUM(CASE WHEN awv_g0438_services > 0 OR awv_g0439_services > 0 THEN 1 ELSE 0 END) as awv FROM providers WHERE state = ?").get(stateAbbr) as any;
+  return Promise.resolve({ totalProviders: num(r?.total), ccmBillers: num(r?.ccm), rpmBillers: num(r?.rpm), bhiBillers: num(r?.bhi), awvBillers: num(r?.awv) });
+}
+
+/** Count of program billers for a specialty within a state */
+export function getStateSpecialtyProgramCounts(specialty: string, stateAbbr: string): Promise<{ totalProviders: number; ccmBillers: number; rpmBillers: number; bhiBillers: number; awvBillers: number }> {
+  if (USE_NEON) return (async () => {
+    const r = await queryOne(`SELECT COUNT(*) as total, SUM(CASE WHEN ccm_99490_services > 0 THEN 1 ELSE 0 END) as ccm, SUM(CASE WHEN rpm_99454_services > 0 THEN 1 ELSE 0 END) as rpm, SUM(CASE WHEN bhi_99484_services > 0 THEN 1 ELSE 0 END) as bhi, SUM(CASE WHEN awv_g0438_services > 0 OR awv_g0439_services > 0 THEN 1 ELSE 0 END) as awv FROM providers WHERE specialty = ? AND state = ?`, [specialty, stateAbbr]);
+    return { totalProviders: num(r?.total), ccmBillers: num(r?.ccm), rpmBillers: num(r?.rpm), bhiBillers: num(r?.bhi), awvBillers: num(r?.awv) };
+  })();
+  const db = getDb();
+  if (!db) return Promise.resolve({ totalProviders: 0, ccmBillers: 0, rpmBillers: 0, bhiBillers: 0, awvBillers: 0 });
+  const r = db.prepare("SELECT COUNT(*) as total, SUM(CASE WHEN ccm_99490_services > 0 THEN 1 ELSE 0 END) as ccm, SUM(CASE WHEN rpm_99454_services > 0 THEN 1 ELSE 0 END) as rpm, SUM(CASE WHEN bhi_99484_services > 0 THEN 1 ELSE 0 END) as bhi, SUM(CASE WHEN awv_g0438_services > 0 OR awv_g0439_services > 0 THEN 1 ELSE 0 END) as awv FROM providers WHERE specialty = ? AND state = ?").get(specialty, stateAbbr) as any;
+  return Promise.resolve({ totalProviders: num(r?.total), ccmBillers: num(r?.ccm), rpmBillers: num(r?.rpm), bhiBillers: num(r?.bhi), awvBillers: num(r?.awv) });
+}
+
+/** Top specialties with biggest program adoption gaps in a state */
+export function getStateSpecialtyProgramGaps(stateAbbr: string, limit = 5): Promise<{ specialty: string; providerCount: number; ccmRate: number; rpmRate: number; bhiRate: number; awvRate: number }[]> {
+  const sql = `SELECT specialty, COUNT(*) as providerCount,
+    AVG(CASE WHEN ccm_99490_services > 0 THEN 1.0 ELSE 0.0 END) as ccmRate,
+    AVG(CASE WHEN rpm_99454_services > 0 THEN 1.0 ELSE 0.0 END) as rpmRate,
+    AVG(CASE WHEN bhi_99484_services > 0 THEN 1.0 ELSE 0.0 END) as bhiRate,
+    AVG(CASE WHEN awv_g0438_services > 0 OR awv_g0439_services > 0 THEN 1.0 ELSE 0.0 END) as awvRate
+    FROM providers WHERE state = ? AND specialty != ''
+    GROUP BY specialty HAVING COUNT(*) >= 10
+    ORDER BY providerCount DESC LIMIT ?`;
+  if (USE_NEON) return queryAll(sql, [stateAbbr, limit]).then(r => r.map((x: any) => ({
+    specialty: x.specialty,
+    providerCount: num(x.providercount ?? x.providerCount),
+    ccmRate: Number(x.ccmrate ?? x.ccmRate ?? 0),
+    rpmRate: Number(x.rpmrate ?? x.rpmRate ?? 0),
+    bhiRate: Number(x.bhirate ?? x.bhiRate ?? 0),
+    awvRate: Number(x.awvrate ?? x.awvRate ?? 0),
+  })));
+  const db = getDb();
+  if (!db) return Promise.resolve([]);
+  return Promise.resolve((db.prepare(sql).all(stateAbbr, limit) as any[]).map((x: any) => ({
+    specialty: x.specialty,
+    providerCount: num(x.providerCount),
+    ccmRate: Number(x.ccmRate ?? 0),
+    rpmRate: Number(x.rpmRate ?? 0),
+    bhiRate: Number(x.bhiRate ?? 0),
+    awvRate: Number(x.awvRate ?? 0),
+  })));
+}
+
+/** Find related CPT/HCPCS codes (same family/prefix) */
+export function getRelatedCodes(code: string, limit = 5): Promise<{ hcpcs_code: string; totalProviders: number; avgPayment: number }[]> {
+  // Determine family: E&M codes (9921x), CCM (9949x), RPM (9945x), AWV (G043x)
+  let prefix: string;
+  if (code.startsWith("G")) {
+    prefix = code.substring(0, 4); // G043x
+  } else {
+    prefix = code.substring(0, 4); // 9921x, 9949x, etc.
+  }
+  const pattern = `${prefix}%`;
+  if (USE_NEON) return queryAll(`SELECT hcpcs_code, COUNT(DISTINCT npi) as "totalProviders", AVG(payment / NULLIF(services, 0)) as "avgPayment" FROM provider_codes WHERE hcpcs_code LIKE ? AND hcpcs_code != ? GROUP BY hcpcs_code ORDER BY "totalProviders" DESC LIMIT ?`, [pattern, code, limit]).then(r => r.map((x: any) => ({ hcpcs_code: x.hcpcs_code, totalProviders: num(x.totalProviders ?? x.totalproviders), avgPayment: num(x.avgPayment ?? x.avgpayment) })));
+  const db = getDb();
+  if (!db) return Promise.resolve([]);
+  return Promise.resolve(db.prepare("SELECT hcpcs_code, COUNT(DISTINCT npi) as totalProviders, AVG(payment / NULLIF(services, 0)) as avgPayment FROM provider_codes WHERE hcpcs_code LIKE ? AND hcpcs_code != ? GROUP BY hcpcs_code ORDER BY totalProviders DESC LIMIT ?").all(pattern, code, limit) as any[]);
+}
+
+// ── Tiered Provider Sitemap + Program Adoption Queries ──────
+
+/** High-priority providers for tiered sitemap drip-feed */
+export function getHighPriorityProviders(
+  stateAbbr: string,
+  tier: 1 | 2 | 3 = 1,
+  limit = 50000
+): Promise<{ npi: string }[]> {
+  let conditions: string;
+  switch (tier) {
+    case 1:
+      conditions = "AND total_medicare_payment >= 25000 AND total_beneficiaries >= 20";
+      break;
+    case 2:
+      conditions = "AND total_medicare_payment >= 10000 AND total_medicare_payment < 25000";
+      break;
+    case 3:
+      conditions = "AND total_medicare_payment < 10000";
+      break;
+  }
+  const sql = `SELECT npi FROM providers WHERE state = ? ${conditions} ORDER BY total_medicare_payment DESC LIMIT ?`;
+  if (USE_NEON) return queryAll(sql, [stateAbbr, limit]);
+  const db = getDb();
+  if (!db) return Promise.resolve([]);
+  return Promise.resolve(db.prepare(sql).all(stateAbbr, limit) as { npi: string }[]);
+}
+
+/** Top states by program adoption rate (for /programs hub pages) */
+export function getProgramTopStates(
+  program: "ccm" | "rpm" | "bhi" | "awv",
+  limit = 10
+): Promise<{ state: string; adoptionRate: number; providerCount: number; billerCount: number }[]> {
+  const column: Record<string, string> = {
+    ccm: "ccm_99490_services",
+    rpm: "rpm_99454_services",
+    bhi: "bhi_99484_services",
+    awv: "(awv_g0438_services + awv_g0439_services)",
+  };
+  const col = column[program];
+  const sql = `SELECT state,
+    COUNT(*) as providerCount,
+    SUM(CASE WHEN ${col} > 0 THEN 1 ELSE 0 END) as billerCount,
+    AVG(CASE WHEN ${col} > 0 THEN 1.0 ELSE 0.0 END) as adoptionRate
+    FROM providers WHERE state != ''
+    GROUP BY state HAVING COUNT(*) >= 50
+    ORDER BY adoptionRate DESC LIMIT ?`;
+  if (USE_NEON) return queryAll(sql, [limit]).then(r => r.map((x: any) => ({
+    state: x.state,
+    adoptionRate: Number(x.adoptionrate ?? x.adoptionRate ?? 0),
+    providerCount: num(x.providercount ?? x.providerCount),
+    billerCount: num(x.billercount ?? x.billerCount),
+  })));
+  const db = getDb();
+  if (!db) return Promise.resolve([]);
+  return Promise.resolve((db.prepare(sql).all(limit) as any[]).map((x: any) => ({
+    state: x.state,
+    adoptionRate: Number(x.adoptionRate ?? 0),
+    providerCount: num(x.providerCount),
+    billerCount: num(x.billerCount),
+  })));
+}
+
+/** Top specialties by program adoption rate (for /programs hub pages) */
+export function getProgramTopSpecialties(
+  program: "ccm" | "rpm" | "bhi" | "awv",
+  limit = 10
+): Promise<{ specialty: string; adoptionRate: number; providerCount: number; billerCount: number }[]> {
+  const column: Record<string, string> = {
+    ccm: "ccm_99490_services",
+    rpm: "rpm_99454_services",
+    bhi: "bhi_99484_services",
+    awv: "(awv_g0438_services + awv_g0439_services)",
+  };
+  const col = column[program];
+  const sql = `SELECT specialty,
+    COUNT(*) as providerCount,
+    SUM(CASE WHEN ${col} > 0 THEN 1 ELSE 0 END) as billerCount,
+    AVG(CASE WHEN ${col} > 0 THEN 1.0 ELSE 0.0 END) as adoptionRate
+    FROM providers WHERE specialty != ''
+    GROUP BY specialty HAVING COUNT(*) >= 50
+    ORDER BY adoptionRate DESC LIMIT ?`;
+  if (USE_NEON) return queryAll(sql, [limit]).then(r => r.map((x: any) => ({
+    specialty: x.specialty,
+    adoptionRate: Number(x.adoptionrate ?? x.adoptionRate ?? 0),
+    providerCount: num(x.providercount ?? x.providerCount),
+    billerCount: num(x.billercount ?? x.billerCount),
+  })));
+  const db = getDb();
+  if (!db) return Promise.resolve([]);
+  return Promise.resolve((db.prepare(sql).all(limit) as any[]).map((x: any) => ({
+    specialty: x.specialty,
+    adoptionRate: Number(x.adoptionRate ?? 0),
+    providerCount: num(x.providerCount),
+    billerCount: num(x.billerCount),
+  })));
+}
+
 // ── Profile Claims ──────────────────────────────────────────
 
 async function ensureClaimsTable(): Promise<void> {

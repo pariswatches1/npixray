@@ -5,6 +5,11 @@ import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { ScanCTA } from "@/components/seo/scan-cta";
 import { ProviderTable } from "@/components/seo/provider-table";
 import { StatCard } from "@/components/seo/stat-card";
+import { EvidenceBlocks } from "@/components/seo/evidence-blocks";
+import { ConfidenceBadge } from "@/components/seo/confidence-badge";
+import { SpecialtyBenchmarkComparison } from "@/components/seo/benchmark-comparison";
+import { RevenueOpportunities } from "@/components/seo/revenue-opportunities";
+import { DataCoverage } from "@/components/seo/data-coverage";
 import {
   getSpecialtyByState,
   getSpecialtyStateProviders,
@@ -17,8 +22,10 @@ import {
   formatCurrency,
   formatNumber,
 } from "@/lib/db-queries";
+import { getStateSpecialtyComparisons } from "@/lib/comparisons";
+import { getStateSpecialtyOpportunities } from "@/lib/opportunity-engine";
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 86400; // ISR: revalidate daily
 
 export async function generateMetadata({
   params,
@@ -38,7 +45,7 @@ export async function generateMetadata({
   const stateName = stateAbbrToName(abbr);
   return {
     title: `${specialtyName} in ${stateName} — ${formatNumber(stats.count)} Providers | NPIxray`,
-    description: `${specialtyName} Medicare data in ${stateName}: ${formatNumber(stats.count)} providers, ${formatCurrency(stats.totalPayment)} total payments, ${formatCurrency(stats.avgPayment)} average per provider.`,
+    description: `${specialtyName} Medicare data in ${stateName}: ${formatNumber(stats.count)} providers, ${formatCurrency(stats.totalPayment)} total payments, ${formatCurrency(stats.avgPayment)} average per provider. Compare to national benchmarks and neighboring states.`,
     alternates: {
       canonical: `https://npixray.com/states/${stateSlug}/specialties/${specSlug}`,
     },
@@ -65,12 +72,17 @@ export default async function StateSpecialtyPage({
   if (!stats || !stats.count) notFound();
 
   const stateName = stateAbbrToName(abbr);
-  const [providers, benchmarks] = await Promise.all([
+
+  // Parallel data fetching — all layers at once
+  const [providers, benchmarks, comparison, opportunities] = await Promise.all([
     getSpecialtyStateProviders(specialtyName, abbr, 50),
     getAllBenchmarks(),
+    getStateSpecialtyComparisons(specialtyName, abbr),
+    getStateSpecialtyOpportunities(specialtyName, abbr),
   ]);
+
   const nationalBenchmark = benchmarks.find(
-    (b) => specialtyToSlug(b.specialty) === specSlug
+    (b: any) => specialtyToSlug(b.specialty) === specSlug
   );
   const nationalAvg = nationalBenchmark?.avg_total_payment ?? null;
 
@@ -80,6 +92,22 @@ export default async function StateSpecialtyPage({
     const direction = diff >= 0 ? "more" : "less";
     comparisonText = `${stateName} ${specialtyName} providers earn ${Math.abs(diff).toFixed(0)}% ${direction} than the national average of ${formatCurrency(nationalAvg)}.`;
   }
+
+  // Build evidence block data
+  const keyStats = [
+    { label: `${specialtyName} providers in ${stateName}`, value: formatNumber(stats.count) },
+    { label: "Average Medicare payment per provider", value: formatCurrency(stats.avgPayment) },
+    { label: "Total Medicare payments", value: formatCurrency(stats.totalPayment) },
+  ];
+
+  const comparisonData = comparison
+    ? {
+        nationalRank: comparison.nationalSpecialtyRank,
+        totalStates: comparison.totalStatesWithSpecialty,
+        deltaVsNational: comparison.vsNationalBenchmark?.avgPaymentDelta ?? 0,
+        entityLabel: `${specialtyName} in ${stateName}`,
+      }
+    : null;
 
   return (
     <>
@@ -144,8 +172,56 @@ export default async function StateSpecialtyPage({
               />
             )}
           </div>
+
+          {/* Confidence Badge */}
+          <ConfidenceBadge
+            providerCount={stats.count}
+            className="mt-6"
+          />
         </div>
       </section>
+
+      {/* Evidence Blocks — snippet-friendly data summary */}
+      <section className="border-t border-dark-50/50 py-10">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <EvidenceBlocks
+            keyStats={keyStats}
+            comparison={comparisonData}
+            opportunities={opportunities}
+          />
+        </div>
+      </section>
+
+      {/* Benchmark Comparison — state vs neighbors for this specialty */}
+      {comparison && comparison.neighborComparisons.length > 0 && (
+        <section className="border-t border-dark-50/50 py-10">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <SpecialtyBenchmarkComparison
+              specialty={specialtyName}
+              stateName={stateName}
+              stateAbbr={abbr}
+              neighbors={comparison.neighborComparisons}
+              nationalRank={comparison.nationalSpecialtyRank}
+              totalStates={comparison.totalStatesWithSpecialty}
+              percentile={comparison.percentilePosition}
+              avgPayment={stats.avgPayment}
+              vsNational={comparison.vsNationalBenchmark}
+            />
+          </div>
+        </section>
+      )}
+
+      {/* Revenue Opportunities — top 3 specific gaps */}
+      {opportunities.length > 0 && (
+        <section className="border-t border-dark-50/50 py-10">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <RevenueOpportunities
+              opportunities={opportunities}
+              title={`Top Revenue Opportunities for ${specialtyName} in ${stateName}`}
+            />
+          </div>
+        </section>
+      )}
 
       {/* Top Providers */}
       {providers.length > 0 && (
@@ -160,9 +236,14 @@ export default async function StateSpecialtyPage({
         </section>
       )}
 
-      {/* CTA */}
+      {/* Data attribution */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4">
+        <DataCoverage providerCount={stats.count} />
+      </section>
+
+      {/* CTA — pre-filtered */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-16">
-        <ScanCTA />
+        <ScanCTA state={stateName} specialty={specialtyName} />
       </section>
     </>
   );

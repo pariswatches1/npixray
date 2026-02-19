@@ -208,6 +208,14 @@ Authorization: Bearer npx_your_api_key_here`}</CodeBlock>
                   <li>Market intelligence</li>
                   <li>Score distributions</li>
                 </ul>
+                <Link
+                  href="/login?callbackUrl=/api-docs"
+                  className="mt-4 flex items-center justify-center gap-2 rounded-lg bg-gold px-4 py-2.5 text-sm font-semibold text-dark hover:bg-gold-300 transition-all w-full"
+                >
+                  <Key className="h-4 w-4" />
+                  Get API Key — $49/mo
+                  <ArrowRight className="h-3 w-3" />
+                </Link>
               </div>
             </div>
           </div>

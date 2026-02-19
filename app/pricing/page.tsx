@@ -36,8 +36,8 @@ const TIERS = [
       "Unlimited NPI scans",
       "E&M coding gap analysis",
       "CCM / RPM / BHI / AWV gap estimates",
-      "90-day action plan roadmap",
       "Specialty benchmark comparisons",
+      "Revenue Score & badge",
       "Shareable report link",
     ],
   },
@@ -52,14 +52,16 @@ const TIERS = [
     planId: "intelligence",
     highlight: true,
     badge: "Most Popular",
+    subtext: "See exactly which patients to enroll first",
     features: [
       "Everything in Free, plus:",
+      "90-day action plan roadmap",
+      "12-month revenue forecast",
       "CSV billing data upload & analysis",
       "Patient-level eligibility lists",
       "AI-powered coding recommendations",
+      "Unlimited AI Coach sessions",
       "Monthly benchmark tracking",
-      "MIPS quality score dashboard",
-      "Payer performance analytics",
       "Email & PDF report exports",
       "Priority support",
     ],
@@ -202,9 +204,15 @@ export default function PricingPage() {
                   </span>
                 </div>
 
-                <p className="text-sm text-[var(--text-secondary)] mb-6 leading-relaxed">
+                <p className="text-sm text-[var(--text-secondary)] mb-2 leading-relaxed">
                   {tier.description}
                 </p>
+                {(tier as any).subtext && (
+                  <p className="text-xs text-gold font-medium mb-4">
+                    {(tier as any).subtext}
+                  </p>
+                )}
+                {!(tier as any).subtext && <div className="mb-4" />}
 
                 {/* CTA Button */}
                 <PricingCTA

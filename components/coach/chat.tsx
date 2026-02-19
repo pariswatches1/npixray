@@ -55,6 +55,7 @@ interface ScanData {
 // ── Constants ────────────────────────────────────────────────
 
 const FREE_MESSAGE_LIMIT = 3;
+const EMAIL_MESSAGE_LIMIT = 8;
 const SESSION_KEY = "npixray-coach-session";
 const EMAIL_KEY = "npixray-coach-email";
 
@@ -259,8 +260,12 @@ export function CoachChat({ scanData }: { scanData?: ScanData | null }) {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  const isGated =
+  // Two-tier gating: email gate at 3, hard paywall at 8
+  const needsEmail =
     !emailSubmitted && userMessageCount >= FREE_MESSAGE_LIMIT;
+  const needsUpgrade =
+    emailSubmitted && userMessageCount >= EMAIL_MESSAGE_LIMIT;
+  const isGated = needsEmail || needsUpgrade;
 
   const sendMessage = useCallback(
     async (text: string) => {
@@ -503,8 +508,8 @@ export function CoachChat({ scanData }: { scanData?: ScanData | null }) {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Email Gate */}
-      {isGated && (
+      {/* Email Gate (3 free messages) */}
+      {needsEmail && (
         <div className="mx-4 sm:mx-6 mb-4 rounded-2xl border border-gold/30 bg-gold/5 p-6 animate-in fade-in slide-in-from-bottom duration-300">
           <div className="flex items-start gap-3 mb-4">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gold/10 border border-gold/20 flex-shrink-0">
@@ -515,7 +520,7 @@ export function CoachChat({ scanData }: { scanData?: ScanData | null }) {
                 Continue Your Coaching Session
               </h3>
               <p className="text-sm text-[var(--text-secondary)] mt-1">
-                Enter your email to unlock unlimited AI coaching.
+                Enter your email to unlock {EMAIL_MESSAGE_LIMIT - FREE_MESSAGE_LIMIT} more coaching messages.
                 We&apos;ll save your chat history for next time.
               </p>
             </div>
@@ -559,6 +564,49 @@ export function CoachChat({ scanData }: { scanData?: ScanData | null }) {
         </div>
       )}
 
+      {/* Hard Paywall (after 8 total messages) */}
+      {needsUpgrade && (
+        <div className="mx-4 sm:mx-6 mb-4 rounded-2xl border border-gold/30 bg-gold/5 p-6 animate-in fade-in slide-in-from-bottom duration-300">
+          <div className="flex items-start gap-3 mb-4">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gold/10 border border-gold/20 flex-shrink-0">
+              <Lock className="h-5 w-5 text-gold" />
+            </div>
+            <div>
+              <h3 className="text-base font-bold text-white">
+                You&apos;ve Used All Free Coaching Sessions
+              </h3>
+              <p className="text-sm text-[var(--text-secondary)] mt-1">
+                Upgrade to Intelligence for unlimited AI coaching, personalized
+                action plans, and patient eligibility lists.
+              </p>
+            </div>
+          </div>
+
+          <div className="space-y-2 mb-5">
+            {[
+              "Unlimited AI Revenue Coach sessions",
+              "Personalized 90-day action plan",
+              "Patient eligibility lists (CCM, RPM, AWV)",
+              "Monthly benchmark tracking & alerts",
+            ].map((f) => (
+              <div key={f} className="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
+                <Sparkles className="h-3.5 w-3.5 text-gold flex-shrink-0" />
+                {f}
+              </div>
+            ))}
+          </div>
+
+          <Link
+            href="/pricing"
+            className="flex items-center justify-center gap-2 rounded-xl bg-gold py-3.5 text-sm font-semibold text-dark hover:bg-gold-300 transition-all w-full"
+          >
+            <Zap className="h-4 w-4" />
+            Upgrade to Intelligence — $99/mo
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+      )}
+
       {/* Input Area */}
       <div className="border-t border-dark-50/50 px-4 sm:px-6 py-4 bg-dark/80 backdrop-blur-sm">
         <div className="flex items-center gap-2 mb-2">
@@ -571,10 +619,11 @@ export function CoachChat({ scanData }: { scanData?: ScanData | null }) {
               New chat
             </button>
           )}
-          {!emailSubmitted && userMessageCount > 0 && (
+          {userMessageCount > 0 && !needsUpgrade && (
             <span className="text-xs text-[var(--text-secondary)] ml-auto">
-              {Math.max(0, FREE_MESSAGE_LIMIT - userMessageCount)} free messages
-              left
+              {emailSubmitted
+                ? `${Math.max(0, EMAIL_MESSAGE_LIMIT - userMessageCount)} messages left`
+                : `${Math.max(0, FREE_MESSAGE_LIMIT - userMessageCount)} free messages left`}
             </span>
           )}
           {scanData && (

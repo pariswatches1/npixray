@@ -14,7 +14,7 @@ export async function generateMetadata({
   }
 
   try {
-    const result = await performScan(npi);
+    const { result } = await performScan(npi);
     const missed = result.totalMissedRevenue >= 1000
       ? `$${Math.round(result.totalMissedRevenue / 1000)}K`
       : `$${result.totalMissedRevenue.toLocaleString()}`;

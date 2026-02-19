@@ -16,7 +16,8 @@ export type PageType =
   | "leaderboard"
   | "score"
   | "market"
-  | "ranking";
+  | "ranking"
+  | "program";
 
 export interface RelatedLink {
   label: string;
@@ -81,6 +82,14 @@ const COMPARISONS: RelatedLink[] = [
   { label: "NPIxray vs Chronic Care IQ", href: "/vs/chronic-care-iq" },
   { label: "NPIxray vs Prevounce", href: "/vs/prevounce" },
   { label: "NPIxray vs Aledade", href: "/vs/aledade" },
+];
+
+const PROGRAMS: RelatedLink[] = [
+  { label: "CCM Program", href: "/programs/ccm" },
+  { label: "RPM Program", href: "/programs/rpm" },
+  { label: "AWV Program", href: "/programs/awv" },
+  { label: "BHI Program", href: "/programs/bhi" },
+  { label: "E&M Coding", href: "/programs/em-coding" },
 ];
 
 const INSIGHTS: RelatedLink[] = [
@@ -157,14 +166,14 @@ export function getRelatedLinks(
           links: take(filterOutCurrent(GUIDES, slug), 4),
         },
         {
+          category: "Programs",
+          icon: "Activity",
+          links: take(PROGRAMS, 3),
+        },
+        {
           category: "Free Tools",
           icon: "Wrench",
           links: take([...TOP_TOOLS, ...MORE_TOOLS], 4),
-        },
-        {
-          category: "Data Insights",
-          icon: "BarChart3",
-          links: take(INSIGHTS, 3),
         },
       ];
 
@@ -217,6 +226,11 @@ export function getRelatedLinks(
     case "code":
       return [
         {
+          category: "Programs",
+          icon: "Activity",
+          links: take(PROGRAMS, 3),
+        },
+        {
           category: "Billing Guides",
           icon: "BookOpen",
           links: take(GUIDES, 3),
@@ -230,11 +244,6 @@ export function getRelatedLinks(
             { label: "Revenue Calculator", href: "/tools/revenue-calculator" },
           ],
         },
-        {
-          category: "Top Specialties",
-          icon: "Stethoscope",
-          links: take(TOP_SPECIALTIES, 3),
-        },
       ];
 
     case "insight":
@@ -245,13 +254,9 @@ export function getRelatedLinks(
           links: take(filterOutCurrent(INSIGHTS, slug), 4),
         },
         {
-          category: "Browse Data",
-          icon: "MapPin",
-          links: [
-            { label: "All States", href: "/states" },
-            { label: "All Specialties", href: "/specialties" },
-            { label: "All Codes", href: "/codes" },
-          ],
+          category: "Programs",
+          icon: "Activity",
+          links: take(PROGRAMS, 3),
         },
         {
           category: "Free Tools",
@@ -303,6 +308,25 @@ export function getRelatedLinks(
             { label: "All Specialties", href: "/specialties" },
             { label: "All Codes", href: "/codes" },
           ],
+        },
+      ];
+
+    case "program":
+      return [
+        {
+          category: "More Programs",
+          icon: "Activity",
+          links: take(filterOutCurrent(PROGRAMS, slug), 4),
+        },
+        {
+          category: "Billing Guides",
+          icon: "BookOpen",
+          links: take(GUIDES, 3),
+        },
+        {
+          category: "Free Tools",
+          icon: "Wrench",
+          links: take(TOP_TOOLS, 3),
         },
       ];
 

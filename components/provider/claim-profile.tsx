@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { Shield, CheckCircle2, AlertCircle, Mail, ArrowRight, Bell, FileText, BarChart3 } from "lucide-react";
+import Link from "next/link";
+import { Shield, CheckCircle2, AlertCircle, Mail, ArrowRight, Bell, FileText, BarChart3, Zap, Users, Brain } from "lucide-react";
 import { trackEvent } from "@/lib/analytics";
 
 interface ClaimProfileProps {
@@ -55,18 +56,64 @@ export function ClaimProfile({ npi, providerName }: ClaimProfileProps) {
 
   if (state === "success") {
     return (
-      <div className="mb-8 rounded-2xl border border-emerald-500/30 bg-emerald-500/5 p-6">
-        <div className="flex items-center gap-3">
+      <div className="mb-8 rounded-2xl border border-gold/30 bg-gold/5 p-6">
+        {/* Success banner */}
+        <div className="flex items-center gap-3 mb-6">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/10">
             <CheckCircle2 className="h-5 w-5 text-emerald-400" />
           </div>
           <div>
-            <p className="font-semibold text-emerald-400">Verification email sent!</p>
+            <p className="font-semibold text-emerald-400">Profile Claimed!</p>
             <p className="text-sm text-[var(--text-secondary)]">
-              Check your inbox at <span className="font-medium text-[var(--text-primary)]">{email}</span> to confirm ownership of this profile.
+              Verification sent to <span className="font-medium text-[var(--text-primary)]">{email}</span>
             </p>
           </div>
         </div>
+
+        {/* Subscription funnel */}
+        <h4 className="font-bold mb-4">Here&apos;s what you can unlock:</h4>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+          {/* Free tier (included) */}
+          <div className="rounded-xl border border-dark-50/50 bg-dark-400/30 p-4">
+            <p className="text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider mb-2">Free (Included)</p>
+            <ul className="space-y-1.5">
+              {["Public Revenue Score", "Share badge on your website", "Score change alerts"].map((f) => (
+                <li key={f} className="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
+                  <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400 flex-shrink-0" />
+                  {f}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Intelligence tier (upgrade) */}
+          <div className="rounded-xl border border-gold/30 bg-gold/5 p-4">
+            <p className="text-xs font-semibold text-gold uppercase tracking-wider mb-2">Intelligence — $99/mo</p>
+            <ul className="space-y-1.5">
+              {[
+                "Monthly score tracking & alerts",
+                "Patient eligibility lists",
+                "PDF report exports",
+                "AI coding recommendations",
+              ].map((f) => (
+                <li key={f} className="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
+                  <Zap className="h-3.5 w-3.5 text-gold flex-shrink-0" />
+                  {f}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <Link
+          href="/pricing"
+          className="flex items-center justify-center gap-2 rounded-xl bg-gold py-3 text-sm font-semibold text-dark hover:bg-gold-300 transition-all w-full"
+        >
+          <Zap className="h-4 w-4" />
+          Unlock Full Intelligence — $99/mo
+          <ArrowRight className="h-4 w-4" />
+        </Link>
       </div>
     );
   }

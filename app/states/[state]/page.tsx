@@ -7,11 +7,17 @@ import { ScanCTA } from "@/components/seo/scan-cta";
 import { ProviderTable } from "@/components/seo/provider-table";
 import { StatCard } from "@/components/seo/stat-card";
 import { RelatedLinks } from "@/components/seo/related-links";
+import { EvidenceBlocks } from "@/components/seo/evidence-blocks";
+import { ConfidenceBadge } from "@/components/seo/confidence-badge";
+import { StateBenchmarkComparison } from "@/components/seo/benchmark-comparison";
+import { RevenueOpportunities } from "@/components/seo/revenue-opportunities";
+import { SpecialtyOpportunitiesGrid } from "@/components/seo/specialty-opportunities-grid";
 import {
   getStateStats,
   getStateSpecialties,
   getStateCities,
   getStateTopProviders,
+  getStateSpecialtyProgramGaps,
   slugToStateAbbr,
   stateAbbrToName,
   specialtyToSlug,
@@ -19,8 +25,11 @@ import {
   formatCurrency,
   formatNumber,
 } from "@/lib/db-queries";
+import { getStateComparisons } from "@/lib/comparisons";
+import { getStateOpportunities } from "@/lib/opportunity-engine";
+import { DataCoverage } from "@/components/seo/data-coverage";
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 86400; // ISR: revalidate every 24 hours
 
 export async function generateMetadata({
   params,
@@ -61,10 +70,13 @@ export default async function StatePage({
   if (!stats || !stats.totalProviders) notFound();
 
   const stateName = stateAbbrToName(abbr);
-  const [specialties, cities, providers] = await Promise.all([
+  const [specialties, cities, providers, comparison, opportunities, specialtyGaps] = await Promise.all([
     getStateSpecialties(abbr, 20),
     getStateCities(abbr, 30),
     getStateTopProviders(abbr, 50),
+    getStateComparisons(abbr),
+    getStateOpportunities(abbr),
+    getStateSpecialtyProgramGaps(abbr, 10),
   ]);
 
   return (
@@ -131,6 +143,8 @@ export default async function StatePage({
             )}
           </div>
 
+          <DataCoverage providerCount={stats.totalProviders} className="mt-4" />
+
           {/* Stats Grid */}
           <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-4">
             <StatCard
@@ -155,6 +169,57 @@ export default async function StatePage({
               icon={Activity}
             />
           </div>
+        </div>
+      </section>
+
+      {/* ── Differentiation Layers ─────────────────────────── */}
+      <section className="border-t border-dark-50/50 py-10 sm:py-14">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-10">
+          {/* Layer A: Evidence Blocks — snippet-friendly data boxes */}
+          <EvidenceBlocks
+            keyStats={[
+              { label: "Total Providers", value: formatNumber(stats.totalProviders), subtext: stateName },
+              { label: "Avg Medicare Payment", value: formatCurrency(stats.avgPayment), subtext: "per provider" },
+              { label: "Total Medicare Payments", value: formatCurrency(stats.totalPayment) },
+              ...(specialties.length > 0
+                ? [{ label: "Top Specialty", value: specialties[0].specialty, subtext: `${specialties[0].count.toLocaleString()} providers` }]
+                : []),
+            ]}
+            comparison={comparison ? {
+              nationalRank: comparison.nationalRank,
+              totalStates: comparison.totalStates,
+              deltaVsNational: comparison.avgPaymentDelta,
+              entityLabel: `${stateName} Medicare Revenue`,
+            } : null}
+            opportunities={opportunities}
+          />
+
+          {/* Layer B: Confidence Badge — data trustworthiness */}
+          <ConfidenceBadge providerCount={stats.totalProviders} />
+
+          {/* Layer 2: Benchmark Comparison — neighbor bars + national rank */}
+          {comparison && (
+            <StateBenchmarkComparison
+              stateName={stateName}
+              comparison={comparison}
+            />
+          )}
+
+          {/* Layer 3: Revenue Opportunities — top 3 program gaps */}
+          {opportunities.length > 0 && (
+            <RevenueOpportunities
+              opportunities={opportunities}
+              title={`Top Revenue Opportunities in ${stateName}`}
+            />
+          )}
+
+          {/* Layer 4: Specialty Opportunities Grid — specialties with biggest gaps */}
+          {specialtyGaps.length > 0 && (
+            <SpecialtyOpportunitiesGrid
+              gaps={specialtyGaps}
+              stateSlug={slug}
+            />
+          )}
         </div>
       </section>
 
@@ -245,7 +310,7 @@ export default async function StatePage({
 
       {/* CTA */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-16">
-        <ScanCTA />
+        <ScanCTA state={stateName} />
       </section>
     </>
   );

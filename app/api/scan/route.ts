@@ -12,8 +12,11 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const result = await performScan(npi);
-    return NextResponse.json({ result });
+    const { result, warnings } = await performScan(npi);
+    return NextResponse.json({
+      result,
+      ...(warnings.length > 0 ? { warnings } : {}),
+    });
   } catch (err) {
     console.error("Scan error:", err);
     return NextResponse.json(

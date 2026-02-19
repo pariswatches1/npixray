@@ -45,6 +45,8 @@ export async function generateMetadata({
       title: `${cityName}, ${stateName} Medicare Providers | NPIxray`,
       description: `Explore Medicare billing data for ${stats.count} providers in ${cityName}, ${abbr}.`,
     },
+    // noindex thin city pages with fewer than 20 providers (crawl budget hygiene)
+    robots: stats.count < 20 ? { index: false, follow: true } : undefined,
   };
 }
 
