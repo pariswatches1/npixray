@@ -58,13 +58,16 @@ async function getUserById(id: string) {
 export const authConfig: NextAuthConfig = {
   providers: [
     Google({
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      clientId: process.env.GOOGLE_CLIENT_ID || "",
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
     }),
   ],
 
+  trustHost: true,
+
   pages: {
     signIn: "/login",
+    error: "/login",
   },
 
   callbacks: {
