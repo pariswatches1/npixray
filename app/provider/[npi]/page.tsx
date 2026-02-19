@@ -66,6 +66,8 @@ export async function generateMetadata({
     twitter: {
       card: "summary_large_image",
     },
+    // noindex low-volume providers to preserve crawl budget
+    robots: provider.total_medicare_payment < 10000 ? { index: false, follow: true } : undefined,
   };
 }
 

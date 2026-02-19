@@ -31,6 +31,14 @@ export async function GET() {
     { loc: "/research", priority: "0.8", changefreq: "monthly" },
     { loc: "/data-api", priority: "0.7", changefreq: "monthly" },
     { loc: "/search", priority: "0.7", changefreq: "weekly" },
+    { loc: "/methodology", priority: "0.9", changefreq: "monthly" },
+    { loc: "/programs", priority: "0.9", changefreq: "monthly" },
+    { loc: "/programs/ccm", priority: "0.9", changefreq: "monthly" },
+    { loc: "/programs/rpm", priority: "0.9", changefreq: "monthly" },
+    { loc: "/programs/awv", priority: "0.9", changefreq: "monthly" },
+    { loc: "/programs/bhi", priority: "0.9", changefreq: "monthly" },
+    { loc: "/programs/em-coding", priority: "0.9", changefreq: "monthly" },
+    { loc: "/reports/2026-medicare-revenue-gap", priority: "1.0", changefreq: "monthly" },
   ];
 
   const urls = pages

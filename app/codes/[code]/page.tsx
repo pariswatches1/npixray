@@ -5,6 +5,7 @@ import { Hash, Users, Activity, DollarSign, Stethoscope } from "lucide-react";
 import {
   getCodeStats,
   getCodeTopSpecialties,
+  getRelatedCodes,
   formatCurrency,
   formatNumber,
   specialtyToSlug,
@@ -13,8 +14,13 @@ import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { StatCard } from "@/components/seo/stat-card";
 import { ScanCTA } from "@/components/seo/scan-cta";
 import { RelatedLinks } from "@/components/seo/related-links";
+import { EvidenceBlocks } from "@/components/seo/evidence-blocks";
+import { ConfidenceBadge } from "@/components/seo/confidence-badge";
+import { RevenueOpportunities } from "@/components/seo/revenue-opportunities";
+import { CodeRevenueImpact } from "@/components/seo/code-revenue-impact";
+import { getCodeOpportunities } from "@/lib/opportunity-engine";
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 86400; // ISR: revalidate every 24 hours
 
 export async function generateMetadata({
   params,
@@ -49,7 +55,11 @@ export default async function CodePage({
   const stats = getCodeStats(codeUpper);
   if (!stats || !stats.totalProviders) notFound();
 
-  const topSpecialties = getCodeTopSpecialties(codeUpper, 15);
+  const [topSpecialties, opportunities, relatedCodes] = await Promise.all([
+    getCodeTopSpecialties(codeUpper, 15),
+    getCodeOpportunities(codeUpper),
+    getRelatedCodes(codeUpper, 5),
+  ]);
 
   return (
     <>
@@ -104,6 +114,44 @@ export default async function CodePage({
               sub="per claim"
             />
           </div>
+        </div>
+      </section>
+
+      {/* ── Differentiation Layers ─────────────────────────── */}
+      <section className="border-t border-dark-50/50 py-10 sm:py-14">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-10">
+          {/* Layer A: Evidence Blocks */}
+          <EvidenceBlocks
+            keyStats={[
+              { label: "Providers Billing This Code", value: formatNumber(stats.totalProviders) },
+              { label: "Avg Payment per Service", value: formatCurrency(stats.avgPayment) },
+              { label: "Total Medicare Services", value: formatNumber(stats.totalServices) },
+              { label: "Total Medicare Payments", value: formatCurrency(stats.totalPayment) },
+            ]}
+            comparison={null}
+            opportunities={opportunities}
+          />
+
+          {/* Layer B: Confidence Badge */}
+          <ConfidenceBadge providerCount={stats.totalProviders} />
+
+          {/* Code Revenue Impact — related codes comparison */}
+          {relatedCodes.length > 0 && (
+            <CodeRevenueImpact
+              currentCode={codeUpper}
+              currentAvgPayment={stats.avgPayment}
+              currentTotalProviders={stats.totalProviders}
+              relatedCodes={relatedCodes}
+            />
+          )}
+
+          {/* Layer 3: Revenue Opportunities */}
+          {opportunities.length > 0 && (
+            <RevenueOpportunities
+              opportunities={opportunities}
+              title={`Revenue Opportunities for ${codeUpper}`}
+            />
+          )}
         </div>
       </section>
 

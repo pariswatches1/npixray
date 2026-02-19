@@ -83,6 +83,11 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/reports/2026-medicare-revenue-gap" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
+                  2026 Revenue Gap Report
+                </Link>
+              </li>
+              <li>
                 <Link href="/api-docs" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
                   Public API
                 </Link>
@@ -91,8 +96,8 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Row 2: Compare, Solutions, States, Specialties */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-8 pt-8 border-t border-dark-50/30">
+        {/* Row 2: Compare, Solutions, Programs, States, Specialties */}
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mt-8 pt-8 border-t border-dark-50/30">
           {/* Compare */}
           <div>
             <h3 className="text-sm font-semibold text-gold mb-4 uppercase tracking-wider">
@@ -156,6 +161,40 @@ export function Footer() {
               <li>
                 <Link href="/solutions" className="text-sm text-gold hover:text-gold-300 transition-colors font-medium">
                   All Solutions →
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Programs */}
+          <div>
+            <h3 className="text-sm font-semibold text-gold mb-4 uppercase tracking-wider">
+              Programs
+            </h3>
+            <ul className="space-y-2.5">
+              <li>
+                <Link href="/programs/ccm" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
+                  CCM
+                </Link>
+              </li>
+              <li>
+                <Link href="/programs/rpm" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
+                  RPM
+                </Link>
+              </li>
+              <li>
+                <Link href="/programs/awv" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
+                  AWV
+                </Link>
+              </li>
+              <li>
+                <Link href="/programs/bhi" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
+                  BHI
+                </Link>
+              </li>
+              <li>
+                <Link href="/programs" className="text-sm text-gold hover:text-gold-300 transition-colors font-medium">
+                  All Programs →
                 </Link>
               </li>
             </ul>
@@ -239,6 +278,7 @@ export function Footer() {
             <Link href="/about" className="text-xs text-[var(--text-secondary)] hover:text-gold transition-colors">About</Link>
             <Link href="/pricing" className="text-xs text-[var(--text-secondary)] hover:text-gold transition-colors">Pricing</Link>
             <Link href="/guides" className="text-xs text-[var(--text-secondary)] hover:text-gold transition-colors">Guides</Link>
+            <Link href="/methodology" className="text-xs text-[var(--text-secondary)] hover:text-gold transition-colors">Methodology</Link>
           </div>
           <p className="text-xs text-[var(--text-secondary)]">
             Data sourced from CMS.gov public datasets. Not medical advice.

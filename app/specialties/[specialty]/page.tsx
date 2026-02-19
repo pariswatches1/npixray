@@ -14,8 +14,11 @@ import { StatCard } from "@/components/seo/stat-card";
 import { ProviderTable } from "@/components/seo/provider-table";
 import { ScanCTA } from "@/components/seo/scan-cta";
 import { RelatedLinks } from "@/components/seo/related-links";
+import { EvidenceBlocks } from "@/components/seo/evidence-blocks";
+import { ConfidenceBadge } from "@/components/seo/confidence-badge";
+import { DataCoverage } from "@/components/seo/data-coverage";
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 86400; // ISR: revalidate every 24 hours
 
 async function findSpecialtyBySlug(slug: string) {
   const benchmarks = await getAllBenchmarks();
@@ -117,6 +120,29 @@ export default async function SpecialtyPage({
         </div>
       </section>
 
+      {/* ── Differentiation Layers ─────────────────────────── */}
+      <section className="border-t border-dark-50/50 py-10 sm:py-14">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8">
+          {/* Layer A: Evidence Blocks — snippet-friendly data boxes */}
+          <EvidenceBlocks
+            keyStats={[
+              { label: "National Provider Count", value: formatNumber(benchmark.provider_count) },
+              { label: "Avg Total Medicare Payment", value: formatCurrency(benchmark.avg_total_payment), subtext: "per provider" },
+              { label: "Avg Medicare Patients", value: formatNumber(benchmark.avg_medicare_patients), subtext: "per provider" },
+              { label: "Avg Revenue per Patient", value: formatCurrency(benchmark.avg_revenue_per_patient) },
+            ]}
+            comparison={null}
+            opportunities={[]}
+          />
+
+          {/* Layer B: Confidence Badge — data trustworthiness */}
+          <ConfidenceBadge
+            providerCount={benchmark.provider_count}
+            dataSource="CMS Medicare Public Data 2024 — National Specialty Benchmarks"
+          />
+        </div>
+      </section>
+
       {/* Data-Driven Specialty Intro */}
       <section className="border-t border-dark-50/50 py-10 sm:py-14">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -192,6 +218,7 @@ export default async function SpecialtyPage({
               })()}
             </p>
           </div>
+          <DataCoverage providerCount={benchmark.provider_count} className="mt-6" />
         </div>
       </section>
 
@@ -313,7 +340,7 @@ export default async function SpecialtyPage({
       <RelatedLinks pageType="specialty" currentSlug={slug} context={{ specialty: slug }} />
 
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-16">
-        <ScanCTA />
+        <ScanCTA specialty={benchmark.specialty} />
       </section>
     </>
   );
