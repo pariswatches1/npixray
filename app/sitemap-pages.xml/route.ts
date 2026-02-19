@@ -39,6 +39,8 @@ export async function GET() {
     { loc: "/programs/bhi", priority: "0.9", changefreq: "monthly" },
     { loc: "/programs/em-coding", priority: "0.9", changefreq: "monthly" },
     { loc: "/reports/2026-medicare-revenue-gap", priority: "1.0", changefreq: "monthly" },
+    { loc: "/enterprise", priority: "0.8", changefreq: "monthly" },
+    { loc: "/enterprise/billing-companies", priority: "0.9", changefreq: "monthly" },
   ];
 
   const urls = pages

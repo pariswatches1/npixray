@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { ArrowRight, Loader2 } from "lucide-react";
+import { ArrowRight, Loader2, Check, Zap, Calendar } from "lucide-react";
 
 interface PricingCTAProps {
   planId: string;
@@ -16,6 +16,8 @@ export function PricingCTA({ planId, label, highlight }: PricingCTAProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
+  const userPlan = (session?.user as any)?.plan || "free";
+
   async function handleClick() {
     // Free tier — just go to scanner
     if (planId === "free") {
@@ -23,11 +25,20 @@ export function PricingCTA({ planId, label, highlight }: PricingCTAProps) {
       return;
     }
 
-    // Not logged in — send to login first
-    if (!session?.user) {
-      router.push("/login");
+    // Care Management — open demo booking
+    if (planId === "care") {
+      window.location.href = "mailto:sales@npixray.com?subject=Care%20Management%20Demo%20Request";
       return;
     }
+
+    // Not logged in — send to login first
+    if (!session?.user) {
+      router.push("/login?callbackUrl=/pricing");
+      return;
+    }
+
+    // Already on this plan
+    if (userPlan === planId) return;
 
     // Logged in — try Stripe checkout
     setLoading(true);
@@ -54,28 +65,47 @@ export function PricingCTA({ planId, label, highlight }: PricingCTAProps) {
     }
   }
 
-  // Determine button text
+  // ── Context-aware button text ──
   let buttonText = label;
-  if (planId !== "free" && !session?.user) {
-    buttonText = "Sign In to Get Started";
+  let icon: React.ReactNode = <ArrowRight className="h-4 w-4" />;
+  let disabled = false;
+
+  if (planId === "free") {
+    buttonText = "Scan Now \u2014 It\u2019s Free";
+    icon = <Zap className="h-4 w-4" />;
+  } else if (planId === "care") {
+    buttonText = "Book a Demo";
+    icon = <Calendar className="h-4 w-4" />;
+  } else if (session?.user && userPlan === planId) {
+    buttonText = "Current Plan";
+    icon = <Check className="h-4 w-4" />;
+    disabled = true;
+  } else if (session?.user && userPlan === "free" && planId === "intelligence") {
+    buttonText = "Upgrade Now \u2014 $99/mo";
+    icon = <Zap className="h-4 w-4" />;
+  } else if (!session?.user && planId !== "free") {
+    buttonText = "Start Free, Then Upgrade";
+    icon = <ArrowRight className="h-4 w-4" />;
   }
 
   return (
     <button
       onClick={handleClick}
-      disabled={loading}
+      disabled={loading || disabled}
       className={`flex items-center justify-center gap-2 rounded-xl py-3.5 text-sm font-semibold transition-all w-full mb-8 ${
-        highlight
-          ? "bg-gold text-dark hover:bg-gold-300 hover:shadow-lg hover:shadow-gold/20 disabled:opacity-70"
-          : "border border-dark-50 text-[var(--text-secondary)] hover:border-gold/30 hover:text-gold disabled:opacity-70"
+        disabled
+          ? "border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 cursor-default"
+          : highlight
+            ? "bg-gold text-dark hover:bg-gold-300 hover:shadow-lg hover:shadow-gold/20 disabled:opacity-70"
+            : "border border-dark-50 text-[var(--text-secondary)] hover:border-gold/30 hover:text-gold disabled:opacity-70"
       }`}
     >
       {loading ? (
         <Loader2 className="h-4 w-4 animate-spin" />
       ) : (
         <>
+          {icon}
           {buttonText}
-          <ArrowRight className="h-4 w-4" />
         </>
       )}
     </button>

@@ -29,7 +29,7 @@ export async function scanBatch(
     while (queue.length > 0) {
       const npi = queue.shift()!;
       try {
-        const result = await performScan(npi);
+        const { result } = await performScan(npi);
         results.set(npi, { result });
       } catch (err) {
         results.set(npi, {

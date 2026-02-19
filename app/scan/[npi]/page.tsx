@@ -14,6 +14,7 @@ import {
   ClipboardList,
   Loader2,
   AlertCircle,
+  AlertTriangle,
   RefreshCw,
   Database,
   Sparkles,
@@ -22,7 +23,9 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { ScanResult } from "@/lib/types";
+import type { ScanWarning } from "@/lib/scan";
 import { calculateRevenueScoreFromScan, estimatePercentile } from "@/lib/revenue-score";
+import { UpgradeGate } from "@/components/paywall/upgrade-gate";
 import { RevenueScoreGauge } from "@/components/score/revenue-score-gauge";
 import { ScoreBreakdown } from "@/components/score/score-breakdown";
 import { ScoreBadgeEmbed } from "@/components/score/score-badge-embed";
@@ -138,6 +141,7 @@ export default function ScanResultPage() {
   const npi = params.npi as string;
   const [data, setData] = useState<ScanResult | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [warnings, setWarnings] = useState<ScanWarning[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<Tab>("overview");
 
@@ -145,6 +149,7 @@ export default function ScanResultPage() {
     setLoading(true);
     setError(null);
     setData(null);
+    setWarnings([]);
 
     try {
       const res = await fetch(`/api/scan?npi=${encodeURIComponent(npi)}`);
@@ -154,6 +159,7 @@ export default function ScanResultPage() {
         return;
       }
       setData(json.result);
+      if (json.warnings?.length) setWarnings(json.warnings);
       trackEvent({
         action: "npi_scan",
         category: "scan",
@@ -273,6 +279,23 @@ export default function ScanResultPage() {
         </div>
       </div>
 
+      {/* Warning banner for partial data */}
+      {warnings.length > 0 && (
+        <div className="mb-6 rounded-xl border border-yellow-500/30 bg-yellow-500/5 p-4">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="h-5 w-5 text-yellow-400 flex-shrink-0 mt-0.5" />
+            <div>
+              <p className="text-sm font-medium text-yellow-400">Partial Data</p>
+              {warnings.map((w) => (
+                <p key={w.code} className="text-xs text-[var(--text-secondary)] mt-1">
+                  {w.message}
+                </p>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* ── Revenue Score ──────────────────────────────── */}
       {(() => {
         const scoreResult = calculateRevenueScoreFromScan(data);
@@ -381,8 +404,16 @@ export default function ScanResultPage() {
         {activeTab === "overview" && <OverviewTab data={data} />}
         {activeTab === "programs" && <ProgramsTab data={data} />}
         {activeTab === "coding" && <CodingTab data={data} />}
-        {activeTab === "forecast" && <ForecastTab data={data} />}
-        {activeTab === "action-plan" && <ActionPlanTab data={data} />}
+        {activeTab === "forecast" && (
+          <UpgradeGate feature="12-Month Revenue Forecast">
+            <ForecastTab data={data} />
+          </UpgradeGate>
+        )}
+        {activeTab === "action-plan" && (
+          <UpgradeGate feature="90-Day Action Plan">
+            <ActionPlanTab data={data} />
+          </UpgradeGate>
+        )}
         {activeTab === "competition" && <CompetitionTab npi={data.provider.npi} />}
       </div>
 

@@ -18,7 +18,7 @@ export default async function OGImage({
   let missedRevenue = "$0";
 
   try {
-    const result = await performScan(npi);
+    const { result } = await performScan(npi);
     providerName = result.provider.fullName;
     specialty = result.provider.specialty;
     location = `${result.provider.address.city}, ${result.provider.address.state}`;

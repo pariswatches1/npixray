@@ -14,7 +14,7 @@ export async function generateMetadata({
   }
 
   try {
-    const result = await performScan(npi);
+    const { result } = await performScan(npi);
     const scoreResult = calculateRevenueScoreFromScan(result);
     const percentile = estimatePercentile(scoreResult.overall);
     const missed =

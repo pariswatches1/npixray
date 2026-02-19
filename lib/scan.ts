@@ -83,22 +83,60 @@ export function createDemoProvider(npi: string): NPPESProvider {
  *   4. If no CMS data → simulate billing from specialty benchmarks (dataSource: "estimated")
  *   5. Falls back to demo provider if NPPES returns nothing
  */
-export async function performScan(npi: string): Promise<ScanResult> {
-  let provider = await lookupByNPI(npi);
+export interface ScanWarning {
+  code: string;
+  message: string;
+}
+
+export interface ScanResponse {
+  result: ScanResult;
+  warnings: ScanWarning[];
+}
+
+export async function performScan(npi: string): Promise<ScanResponse> {
+  const warnings: ScanWarning[] = [];
+  let provider: NPPESProvider | null = null;
+
+  // 1. Attempt NPPES lookup — wrapped in try/catch for resilience
+  try {
+    provider = await lookupByNPI(npi);
+  } catch (err) {
+    console.warn("NPPES lookup failed, using demo provider:", err);
+    warnings.push({
+      code: "NPPES_UNAVAILABLE",
+      message: "Provider registry lookup timed out. Showing estimated data based on specialty benchmarks.",
+    });
+  }
 
   if (!provider) {
     provider = createDemoProvider(npi);
+    if (!warnings.length) {
+      warnings.push({
+        code: "PROVIDER_NOT_FOUND",
+        message: "Provider not found in NPPES registry. Showing estimated data based on specialty benchmarks.",
+      });
+    }
   }
 
-  // Check for real CMS billing data
-  const cmsData = lookupCMSData(npi);
+  // 2. Check for real CMS billing data
+  let result: ScanResult;
+  try {
+    const cmsData = lookupCMSData(npi);
 
-  if (cmsData) {
-    // Use real CMS data — convert to ProviderBillingData and pass to calculator
-    const realBilling = cmsToBillingData(cmsData, provider.specialty);
-    return calculateScanResult(provider, realBilling);
+    if (cmsData) {
+      const realBilling = cmsToBillingData(cmsData, provider.specialty);
+      result = calculateScanResult(provider, realBilling);
+    } else {
+      result = calculateScanResult(provider);
+    }
+  } catch (err) {
+    console.warn("CMS data lookup failed, using estimated billing:", err);
+    warnings.push({
+      code: "CMS_DATA_ERROR",
+      message: "Could not load billing data. Revenue estimates use specialty benchmarks.",
+    });
+    result = calculateScanResult(provider);
   }
 
-  // No CMS data available — fall back to simulated billing
-  return calculateScanResult(provider);
+  return { result, warnings };
 }

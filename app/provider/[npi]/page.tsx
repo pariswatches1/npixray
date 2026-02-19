@@ -35,6 +35,7 @@ import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { ScanCTA } from "@/components/seo/scan-cta";
 import { ClaimProfile } from "@/components/provider/claim-profile";
 import { ShareButtons } from "@/components/reports/share-buttons";
+import { UpgradeInlineCTA } from "@/components/paywall/upgrade-gate";
 
 export const dynamic = 'force-dynamic';
 
@@ -558,6 +559,12 @@ export default async function ProviderProfilePage({
             })}
           </div>
         </section>
+
+        {/* ── Upgrade CTA ──────────────────────────────────── */}
+        <UpgradeInlineCTA
+          feature="Patient Eligibility Lists"
+          teaser={`We identified potential CCM, RPM, and AWV candidates from ${fullName}'s Medicare patient panel. Upgrade to see the full eligibility breakdown and personalized action plan.`}
+        />
 
         {/* ── Related Providers ───────────────────────────── */}
         <section className="mb-10">

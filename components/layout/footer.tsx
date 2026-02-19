@@ -159,6 +159,11 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/enterprise" className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
+                  Enterprise
+                </Link>
+              </li>
+              <li>
                 <Link href="/solutions" className="text-sm text-gold hover:text-gold-300 transition-colors font-medium">
                   All Solutions →
                 </Link>
