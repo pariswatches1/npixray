@@ -17,6 +17,9 @@ import {
   RefreshCw,
   Database,
   Sparkles,
+  Share2,
+  Download,
+  ArrowRight,
 } from "lucide-react";
 import { ScanResult } from "@/lib/types";
 import { calculateRevenueScoreFromScan, estimatePercentile } from "@/lib/revenue-score";
@@ -320,6 +323,36 @@ export default function ScanResultPage() {
         </div>
         <ArrowLeft className="h-5 w-5 text-gold rotate-180 flex-shrink-0 group-hover:translate-x-1 transition-transform" />
       </Link>
+
+      {/* Report Card CTA */}
+      <div className="mt-4 flex flex-col sm:flex-row gap-3">
+        <Link
+          href={`/scan/${npi}/card`}
+          className="flex-1 group flex items-center justify-center gap-3 rounded-2xl border border-dark-50/80 bg-dark-400/50 p-4 transition-all hover:border-gold/30 hover:bg-gold/[0.03]"
+        >
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gold/10 border border-gold/20 flex-shrink-0 group-hover:bg-gold/20 transition-colors">
+            <Share2 className="h-5 w-5 text-gold" />
+          </div>
+          <div className="text-left">
+            <h3 className="text-sm font-bold group-hover:text-gold transition-colors">
+              Get Your Report Card
+            </h3>
+            <p className="text-xs text-[var(--text-secondary)]">
+              Share your Revenue Score on social media
+            </p>
+          </div>
+          <ArrowRight className="h-4 w-4 text-[var(--text-secondary)] group-hover:text-gold transition-colors ml-auto" />
+        </Link>
+        <a
+          href={`/api/card/image?npi=${npi}`}
+          download={`npixray-report-card-${npi}.png`}
+          className="flex items-center justify-center gap-2 rounded-2xl border border-dark-50/80 bg-dark-400/50 px-5 py-4 transition-all hover:border-gold/30 hover:bg-gold/[0.03] text-sm font-medium text-[var(--text-secondary)] hover:text-gold"
+        >
+          <Download className="h-4 w-4" />
+          <span className="sm:hidden">Download Card</span>
+          <span className="hidden sm:inline">Download Image</span>
+        </a>
+      </div>
 
       {/* Tab Navigation */}
       <div className="border-b border-dark-50/50 mb-8">
