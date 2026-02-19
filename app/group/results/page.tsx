@@ -128,7 +128,7 @@ function GroupResultsPage() {
         <div className="text-center px-4">
           <AlertCircle className="h-12 w-12 text-red-400 mx-auto mb-4" />
           <h2 className="text-xl font-semibold text-white mb-2">Scan Error</h2>
-          <p className="text-dark-300 mb-6">{error || "Something went wrong"}</p>
+          <p className="text-[var(--text-secondary)] mb-6">{error || "Something went wrong"}</p>
           <Link
             href="/group"
             className="inline-flex items-center gap-2 rounded-xl bg-gold px-6 py-3 font-bold text-dark-900 hover:bg-gold/90 transition-colors"
@@ -146,7 +146,7 @@ function GroupResultsPage() {
         {/* Back link */}
         <Link
           href="/group"
-          className="inline-flex items-center gap-1.5 text-sm text-dark-300 hover:text-gold transition-colors mb-6"
+          className="inline-flex items-center gap-1.5 text-sm text-[var(--text-secondary)] hover:text-gold transition-colors mb-6"
         >
           <ArrowLeft className="h-4 w-4" />
           New Group Scan
@@ -161,7 +161,7 @@ function GroupResultsPage() {
                 {data.practiceName}
               </h1>
             </div>
-            <div className="flex items-center gap-4 text-sm text-dark-300">
+            <div className="flex items-center gap-4 text-sm text-[var(--text-secondary)]">
               <span className="flex items-center gap-1.5">
                 <Users className="h-4 w-4" />
                 {data.successfulScans} provider{data.successfulScans !== 1 ? "s" : ""}
@@ -176,7 +176,7 @@ function GroupResultsPage() {
           {/* Hero Stat + Share */}
           <div className="flex items-center gap-4">
             <div className="text-right">
-              <p className="text-xs text-dark-400 uppercase tracking-wider mb-1">
+              <p className="text-xs text-[var(--text-secondary)]/60 uppercase tracking-wider mb-1">
                 Total Missed Revenue
               </p>
               <p className="text-3xl font-bold font-mono text-gold">
@@ -185,7 +185,7 @@ function GroupResultsPage() {
             </div>
             <button
               onClick={handleShare}
-              className="rounded-xl bg-dark-800 border border-dark-50/20 px-4 py-3 text-sm text-dark-200 hover:text-gold hover:border-gold/30 transition-colors"
+              className="rounded-xl bg-dark-800 border border-dark-50/20 px-4 py-3 text-sm text-[var(--text-primary)] hover:text-gold hover:border-gold/30 transition-colors"
             >
               <Share2 className="h-4 w-4" />
               <span className="sr-only">Share</span>
@@ -213,7 +213,7 @@ function GroupResultsPage() {
                   className={`flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
                     isActive
                       ? "border-gold text-gold"
-                      : "border-transparent text-dark-300 hover:text-white hover:border-dark-50/50"
+                      : "border-transparent text-[var(--text-secondary)] hover:text-white hover:border-dark-50/50"
                   }`}
                 >
                   <Icon className="h-4 w-4" />

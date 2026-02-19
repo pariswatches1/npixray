@@ -67,7 +67,7 @@ export function GroupCodingTab({ data }: Props) {
         <h3 className="text-lg font-semibold text-white mb-2">
           Practice E&M Distribution vs. Benchmark
         </h3>
-        <p className="text-sm text-dark-300 mb-6">
+        <p className="text-sm text-[var(--text-secondary)] mb-6">
           Aggregated across all {successful.length} providers
         </p>
 
@@ -79,14 +79,14 @@ export function GroupCodingTab({ data }: Props) {
               <div key={row.code} className="space-y-2">
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-white font-medium">
-                    {row.code} <span className="text-dark-400">({row.label})</span>
+                    {row.code} <span className="text-[var(--text-secondary)]/60">({row.label})</span>
                   </span>
                   <div className="flex items-center gap-3">
                     <span className="font-mono" style={{ color: row.color }}>
                       {row.pct.toFixed(1)}%
                     </span>
-                    <span className="text-dark-400">vs</span>
-                    <span className="font-mono text-dark-300">
+                    <span className="text-[var(--text-secondary)]/60">vs</span>
+                    <span className="font-mono text-[var(--text-secondary)]">
                       {row.bench.toFixed(1)}%
                     </span>
                     {isUnder && (
@@ -119,7 +119,7 @@ export function GroupCodingTab({ data }: Props) {
 
         {data.totalCodingGap > 0 && (
           <div className="mt-6 pt-4 border-t border-dark-50/10 flex justify-between items-center">
-            <span className="text-sm text-dark-300">
+            <span className="text-sm text-[var(--text-secondary)]">
               Total Coding Gap Across Practice
             </span>
             <span className="text-lg font-bold font-mono text-gold">
@@ -134,14 +134,14 @@ export function GroupCodingTab({ data }: Props) {
         <h3 className="text-lg font-semibold text-white mb-4">
           Provider E&M Mix Comparison
         </h3>
-        <p className="text-sm text-dark-300 mb-6">
+        <p className="text-sm text-[var(--text-secondary)] mb-6">
           Sorted by coding gap (largest opportunity first)
         </p>
 
         <div className="space-y-3">
           {providerEm.map((p) => (
             <div key={p.npi} className="flex items-center gap-3">
-              <span className="w-36 text-xs text-dark-200 truncate shrink-0">{p.name}</span>
+              <span className="w-36 text-xs text-[var(--text-primary)] truncate shrink-0">{p.name}</span>
               <div className="flex-1 flex h-5 rounded-full overflow-hidden bg-dark-900/30">
                 <div
                   className="h-full"
@@ -167,7 +167,7 @@ export function GroupCodingTab({ data }: Props) {
         </div>
 
         {/* Legend */}
-        <div className="flex items-center justify-center gap-6 mt-4 pt-4 border-t border-dark-50/10 text-xs text-dark-300">
+        <div className="flex items-center justify-center gap-6 mt-4 pt-4 border-t border-dark-50/10 text-xs text-[var(--text-secondary)]">
           <span className="flex items-center gap-1.5">
             <span className="h-2.5 w-2.5 rounded-sm" style={{ backgroundColor: "#60a5fa" }} />
             99213

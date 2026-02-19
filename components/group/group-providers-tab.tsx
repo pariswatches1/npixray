@@ -50,7 +50,7 @@ export function GroupProvidersTab({ data }: Props) {
       {/* Provider Table */}
       <div className="rounded-2xl bg-dark-800/50 border border-dark-50/20 overflow-hidden">
         {/* Header */}
-        <div className="hidden lg:grid lg:grid-cols-12 gap-4 px-6 py-3 bg-dark-900/50 border-b border-dark-50/10 text-xs text-dark-300 uppercase tracking-wider">
+        <div className="hidden lg:grid lg:grid-cols-12 gap-4 px-6 py-3 bg-dark-900/50 border-b border-dark-50/10 text-xs text-[var(--text-secondary)] uppercase tracking-wider">
           <SortHeader label="Provider" col="col-span-3" sortKey="name" current={sortKey} asc={sortAsc} onSort={toggleSort} />
           <div className="col-span-2">Specialty</div>
           <SortHeader label="Score" col="col-span-1" sortKey="score" current={sortKey} asc={sortAsc} onSort={toggleSort} />
@@ -142,12 +142,12 @@ function ProviderRow({
       {/* Provider Name */}
       <div className="col-span-2 lg:col-span-3">
         <p className="text-sm font-medium text-white truncate">{provider.fullName}</p>
-        <p className="text-xs text-dark-300 font-mono">{provider.npi}</p>
+        <p className="text-xs text-[var(--text-secondary)] font-mono">{provider.npi}</p>
       </div>
 
       {/* Specialty */}
       <div className="hidden lg:block lg:col-span-2">
-        <span className="text-sm text-dark-200">{provider.specialty}</span>
+        <span className="text-sm text-[var(--text-primary)]">{provider.specialty}</span>
       </div>
 
       {/* Score */}
@@ -166,7 +166,7 @@ function ProviderRow({
 
       {/* Revenue */}
       <div className="hidden lg:block lg:col-span-2">
-        <span className="text-sm font-mono text-dark-200">
+        <span className="text-sm font-mono text-[var(--text-primary)]">
           {formatCurrency(provider.currentRevenue)}
         </span>
       </div>
@@ -186,9 +186,9 @@ function ProviderRow({
             {formatCurrency(provider.missedRevenue)}
           </span>
         </div>
-        <p className="text-xs text-dark-400 mt-0.5 lg:hidden">{provider.specialty}</p>
+        <p className="text-xs text-[var(--text-secondary)]/60 mt-0.5 lg:hidden">{provider.specialty}</p>
         {topGap && topGap.value > 0 && (
-          <p className="text-xs text-dark-400 mt-0.5">
+          <p className="text-xs text-[var(--text-secondary)]/60 mt-0.5">
             Top gap: {topGap.label} ({formatCurrency(topGap.value)})
           </p>
         )}
@@ -198,7 +198,7 @@ function ProviderRow({
       <div className="hidden lg:flex lg:col-span-1 justify-end">
         <Link
           href={`/scan/${provider.npi}`}
-          className="p-2 rounded-lg hover:bg-dark-50/10 text-dark-300 hover:text-gold transition-colors"
+          className="p-2 rounded-lg hover:bg-dark-50/10 text-[var(--text-secondary)] hover:text-gold transition-colors"
           title="View full report"
         >
           <ExternalLink className="h-4 w-4" />

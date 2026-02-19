@@ -24,7 +24,7 @@ export default function GroupScanPage() {
         {/* Back link */}
         <Link
           href="/"
-          className="inline-flex items-center gap-1.5 text-sm text-dark-300 hover:text-gold transition-colors mb-8"
+          className="inline-flex items-center gap-1.5 text-sm text-[var(--text-secondary)] hover:text-gold transition-colors mb-8"
         >
           <ArrowLeft className="h-4 w-4" />
           Back to Scanner
@@ -39,7 +39,7 @@ export default function GroupScanPage() {
           <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3">
             X-Ray Your Entire Practice
           </h1>
-          <p className="text-dark-300 text-lg max-w-xl mx-auto">
+          <p className="text-[var(--text-secondary)] text-lg max-w-xl mx-auto">
             Enter all provider NPIs to see your practice&apos;s total missed revenue,
             per-provider rankings, and program adoption gaps.
           </p>
@@ -87,7 +87,7 @@ function ValueProp({
       <div className="shrink-0 mt-0.5">{icon}</div>
       <div>
         <h3 className="text-sm font-semibold text-white">{title}</h3>
-        <p className="text-xs text-dark-400 mt-0.5">{desc}</p>
+        <p className="text-xs text-[var(--text-secondary)] mt-0.5">{desc}</p>
       </div>
     </div>
   );

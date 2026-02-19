@@ -61,7 +61,7 @@ export function GroupOverviewTab({ data }: Props) {
         <div className="space-y-4">
           {gapBreakdown.map((gap) => (
             <div key={gap.label} className="flex items-center gap-4">
-              <span className="w-24 text-sm text-dark-200 shrink-0">{gap.label}</span>
+              <span className="w-24 text-sm text-[var(--text-primary)] shrink-0">{gap.label}</span>
               <div className="flex-1 h-6 bg-dark-900/50 rounded-full overflow-hidden">
                 <div
                   className="h-full rounded-full transition-all duration-700"
@@ -79,7 +79,7 @@ export function GroupOverviewTab({ data }: Props) {
           ))}
         </div>
         <div className="mt-4 pt-4 border-t border-dark-50/10 flex justify-between items-center">
-          <span className="text-sm text-dark-300">Total Practice Opportunity</span>
+          <span className="text-sm text-[var(--text-secondary)]">Total Practice Opportunity</span>
           <span className="text-lg font-bold font-mono text-gold">
             {formatCurrency(data.totalMissedRevenue)}
           </span>
@@ -98,11 +98,11 @@ export function GroupOverviewTab({ data }: Props) {
               >
                 <div>
                   <p className="text-sm font-medium text-white">{s.specialty}</p>
-                  <p className="text-xs text-dark-300">
+                  <p className="text-xs text-[var(--text-secondary)]">
                     {s.count} provider{s.count > 1 ? "s" : ""}
                   </p>
                 </div>
-                <span className="text-sm font-mono text-dark-200">
+                <span className="text-sm font-mono text-[var(--text-primary)]">
                   {formatCurrency(s.totalRevenue)}
                 </span>
               </div>
@@ -112,7 +112,7 @@ export function GroupOverviewTab({ data }: Props) {
       )}
 
       {/* Data Source */}
-      <div className="flex items-center justify-center gap-4 text-xs text-dark-400">
+      <div className="flex items-center justify-center gap-4 text-xs text-[var(--text-secondary)]/60">
         {data.cmsDataCount > 0 && (
           <span className="flex items-center gap-1.5">
             <span className="h-2 w-2 rounded-full bg-emerald-400" />
@@ -153,7 +153,7 @@ function StatCard({
     >
       <div className="flex items-center gap-2 mb-2">
         {icon}
-        <span className="text-xs text-dark-300 uppercase tracking-wider">{label}</span>
+        <span className="text-xs text-[var(--text-secondary)] uppercase tracking-wider">{label}</span>
       </div>
       <p
         className={`text-2xl font-bold font-mono ${
@@ -162,7 +162,7 @@ function StatCard({
       >
         {value}
       </p>
-      <p className="text-xs text-dark-400 mt-1 truncate">{sub}</p>
+      <p className="text-xs text-[var(--text-secondary)]/60 mt-1 truncate">{sub}</p>
     </div>
   );
 }

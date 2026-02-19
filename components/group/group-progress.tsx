@@ -34,7 +34,7 @@ export function GroupProgress({ total, completed, failed }: GroupProgressProps) 
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <span className="text-3xl font-bold font-mono text-white">{completed + failed}</span>
-          <span className="text-sm text-dark-300">of {total}</span>
+          <span className="text-sm text-[var(--text-secondary)]">of {total}</span>
         </div>
       </div>
 
@@ -45,7 +45,7 @@ export function GroupProgress({ total, completed, failed }: GroupProgressProps) 
         </h2>
       </div>
 
-      <p className="text-dark-300 text-sm mb-6">
+      <p className="text-[var(--text-secondary)] text-sm mb-6">
         Analyzing Medicare billing data, coding patterns, and program adoption for each provider.
       </p>
 
@@ -69,7 +69,7 @@ export function GroupProgress({ total, completed, failed }: GroupProgressProps) 
             {failed} failed
           </span>
         )}
-        <span className="text-dark-400">
+        <span className="text-[var(--text-secondary)]/60">
           {total - completed - failed} remaining
         </span>
       </div>

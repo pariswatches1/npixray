@@ -122,17 +122,17 @@ export function NpiInputForm({ onSubmit, loading = false }: NpiInputFormProps) {
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Practice Name (optional) */}
       <div>
-        <label className="block text-sm font-medium text-dark-200 mb-2">
-          Practice Name <span className="text-dark-300">(optional)</span>
+        <label className="block text-sm font-medium text-[var(--text-primary)] mb-2">
+          Practice Name <span className="text-[var(--text-secondary)]">(optional)</span>
         </label>
         <div className="relative">
-          <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-dark-300" />
+          <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--text-secondary)]" />
           <input
             type="text"
             value={practiceName}
             onChange={(e) => setPracticeName(e.target.value)}
             placeholder="e.g., Valley Medical Associates"
-            className="w-full rounded-xl bg-dark-800 border border-dark-50/30 pl-10 pr-4 py-3 text-white placeholder:text-dark-300 focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-gold/50"
+            className="w-full rounded-xl bg-dark-800 border border-dark-50/30 pl-10 pr-4 py-3 text-white placeholder:text-[var(--text-secondary)]/40 focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-gold/50"
           />
         </div>
       </div>
@@ -145,7 +145,7 @@ export function NpiInputForm({ onSubmit, loading = false }: NpiInputFormProps) {
           className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
             mode === "grid"
               ? "bg-gold/15 text-gold border border-gold/30"
-              : "bg-dark-800 text-dark-200 border border-dark-50/20 hover:border-dark-50/40"
+              : "bg-dark-800 text-[var(--text-secondary)] border border-dark-50/20 hover:border-dark-50/40"
           }`}
         >
           <Search className="h-4 w-4" />
@@ -157,7 +157,7 @@ export function NpiInputForm({ onSubmit, loading = false }: NpiInputFormProps) {
           className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
             mode === "paste"
               ? "bg-gold/15 text-gold border border-gold/30"
-              : "bg-dark-800 text-dark-200 border border-dark-50/20 hover:border-dark-50/40"
+              : "bg-dark-800 text-[var(--text-secondary)] border border-dark-50/20 hover:border-dark-50/40"
           }`}
         >
           <ClipboardPaste className="h-4 w-4" />
@@ -173,7 +173,7 @@ export function NpiInputForm({ onSubmit, loading = false }: NpiInputFormProps) {
             onChange={(e) => setPasteText(e.target.value)}
             rows={6}
             placeholder="Paste NPIs here — separated by commas, spaces, tabs, or newlines.&#10;&#10;Example:&#10;1234567890, 2345678901&#10;3456789012"
-            className="w-full rounded-xl bg-dark-800 border border-dark-50/30 p-4 text-white placeholder:text-dark-300 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-gold/50 resize-none"
+            className="w-full rounded-xl bg-dark-800 border border-dark-50/30 p-4 text-white placeholder:text-[var(--text-secondary)]/40 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-gold/50 resize-none"
           />
           <button
             type="button"
@@ -190,7 +190,7 @@ export function NpiInputForm({ onSubmit, loading = false }: NpiInputFormProps) {
           <div className="grid gap-3">
             {fields.map((field, i) => (
               <div key={i} className="flex items-center gap-3">
-                <span className="w-6 text-xs text-dark-300 text-right font-mono shrink-0">
+                <span className="w-6 text-xs text-[var(--text-secondary)] text-right font-mono shrink-0">
                   {i + 1}.
                 </span>
                 <div className="flex-1 relative">
@@ -200,7 +200,7 @@ export function NpiInputForm({ onSubmit, loading = false }: NpiInputFormProps) {
                     value={field.value}
                     onChange={(e) => updateField(i, e.target.value)}
                     placeholder="10-digit NPI"
-                    className="w-full rounded-lg bg-dark-800 border border-dark-50/30 px-4 py-2.5 text-white font-mono text-sm placeholder:text-dark-400 focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-gold/50"
+                    className="w-full rounded-lg bg-dark-800 border border-dark-50/30 px-4 py-2.5 text-white font-mono text-sm placeholder:text-[var(--text-secondary)]/40 focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-gold/50"
                   />
                   {/* Status indicator */}
                   <div className="absolute right-3 top-1/2 -translate-y-1/2">
@@ -216,7 +216,7 @@ export function NpiInputForm({ onSubmit, loading = false }: NpiInputFormProps) {
                     <div className="text-xs">
                       <span className="text-white">{field.name}</span>
                       {field.specialty && (
-                        <span className="text-dark-300 ml-1">· {field.specialty}</span>
+                        <span className="text-[var(--text-secondary)] ml-1">· {field.specialty}</span>
                       )}
                     </div>
                   ) : field.error ? (
@@ -229,7 +229,7 @@ export function NpiInputForm({ onSubmit, loading = false }: NpiInputFormProps) {
                   type="button"
                   onClick={() => removeField(i)}
                   disabled={fields.length <= 2}
-                  className="p-1 text-dark-300 hover:text-red-400 transition-colors disabled:opacity-20 disabled:cursor-not-allowed shrink-0"
+                  className="p-1 text-[var(--text-secondary)] hover:text-red-400 transition-colors disabled:opacity-20 disabled:cursor-not-allowed shrink-0"
                 >
                   <X className="h-4 w-4" />
                 </button>
@@ -241,7 +241,7 @@ export function NpiInputForm({ onSubmit, loading = false }: NpiInputFormProps) {
             <button
               type="button"
               onClick={addField}
-              className="flex items-center gap-2 text-sm text-dark-200 hover:text-gold transition-colors px-7"
+              className="flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-gold transition-colors px-7"
             >
               <Plus className="h-4 w-4" />
               Add Provider
@@ -252,10 +252,10 @@ export function NpiInputForm({ onSubmit, loading = false }: NpiInputFormProps) {
 
       {/* Summary + Submit */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
-        <p className="text-sm text-dark-300">
+        <p className="text-sm text-[var(--text-secondary)]">
           {uniqueNpis.length} valid NPI{uniqueNpis.length !== 1 ? "s" : ""} entered
           {uniqueNpis.length < 2 && (
-            <span className="text-dark-400 ml-1">(minimum 2)</span>
+            <span className="text-[var(--text-secondary)]/60 ml-1">(minimum 2)</span>
           )}
         </p>
         <button

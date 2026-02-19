@@ -71,22 +71,22 @@ export function GroupProgramsTab({ data }: Props) {
                 </div>
                 <div>
                   <h3 className="text-sm font-semibold text-white">{prog.name}</h3>
-                  <p className="text-xs text-dark-400 font-mono">{prog.code}</p>
+                  <p className="text-xs text-[var(--text-secondary)]/60 font-mono">{prog.code}</p>
                 </div>
               </div>
 
               {/* Adoption Stats */}
               <div className="grid grid-cols-3 gap-3 mb-4">
                 <div>
-                  <p className="text-xs text-dark-400">Enrolled</p>
+                  <p className="text-xs text-[var(--text-secondary)]/60">Enrolled</p>
                   <p className="text-lg font-bold font-mono text-white">{adoption.enrolled}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-dark-400">Eligible</p>
+                  <p className="text-xs text-[var(--text-secondary)]/60">Eligible</p>
                   <p className="text-lg font-bold font-mono text-white">{adoption.eligible}</p>
                 </div>
                 <div>
-                  <p className="text-xs text-dark-400">Rate</p>
+                  <p className="text-xs text-[var(--text-secondary)]/60">Rate</p>
                   <p
                     className="text-lg font-bold font-mono"
                     style={{ color: adoption.rate >= 50 ? prog.color : "#fb923c" }}
@@ -110,7 +110,7 @@ export function GroupProgramsTab({ data }: Props) {
 
               {/* Revenue Impact */}
               {prog.gap > 0 && (
-                <p className="text-xs text-dark-300">
+                <p className="text-xs text-[var(--text-secondary)]">
                   Practice-wide opportunity:{" "}
                   <span className="text-gold font-mono font-medium">
                     {formatCurrency(prog.gap)}/yr
@@ -128,7 +128,7 @@ export function GroupProgramsTab({ data }: Props) {
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="text-xs text-dark-300 uppercase tracking-wider border-b border-dark-50/10">
+              <tr className="text-xs text-[var(--text-secondary)] uppercase tracking-wider border-b border-dark-50/10">
                 <th className="text-left py-2 pr-4">Provider</th>
                 <th className="text-center px-4 py-2">CCM</th>
                 <th className="text-center px-4 py-2">RPM</th>
@@ -150,7 +150,7 @@ export function GroupProgramsTab({ data }: Props) {
                       <p className="text-white font-medium truncate max-w-[200px]">
                         {provider.fullName}
                       </p>
-                      <p className="text-xs text-dark-400">{provider.specialty}</p>
+                      <p className="text-xs text-[var(--text-secondary)]/60">{provider.specialty}</p>
                     </td>
                     <td className="text-center px-4">
                       <AdoptionIcon adopted={hasCcm} />
@@ -179,6 +179,6 @@ function AdoptionIcon({ adopted }: { adopted: boolean }) {
   return adopted ? (
     <CheckCircle2 className="h-4 w-4 text-emerald-400 mx-auto" />
   ) : (
-    <XCircle className="h-4 w-4 text-dark-400 mx-auto" />
+    <XCircle className="h-4 w-4 text-[var(--text-secondary)]/60 mx-auto" />
   );
 }

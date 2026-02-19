@@ -35,7 +35,7 @@ export function GroupActionPlanTab({ data }: Props) {
       <div className="rounded-2xl bg-dark-800/50 border border-dark-50/20 p-12 text-center">
         <Zap className="h-12 w-12 text-gold mx-auto mb-4" />
         <h3 className="text-lg font-semibold text-white mb-2">Practice is Performing Well</h3>
-        <p className="text-dark-300 text-sm max-w-md mx-auto">
+        <p className="text-[var(--text-secondary)] text-sm max-w-md mx-auto">
           No significant revenue gaps were found across your providers.
           Keep up the great work with your billing optimization!
         </p>
@@ -51,15 +51,15 @@ export function GroupActionPlanTab({ data }: Props) {
       <div className="rounded-2xl bg-gold/5 border border-gold/20 p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
           <h3 className="text-lg font-semibold text-white">Practice Revenue Roadmap</h3>
-          <p className="text-sm text-dark-300 mt-1">
+          <p className="text-sm text-[var(--text-secondary)] mt-1">
             {actions.length} action{actions.length > 1 ? "s" : ""} identified across {data.successfulScans} providers
           </p>
         </div>
         <div className="text-right">
-          <p className="text-xs text-dark-400 uppercase tracking-wider">Total Opportunity</p>
+          <p className="text-xs text-[var(--text-secondary)]/60 uppercase tracking-wider">Total Opportunity</p>
           <p className="text-2xl font-bold font-mono text-gold">
             {formatCurrency(totalOpportunity)}
-            <span className="text-sm text-dark-400 font-normal">/yr</span>
+            <span className="text-sm text-[var(--text-secondary)]/60 font-normal">/yr</span>
           </p>
         </div>
       </div>
@@ -99,7 +99,7 @@ export function GroupActionPlanTab({ data }: Props) {
                     </span>
                   </div>
 
-                  <p className="text-sm text-dark-300 mb-4">{action.description}</p>
+                  <p className="text-sm text-[var(--text-secondary)] mb-4">{action.description}</p>
 
                   <div className="flex flex-wrap gap-4 text-sm">
                     <div className="flex items-center gap-1.5 text-gold">
@@ -108,11 +108,11 @@ export function GroupActionPlanTab({ data }: Props) {
                         {formatCurrency(action.totalEstimatedRevenue)}/yr
                       </span>
                     </div>
-                    <div className="flex items-center gap-1.5 text-dark-300">
+                    <div className="flex items-center gap-1.5 text-[var(--text-secondary)]">
                       <AlertTriangle className="h-4 w-4" />
                       {action.affectedProviders} provider{action.affectedProviders > 1 ? "s" : ""}
                     </div>
-                    <div className="flex items-center gap-1.5 text-dark-300">
+                    <div className="flex items-center gap-1.5 text-[var(--text-secondary)]">
                       <Clock className="h-4 w-4" />
                       {impactPct}% of total opportunity
                     </div>
