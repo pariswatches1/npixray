@@ -165,7 +165,7 @@ export default function MethodologyPage() {
             </p>
 
             <div className="rounded-xl border border-dark-50/50 bg-dark-400/50 p-6 font-mono text-xs">
-              <div className="text-gold mb-2">// Revenue Gap Formula</div>
+              <div className="text-gold mb-2">{/* Revenue Gap Formula */}{"// Revenue Gap Formula"}</div>
               <div>adoption_gap = national_benchmark_rate - local_adoption_rate</div>
               <div>additional_providers = adoption_gap × total_providers</div>
               <div>estimated_revenue = additional_providers × payment_rate × patients_per_provider × 12</div>
@@ -278,10 +278,10 @@ export default function MethodologyPage() {
             </p>
 
             <div className="rounded-xl border border-dark-50/50 bg-dark-400/50 p-6 font-mono text-xs">
-              <div className="text-gold mb-2">// National Rank</div>
+              <div className="text-gold mb-2">{"// National Rank"}</div>
               <div>state_avg_payment = SUM(all_provider_payments) / COUNT(providers_in_state)</div>
               <div>national_rank = RANK(state_avg_payment DESC) among all 50 states + DC</div>
-              <div className="mt-2 text-gold">// Delta vs National Average</div>
+              <div className="mt-2 text-gold">{"// Delta vs National Average"}</div>
               <div>national_weighted_avg = SUM(state_avg × state_providers) / SUM(state_providers)</div>
               <div>delta_pct = ((state_avg - national_weighted_avg) / national_weighted_avg) × 100</div>
             </div>
