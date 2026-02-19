@@ -1,11 +1,15 @@
 "use client";
 
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { Menu, X, Zap, Sparkles } from "lucide-react";
+import { Menu, X, Zap, Sparkles, LogIn } from "lucide-react";
+import { UserMenu } from "@/components/auth/user-menu";
 
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { data: session, status } = useSession();
+  const isLoading = status === "loading";
 
   return (
     <header className="sticky top-0 z-50 border-b border-dark-50/50 bg-dark/80 backdrop-blur-xl">
@@ -22,7 +26,7 @@ export function Header() {
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-8" aria-label="Main navigation">
+          <nav className="hidden md:flex items-center gap-6" aria-label="Main navigation">
             <Link
               href="/guides"
               className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors"
@@ -48,6 +52,24 @@ export function Header() {
               <Sparkles className="h-3.5 w-3.5" />
               AI Coach
             </Link>
+
+            {/* Auth section */}
+            {!isLoading && (
+              <>
+                {session?.user ? (
+                  <UserMenu />
+                ) : (
+                  <Link
+                    href="/login"
+                    className="inline-flex items-center gap-2 rounded-lg border border-dark-50/80 px-4 py-2 text-sm font-medium text-[var(--text-secondary)] transition-all hover:border-gold/30 hover:text-gold"
+                  >
+                    <LogIn className="h-3.5 w-3.5" />
+                    Sign In
+                  </Link>
+                )}
+              </>
+            )}
+
             <Link
               href="/"
               className="inline-flex items-center gap-2 rounded-lg bg-gold px-4 py-2 text-sm font-semibold text-dark transition-all hover:bg-gold-300 hover:shadow-lg hover:shadow-gold/20"
@@ -100,6 +122,28 @@ export function Header() {
               <Sparkles className="h-3.5 w-3.5" />
               AI Coach
             </Link>
+
+            {/* Auth section (mobile) */}
+            {!isLoading && !session?.user && (
+              <Link
+                href="/login"
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-gold transition-colors py-1"
+              >
+                <LogIn className="h-3.5 w-3.5" />
+                Sign In
+              </Link>
+            )}
+            {!isLoading && session?.user && (
+              <Link
+                href="/dashboard"
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center gap-2 text-sm text-gold font-medium py-1"
+              >
+                Dashboard
+              </Link>
+            )}
+
             <Link
               href="/"
               onClick={() => setMobileOpen(false)}

@@ -1,0 +1,93 @@
+"use client";
+
+import { useSession } from "next-auth/react";
+import Link from "next/link";
+import { CreditCard, ExternalLink, Shield } from "lucide-react";
+
+export default function BillingPage() {
+  const { data: session } = useSession();
+  const plan = (session?.user as any)?.plan || "free";
+  const status = (session?.user as any)?.subscriptionStatus || "none";
+
+  const planLabel =
+    plan === "intelligence"
+      ? "Intelligence ($99/mo)"
+      : plan === "care"
+        ? "Care Management ($299–699/mo)"
+        : "Free";
+
+  const isActive = status === "active";
+
+  async function handleManageBilling() {
+    const res = await fetch("/api/stripe/portal", { method: "POST" });
+    const data = await res.json();
+    if (data.url) {
+      window.location.href = data.url;
+    }
+  }
+
+  return (
+    <div className="space-y-8 max-w-2xl">
+      <div>
+        <h1 className="text-2xl font-bold">Billing</h1>
+        <p className="text-sm text-[var(--text-secondary)] mt-1">
+          Manage your subscription and billing details
+        </p>
+      </div>
+
+      {/* Current Plan */}
+      <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6">
+        <div className="flex items-center gap-3 mb-4">
+          <CreditCard className="h-5 w-5 text-gold" />
+          <h2 className="text-lg font-semibold">Current Plan</h2>
+        </div>
+
+        <div className="flex items-center justify-between gap-4 flex-wrap">
+          <div>
+            <p className="text-lg font-bold">{planLabel}</p>
+            <p className="text-sm text-[var(--text-secondary)]">
+              {isActive
+                ? "Active subscription"
+                : plan === "free"
+                  ? "No active subscription"
+                  : `Status: ${status}`}
+            </p>
+          </div>
+
+          {isActive ? (
+            <button
+              onClick={handleManageBilling}
+              className="inline-flex items-center gap-2 rounded-lg border border-dark-50/80 px-4 py-2 text-sm font-medium text-[var(--text-secondary)] hover:border-gold/30 hover:text-gold transition-all"
+            >
+              Manage Billing
+              <ExternalLink className="h-3.5 w-3.5" />
+            </button>
+          ) : (
+            <Link
+              href="/pricing"
+              className="inline-flex items-center gap-2 rounded-lg bg-gold px-5 py-2.5 text-sm font-semibold text-dark hover:bg-gold-300 transition-all"
+            >
+              Upgrade Plan
+            </Link>
+          )}
+        </div>
+      </div>
+
+      {/* Stripe not configured notice */}
+      {plan === "free" && (
+        <div className="rounded-xl border border-dark-50/50 bg-dark-400/30 p-6">
+          <div className="flex items-start gap-3">
+            <Shield className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
+            <div>
+              <p className="text-sm font-medium">Secure payments via Stripe</p>
+              <p className="text-xs text-[var(--text-secondary)] mt-1 leading-relaxed">
+                When you upgrade, payments are processed securely through Stripe.
+                We never store your credit card information. Cancel anytime.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}

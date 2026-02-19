@@ -261,6 +261,21 @@ export default function HomePage() {
               CMS public data only
             </div>
           </div>
+
+          {/* Group Practice CTA */}
+          <div className="mt-8 flex justify-center">
+            <a
+              href="/group"
+              className="group inline-flex items-center gap-3 rounded-xl border border-dark-50/50 bg-dark-300/50 px-6 py-3 hover:border-gold/30 hover:bg-gold/5 transition-all"
+            >
+              <Users className="h-5 w-5 text-gold/70 group-hover:text-gold transition-colors" />
+              <div className="text-left">
+                <p className="text-sm font-semibold text-white">Scan Your Entire Practice</p>
+                <p className="text-xs text-[var(--text-secondary)]">Enter multiple NPIs for practice-wide revenue analysis</p>
+              </div>
+              <ChevronRight className="h-4 w-4 text-[var(--text-secondary)] group-hover:text-gold transition-colors" />
+            </a>
+          </div>
         </div>
       </section>
 
