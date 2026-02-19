@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { TrackPageView } from "@/components/analytics/track-pageview";
 import { PricingCTA } from "@/components/pricing/pricing-cta";
+import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 
 export const metadata: Metadata = {
   title: "Pricing",
@@ -132,6 +133,7 @@ export default function PricingPage() {
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gold/[0.03] rounded-full blur-3xl" />
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-20 pb-16 sm:pt-28 sm:pb-20">
+          <Breadcrumbs items={[{ label: "Pricing" }]} />
           <div className="text-center">
             <div className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/5 px-4 py-1.5 mb-8">
               <Shield className="h-3.5 w-3.5 text-gold" />
