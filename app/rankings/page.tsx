@@ -31,6 +31,9 @@ export const metadata: Metadata = {
     "top Medicare specialties",
     "healthcare provider rankings",
   ],
+  alternates: {
+    canonical: "https://npixray.com/rankings",
+  },
   openGraph: {
     title: "Medicare Provider Rankings — Top Doctors by Revenue | NPIxray",
     description:

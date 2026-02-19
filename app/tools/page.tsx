@@ -36,6 +36,9 @@ export const metadata: Metadata = {
     "revenue calculator healthcare",
     "specialty comparison Medicare",
   ],
+  alternates: {
+    canonical: "https://npixray.com/tools",
+  },
   openGraph: {
     title: "Free Medicare Billing Tools | NPIxray",
     description:

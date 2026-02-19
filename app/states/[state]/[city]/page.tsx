@@ -38,6 +38,9 @@ export async function generateMetadata({
   return {
     title: `${cityName}, ${stateName} Medicare Providers — Revenue Data | NPIxray`,
     description: `${cityName}, ${abbr} Medicare provider data: ${stats.count} providers, ${formatCurrency(stats.totalPayment)} total payments, ${formatCurrency(stats.avgPayment)} average per provider. See all specialties and providers.`,
+    alternates: {
+      canonical: `https://npixray.com/states/${stateSlug}/${citySlug}`,
+    },
     openGraph: {
       title: `${cityName}, ${stateName} Medicare Providers | NPIxray`,
       description: `Explore Medicare billing data for ${stats.count} providers in ${cityName}, ${abbr}.`,

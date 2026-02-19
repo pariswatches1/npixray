@@ -15,6 +15,9 @@ export const metadata: Metadata = {
     "CCM adoption rate comparison",
     "medical specialty benchmarks",
   ],
+  alternates: {
+    canonical: "https://npixray.com/tools/specialty-comparison",
+  },
   openGraph: {
     title: "Specialty Comparison Tool | NPIxray",
     description:

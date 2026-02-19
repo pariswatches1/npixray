@@ -17,6 +17,9 @@ export const metadata: Metadata = {
     "99458 billing",
     "RPM ROI calculator",
   ],
+  alternates: {
+    canonical: "https://npixray.com/tools/rpm-calculator",
+  },
   openGraph: {
     title: "RPM Revenue Calculator | NPIxray",
     description:

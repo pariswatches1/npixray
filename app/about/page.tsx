@@ -21,6 +21,9 @@ export const metadata: Metadata = {
   title: "About NPIxray — How We Turn Public CMS Data Into Revenue Intelligence",
   description:
     "Learn how NPIxray uses free CMS Medicare public data to help medical practices identify missed revenue in coding, CCM, RPM, BHI, and AWV programs. No patient data. No PHI.",
+  alternates: {
+    canonical: "https://npixray.com/about",
+  },
   openGraph: {
     title: "About NPIxray — AI Revenue Intelligence for Medical Practices",
     description:

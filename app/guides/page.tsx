@@ -29,6 +29,9 @@ export const metadata: Metadata = {
     "medical billing best practices",
     "Medicare revenue optimization",
   ],
+  alternates: {
+    canonical: "https://npixray.com/guides",
+  },
   openGraph: {
     title: "Medicare Billing Guides | NPIxray",
     description:

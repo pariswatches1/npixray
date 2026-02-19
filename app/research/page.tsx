@@ -41,6 +41,9 @@ export const metadata: Metadata = {
     "NPI data research",
     "Medicare benchmarking study",
   ],
+  alternates: {
+    canonical: "https://npixray.com/research",
+  },
   openGraph: {
     title: "NPIxray Medicare Data Research — Original Analysis of 1.17M Providers",
     description:

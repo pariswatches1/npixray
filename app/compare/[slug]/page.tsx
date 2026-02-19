@@ -42,6 +42,9 @@ export async function generateMetadata({
   return {
     title: `${nameA} vs ${nameB} — Medicare Revenue Comparison | NPIxray`,
     description: `Side-by-side comparison of ${nameA} and ${nameB}: Medicare revenue, patient volumes, E&M coding distribution, and care management adoption rates.`,
+    alternates: {
+      canonical: `https://npixray.com/compare/${slug}`,
+    },
     openGraph: {
       title: `${nameA} vs ${nameB} — Medicare Revenue Comparison | NPIxray`,
       description: `Compare ${nameA} vs ${nameB} with real CMS Medicare data.`,

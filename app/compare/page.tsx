@@ -19,6 +19,9 @@ export const metadata: Metadata = {
     "E&M coding comparison",
     "healthcare specialty data",
   ],
+  alternates: {
+    canonical: "https://npixray.com/compare",
+  },
   openGraph: {
     title: "Medicare Specialty Comparisons | NPIxray",
     description:

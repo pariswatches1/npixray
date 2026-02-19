@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Code2, Zap, Lock, Clock, ArrowRight, Key, Star } from "lucide-react";
+import { Code2, Zap, Lock, Clock, ArrowRight, Key, Star, FileJson, Plug, Heart } from "lucide-react";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { ApiPlayground } from "@/components/api/playground";
 
@@ -20,6 +20,9 @@ export const metadata: Metadata = {
     "CMS data API",
     "healthcare billing intelligence API",
   ],
+  alternates: {
+    canonical: "https://npixray.com/api-docs",
+  },
   openGraph: {
     title: "NPIxray API — Medicare Billing Intelligence API",
     description:
@@ -200,6 +203,8 @@ Authorization: Bearer npx_your_api_key_here`}</CodeBlock>
                   <li>Full billing breakdowns</li>
                   <li>All billing codes per provider</li>
                   <li>Multi-provider comparison</li>
+                  <li>Batch lookup (100 NPIs)</li>
+                  <li>Group practice scan (50 NPIs)</li>
                   <li>Market intelligence</li>
                   <li>Score distributions</li>
                 </ul>
@@ -458,6 +463,167 @@ Authorization: Bearer npx_your_api_key_here`}</CodeBlock>
   }
 }`}
             />
+
+            <EndpointSection
+              method="POST"
+              path="/api/v1/providers/batch"
+              description="Look up multiple providers in a single request. Returns basic provider info and Revenue Scores for up to 100 NPIs at once."
+              tier="pro"
+              params={[
+                { name: "npis", location: "body, required", desc: "Array of 10-digit NPI strings (1-100)" },
+              ]}
+              example={`curl -X POST -H "X-API-Key: npx_your_key" \\
+  -H "Content-Type: application/json" \\
+  -d '{"npis": ["1306849450", "1234567890"]}' \\
+  https://npixray.com/api/v1/providers/batch
+
+{
+  "data": {
+    "providers": [
+      { "npi": "1306849450", "name": "JAMES MARTINEZ", "revenue_score": 42, ... },
+      { "npi": "1234567890", "name": "JOHN SMITH", "revenue_score": 67, ... }
+    ],
+    "found": 2, "requested": 2
+  }
+}`}
+            />
+
+            <EndpointSection
+              method="POST"
+              path="/api/v1/group-scan"
+              description="Run a full practice-level revenue scan across 2-50 providers. Returns aggregated missed revenue, program adoption rates, E&M distribution, and a prioritized action plan."
+              tier="pro"
+              params={[
+                { name: "npis", location: "body, required", desc: "Array of 10-digit NPI strings (2-50)" },
+                { name: "practiceName", location: "body, optional", desc: "Practice name for the report" },
+              ]}
+              example={`curl -X POST -H "X-API-Key: npx_your_key" \\
+  -H "Content-Type: application/json" \\
+  -d '{"npis": ["1306849450", "1234567890"], "practiceName": "Metro Health"}' \\
+  https://npixray.com/api/v1/group-scan
+
+{
+  "data": {
+    "practiceName": "Metro Health",
+    "totalProviders": 2,
+    "totalMissedRevenue": 892430,
+    "averageRevenueScore": 54,
+    "programAdoption": { "ccm": {...}, "rpm": {...} },
+    "providers": [...],
+    "practiceActionPlan": [...]
+  }
+}`}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* FHIR & EHR Integration */}
+      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl">
+            <div className="flex items-center gap-3 mb-2">
+              <Heart className="h-5 w-5 text-gold" />
+              <h2 className="text-2xl font-bold">
+                FHIR & <span className="text-gold">EHR Integration</span>
+              </h2>
+            </div>
+            <p className="text-sm text-[var(--text-secondary)] mb-6">
+              Integrate NPIxray into your EHR, practice management system, or clinical workflow.
+            </p>
+
+            <EndpointSection
+              method="GET"
+              path="/api/v1/fhir?npi={npi}"
+              description="FHIR R4-compatible Practitioner resource with NPIxray Revenue Score extensions. Returns standard FHIR identifiers, qualifications, and address fields plus custom extensions for billing intelligence."
+              tier="free"
+              params={[
+                { name: "npi", location: "query, required", desc: "10-digit NPI number" },
+              ]}
+              example={`curl https://npixray.com/api/v1/fhir?npi=1306849450
+
+{
+  "resourceType": "Practitioner",
+  "id": "1306849450",
+  "identifier": [{ "system": "http://hl7.org/fhir/sid/us-npi", "value": "1306849450" }],
+  "name": [{ "family": "MARTINEZ", "given": ["JAMES"], "suffix": ["MD"] }],
+  "extension": [
+    { "url": ".../revenue-score", "valueInteger": 42 },
+    { "url": ".../total-medicare-payment", "valueDecimal": 245832.50 }
+  ]
+}`}
+            />
+
+            <h3 className="text-lg font-semibold mt-8 mb-4">Embeddable Widget</h3>
+            <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-4">
+              Drop an NPIxray Revenue Score card into any web application. Two integration options:
+            </p>
+
+            <h4 className="text-sm font-semibold mb-2">Option 1: Script Tag (recommended)</h4>
+            <CodeBlock language="html">{`<!-- Add to your page -->
+<div data-npixray-npi="1306849450"></div>
+<script src="https://npixray.com/embed.js"></script>
+
+<!-- Optional: customize dimensions -->
+<div data-npixray-npi="1306849450"
+     data-width="400px"
+     data-height="350px"></div>
+<script src="https://npixray.com/embed.js"></script>`}</CodeBlock>
+
+            <h4 className="text-sm font-semibold mt-4 mb-2">Option 2: Direct Iframe</h4>
+            <CodeBlock language="html">{`<iframe
+  src="https://npixray.com/embed/1306849450"
+  width="340" height="320"
+  frameborder="0"
+  style="border-radius: 12px"
+  title="NPIxray Revenue Score">
+</iframe>`}</CodeBlock>
+
+            <div className="mt-6 rounded-xl border border-dark-50/80 bg-dark-400/50 p-5">
+              <h4 className="font-semibold mb-2 flex items-center gap-2">
+                <Plug className="h-4 w-4 text-gold" />
+                EHR Vendor Integration
+              </h4>
+              <ul className="text-sm text-[var(--text-secondary)] space-y-1.5">
+                <li>FHIR R4 Practitioner resource for CDS Hooks / SMART on FHIR</li>
+                <li>Iframe widget for embedded dashboards within EHR chrome</li>
+                <li>Custom extensions under <code className="text-gold text-xs">npixray.com/fhir/extension/</code></li>
+                <li>No PHI transmitted — uses public CMS data only</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* OpenAPI Spec */}
+      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl">
+            <div className="flex items-center gap-3 mb-2">
+              <FileJson className="h-5 w-5 text-gold" />
+              <h2 className="text-2xl font-bold">
+                OpenAPI <span className="text-gold">Specification</span>
+              </h2>
+            </div>
+            <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-4">
+              Import our full API spec into Postman, Swagger UI, or any OpenAPI-compatible tool.
+            </p>
+            <CodeBlock language="bash">{`# Download the OpenAPI 3.0 spec
+curl https://npixray.com/api/v1/openapi
+
+# Import into Postman, Swagger Editor, or use with code generators:
+# openapi-generator generate -i https://npixray.com/api/v1/openapi -g python`}</CodeBlock>
+            <div className="mt-4">
+              <Link
+                href="/api/v1/openapi"
+                className="inline-flex items-center gap-2 rounded-lg border border-gold/20 bg-gold/5 px-4 py-2 text-sm font-medium text-gold hover:bg-gold/10 transition-colors"
+                target="_blank"
+              >
+                <FileJson className="h-4 w-4" />
+                View OpenAPI Spec (JSON)
+                <ArrowRight className="h-3 w-3" />
+              </Link>
+            </div>
           </div>
         </div>
       </section>

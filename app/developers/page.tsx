@@ -30,6 +30,9 @@ export const metadata: Metadata = {
     "CMS data API",
     "build with Medicare data",
   ],
+  alternates: {
+    canonical: "https://npixray.com/developers",
+  },
   openGraph: {
     title: "Build on NPIxray — Healthcare Data API for Developers",
     description:

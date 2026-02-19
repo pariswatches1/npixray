@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { ScanCTA } from "@/components/seo/scan-cta";
+import { RelatedLinks } from "@/components/seo/related-links";
 
 // ────────────────────────────────────────────────────────────
 // Solution page data
@@ -907,6 +908,9 @@ export async function generateMetadata({
   return {
     title: solution.metaTitle,
     description: solution.metaDescription,
+    alternates: {
+      canonical: `https://npixray.com/solutions/${slug}`,
+    },
     openGraph: {
       title: solution.metaTitle,
       description: solution.metaDescription,
@@ -1078,6 +1082,9 @@ export default async function SolutionPage({
             </div>
           </div>
         </section>
+
+        {/* Related Links */}
+        <RelatedLinks pageType="solution" currentSlug={slug} />
 
         {/* CTA */}
         <section>

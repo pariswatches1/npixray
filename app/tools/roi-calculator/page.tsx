@@ -18,6 +18,9 @@ export const metadata: Metadata = {
     "practice revenue potential",
     "Medicare revenue calculator",
   ],
+  alternates: {
+    canonical: "https://npixray.com/tools/roi-calculator",
+  },
   openGraph: {
     title: "ROI Calculator — Estimate Your Revenue Recovery | NPIxray",
     description:

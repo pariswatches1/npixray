@@ -6,6 +6,7 @@ import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { ScanCTA } from "@/components/seo/scan-cta";
 import { ProviderTable } from "@/components/seo/provider-table";
 import { StatCard } from "@/components/seo/stat-card";
+import { RelatedLinks } from "@/components/seo/related-links";
 import {
   getStateStats,
   getStateSpecialties,
@@ -37,6 +38,9 @@ export async function generateMetadata({
   return {
     title: `${name} Medicare Revenue Analysis — ${formatNumber(stats.totalProviders)} Providers | NPIxray`,
     description: `${name} Medicare billing data: ${formatNumber(stats.totalProviders)} providers, ${formatCurrency(stats.totalPayment)} total payments, ${formatCurrency(stats.avgPayment)} average per provider. See top specialties, cities, and providers.`,
+    alternates: {
+      canonical: `https://npixray.com/states/${slug}`,
+    },
     openGraph: {
       title: `${name} Medicare Revenue Analysis | NPIxray`,
       description: `Explore Medicare billing data for ${formatNumber(stats.totalProviders)} providers in ${name}. ${formatCurrency(stats.totalPayment)} in total Medicare payments.`,
@@ -235,6 +239,9 @@ export default async function StatePage({
           </div>
         </section>
       )}
+
+      {/* Related Links */}
+      <RelatedLinks pageType="state" currentSlug={slug} context={{ state: slug }} />
 
       {/* CTA */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-16">

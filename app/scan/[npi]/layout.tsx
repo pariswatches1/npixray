@@ -25,6 +25,9 @@ export async function generateMetadata({
     return {
       title,
       description,
+      alternates: {
+        canonical: `https://npixray.com/scan/${npi}`,
+      },
       openGraph: {
         title,
         description,
@@ -41,6 +44,9 @@ export async function generateMetadata({
     return {
       title: `NPI ${npi} Revenue Analysis`,
       description: `Medicare revenue gap analysis for NPI ${npi}. See missed revenue from E&M coding, CCM, RPM, BHI, and AWV programs.`,
+      alternates: {
+        canonical: `https://npixray.com/scan/${npi}`,
+      },
     };
   }
 }
