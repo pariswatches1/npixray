@@ -6,8 +6,6 @@ import {
   estimatePercentile,
 } from "@/lib/revenue-score";
 
-export const runtime = "edge";
-
 /**
  * GET /api/card/image?npi=1234567890
  * Generates a high-res PNG report card image for download / social sharing.
