@@ -2,7 +2,7 @@
 
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { CreditCard, ExternalLink, Shield } from "lucide-react";
+import { AlertTriangle, CreditCard, ExternalLink, Shield } from "lucide-react";
 
 export default function BillingPage() {
   const { data: session } = useSession();
@@ -12,11 +12,14 @@ export default function BillingPage() {
   const planLabel =
     plan === "intelligence"
       ? "Intelligence ($99/mo)"
-      : plan === "care"
-        ? "Care Management ($299–699/mo)"
-        : "Free";
+      : plan === "api"
+        ? "API Pro ($49/mo)"
+        : plan === "care"
+          ? "Care Management ($299–699/mo)"
+          : "Free";
 
   const isActive = status === "active";
+  const isPastDue = status === "past_due";
 
   async function handleManageBilling() {
     const res = await fetch("/api/stripe/portal", { method: "POST" });
@@ -35,6 +38,19 @@ export default function BillingPage() {
         </p>
       </div>
 
+      {/* Past due warning */}
+      {isPastDue && (
+        <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 flex items-start gap-3">
+          <AlertTriangle className="h-5 w-5 text-amber-600 flex-shrink-0 mt-0.5" />
+          <div className="flex-1">
+            <p className="text-sm font-semibold text-amber-900">Payment failed</p>
+            <p className="text-sm text-amber-700 mt-0.5">
+              Your last payment didn&apos;t go through. Please update your payment method below to keep your subscription active.
+            </p>
+          </div>
+        </div>
+      )}
+
       {/* Current Plan */}
       <div className="rounded-xl border border-[var(--border-light)] bg-white p-6">
         <div className="flex items-center gap-3 mb-4">
@@ -48,18 +64,24 @@ export default function BillingPage() {
             <p className="text-sm text-[var(--text-secondary)]">
               {isActive
                 ? "Active subscription"
-                : plan === "free"
-                  ? "No active subscription"
-                  : `Status: ${status}`}
+                : isPastDue
+                  ? "Payment past due"
+                  : plan === "free"
+                    ? "No active subscription"
+                    : `Status: ${status}`}
             </p>
           </div>
 
-          {isActive ? (
+          {(isActive || isPastDue) ? (
             <button
               onClick={handleManageBilling}
-              className="inline-flex items-center gap-2 rounded-lg border border-[var(--border-light)] px-4 py-2 text-sm font-medium text-[var(--text-secondary)] hover:border-[#2F5EA8]/15 hover:text-[#2F5EA8] transition-all"
+              className={`inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all ${
+                isPastDue
+                  ? "bg-amber-600 text-white hover:bg-amber-700"
+                  : "border border-[var(--border-light)] text-[var(--text-secondary)] hover:border-[#2F5EA8]/15 hover:text-[#2F5EA8]"
+              }`}
             >
-              Manage Billing
+              {isPastDue ? "Update Payment" : "Manage Billing"}
               <ExternalLink className="h-3.5 w-3.5" />
             </button>
           ) : (

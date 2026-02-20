@@ -114,11 +114,13 @@ export async function createCheckoutSession(params: {
     line_items: [{ price: plan.priceId, quantity: 1 }],
     success_url: params.successUrl,
     cancel_url: params.cancelUrl,
+    allow_promotion_codes: true,
     metadata: {
       userId: params.userId,
       planId: params.planId,
     },
     subscription_data: {
+      trial_period_days: 14,
       metadata: {
         userId: params.userId,
         planId: params.planId,

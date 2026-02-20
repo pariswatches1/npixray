@@ -1,7 +1,9 @@
 "use client";
 
 import { useSession } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { Suspense } from "react";
 import {
   Zap,
   BarChart3,
@@ -9,16 +11,66 @@ import {
   Wrench,
   ArrowRight,
   Crown,
+  CheckCircle2,
+  AlertTriangle,
+  X,
 } from "lucide-react";
 
-export default function DashboardPage() {
-  const { data: session } = useSession();
+function DashboardContent() {
+  const { data: session, update } = useSession();
+  const searchParams = useSearchParams();
+  const upgraded = searchParams.get("upgraded") === "true";
   const user = session?.user;
   const plan = (user as any)?.plan || "free";
+  const subscriptionStatus = (user as any)?.subscriptionStatus || "none";
   const firstName = user?.name?.split(" ")[0] || "there";
+
+  // Refresh session to pick up new plan after upgrade
+  if (upgraded && plan === "free") {
+    update();
+  }
 
   return (
     <div className="space-y-8">
+      {/* Upgrade success banner */}
+      {upgraded && (
+        <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 flex items-start gap-3">
+          <CheckCircle2 className="h-5 w-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+          <div className="flex-1">
+            <p className="text-sm font-semibold text-emerald-900">
+              Welcome to NPIxray Intelligence!
+            </p>
+            <p className="text-sm text-emerald-700 mt-0.5">
+              Your 14-day free trial has started. You now have access to AI coding recommendations, revenue forecasts, and more.
+            </p>
+          </div>
+          <Link href="/dashboard" className="text-emerald-400 hover:text-emerald-600 transition-colors">
+            <X className="h-4 w-4" />
+          </Link>
+        </div>
+      )}
+
+      {/* Past due payment warning */}
+      {subscriptionStatus === "past_due" && (
+        <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 flex items-start gap-3">
+          <AlertTriangle className="h-5 w-5 text-amber-600 flex-shrink-0 mt-0.5" />
+          <div className="flex-1">
+            <p className="text-sm font-semibold text-amber-900">
+              Payment failed
+            </p>
+            <p className="text-sm text-amber-700 mt-0.5">
+              Your last payment didn&apos;t go through. Please update your payment method to keep your subscription active.
+            </p>
+          </div>
+          <Link
+            href="/dashboard/billing"
+            className="inline-flex items-center gap-1 rounded-lg bg-amber-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-amber-700 transition-colors whitespace-nowrap"
+          >
+            Update Payment
+          </Link>
+        </div>
+      )}
+
       {/* Welcome */}
       <div>
         <h1 className="text-2xl font-bold">
@@ -119,5 +171,13 @@ function QuickAction({
       </h3>
       <p className="text-xs text-[var(--text-secondary)] mt-0.5">{description}</p>
     </Link>
+  );
+}
+
+export default function DashboardPage() {
+  return (
+    <Suspense>
+      <DashboardContent />
+    </Suspense>
   );
 }

@@ -99,6 +99,7 @@ export const authConfig: NextAuthConfig = {
           token.plan = dbUser.plan || "free";
           token.subscriptionStatus = dbUser.subscription_status || "none";
           token.npi = dbUser.npi || null;
+          token.stripeCustomerId = dbUser.stripe_customer_id || null;
         }
       }
 
@@ -109,6 +110,7 @@ export const authConfig: NextAuthConfig = {
           token.plan = dbUser.plan || "free";
           token.subscriptionStatus = dbUser.subscription_status || "none";
           token.npi = dbUser.npi || null;
+          token.stripeCustomerId = dbUser.stripe_customer_id || null;
         }
       }
 
@@ -121,6 +123,7 @@ export const authConfig: NextAuthConfig = {
         (session.user as any).plan = token.plan as string;
         (session.user as any).subscriptionStatus = token.subscriptionStatus as string;
         (session.user as any).npi = token.npi as string | null;
+        (session.user as any).stripeCustomerId = token.stripeCustomerId as string | null;
       }
       return session;
     },
