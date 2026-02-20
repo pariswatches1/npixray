@@ -53,7 +53,7 @@ export function CcmCalculatorTool() {
   return (
     <div>
       {/* Input */}
-      <div className="rounded-2xl border border-dark-50/80 bg-dark-400/50 p-6 sm:p-8">
+      <div className="rounded-2xl border border-[var(--border-light)] bg-white p-6 sm:p-8">
         <div className="flex items-center gap-3 mb-6">
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-rose-500/10 border border-rose-500/20">
             <HeartPulse className="h-5 w-5 text-rose-400" />
@@ -71,7 +71,7 @@ export function CcmCalculatorTool() {
             placeholder="e.g. 100"
             value={patients}
             onChange={(e) => setPatients(e.target.value)}
-            className="w-full rounded-lg border border-dark-50/50 bg-dark-200 px-4 py-3 text-white placeholder:text-[var(--text-secondary)]/50 focus:border-gold focus:outline-none transition-colors"
+            className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-white placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20 focus:outline-none transition-colors"
             aria-label="Number of patients with 2+ chronic conditions"
           />
           <p className="mt-2 text-xs text-[var(--text-secondary)]">
@@ -82,7 +82,7 @@ export function CcmCalculatorTool() {
         <button
           onClick={handleCalculate}
           disabled={!patients || parseInt(patients) < 1}
-          className="mt-6 w-full sm:w-auto bg-gold text-dark font-semibold rounded-lg px-6 py-3 hover:bg-gold-300 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+          className="mt-6 w-full sm:w-auto bg-[#2F5EA8] text-white font-semibold rounded-lg px-6 py-3 hover:bg-[#264D8C] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
         >
           Calculate CCM Revenue
         </button>
@@ -92,11 +92,11 @@ export function CcmCalculatorTool() {
       {results && (
         <div className="mt-8 space-y-6">
           {/* Total Revenue */}
-          <div className="rounded-xl border border-gold/20 bg-gold/5 p-6 text-center">
+          <div className="rounded-xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-6 text-center">
             <p className="text-sm text-[var(--text-secondary)] mb-2">
               Total Annual CCM Revenue Potential
             </p>
-            <p className="text-4xl font-bold font-mono text-gold">
+            <p className="text-4xl font-bold font-mono text-[#2F5EA8]">
               {formatCurrency(results.totalAnnual)}
             </p>
             <p className="text-sm text-[var(--text-secondary)] mt-2">
@@ -106,7 +106,7 @@ export function CcmCalculatorTool() {
 
           {/* Breakdown */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5">
+            <div className="rounded-xl border border-[var(--border-light)] bg-white p-5">
               <div className="flex items-center gap-2 text-sm text-[var(--text-secondary)] mb-3">
                 <DollarSign className="h-4 w-4 text-rose-400" />
                 CPT 99490 — Initial 20 min
@@ -126,7 +126,7 @@ export function CcmCalculatorTool() {
               </div>
             </div>
 
-            <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5">
+            <div className="rounded-xl border border-[var(--border-light)] bg-white p-5">
               <div className="flex items-center gap-2 text-sm text-[var(--text-secondary)] mb-3">
                 <TrendingUp className="h-4 w-4 text-amber-400" />
                 CPT 99439 — Add-on 20 min
@@ -148,9 +148,9 @@ export function CcmCalculatorTool() {
           </div>
 
           {/* Revenue Scaling */}
-          <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6">
+          <div className="rounded-xl border border-[var(--border-light)] bg-white p-6">
             <div className="flex items-center gap-2 mb-4">
-              <Users className="h-4 w-4 text-gold" />
+              <Users className="h-4 w-4 text-[#2F5EA8]" />
               <h3 className="text-base font-semibold">Revenue at Different Patient Volumes</h3>
             </div>
             <div className="space-y-3">
@@ -163,13 +163,13 @@ export function CcmCalculatorTool() {
                     <span className="text-sm w-24 text-[var(--text-secondary)]">
                       {count} patients
                     </span>
-                    <div className="flex-1 h-6 rounded bg-dark-200 overflow-hidden">
+                    <div className="flex-1 h-6 rounded bg-white overflow-hidden">
                       <div
-                        className={`h-full rounded transition-all duration-500 ${isCurrentRange ? "bg-gold" : "bg-rose-500/60"}`}
+                        className={`h-full rounded transition-all duration-500 ${isCurrentRange ? "bg-[#2F5EA8]" : "bg-rose-500/60"}`}
                         style={{ width: `${(annual / (200 * RATE_99490 * 12 + 100 * RATE_99439 * 12)) * 100}%` }}
                       />
                     </div>
-                    <span className={`text-sm font-mono font-semibold w-28 text-right ${isCurrentRange ? "text-gold" : ""}`}>
+                    <span className={`text-sm font-mono font-semibold w-28 text-right ${isCurrentRange ? "text-[#2F5EA8]" : ""}`}>
                       {formatCurrency(annual)}/yr
                     </span>
                   </div>
@@ -179,8 +179,8 @@ export function CcmCalculatorTool() {
           </div>
 
           {/* Info */}
-          <div className="flex items-start gap-3 text-sm text-[var(--text-secondary)] bg-dark-300/50 rounded-lg p-4 border border-dark-50/50">
-            <Info className="h-4 w-4 flex-shrink-0 mt-0.5 text-gold" />
+          <div className="flex items-start gap-3 text-sm text-[var(--text-secondary)] bg-white/80 rounded-lg p-4 border border-[var(--border-light)]">
+            <Info className="h-4 w-4 flex-shrink-0 mt-0.5 text-[#2F5EA8]" />
             <div>
               <p className="font-medium text-[var(--text-primary)] mb-1">About CCM Billing</p>
               <p>

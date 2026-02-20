@@ -48,9 +48,9 @@ export function GroupProvidersTab({ data }: Props) {
   return (
     <div className="space-y-6">
       {/* Provider Table */}
-      <div className="rounded-2xl bg-dark-800/50 border border-dark-50/20 overflow-hidden">
+      <div className="rounded-2xl bg-white border border-[var(--border-light)] overflow-hidden">
         {/* Header */}
-        <div className="hidden lg:grid lg:grid-cols-12 gap-4 px-6 py-3 bg-dark-900/50 border-b border-dark-50/10 text-xs text-[var(--text-secondary)] uppercase tracking-wider">
+        <div className="hidden lg:grid lg:grid-cols-12 gap-4 px-6 py-3 bg-[var(--bg)] border-b border-[var(--border-light)] text-xs text-[var(--text-secondary)] uppercase tracking-wider">
           <SortHeader label="Provider" col="col-span-3" sortKey="name" current={sortKey} asc={sortAsc} onSort={toggleSort} />
           <div className="col-span-2">Specialty</div>
           <SortHeader label="Score" col="col-span-1" sortKey="score" current={sortKey} asc={sortAsc} onSort={toggleSort} />
@@ -106,8 +106,8 @@ function SortHeader({
   return (
     <button
       onClick={() => onSort(sortKey)}
-      className={`${col} flex items-center gap-1 hover:text-gold transition-colors ${
-        current === sortKey ? "text-gold" : ""
+      className={`${col} flex items-center gap-1 hover:text-[#2F5EA8] transition-colors ${
+        current === sortKey ? "text-[#2F5EA8]" : ""
       }`}
     >
       {label}
@@ -138,7 +138,7 @@ function ProviderRow({
   const topGap = gaps[0];
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-12 gap-4 px-6 py-4 items-center hover:bg-dark-50/5 transition-colors">
+    <div className="grid grid-cols-2 lg:grid-cols-12 gap-4 px-6 py-4 items-center hover:bg-[var(--bg)] transition-colors">
       {/* Provider Name */}
       <div className="col-span-2 lg:col-span-3">
         <p className="text-sm font-medium text-white truncate">{provider.fullName}</p>
@@ -175,14 +175,14 @@ function ProviderRow({
       <div className="col-span-2 lg:col-span-3">
         <div className="flex items-center gap-3">
           <div className="flex-1">
-            <div className="h-4 bg-dark-900/50 rounded-full overflow-hidden">
+            <div className="h-4 bg-[var(--bg)] rounded-full overflow-hidden">
               <div
-                className="h-full bg-gold/60 rounded-full transition-all duration-500"
+                className="h-full bg-[#2F5EA8]/60 rounded-full transition-all duration-500"
                 style={{ width: `${missedPct}%` }}
               />
             </div>
           </div>
-          <span className="text-sm font-mono text-gold w-16 text-right shrink-0">
+          <span className="text-sm font-mono text-[#2F5EA8] w-16 text-right shrink-0">
             {formatCurrency(provider.missedRevenue)}
           </span>
         </div>
@@ -198,7 +198,7 @@ function ProviderRow({
       <div className="hidden lg:flex lg:col-span-1 justify-end">
         <Link
           href={`/scan/${provider.npi}`}
-          className="p-2 rounded-lg hover:bg-dark-50/10 text-[var(--text-secondary)] hover:text-gold transition-colors"
+          className="p-2 rounded-lg hover:bg-[var(--bg)] text-[var(--text-secondary)] hover:text-[#2F5EA8] transition-colors"
           title="View full report"
         >
           <ExternalLink className="h-4 w-4" />

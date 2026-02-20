@@ -19,12 +19,12 @@ export default function GroupScanPage() {
   };
 
   return (
-    <div className="min-h-screen bg-dark-900">
+    <div className="min-h-screen bg-[var(--bg)]">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-8">
         {/* Back link */}
         <Link
           href="/"
-          className="inline-flex items-center gap-1.5 text-sm text-[var(--text-secondary)] hover:text-gold transition-colors mb-8"
+          className="inline-flex items-center gap-1.5 text-sm text-[var(--text-secondary)] hover:text-[#2F5EA8] transition-colors mb-8"
         >
           <ArrowLeft className="h-4 w-4" />
           Back to Scanner
@@ -32,7 +32,7 @@ export default function GroupScanPage() {
 
         {/* Hero */}
         <div className="text-center mb-10">
-          <div className="inline-flex items-center gap-2 rounded-full bg-gold/10 border border-gold/20 px-4 py-1.5 text-xs font-medium text-gold mb-4">
+          <div className="inline-flex items-center gap-2 rounded-full bg-[#2F5EA8]/[0.06] border border-[#2F5EA8]/10 px-4 py-1.5 text-xs font-medium text-[#2F5EA8] mb-4">
             <Users className="h-3.5 w-3.5" />
             GROUP PRACTICE SCAN
           </div>
@@ -46,14 +46,14 @@ export default function GroupScanPage() {
         </div>
 
         {/* Input Card */}
-        <div className="rounded-2xl bg-dark-800/30 border border-dark-50/20 p-6 sm:p-8 mb-8">
+        <div className="rounded-2xl bg-white border border-[var(--border-light)] p-6 sm:p-8 mb-8">
           <NpiInputForm onSubmit={handleSubmit} loading={submitting} />
         </div>
 
         {/* Value Props */}
         <div className="grid gap-4 sm:grid-cols-3 mb-8">
           <ValueProp
-            icon={<Zap className="h-5 w-5 text-gold" />}
+            icon={<Zap className="h-5 w-5 text-[#2F5EA8]" />}
             title="Practice-Wide View"
             desc="See total missed revenue across all providers in one dashboard"
           />
@@ -83,7 +83,7 @@ function ValueProp({
   desc: string;
 }) {
   return (
-    <div className="flex items-start gap-3 rounded-xl bg-dark-800/20 border border-dark-50/10 p-4">
+    <div className="flex items-start gap-3 rounded-xl bg-white border border-[var(--border-light)] p-4">
       <div className="shrink-0 mt-0.5">{icon}</div>
       <div>
         <h3 className="text-sm font-semibold text-white">{title}</h3>

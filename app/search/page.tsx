@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 function SearchFallback() {
   return (
     <div className="flex flex-col items-center justify-center py-24 gap-3">
-      <Loader2 className="h-8 w-8 text-gold animate-spin" />
+      <Loader2 className="h-8 w-8 text-[#2F5EA8] animate-spin" />
       <p className="text-sm text-[var(--text-secondary)]">Loading search...</p>
     </div>
   );

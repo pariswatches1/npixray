@@ -18,9 +18,9 @@ export default function AccountPage() {
       </div>
 
       {/* Profile */}
-      <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6">
+      <div className="rounded-xl border border-[var(--border-light)] bg-white p-6">
         <div className="flex items-center gap-3 mb-6">
-          <User className="h-5 w-5 text-gold" />
+          <User className="h-5 w-5 text-[#2F5EA8]" />
           <h2 className="text-lg font-semibold">Profile</h2>
         </div>
 
@@ -29,12 +29,12 @@ export default function AccountPage() {
             <img
               src={user.image}
               alt=""
-              className="h-14 w-14 rounded-full border-2 border-gold/20"
+              className="h-14 w-14 rounded-full border-2 border-[#2F5EA8]/10"
               referrerPolicy="no-referrer"
             />
           ) : (
-            <div className="h-14 w-14 rounded-full bg-gold/10 flex items-center justify-center border-2 border-gold/20">
-              <User className="h-6 w-6 text-gold" />
+            <div className="h-14 w-14 rounded-full bg-[#2F5EA8]/[0.06] flex items-center justify-center border-2 border-[#2F5EA8]/10">
+              <User className="h-6 w-6 text-[#2F5EA8]" />
             </div>
           )}
           <div>
@@ -44,7 +44,7 @@ export default function AccountPage() {
         </div>
 
         <div className="space-y-4">
-          <div className="flex items-center justify-between py-3 border-t border-dark-50/50">
+          <div className="flex items-center justify-between py-3 border-t border-[var(--border-light)]">
             <div className="flex items-center gap-2">
               <Mail className="h-4 w-4 text-[var(--text-secondary)]" />
               <span className="text-sm">Email</span>
@@ -54,12 +54,12 @@ export default function AccountPage() {
             </span>
           </div>
 
-          <div className="flex items-center justify-between py-3 border-t border-dark-50/50">
+          <div className="flex items-center justify-between py-3 border-t border-[var(--border-light)]">
             <div className="flex items-center gap-2">
               <Shield className="h-4 w-4 text-[var(--text-secondary)]" />
               <span className="text-sm">Plan</span>
             </div>
-            <span className="text-sm font-medium text-gold">
+            <span className="text-sm font-medium text-[#2F5EA8]">
               {plan === "intelligence"
                 ? "Intelligence"
                 : plan === "care"
@@ -68,7 +68,7 @@ export default function AccountPage() {
             </span>
           </div>
 
-          <div className="flex items-center justify-between py-3 border-t border-dark-50/50">
+          <div className="flex items-center justify-between py-3 border-t border-[var(--border-light)]">
             <div className="flex items-center gap-2">
               <User className="h-4 w-4 text-[var(--text-secondary)]" />
               <span className="text-sm">Auth Provider</span>
@@ -79,9 +79,9 @@ export default function AccountPage() {
       </div>
 
       {/* Data usage */}
-      <div className="rounded-xl border border-dark-50/50 bg-dark-400/30 p-6">
+      <div className="rounded-xl border border-[var(--border-light)] bg-white p-6">
         <div className="flex items-start gap-3">
-          <Shield className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
+          <Shield className="h-5 w-5 text-[#2F5EA8] flex-shrink-0 mt-0.5" />
           <div>
             <p className="text-sm font-medium">Your data is safe</p>
             <p className="text-xs text-[var(--text-secondary)] mt-1 leading-relaxed">

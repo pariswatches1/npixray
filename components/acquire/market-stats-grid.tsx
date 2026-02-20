@@ -47,9 +47,9 @@ export function MarketStatsGrid({
       label: "Estimated Missed Revenue",
       value: formatAcquisitionCurrency(estimatedMissedRevenue),
       icon: TrendingUp,
-      color: "text-gold",
-      bgColor: "bg-gold/10",
-      borderColor: "border-gold/20",
+      color: "text-[#2F5EA8]",
+      bgColor: "bg-[#2F5EA8]/[0.06]",
+      borderColor: "border-[#2F5EA8]/10",
     },
     {
       label: "Prime Targets",

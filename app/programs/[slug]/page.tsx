@@ -91,7 +91,7 @@ export default async function ProgramHubPage({
     <>
       {/* Hero */}
       <section className="relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gold/[0.03] rounded-full blur-3xl" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#2F5EA8]/[0.03] rounded-full blur-3xl" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-8 pb-12 sm:pt-12 sm:pb-16">
           <Breadcrumbs
             items={[
@@ -101,13 +101,13 @@ export default async function ProgramHubPage({
           />
 
           <div className="flex items-center gap-3 mb-6">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-gold/20 bg-gold/10">
-              <Icon className="h-6 w-6 text-gold" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.06]">
+              <Icon className="h-6 w-6 text-[#2F5EA8]" />
             </div>
             <div>
               <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
                 {program.fullName}{" "}
-                <span className="text-gold">({program.name})</span>
+                <span className="text-[#2F5EA8]">({program.name})</span>
               </h1>
               <p className="text-sm text-[var(--text-secondary)]">
                 Medicare billing codes, adoption data &amp; revenue calculator
@@ -122,13 +122,13 @@ export default async function ProgramHubPage({
       </section>
 
       {/* Eligibility Criteria */}
-      <section className="border-t border-dark-50/50 py-10">
+      <section className="border-t border-[var(--border-light)] py-10">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-2 mb-6">
-            <CheckCircle className="h-5 w-5 text-gold" />
+            <CheckCircle className="h-5 w-5 text-[#2F5EA8]" />
             <h2 className="text-2xl font-bold">Eligibility Criteria</h2>
           </div>
-          <div className="rounded-xl border border-dark-50/50 bg-dark-400/50 p-6">
+          <div className="rounded-xl border border-[var(--border-light)] bg-white p-6">
             <ul className="space-y-3">
               {program.eligibilityCriteria.map((criterion, i) => (
                 <li key={i} className="flex items-start gap-3 text-sm text-[var(--text-secondary)]">
@@ -142,16 +142,16 @@ export default async function ProgramHubPage({
       </section>
 
       {/* Billing Codes Table */}
-      <section className="border-t border-dark-50/50 py-10">
+      <section className="border-t border-[var(--border-light)] py-10">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-2 mb-6">
-            <FileText className="h-5 w-5 text-gold" />
+            <FileText className="h-5 w-5 text-[#2F5EA8]" />
             <h2 className="text-2xl font-bold">{program.name} Billing Codes</h2>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-dark-50/50 text-left text-[var(--text-secondary)]">
+                <tr className="border-b border-[var(--border-light)] text-left text-[var(--text-secondary)]">
                   <th className="pb-3 pr-4 font-medium">Code</th>
                   <th className="pb-3 pr-4 font-medium">Description</th>
                   <th className="pb-3 font-medium text-right">Medicare Rate</th>
@@ -159,11 +159,11 @@ export default async function ProgramHubPage({
               </thead>
               <tbody className="divide-y divide-dark-50/30">
                 {program.billingCodes.map((code) => (
-                  <tr key={code.code} className="hover:bg-dark-400/30">
+                  <tr key={code.code} className="hover:bg-white">
                     <td className="py-3 pr-4">
                       <Link
                         href={`/codes/${code.code.toLowerCase()}`}
-                        className="font-mono text-gold hover:underline"
+                        className="font-mono text-[#2F5EA8] hover:underline"
                       >
                         {code.code}
                       </Link>
@@ -184,10 +184,10 @@ export default async function ProgramHubPage({
 
       {/* Live Data: Top States */}
       {topStates.length > 0 && (
-        <section className="border-t border-dark-50/50 py-10">
+        <section className="border-t border-[var(--border-light)] py-10">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex items-center gap-2 mb-6">
-              <MapPin className="h-5 w-5 text-gold" />
+              <MapPin className="h-5 w-5 text-[#2F5EA8]" />
               <h2 className="text-2xl font-bold">
                 Top States for {program.name} Adoption
               </h2>
@@ -195,7 +195,7 @@ export default async function ProgramHubPage({
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-dark-50/50 text-left text-[var(--text-secondary)]">
+                  <tr className="border-b border-[var(--border-light)] text-left text-[var(--text-secondary)]">
                     <th className="pb-3 pr-4 font-medium">Rank</th>
                     <th className="pb-3 pr-4 font-medium">State</th>
                     <th className="pb-3 pr-4 font-medium text-right">Adoption Rate</th>
@@ -205,12 +205,12 @@ export default async function ProgramHubPage({
                 </thead>
                 <tbody className="divide-y divide-dark-50/30">
                   {topStates.map((row, i) => (
-                    <tr key={row.state} className="hover:bg-dark-400/30">
+                    <tr key={row.state} className="hover:bg-white">
                       <td className="py-3 pr-4 text-[var(--text-secondary)]">#{i + 1}</td>
                       <td className="py-3 pr-4">
                         <Link
                           href={`/states/${stateToSlug(row.state)}`}
-                          className="text-gold hover:underline"
+                          className="text-[#2F5EA8] hover:underline"
                         >
                           {stateAbbrToName(row.state)}
                         </Link>
@@ -235,10 +235,10 @@ export default async function ProgramHubPage({
 
       {/* Live Data: Top Specialties */}
       {topSpecialties.length > 0 && (
-        <section className="border-t border-dark-50/50 py-10">
+        <section className="border-t border-[var(--border-light)] py-10">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex items-center gap-2 mb-6">
-              <Stethoscope className="h-5 w-5 text-gold" />
+              <Stethoscope className="h-5 w-5 text-[#2F5EA8]" />
               <h2 className="text-2xl font-bold">
                 Top Specialties for {program.name} Adoption
               </h2>
@@ -246,7 +246,7 @@ export default async function ProgramHubPage({
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-dark-50/50 text-left text-[var(--text-secondary)]">
+                  <tr className="border-b border-[var(--border-light)] text-left text-[var(--text-secondary)]">
                     <th className="pb-3 pr-4 font-medium">Rank</th>
                     <th className="pb-3 pr-4 font-medium">Specialty</th>
                     <th className="pb-3 pr-4 font-medium text-right">Adoption Rate</th>
@@ -256,12 +256,12 @@ export default async function ProgramHubPage({
                 </thead>
                 <tbody className="divide-y divide-dark-50/30">
                   {topSpecialties.map((row, i) => (
-                    <tr key={row.specialty} className="hover:bg-dark-400/30">
+                    <tr key={row.specialty} className="hover:bg-white">
                       <td className="py-3 pr-4 text-[var(--text-secondary)]">#{i + 1}</td>
                       <td className="py-3 pr-4">
                         <Link
                           href={`/specialties/${specialtyToSlug(row.specialty)}`}
-                          className="text-gold hover:underline"
+                          className="text-[#2F5EA8] hover:underline"
                         >
                           {row.specialty}
                         </Link>
@@ -285,7 +285,7 @@ export default async function ProgramHubPage({
       )}
 
       {/* Resource Links Grid */}
-      <section className="border-t border-dark-50/50 py-10">
+      <section className="border-t border-[var(--border-light)] py-10">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-bold mb-6">
             {program.name} Resources
@@ -294,16 +294,16 @@ export default async function ProgramHubPage({
             {/* Guide */}
             <Link
               href={program.guideLink}
-              className="group rounded-xl border border-dark-50/50 bg-dark-400/50 p-5 hover:border-gold/30 transition-all"
+              className="group rounded-xl border border-[var(--border-light)] bg-white p-5 hover:border-[#2F5EA8]/15 transition-all"
             >
-              <BookOpen className="h-5 w-5 text-gold mb-3" />
-              <h3 className="font-semibold text-sm group-hover:text-gold transition-colors">
+              <BookOpen className="h-5 w-5 text-[#2F5EA8] mb-3" />
+              <h3 className="font-semibold text-sm group-hover:text-[#2F5EA8] transition-colors">
                 {program.name} Billing Guide
               </h3>
               <p className="text-xs text-[var(--text-secondary)] mt-1">
                 Step-by-step billing guide with documentation requirements
               </p>
-              <span className="text-xs text-gold flex items-center gap-1 mt-3 group-hover:gap-2 transition-all">
+              <span className="text-xs text-[#2F5EA8] flex items-center gap-1 mt-3 group-hover:gap-2 transition-all">
                 Read guide <ArrowRight className="h-3 w-3" />
               </span>
             </Link>
@@ -312,16 +312,16 @@ export default async function ProgramHubPage({
             {program.calculatorLink && (
               <Link
                 href={program.calculatorLink}
-                className="group rounded-xl border border-dark-50/50 bg-dark-400/50 p-5 hover:border-gold/30 transition-all"
+                className="group rounded-xl border border-[var(--border-light)] bg-white p-5 hover:border-[#2F5EA8]/15 transition-all"
               >
-                <Calculator className="h-5 w-5 text-gold mb-3" />
-                <h3 className="font-semibold text-sm group-hover:text-gold transition-colors">
+                <Calculator className="h-5 w-5 text-[#2F5EA8] mb-3" />
+                <h3 className="font-semibold text-sm group-hover:text-[#2F5EA8] transition-colors">
                   {program.name} Revenue Calculator
                 </h3>
                 <p className="text-xs text-[var(--text-secondary)] mt-1">
                   Estimate your potential {program.name} revenue
                 </p>
-                <span className="text-xs text-gold flex items-center gap-1 mt-3 group-hover:gap-2 transition-all">
+                <span className="text-xs text-[#2F5EA8] flex items-center gap-1 mt-3 group-hover:gap-2 transition-all">
                   Calculate <ArrowRight className="h-3 w-3" />
                 </span>
               </Link>
@@ -331,31 +331,31 @@ export default async function ProgramHubPage({
             {program.insightLink && (
               <Link
                 href={program.insightLink}
-                className="group rounded-xl border border-dark-50/50 bg-dark-400/50 p-5 hover:border-gold/30 transition-all"
+                className="group rounded-xl border border-[var(--border-light)] bg-white p-5 hover:border-[#2F5EA8]/15 transition-all"
               >
-                <BarChart3 className="h-5 w-5 text-gold mb-3" />
-                <h3 className="font-semibold text-sm group-hover:text-gold transition-colors">
+                <BarChart3 className="h-5 w-5 text-[#2F5EA8] mb-3" />
+                <h3 className="font-semibold text-sm group-hover:text-[#2F5EA8] transition-colors">
                   {program.name} Adoption Data
                 </h3>
                 <p className="text-xs text-[var(--text-secondary)] mt-1">
                   National adoption rates and trends
                 </p>
-                <span className="text-xs text-gold flex items-center gap-1 mt-3 group-hover:gap-2 transition-all">
+                <span className="text-xs text-[#2F5EA8] flex items-center gap-1 mt-3 group-hover:gap-2 transition-all">
                   View data <ArrowRight className="h-3 w-3" />
                 </span>
               </Link>
             )}
 
             {/* Code Pages */}
-            <div className="rounded-xl border border-dark-50/50 bg-dark-400/50 p-5">
-              <FileText className="h-5 w-5 text-gold mb-3" />
+            <div className="rounded-xl border border-[var(--border-light)] bg-white p-5">
+              <FileText className="h-5 w-5 text-[#2F5EA8] mb-3" />
               <h3 className="font-semibold text-sm">Code Pages</h3>
               <ul className="mt-2 space-y-1.5">
                 {program.codePageLinks.map((link) => (
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="text-xs text-[var(--text-secondary)] hover:text-gold transition-colors"
+                      className="text-xs text-[var(--text-secondary)] hover:text-[#2F5EA8] transition-colors"
                     >
                       {link.label} →
                     </Link>
@@ -369,7 +369,7 @@ export default async function ProgramHubPage({
 
       {/* Explore by State (top 5 states linked) */}
       {topStates.length > 0 && (
-        <section className="border-t border-dark-50/50 py-10">
+        <section className="border-t border-[var(--border-light)] py-10">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl font-bold mb-4">
               Explore {program.name} by State
@@ -382,7 +382,7 @@ export default async function ProgramHubPage({
                 <Link
                   key={row.state}
                   href={`/states/${stateToSlug(row.state)}`}
-                  className="rounded-lg border border-dark-50/50 px-4 py-2 text-sm text-[var(--text-secondary)] hover:border-gold/30 hover:text-gold transition-all"
+                  className="rounded-lg border border-[var(--border-light)] px-4 py-2 text-sm text-[var(--text-secondary)] hover:border-[#2F5EA8]/15 hover:text-[#2F5EA8] transition-all"
                 >
                   {stateAbbrToName(row.state)}{" "}
                   <span className="text-xs opacity-60">
@@ -392,7 +392,7 @@ export default async function ProgramHubPage({
               ))}
               <Link
                 href="/states"
-                className="rounded-lg border border-gold/20 bg-gold/5 px-4 py-2 text-sm text-gold hover:bg-gold/10 transition-all"
+                className="rounded-lg border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] px-4 py-2 text-sm text-[#2F5EA8] hover:bg-[#264D8C]/10 transition-all"
               >
                 All 50 States →
               </Link>

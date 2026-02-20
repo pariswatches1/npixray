@@ -66,7 +66,7 @@ export default async function TopProvidersByStatePage({
   return (
     <>
       <section className="relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gold/[0.03] rounded-full blur-3xl" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#2F5EA8]/[0.03] rounded-full blur-3xl" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-8 pb-12 sm:pt-12 sm:pb-16">
           <Breadcrumbs
             items={[
@@ -77,13 +77,13 @@ export default async function TopProvidersByStatePage({
           />
 
           <div className="flex items-center gap-3 mb-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-gold/20 bg-gold/10">
-              <Crown className="h-6 w-6 text-gold" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.06]">
+              <Crown className="h-6 w-6 text-[#2F5EA8]" />
             </div>
             <div>
               <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
                 Top 100 Medicare Providers in{" "}
-                <span className="text-gold">{stateName}</span>
+                <span className="text-[#2F5EA8]">{stateName}</span>
               </h1>
               <p className="text-sm text-[var(--text-secondary)] mt-1">
                 Ranked by total Medicare payments
@@ -119,7 +119,7 @@ export default async function TopProvidersByStatePage({
       </section>
 
       {/* Provider Table */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-xl font-bold mb-6">
             All {providers.length} Providers
@@ -133,26 +133,26 @@ export default async function TopProvidersByStatePage({
       </section>
 
       {/* Related Links */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-lg font-semibold mb-4">Related Pages</h2>
           <div className="flex flex-wrap gap-3">
             <Link
               href={`/states/${slug}`}
-              className="rounded-lg border border-dark-50/80 bg-dark-400/30 px-4 py-2 text-xs font-medium text-[var(--text-secondary)] hover:text-gold hover:border-gold/20 transition-colors"
+              className="rounded-lg border border-[var(--border-light)] bg-white px-4 py-2 text-xs font-medium text-[var(--text-secondary)] hover:text-[#2F5EA8] hover:border-[#2F5EA8]/10 transition-colors"
             >
               <MapPin className="h-3 w-3 inline mr-1" />
               {stateName} State Profile
             </Link>
             <Link
               href="/rankings"
-              className="rounded-lg border border-dark-50/80 bg-dark-400/30 px-4 py-2 text-xs font-medium text-[var(--text-secondary)] hover:text-gold hover:border-gold/20 transition-colors"
+              className="rounded-lg border border-[var(--border-light)] bg-white px-4 py-2 text-xs font-medium text-[var(--text-secondary)] hover:text-[#2F5EA8] hover:border-[#2F5EA8]/10 transition-colors"
             >
               All Rankings
             </Link>
             <Link
               href="/rankings/top-specialties"
-              className="rounded-lg border border-dark-50/80 bg-dark-400/30 px-4 py-2 text-xs font-medium text-[var(--text-secondary)] hover:text-gold hover:border-gold/20 transition-colors"
+              className="rounded-lg border border-[var(--border-light)] bg-white px-4 py-2 text-xs font-medium text-[var(--text-secondary)] hover:text-[#2F5EA8] hover:border-[#2F5EA8]/10 transition-colors"
             >
               Top Specialties
             </Link>

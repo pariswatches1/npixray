@@ -76,22 +76,22 @@ export default async function StateSpecialtyLeaderboardPage({
   return (
     <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
       <nav className="flex items-center gap-1.5 text-sm text-[var(--text-secondary)] mb-6 flex-wrap">
-        <Link href="/" className="hover:text-gold transition-colors"><Home className="h-3.5 w-3.5" /></Link>
-        <ChevronRight className="h-3.5 w-3.5 text-dark-50" />
-        <Link href="/leaderboard" className="hover:text-gold transition-colors">Leaderboard</Link>
-        <ChevronRight className="h-3.5 w-3.5 text-dark-50" />
-        <Link href={`/leaderboard/${stateSlug}`} className="hover:text-gold transition-colors">{stateName}</Link>
-        <ChevronRight className="h-3.5 w-3.5 text-dark-50" />
+        <Link href="/" className="hover:text-[#2F5EA8] transition-colors"><Home className="h-3.5 w-3.5" /></Link>
+        <ChevronRight className="h-3.5 w-3.5 text-[var(--text-secondary)]" />
+        <Link href="/leaderboard" className="hover:text-[#2F5EA8] transition-colors">Leaderboard</Link>
+        <ChevronRight className="h-3.5 w-3.5 text-[var(--text-secondary)]" />
+        <Link href={`/leaderboard/${stateSlug}`} className="hover:text-[#2F5EA8] transition-colors">{stateName}</Link>
+        <ChevronRight className="h-3.5 w-3.5 text-[var(--text-secondary)]" />
         <span className="text-white font-medium">{specName}</span>
       </nav>
 
       <div className="mb-8">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold/10 text-gold text-sm font-semibold mb-4">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#2F5EA8]/[0.06] text-[#2F5EA8] text-sm font-semibold mb-4">
           <Trophy className="h-4 w-4" />
           Leaderboard
         </div>
         <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
-          Top {specName} in <span className="text-gold">{stateName}</span>
+          Top {specName} in <span className="text-[#2F5EA8]">{stateName}</span>
         </h1>
         <p className="text-[var(--text-secondary)]">
           {totalProviders.toLocaleString()} {specName} providers in {stateName}.
@@ -103,11 +103,11 @@ export default async function StateSpecialtyLeaderboardPage({
       </div>
 
       {/* Leaderboard */}
-      <div className="rounded-2xl border border-dark-50/80 bg-dark-400/30 overflow-hidden mb-8">
+      <div className="rounded-2xl border border-[var(--border-light)] bg-white overflow-hidden mb-8">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-dark-50/50 text-xs text-[var(--text-secondary)]">
+              <tr className="border-b border-[var(--border-light)] text-xs text-[var(--text-secondary)]">
                 <th className="px-4 py-3 text-left font-medium">Rank</th>
                 <th className="px-4 py-3 text-left font-medium">Provider</th>
                 <th className="px-4 py-3 text-left font-medium">City</th>
@@ -120,17 +120,17 @@ export default async function StateSpecialtyLeaderboardPage({
                 return (
                   <tr
                     key={p.npi}
-                    className="border-b border-dark-50/30 hover:bg-dark-300/30 transition-colors"
+                    className="border-b border-[var(--border-light)] hover:bg-[var(--bg)]/30 transition-colors"
                   >
                     <td className="px-4 py-3">
-                      <span className={`font-bold text-base ${i === 0 ? "text-gold" : i < 3 ? "text-gold/70" : "text-[var(--text-secondary)]"}`}>
+                      <span className={`font-bold text-base ${i === 0 ? "text-[#2F5EA8]" : i < 3 ? "text-[#2F5EA8]" : "text-[var(--text-secondary)]"}`}>
                         {i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : `#${i + 1}`}
                       </span>
                     </td>
                     <td className="px-4 py-3">
                       <Link
                         href={`/scan/${p.npi}`}
-                        className="hover:text-gold transition-colors"
+                        className="hover:text-[#2F5EA8] transition-colors"
                       >
                         Provider #{p.npi.slice(-4)}
                       </Link>
@@ -164,14 +164,14 @@ export default async function StateSpecialtyLeaderboardPage({
       </div>
 
       {/* CTA */}
-      <div className="rounded-2xl border border-gold/20 bg-gold/5 p-6 text-center mb-8">
+      <div className="rounded-2xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-6 text-center mb-8">
         <h3 className="text-lg font-bold mb-2">Where do you rank?</h3>
         <p className="text-sm text-[var(--text-secondary)] mb-4">
           Scan your NPI to see your Revenue Score and find your position on this leaderboard.
         </p>
         <Link
           href="/"
-          className="inline-flex items-center gap-2 rounded-xl bg-gold px-6 py-3 text-sm font-semibold text-dark hover:bg-gold-300 transition-all"
+          className="inline-flex items-center gap-2 rounded-xl bg-[#2F5EA8] px-6 py-3 text-sm font-semibold text-white hover:bg-[#264D8C] transition-all"
         >
           <Trophy className="h-4 w-4" />
           Find My Ranking

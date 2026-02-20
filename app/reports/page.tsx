@@ -116,20 +116,20 @@ export default async function ReportsIndexPage() {
     <>
       {/* Hero */}
       <section className="relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gold/[0.03] rounded-full blur-3xl" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#2F5EA8]/[0.03] rounded-full blur-3xl" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-8 pb-12 sm:pt-12 sm:pb-16">
           <Breadcrumbs items={[{ label: "Report Cards" }]} />
 
           <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/5 px-4 py-1.5 mb-8">
-              <BarChart3 className="h-3.5 w-3.5 text-gold" />
-              <span className="text-xs font-medium text-gold">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] px-4 py-1.5 mb-8">
+              <BarChart3 className="h-3.5 w-3.5 text-[#2F5EA8]" />
+              <span className="text-xs font-medium text-[#2F5EA8]">
                 2026 CMS Data Analysis
               </span>
             </div>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight max-w-4xl mx-auto leading-[1.1]">
               Medicare Revenue{" "}
-              <span className="text-gold">Report Cards</span>{" "}
+              <span className="text-[#2F5EA8]">Report Cards</span>{" "}
               2026
             </h1>
             <p className="mt-6 text-lg text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed">
@@ -141,34 +141,34 @@ export default async function ReportsIndexPage() {
 
           {/* Summary stats */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-3xl mx-auto">
-            <div className="rounded-xl border border-dark-50/50 bg-dark-300 p-4 text-center">
-              <Users className="h-5 w-5 text-gold mx-auto mb-2" />
-              <p className="text-xl font-bold font-mono text-gold">
+            <div className="rounded-xl border border-[var(--border-light)] bg-white p-4 text-center">
+              <Users className="h-5 w-5 text-[#2F5EA8] mx-auto mb-2" />
+              <p className="text-xl font-bold font-mono text-[#2F5EA8]">
                 {formatNumber(totalProviders)}
               </p>
               <p className="text-[10px] text-[var(--text-secondary)] uppercase tracking-wider mt-1">
                 Providers Analyzed
               </p>
             </div>
-            <div className="rounded-xl border border-dark-50/50 bg-dark-300 p-4 text-center">
-              <BarChart3 className="h-5 w-5 text-gold mx-auto mb-2" />
-              <p className="text-xl font-bold font-mono text-gold">
+            <div className="rounded-xl border border-[var(--border-light)] bg-white p-4 text-center">
+              <BarChart3 className="h-5 w-5 text-[#2F5EA8] mx-auto mb-2" />
+              <p className="text-xl font-bold font-mono text-[#2F5EA8]">
                 {stateCards.length}
               </p>
               <p className="text-[10px] text-[var(--text-secondary)] uppercase tracking-wider mt-1">
                 States Graded
               </p>
             </div>
-            <div className="rounded-xl border border-dark-50/50 bg-dark-300 p-4 text-center">
-              <DollarSign className="h-5 w-5 text-gold mx-auto mb-2" />
-              <p className="text-xl font-bold font-mono text-gold">
+            <div className="rounded-xl border border-[var(--border-light)] bg-white p-4 text-center">
+              <DollarSign className="h-5 w-5 text-[#2F5EA8] mx-auto mb-2" />
+              <p className="text-xl font-bold font-mono text-[#2F5EA8]">
                 {specialtyCards.length}
               </p>
               <p className="text-[10px] text-[var(--text-secondary)] uppercase tracking-wider mt-1">
                 Specialties
               </p>
             </div>
-            <div className="rounded-xl border border-dark-50/50 bg-dark-300 p-4 text-center">
+            <div className="rounded-xl border border-[var(--border-light)] bg-white p-4 text-center">
               <TrendingDown className="h-5 w-5 text-red-400 mx-auto mb-2" />
               <p className="text-xl font-bold font-mono text-red-400">
                 {formatCurrency(totalMissedRevenue)}
@@ -182,7 +182,7 @@ export default async function ReportsIndexPage() {
       </section>
 
       {/* Tabs and content */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <ReportTabs states={stateCards} specialties={specialtyCards} />
         </div>

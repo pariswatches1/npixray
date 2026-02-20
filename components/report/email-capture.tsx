@@ -85,7 +85,7 @@ export function EmailCaptureModal({ data }: { data: ScanResult }) {
       />
 
       {/* Modal */}
-      <div className="relative w-full max-w-md rounded-2xl border border-dark-50/80 bg-dark-400 p-8 shadow-2xl shadow-gold/10 animate-in fade-in zoom-in duration-300">
+      <div className="relative w-full max-w-md rounded-2xl border border-[var(--border-light)] bg-[var(--bg)] p-8 shadow-2xl shadow-[#2F5EA8]/[0.06] animate-in fade-in zoom-in duration-300">
         {/* Close button */}
         <button
           onClick={() => setDismissed(true)}
@@ -106,8 +106,8 @@ export function EmailCaptureModal({ data }: { data: ScanResult }) {
         ) : (
           <>
             <div className="text-center mb-6">
-              <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gold/10 border border-gold/20 mb-4">
-                <Mail className="h-6 w-6 text-gold" />
+              <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-[#2F5EA8]/[0.06] border border-[#2F5EA8]/10 mb-4">
+                <Mail className="h-6 w-6 text-[#2F5EA8]" />
               </div>
               <h3 className="text-xl font-bold mb-2">
                 Get Your Full Report
@@ -116,7 +116,7 @@ export function EmailCaptureModal({ data }: { data: ScanResult }) {
                 We&apos;ll email you the complete revenue analysis for{" "}
                 <span className="text-white font-medium">{data.provider.fullName}</span>{" "}
                 including{" "}
-                <span className="text-gold font-semibold">
+                <span className="text-[#2F5EA8] font-semibold">
                   {formatCurrency(data.totalMissedRevenue)}/yr
                 </span>{" "}
                 in missed revenue opportunities.
@@ -134,7 +134,7 @@ export function EmailCaptureModal({ data }: { data: ScanResult }) {
                   placeholder="you@practice.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full rounded-xl border border-dark-50 bg-dark-500 py-3.5 pl-11 pr-4 text-sm placeholder:text-[var(--text-secondary)]/50 focus:border-gold/50 focus:ring-1 focus:ring-gold/30 outline-none transition-all"
+                  className="w-full rounded-xl border border-[var(--border)] bg-[var(--bg)] py-3.5 pl-11 pr-4 text-sm placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20/50 focus:ring-1 focus:ring-[#2F5EA8]/10 outline-none transition-all"
                   aria-label="Email address"
                 />
               </div>
@@ -146,11 +146,11 @@ export function EmailCaptureModal({ data }: { data: ScanResult }) {
               <button
                 type="submit"
                 disabled={status === "loading"}
-                className="w-full flex items-center justify-center gap-2 rounded-xl bg-gold py-3.5 text-sm font-semibold text-dark transition-all hover:bg-gold-300 hover:shadow-lg hover:shadow-gold/20 disabled:opacity-50"
+                className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#2F5EA8] py-3.5 text-sm font-semibold text-white transition-all hover:bg-[#264D8C] hover:shadow-lg hover:shadow-[#2F5EA8]/10 disabled:opacity-50"
               >
                 {status === "loading" ? (
                   <>
-                    <div className="h-4 w-4 border-2 border-dark/30 border-t-dark rounded-full animate-spin" />
+                    <div className="h-4 w-4 border-2 border-[var(--border-light)] border-t-[var(--text-primary)] rounded-full animate-spin" />
                     Sending...
                   </>
                 ) : (
@@ -212,11 +212,11 @@ export function EmailCaptureInline({ data }: { data: ScanResult }) {
   }
 
   return (
-    <div className="rounded-xl border border-gold/20 bg-gold/5 p-6 sm:p-8">
+    <div className="rounded-xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-6 sm:p-8">
       <div className="flex flex-col sm:flex-row items-center gap-6">
         <div className="flex-1">
           <div className="flex items-center gap-3 mb-2">
-            <Mail className="h-5 w-5 text-gold" />
+            <Mail className="h-5 w-5 text-[#2F5EA8]" />
             <h3 className="text-lg font-semibold">Email Me This Report</h3>
           </div>
           <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
@@ -233,16 +233,16 @@ export function EmailCaptureInline({ data }: { data: ScanResult }) {
               placeholder="you@practice.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="flex-1 rounded-xl border border-dark-50 bg-dark-500 py-3 px-4 text-sm placeholder:text-[var(--text-secondary)]/50 focus:border-gold/50 focus:ring-1 focus:ring-gold/30 outline-none transition-all"
+              className="flex-1 rounded-xl border border-[var(--border)] bg-[var(--bg)] py-3 px-4 text-sm placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20/50 focus:ring-1 focus:ring-[#2F5EA8]/10 outline-none transition-all"
               aria-label="Email address"
             />
             <button
               type="submit"
               disabled={status === "loading"}
-              className="flex items-center gap-2 rounded-xl bg-gold px-5 py-3 text-sm font-semibold text-dark transition-all hover:bg-gold-300 hover:shadow-lg hover:shadow-gold/20 disabled:opacity-50 whitespace-nowrap"
+              className="flex items-center gap-2 rounded-xl bg-[#2F5EA8] px-5 py-3 text-sm font-semibold text-white transition-all hover:bg-[#264D8C] hover:shadow-lg hover:shadow-[#2F5EA8]/10 disabled:opacity-50 whitespace-nowrap"
             >
               {status === "loading" ? (
-                <div className="h-4 w-4 border-2 border-dark/30 border-t-dark rounded-full animate-spin" />
+                <div className="h-4 w-4 border-2 border-[var(--border-light)] border-t-[var(--text-primary)] rounded-full animate-spin" />
               ) : (
                 <Send className="h-4 w-4" />
               )}

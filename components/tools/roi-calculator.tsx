@@ -136,9 +136,9 @@ export function RoiCalculatorTool() {
       {/* Inputs */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Left column: Practice details */}
-        <div className="rounded-2xl border border-dark-50/80 bg-dark-400/50 p-6 sm:p-8">
+        <div className="rounded-2xl border border-[var(--border-light)] bg-white p-6 sm:p-8">
           <h2 className="text-lg font-bold mb-6 flex items-center gap-2">
-            <Calculator className="h-5 w-5 text-gold" />
+            <Calculator className="h-5 w-5 text-[#2F5EA8]" />
             Your Practice Details
           </h2>
 
@@ -154,7 +154,7 @@ export function RoiCalculatorTool() {
               id="roi-specialty"
               value={specialty}
               onChange={(e) => setSpecialty(e.target.value)}
-              className="w-full rounded-xl border border-dark-50/80 bg-dark-300 px-4 py-3 text-sm focus:border-gold/50 focus:outline-none focus:ring-1 focus:ring-gold/50 transition-colors appearance-none"
+              className="w-full rounded-xl border border-[var(--border-light)] bg-white px-4 py-3 text-sm focus:border-[#2F5EA8]/20/50 focus:outline-none focus:ring-1 focus:ring-[#2F5EA8]/10 transition-colors appearance-none"
             >
               {SPECIALTY_LIST.map((s) => (
                 <option key={s} value={s}>
@@ -176,7 +176,7 @@ export function RoiCalculatorTool() {
               id="roi-state"
               value={state}
               onChange={(e) => setState(e.target.value)}
-              className="w-full rounded-xl border border-dark-50/80 bg-dark-300 px-4 py-3 text-sm focus:border-gold/50 focus:outline-none focus:ring-1 focus:ring-gold/50 transition-colors appearance-none"
+              className="w-full rounded-xl border border-[var(--border-light)] bg-white px-4 py-3 text-sm focus:border-[#2F5EA8]/20/50 focus:outline-none focus:ring-1 focus:ring-[#2F5EA8]/10 transition-colors appearance-none"
             >
               {STATE_LIST.map((s) => (
                 <option key={s.abbr} value={s.abbr}>
@@ -193,7 +193,7 @@ export function RoiCalculatorTool() {
               className="block text-sm font-medium mb-2"
             >
               Medicare Patients:{" "}
-              <span className="text-gold font-bold">{patientCount}</span>
+              <span className="text-[#2F5EA8] font-bold">{patientCount}</span>
             </label>
             <input
               id="roi-patients"
@@ -203,7 +203,7 @@ export function RoiCalculatorTool() {
               step={10}
               value={patientCount}
               onChange={(e) => setPatientCount(Number(e.target.value))}
-              className="w-full accent-gold h-2 rounded-lg appearance-none bg-dark-50/50 cursor-pointer"
+              className="w-full accent-[#2F5EA8] h-2 rounded-lg appearance-none bg-gray-100 cursor-pointer"
             />
             <div className="flex justify-between text-xs text-[var(--text-secondary)] mt-1">
               <span>50</span>
@@ -229,8 +229,8 @@ export function RoiCalculatorTool() {
                   onClick={() => handleProgramToggle(key)}
                   className={`flex items-center gap-2 rounded-xl border px-4 py-3 text-sm font-medium transition-all ${
                     programs[key]
-                      ? "border-gold/30 bg-gold/10 text-gold"
-                      : "border-dark-50/80 bg-dark-300 text-[var(--text-secondary)] hover:border-dark-50"
+                      ? "border-[#2F5EA8]/15 bg-[#2F5EA8]/[0.06] text-[#2F5EA8]"
+                      : "border-[var(--border-light)] bg-white text-[var(--text-secondary)] hover:border-[var(--border)]"
                   }`}
                 >
                   <Icon className="h-4 w-4" />
@@ -258,17 +258,17 @@ export function RoiCalculatorTool() {
                   onClick={() => setPlan(key)}
                   className={`w-full flex items-center gap-3 rounded-xl border px-4 py-3 text-sm font-medium transition-all text-left ${
                     plan === key
-                      ? "border-gold/30 bg-gold/10 text-gold"
-                      : "border-dark-50/80 bg-dark-300 text-[var(--text-secondary)] hover:border-dark-50"
+                      ? "border-[#2F5EA8]/15 bg-[#2F5EA8]/[0.06] text-[#2F5EA8]"
+                      : "border-[var(--border-light)] bg-white text-[var(--text-secondary)] hover:border-[var(--border)]"
                   }`}
                 >
                   <div
                     className={`h-4 w-4 rounded-full border-2 flex items-center justify-center ${
-                      plan === key ? "border-gold" : "border-dark-50"
+                      plan === key ? "border-[#2F5EA8]/20" : "border-[var(--border)]"
                     }`}
                   >
                     {plan === key && (
-                      <div className="h-2 w-2 rounded-full bg-gold" />
+                      <div className="h-2 w-2 rounded-full bg-[#2F5EA8]" />
                     )}
                   </div>
                   {label}
@@ -298,7 +298,7 @@ export function RoiCalculatorTool() {
                 {results ? formatCurrency(results.potentialRecovery) : "$0"}
               </p>
             </div>
-            <div className="rounded-2xl border border-dark-50/80 bg-dark-400/50 p-6">
+            <div className="rounded-2xl border border-[var(--border-light)] bg-white p-6">
               <p className="text-xs text-[var(--text-secondary)] uppercase tracking-wider mb-2">
                 NPIxray Annual Cost
               </p>
@@ -306,11 +306,11 @@ export function RoiCalculatorTool() {
                 {results ? formatCurrency(results.annualCost) : "$0"}
               </p>
             </div>
-            <div className="rounded-2xl border border-gold/20 bg-gold/5 p-6">
+            <div className="rounded-2xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-6">
               <p className="text-xs text-[var(--text-secondary)] uppercase tracking-wider mb-2">
                 Net ROI
               </p>
-              <p className="text-3xl font-bold text-gold">
+              <p className="text-3xl font-bold text-[#2F5EA8]">
                 {results ? formatCurrency(results.netRoi) : "$0"}
               </p>
             </div>
@@ -318,29 +318,29 @@ export function RoiCalculatorTool() {
 
           {/* ROI ratio callout */}
           {results && results.annualCost > 0 && (
-            <div className="rounded-2xl border border-gold/20 bg-gold/5 p-6 text-center">
+            <div className="rounded-2xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-6 text-center">
               <p className="text-sm text-[var(--text-secondary)] mb-1">
                 For every $1 spent on NPIxray, you recover
               </p>
-              <p className="text-4xl font-bold text-gold">
+              <p className="text-4xl font-bold text-[#2F5EA8]">
                 ${results.roiRatio.toFixed(1)}
               </p>
             </div>
           )}
 
           {results && results.annualCost === 0 && (
-            <div className="rounded-2xl border border-gold/20 bg-gold/5 p-6 text-center">
+            <div className="rounded-2xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-6 text-center">
               <p className="text-sm text-[var(--text-secondary)] mb-1">
                 The Free plan costs nothing
               </p>
-              <p className="text-4xl font-bold text-gold">
+              <p className="text-4xl font-bold text-[#2F5EA8]">
                 Infinite ROI
               </p>
             </div>
           )}
 
           {/* Breakdown bar chart */}
-          <div className="rounded-2xl border border-dark-50/80 bg-dark-400/50 p-6 sm:p-8">
+          <div className="rounded-2xl border border-[var(--border-light)] bg-white p-6 sm:p-8">
             <h3 className="text-sm font-semibold uppercase tracking-wider text-[var(--text-secondary)] mb-6">
               Revenue Breakdown by Source
             </h3>
@@ -392,14 +392,14 @@ export function RoiCalculatorTool() {
           </div>
 
           {/* Breakdown table */}
-          <div className="rounded-2xl border border-dark-50/80 bg-dark-400/50 p-6 sm:p-8">
+          <div className="rounded-2xl border border-[var(--border-light)] bg-white p-6 sm:p-8">
             <h3 className="text-sm font-semibold uppercase tracking-wider text-[var(--text-secondary)] mb-4">
               Detailed Breakdown
             </h3>
             {results && (
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-dark-50/50">
+                  <tr className="border-b border-[var(--border-light)]">
                     <th className="text-left text-xs text-[var(--text-secondary)] pb-2">
                       Source
                     </th>
@@ -412,7 +412,7 @@ export function RoiCalculatorTool() {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="border-b border-dark-50/30">
+                  <tr className="border-b border-[var(--border-light)]">
                     <td className="text-sm py-3">E&M Coding Optimization</td>
                     <td className="text-sm text-right text-red-400">
                       {formatCurrency(results.emGap)}
@@ -421,11 +421,11 @@ export function RoiCalculatorTool() {
                       {formatCurrency(results.emGap * CAPTURE_RATE)}
                     </td>
                   </tr>
-                  <tr className="border-b border-dark-50/30">
+                  <tr className="border-b border-[var(--border-light)]">
                     <td className="text-sm py-3">
                       CCM (99490)
                       {programs.ccm && (
-                        <span className="text-xs text-gold ml-2">
+                        <span className="text-xs text-[#2F5EA8] ml-2">
                           Already running
                         </span>
                       )}
@@ -437,11 +437,11 @@ export function RoiCalculatorTool() {
                       {formatCurrency(results.ccmRevenue * CAPTURE_RATE)}
                     </td>
                   </tr>
-                  <tr className="border-b border-dark-50/30">
+                  <tr className="border-b border-[var(--border-light)]">
                     <td className="text-sm py-3">
                       RPM (99453-99458)
                       {programs.rpm && (
-                        <span className="text-xs text-gold ml-2">
+                        <span className="text-xs text-[#2F5EA8] ml-2">
                           Already running
                         </span>
                       )}
@@ -453,11 +453,11 @@ export function RoiCalculatorTool() {
                       {formatCurrency(results.rpmRevenue * CAPTURE_RATE)}
                     </td>
                   </tr>
-                  <tr className="border-b border-dark-50/30">
+                  <tr className="border-b border-[var(--border-light)]">
                     <td className="text-sm py-3">
                       BHI (99484)
                       {programs.bhi && (
-                        <span className="text-xs text-gold ml-2">
+                        <span className="text-xs text-[#2F5EA8] ml-2">
                           Already running
                         </span>
                       )}
@@ -469,11 +469,11 @@ export function RoiCalculatorTool() {
                       {formatCurrency(results.bhiRevenue * CAPTURE_RATE)}
                     </td>
                   </tr>
-                  <tr className="border-b border-dark-50/30">
+                  <tr className="border-b border-[var(--border-light)]">
                     <td className="text-sm py-3">
                       AWV (G0438/G0439)
                       {programs.awv && (
-                        <span className="text-xs text-gold ml-2">
+                        <span className="text-xs text-[#2F5EA8] ml-2">
                           Already running
                         </span>
                       )}
@@ -500,7 +500,7 @@ export function RoiCalculatorTool() {
           </div>
 
           {/* Assumptions note */}
-          <div className="rounded-xl bg-dark-400/30 border border-dark-50/50 p-4 flex items-start gap-3">
+          <div className="rounded-xl bg-white border border-[var(--border-light)] p-4 flex items-start gap-3">
             <Info className="h-4 w-4 text-[var(--text-secondary)] flex-shrink-0 mt-0.5" />
             <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
               Estimates based on CMS national specialty benchmarks and Medicare
@@ -513,8 +513,8 @@ export function RoiCalculatorTool() {
       </div>
 
       {/* Email Capture */}
-      <div className="rounded-2xl border border-dark-50/80 bg-dark-400/50 p-8 sm:p-10 text-center max-w-2xl mx-auto">
-        <Mail className="h-8 w-8 text-gold mx-auto mb-4" />
+      <div className="rounded-2xl border border-[var(--border-light)] bg-white p-8 sm:p-10 text-center max-w-2xl mx-auto">
+        <Mail className="h-8 w-8 text-[#2F5EA8] mx-auto mb-4" />
         <h2 className="text-xl font-bold mb-2">
           Get Your Custom ROI Report
         </h2>
@@ -544,11 +544,11 @@ export function RoiCalculatorTool() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="flex-1 rounded-xl border border-dark-50/80 bg-dark-300 px-4 py-3 text-sm focus:border-gold/50 focus:outline-none focus:ring-1 focus:ring-gold/50 transition-colors placeholder:text-dark-50"
+              className="flex-1 rounded-xl border border-[var(--border-light)] bg-white px-4 py-3 text-sm focus:border-[#2F5EA8]/20/50 focus:outline-none focus:ring-1 focus:ring-[#2F5EA8]/10 transition-colors placeholder:text-[var(--text-secondary)]"
             />
             <button
               type="submit"
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-gold px-6 py-3 text-sm font-semibold text-dark hover:bg-gold-300 transition-colors whitespace-nowrap"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#2F5EA8] px-6 py-3 text-sm font-semibold text-white hover:bg-[#264D8C] transition-colors whitespace-nowrap"
             >
               <Mail className="h-4 w-4" />
               Send Report
@@ -587,12 +587,12 @@ function RevenueBar({
         <span className="text-sm">
           {label}
           {disabled && (
-            <span className="text-xs text-gold ml-2">Already running</span>
+            <span className="text-xs text-[#2F5EA8] ml-2">Already running</span>
           )}
         </span>
         <span className="text-sm font-semibold">{formatCurrency(value)}</span>
       </div>
-      <div className="h-3 rounded-full bg-dark-50/30 overflow-hidden">
+      <div className="h-3 rounded-full bg-gray-100 overflow-hidden">
         <div
           className={`h-full rounded-full ${color} transition-all duration-500`}
           style={{ width: `${value > 0 ? width : 0}%` }}

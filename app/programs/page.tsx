@@ -32,20 +32,20 @@ const PROGRAM_COLORS: Record<string, string> = {
   rpm: "text-blue-400 border-blue-400/20 bg-blue-400/10",
   awv: "text-amber-400 border-amber-400/20 bg-amber-400/10",
   bhi: "text-purple-400 border-purple-400/20 bg-purple-400/10",
-  "em-coding": "text-gold border-gold/20 bg-gold/10",
+  "em-coding": "text-[#2F5EA8] border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.06]",
 };
 
 export default function ProgramsIndexPage() {
   return (
     <>
       <section className="relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gold/[0.03] rounded-full blur-3xl" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#2F5EA8]/[0.03] rounded-full blur-3xl" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-8 pb-12 sm:pt-12 sm:pb-16">
           <Breadcrumbs items={[{ label: "Programs" }]} />
 
           <div className="flex items-center gap-3 mb-6">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-gold/20 bg-gold/10">
-              <Activity className="h-6 w-6 text-gold" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.06]">
+              <Activity className="h-6 w-6 text-[#2F5EA8]" />
             </div>
             <div>
               <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
@@ -66,26 +66,26 @@ export default function ProgramsIndexPage() {
       </section>
 
       {/* Program Cards Grid */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {PROGRAM_HUBS.map((program) => {
               const Icon = PROGRAM_ICONS[program.slug] ?? Activity;
-              const colorClasses = PROGRAM_COLORS[program.slug] ?? "text-gold border-gold/20 bg-gold/10";
+              const colorClasses = PROGRAM_COLORS[program.slug] ?? "text-[#2F5EA8] border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.06]";
               const [iconColor, borderColor, bgColor] = colorClasses.split(" ");
 
               return (
                 <Link
                   key={program.slug}
                   href={`/programs/${program.slug}`}
-                  className="group rounded-xl border border-dark-50/50 bg-dark-400/50 p-6 hover:border-gold/30 transition-all"
+                  className="group rounded-xl border border-[var(--border-light)] bg-white p-6 hover:border-[#2F5EA8]/15 transition-all"
                 >
                   <div className="flex items-center gap-3 mb-4">
                     <div className={`flex h-10 w-10 items-center justify-center rounded-lg border ${borderColor} ${bgColor}`}>
                       <Icon className={`h-5 w-5 ${iconColor}`} />
                     </div>
                     <div>
-                      <h2 className="text-lg font-bold group-hover:text-gold transition-colors">
+                      <h2 className="text-lg font-bold group-hover:text-[#2F5EA8] transition-colors">
                         {program.name}
                       </h2>
                       <p className="text-xs text-[var(--text-secondary)]">{program.fullName}</p>
@@ -100,7 +100,7 @@ export default function ProgramsIndexPage() {
                     <span className="text-xs text-[var(--text-secondary)]">
                       {program.billingCodes.length} billing code{program.billingCodes.length !== 1 ? "s" : ""}
                     </span>
-                    <span className="text-sm text-gold flex items-center gap-1 group-hover:gap-2 transition-all">
+                    <span className="text-sm text-[#2F5EA8] flex items-center gap-1 group-hover:gap-2 transition-all">
                       Explore <ArrowRight className="h-3.5 w-3.5" />
                     </span>
                   </div>
@@ -112,40 +112,40 @@ export default function ProgramsIndexPage() {
       </section>
 
       {/* Quick Links */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-bold mb-6">Quick Links</h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            <div className="rounded-lg border border-dark-50/50 p-4">
-              <h3 className="text-sm font-semibold text-gold mb-2">Billing Guides</h3>
+            <div className="rounded-lg border border-[var(--border-light)] p-4">
+              <h3 className="text-sm font-semibold text-[#2F5EA8] mb-2">Billing Guides</h3>
               <ul className="space-y-1.5">
                 {PROGRAM_HUBS.map((p) => (
                   <li key={p.slug}>
-                    <Link href={p.guideLink} className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
+                    <Link href={p.guideLink} className="text-sm text-[var(--text-secondary)] hover:text-[#2F5EA8] transition-colors">
                       {p.name} Billing Guide →
                     </Link>
                   </li>
                 ))}
               </ul>
             </div>
-            <div className="rounded-lg border border-dark-50/50 p-4">
-              <h3 className="text-sm font-semibold text-gold mb-2">Revenue Calculators</h3>
+            <div className="rounded-lg border border-[var(--border-light)] p-4">
+              <h3 className="text-sm font-semibold text-[#2F5EA8] mb-2">Revenue Calculators</h3>
               <ul className="space-y-1.5">
                 {PROGRAM_HUBS.filter((p) => p.calculatorLink).map((p) => (
                   <li key={p.slug}>
-                    <Link href={p.calculatorLink!} className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
+                    <Link href={p.calculatorLink!} className="text-sm text-[var(--text-secondary)] hover:text-[#2F5EA8] transition-colors">
                       {p.name} Calculator →
                     </Link>
                   </li>
                 ))}
               </ul>
             </div>
-            <div className="rounded-lg border border-dark-50/50 p-4">
-              <h3 className="text-sm font-semibold text-gold mb-2">Data Insights</h3>
+            <div className="rounded-lg border border-[var(--border-light)] p-4">
+              <h3 className="text-sm font-semibold text-[#2F5EA8] mb-2">Data Insights</h3>
               <ul className="space-y-1.5">
                 {PROGRAM_HUBS.filter((p) => p.insightLink).map((p) => (
                   <li key={p.slug}>
-                    <Link href={p.insightLink!} className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors">
+                    <Link href={p.insightLink!} className="text-sm text-[var(--text-secondary)] hover:text-[#2F5EA8] transition-colors">
                       {p.name} Adoption Data →
                     </Link>
                   </li>

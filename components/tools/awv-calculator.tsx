@@ -66,7 +66,7 @@ export function AwvCalculatorTool() {
   return (
     <div>
       {/* Input */}
-      <div className="rounded-2xl border border-dark-50/80 bg-dark-400/50 p-6 sm:p-8">
+      <div className="rounded-2xl border border-[var(--border-light)] bg-white p-6 sm:p-8">
         <div className="flex items-center gap-3 mb-6">
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-teal-500/10 border border-teal-500/20">
             <CalendarCheck className="h-5 w-5 text-teal-400" />
@@ -85,7 +85,7 @@ export function AwvCalculatorTool() {
               placeholder="e.g. 500"
               value={totalPatients}
               onChange={(e) => setTotalPatients(e.target.value)}
-              className="w-full rounded-lg border border-dark-50/50 bg-dark-200 px-4 py-3 text-white placeholder:text-[var(--text-secondary)]/50 focus:border-gold focus:outline-none transition-colors"
+              className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-white placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20 focus:outline-none transition-colors"
               aria-label="Total Medicare patients"
             />
           </div>
@@ -101,7 +101,7 @@ export function AwvCalculatorTool() {
                 placeholder="30"
                 value={completionRate}
                 onChange={(e) => setCompletionRate(e.target.value)}
-                className="w-full rounded-lg border border-dark-50/50 bg-dark-200 px-4 py-3 pr-8 text-white placeholder:text-[var(--text-secondary)]/50 focus:border-gold focus:outline-none transition-colors"
+                className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 pr-8 text-white placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20 focus:outline-none transition-colors"
                 aria-label="AWV completion rate percentage"
               />
               <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--text-secondary)]">%</span>
@@ -112,7 +112,7 @@ export function AwvCalculatorTool() {
         <button
           onClick={handleCalculate}
           disabled={!totalPatients || parseInt(totalPatients) < 1}
-          className="mt-6 w-full sm:w-auto bg-gold text-dark font-semibold rounded-lg px-6 py-3 hover:bg-gold-300 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+          className="mt-6 w-full sm:w-auto bg-[#2F5EA8] text-white font-semibold rounded-lg px-6 py-3 hover:bg-[#264D8C] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
         >
           Calculate AWV Revenue
         </button>
@@ -122,11 +122,11 @@ export function AwvCalculatorTool() {
       {results && (
         <div className="mt-8 space-y-6">
           {/* Total */}
-          <div className="rounded-xl border border-gold/20 bg-gold/5 p-6 text-center">
+          <div className="rounded-xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-6 text-center">
             <p className="text-sm text-[var(--text-secondary)] mb-2">
               Annual AWV Revenue at {completionRate}% Completion
             </p>
-            <p className="text-4xl font-bold font-mono text-gold">
+            <p className="text-4xl font-bold font-mono text-[#2F5EA8]">
               {formatCurrency(results.totalRevenue)}
             </p>
             <p className="text-sm text-[var(--text-secondary)] mt-2">
@@ -136,7 +136,7 @@ export function AwvCalculatorTool() {
 
           {/* Breakdown */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5">
+            <div className="rounded-xl border border-[var(--border-light)] bg-white p-5">
               <div className="flex items-center gap-2 text-sm text-[var(--text-secondary)] mb-3">
                 <DollarSign className="h-4 w-4 text-emerald-400" />
                 G0438 — Initial AWV
@@ -152,7 +152,7 @@ export function AwvCalculatorTool() {
               </p>
             </div>
 
-            <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5">
+            <div className="rounded-xl border border-[var(--border-light)] bg-white p-5">
               <div className="flex items-center gap-2 text-sm text-[var(--text-secondary)] mb-3">
                 <TrendingUp className="h-4 w-4 text-teal-400" />
                 G0439 — Subsequent AWV
@@ -170,9 +170,9 @@ export function AwvCalculatorTool() {
           </div>
 
           {/* Scenarios */}
-          <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6">
+          <div className="rounded-xl border border-[var(--border-light)] bg-white p-6">
             <div className="flex items-center gap-2 mb-4">
-              <Users className="h-4 w-4 text-gold" />
+              <Users className="h-4 w-4 text-[#2F5EA8]" />
               <h3 className="text-base font-semibold">Revenue at Different Completion Rates</h3>
             </div>
             <div className="space-y-3">
@@ -184,13 +184,13 @@ export function AwvCalculatorTool() {
                     <span className="text-sm w-20 text-[var(--text-secondary)] text-right">
                       {scenario.rate}%
                     </span>
-                    <div className="flex-1 h-6 rounded bg-dark-200 overflow-hidden">
+                    <div className="flex-1 h-6 rounded bg-white overflow-hidden">
                       <div
-                        className={`h-full rounded transition-all duration-500 ${isCurrent ? "bg-gold" : "bg-teal-500/60"}`}
+                        className={`h-full rounded transition-all duration-500 ${isCurrent ? "bg-[#2F5EA8]" : "bg-teal-500/60"}`}
                         style={{ width: `${(scenario.revenue / maxRevenue) * 100}%` }}
                       />
                     </div>
-                    <span className={`text-sm font-mono font-semibold w-28 text-right ${isCurrent ? "text-gold" : ""}`}>
+                    <span className={`text-sm font-mono font-semibold w-28 text-right ${isCurrent ? "text-[#2F5EA8]" : ""}`}>
                       {formatCurrency(scenario.revenue)}
                     </span>
                   </div>
@@ -200,8 +200,8 @@ export function AwvCalculatorTool() {
           </div>
 
           {/* Info */}
-          <div className="flex items-start gap-3 text-sm text-[var(--text-secondary)] bg-dark-300/50 rounded-lg p-4 border border-dark-50/50">
-            <Info className="h-4 w-4 flex-shrink-0 mt-0.5 text-gold" />
+          <div className="flex items-start gap-3 text-sm text-[var(--text-secondary)] bg-white/80 rounded-lg p-4 border border-[var(--border-light)]">
+            <Info className="h-4 w-4 flex-shrink-0 mt-0.5 text-[#2F5EA8]" />
             <div>
               <p className="font-medium text-[var(--text-primary)] mb-1">About AWV Billing</p>
               <p>

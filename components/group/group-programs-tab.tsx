@@ -60,7 +60,7 @@ export function GroupProgramsTab({ data }: Props) {
           return (
             <div
               key={prog.key}
-              className="rounded-2xl bg-dark-800/50 border border-dark-50/20 p-6"
+              className="rounded-2xl bg-white border border-[var(--border-light)] p-6"
             >
               <div className="flex items-center gap-3 mb-4">
                 <div
@@ -97,7 +97,7 @@ export function GroupProgramsTab({ data }: Props) {
               </div>
 
               {/* Adoption Bar */}
-              <div className="h-3 bg-dark-900/50 rounded-full overflow-hidden mb-3">
+              <div className="h-3 bg-[var(--bg)] rounded-full overflow-hidden mb-3">
                 <div
                   className="h-full rounded-full transition-all duration-700"
                   style={{
@@ -112,7 +112,7 @@ export function GroupProgramsTab({ data }: Props) {
               {prog.gap > 0 && (
                 <p className="text-xs text-[var(--text-secondary)]">
                   Practice-wide opportunity:{" "}
-                  <span className="text-gold font-mono font-medium">
+                  <span className="text-[#2F5EA8] font-mono font-medium">
                     {formatCurrency(prog.gap)}/yr
                   </span>
                 </p>
@@ -123,12 +123,12 @@ export function GroupProgramsTab({ data }: Props) {
       </div>
 
       {/* Provider Adoption Matrix */}
-      <div className="rounded-2xl bg-dark-800/50 border border-dark-50/20 p-6">
+      <div className="rounded-2xl bg-white border border-[var(--border-light)] p-6">
         <h3 className="text-lg font-semibold text-white mb-4">Provider Adoption Matrix</h3>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="text-xs text-[var(--text-secondary)] uppercase tracking-wider border-b border-dark-50/10">
+              <tr className="text-xs text-[var(--text-secondary)] uppercase tracking-wider border-b border-[var(--border-light)]">
                 <th className="text-left py-2 pr-4">Provider</th>
                 <th className="text-center px-4 py-2">CCM</th>
                 <th className="text-center px-4 py-2">RPM</th>
@@ -145,7 +145,7 @@ export function GroupProgramsTab({ data }: Props) {
                 const hasAwv = scan ? scan.billing.awvCount > 0 : false;
 
                 return (
-                  <tr key={provider.npi} className="hover:bg-dark-50/5">
+                  <tr key={provider.npi} className="hover:bg-[var(--bg)]">
                     <td className="py-2.5 pr-4">
                       <p className="text-white font-medium truncate max-w-[200px]">
                         {provider.fullName}

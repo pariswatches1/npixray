@@ -90,7 +90,7 @@ export default function PartnerScanPage() {
     return (
       <div className="min-h-[70vh] flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
-          <Loader2 className="h-8 w-8 text-gold animate-spin" />
+          <Loader2 className="h-8 w-8 text-[#2F5EA8] animate-spin" />
           <p className="text-sm text-[var(--text-secondary)]">Loading...</p>
         </div>
       </div>
@@ -113,7 +113,7 @@ export default function PartnerScanPage() {
         </div>
         <Link
           href="/"
-          className="mt-4 inline-flex items-center gap-2 rounded-lg bg-gold px-6 py-2.5 text-sm font-semibold text-dark hover:bg-gold-300 transition-colors"
+          className="mt-4 inline-flex items-center gap-2 rounded-lg bg-[#2F5EA8] px-6 py-2.5 text-sm font-semibold text-white hover:bg-[#264D8C] transition-colors"
         >
           Go to NPIxray
           <ArrowRight className="h-4 w-4" />
@@ -129,20 +129,20 @@ export default function PartnerScanPage() {
       <div
         className="absolute inset-0 opacity-[0.03]"
         style={{
-          backgroundImage: `linear-gradient(rgba(232,168,36,0.5) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(232,168,36,0.5) 1px, transparent 1px)`,
+          backgroundImage: `linear-gradient(rgba(47,94,168,0.15) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(47,94,168,0.15) 1px, transparent 1px)`,
           backgroundSize: "60px 60px",
         }}
       />
 
       {/* Radial glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-gold/[0.04] rounded-full blur-3xl" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-[#2F5EA8]/[0.04] rounded-full blur-3xl" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-20 pb-24 sm:pt-28 sm:pb-32">
         {/* Partner co-branding header */}
         <div className="flex items-center justify-center gap-3 mb-8">
           <span className="text-xl font-bold text-white tracking-tight">
-            NPI<span className="text-gold">xray</span>
+            NPI<span className="text-[#2F5EA8]">xray</span>
           </span>
           <span className="text-[var(--text-secondary)] text-lg">&times;</span>
           {partner.logo ? (
@@ -160,9 +160,9 @@ export default function PartnerScanPage() {
 
         {/* Powered by badge */}
         <div className="flex justify-center mb-8">
-          <div className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/5 px-4 py-1.5">
-            <div className="h-1.5 w-1.5 rounded-full bg-gold animate-pulse" />
-            <span className="text-xs font-medium text-gold">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] px-4 py-1.5">
+            <div className="h-1.5 w-1.5 rounded-full bg-[#2F5EA8] animate-pulse" />
+            <span className="text-xs font-medium text-[#2F5EA8]">
               Powered by NPIxray for {partner.name}
             </span>
           </div>
@@ -171,7 +171,7 @@ export default function PartnerScanPage() {
         {/* Headline */}
         <h1 className="text-center text-4xl sm:text-5xl font-bold tracking-tight text-balance max-w-3xl mx-auto leading-[1.1]">
           X-Ray Your{" "}
-          <span className="text-gold">Practice Revenue</span>
+          <span className="text-[#2F5EA8]">Practice Revenue</span>
         </h1>
 
         <p className="mt-6 text-center text-lg sm:text-xl text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed">
@@ -181,7 +181,7 @@ export default function PartnerScanPage() {
 
         {/* Scanner Card */}
         <div className="mt-12 mx-auto max-w-2xl">
-          <div className="rounded-2xl border border-dark-50/80 bg-dark-300/50 backdrop-blur-sm p-6 sm:p-8 glow-gold">
+          <div className="rounded-2xl border border-[var(--border-light)] bg-white/80 backdrop-blur-sm p-6 sm:p-8 glow-blue">
             <form onSubmit={handleScan}>
               {/* NPI Input */}
               <div className="relative">
@@ -198,7 +198,7 @@ export default function PartnerScanPage() {
                     const val = e.target.value.replace(/\D/g, "");
                     if (val.length <= 10) setNpi(val);
                   }}
-                  className="w-full rounded-xl border border-dark-50 bg-dark-500 py-4 pl-12 pr-4 text-lg font-mono tracking-wider placeholder:text-[var(--text-secondary)]/50 focus:border-gold/50 focus:ring-1 focus:ring-gold/30 outline-none transition-all"
+                  className="w-full rounded-xl border border-[var(--border)] bg-[var(--bg)] py-4 pl-12 pr-4 text-lg font-mono tracking-wider placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20/50 focus:ring-1 focus:ring-[#2F5EA8]/10 outline-none transition-all"
                   aria-label="NPI number"
                 />
                 {npi.length > 0 && (
@@ -220,7 +220,7 @@ export default function PartnerScanPage() {
               <button
                 type="submit"
                 disabled={!isValid || isScanning}
-                className="mt-4 w-full flex items-center justify-center gap-2 rounded-xl bg-gold py-4 text-base font-semibold text-dark transition-all hover:bg-gold-300 hover:shadow-lg hover:shadow-gold/20 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-gold disabled:hover:shadow-none"
+                className="mt-4 w-full flex items-center justify-center gap-2 rounded-xl bg-[#2F5EA8] py-4 text-base font-semibold text-white transition-all hover:bg-[#264D8C] hover:shadow-lg hover:shadow-[#2F5EA8]/10 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-[#264D8C] disabled:hover:shadow-none"
               >
                 {isScanning ? (
                   <>
@@ -240,7 +240,7 @@ export default function PartnerScanPage() {
             {/* Helper text */}
             <p className="mt-4 text-center text-xs text-[var(--text-secondary)]">
               Don&apos;t know your NPI?{" "}
-              <Link href="/" className="text-gold hover:underline">
+              <Link href="/" className="text-[#2F5EA8] hover:underline">
                 Search by provider name
               </Link>
             </p>
@@ -256,15 +256,15 @@ export default function PartnerScanPage() {
         {/* Trust indicators */}
         <div className="mt-12 flex flex-wrap justify-center gap-x-8 gap-y-3 text-xs text-[var(--text-secondary)]">
           <div className="flex items-center gap-2">
-            <Shield className="h-3.5 w-3.5 text-gold/60" />
+            <Shield className="h-3.5 w-3.5 text-[#4FA3D1]" />
             No login required
           </div>
           <div className="flex items-center gap-2">
-            <Activity className="h-3.5 w-3.5 text-gold/60" />
+            <Activity className="h-3.5 w-3.5 text-[#4FA3D1]" />
             1.2M+ providers indexed
           </div>
           <div className="flex items-center gap-2">
-            <FileText className="h-3.5 w-3.5 text-gold/60" />
+            <FileText className="h-3.5 w-3.5 text-[#4FA3D1]" />
             CMS public data only
           </div>
         </div>
@@ -273,7 +273,7 @@ export default function PartnerScanPage() {
         <div className="mt-20 mx-auto max-w-3xl">
           <h2 className="text-center text-2xl sm:text-3xl font-bold tracking-tight mb-8">
             What Your Scan{" "}
-            <span className="text-gold">Reveals</span>
+            <span className="text-[#2F5EA8]">Reveals</span>
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {[
@@ -296,7 +296,7 @@ export default function PartnerScanPage() {
             ].map((item) => (
               <div
                 key={item.title}
-                className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5 hover:border-gold/20 transition-colors"
+                className="rounded-xl border border-[var(--border-light)] bg-white p-5 hover:border-[#2F5EA8]/10 transition-colors"
               >
                 <h3 className="text-sm font-semibold mb-1.5">{item.title}</h3>
                 <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
@@ -311,7 +311,7 @@ export default function PartnerScanPage() {
         <div className="mt-16 text-center">
           <p className="text-xs text-[var(--text-secondary)]">
             Revenue intelligence provided by{" "}
-            <Link href="/" className="text-gold hover:underline">
+            <Link href="/" className="text-[#2F5EA8] hover:underline">
               NPIxray
             </Link>
             {partner.website && (
@@ -322,7 +322,7 @@ export default function PartnerScanPage() {
                   href={partner.website}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gold hover:underline"
+                  className="text-[#2F5EA8] hover:underline"
                 >
                   {partner.name}
                 </a>

@@ -66,11 +66,11 @@ export function UpgradeGate({
             compact ? "max-w-md px-4" : "max-w-lg px-6"
           }`}
         >
-          <div className="rounded-2xl border border-gold/30 bg-dark-500/95 backdrop-blur-sm p-6 sm:p-8 shadow-2xl shadow-gold/5">
+          <div className="rounded-2xl border border-[#2F5EA8]/15 bg-white/95 backdrop-blur-sm p-6 sm:p-8 shadow-2xl shadow-[#2F5EA8]/[0.04]">
             {/* Lock icon */}
             <div className="flex justify-center mb-4">
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gold/10 border border-gold/20">
-                <Lock className="h-7 w-7 text-gold" />
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#2F5EA8]/[0.06] border border-[#2F5EA8]/10">
+                <Lock className="h-7 w-7 text-[#2F5EA8]" />
               </div>
             </div>
 
@@ -90,7 +90,7 @@ export function UpgradeGate({
                     key={bullet}
                     className="flex items-start gap-2.5 text-sm text-[var(--text-secondary)]"
                   >
-                    <Zap className="h-4 w-4 text-gold flex-shrink-0 mt-0.5" />
+                    <Zap className="h-4 w-4 text-[#2F5EA8] flex-shrink-0 mt-0.5" />
                     <span>{bullet}</span>
                   </li>
                 ))}
@@ -108,7 +108,7 @@ export function UpgradeGate({
                     label: feature,
                   });
                 }}
-                className="flex items-center justify-center gap-2 rounded-xl bg-gold py-3.5 text-sm font-semibold text-dark hover:bg-gold-300 hover:shadow-lg hover:shadow-gold/20 transition-all w-full"
+                className="flex items-center justify-center gap-2 rounded-xl bg-[#2F5EA8] py-3.5 text-sm font-semibold text-white hover:bg-[#264D8C] hover:shadow-lg hover:shadow-[#2F5EA8]/10 transition-all w-full"
               >
                 <Zap className="h-4 w-4" />
                 Upgrade to Intelligence — $99/mo
@@ -120,7 +120,7 @@ export function UpgradeGate({
                   Already subscribed?{" "}
                   <Link
                     href="/login"
-                    className="text-gold hover:underline font-medium"
+                    className="text-[#2F5EA8] hover:underline font-medium"
                   >
                     Sign in
                   </Link>
@@ -167,10 +167,10 @@ export function UpgradeInlineCTA({
   if (plan === "intelligence" || plan === "care") return null;
 
   return (
-    <div className="rounded-2xl border border-gold/20 bg-gold/5 p-6 my-6">
+    <div className="rounded-2xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-6 my-6">
       <div className="flex items-start gap-4">
-        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gold/10 border border-gold/20 flex-shrink-0">
-          <Lock className="h-6 w-6 text-gold" />
+        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#2F5EA8]/[0.06] border border-[#2F5EA8]/10 flex-shrink-0">
+          <Lock className="h-6 w-6 text-[#2F5EA8]" />
         </div>
         <div className="flex-1 min-w-0">
           <h3 className="font-bold mb-1">
@@ -190,7 +190,7 @@ export function UpgradeInlineCTA({
                 label: feature,
               });
             }}
-            className="inline-flex items-center gap-2 rounded-lg bg-gold px-5 py-2.5 text-sm font-semibold text-dark hover:bg-gold-300 transition-all"
+            className="inline-flex items-center gap-2 rounded-lg bg-[#2F5EA8] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#264D8C] transition-all"
           >
             <Zap className="h-4 w-4" />
             Upgrade to Intelligence — $99/mo

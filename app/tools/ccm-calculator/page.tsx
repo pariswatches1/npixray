@@ -61,7 +61,7 @@ export default function CcmCalculatorPage() {
         <div className="max-w-4xl">
           <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
             CCM Revenue{" "}
-            <span className="text-gold">Calculator</span>
+            <span className="text-[#2F5EA8]">Calculator</span>
           </h1>
           <p className="text-lg text-[var(--text-secondary)] mb-10 max-w-2xl">
             Estimate your Chronic Care Management revenue potential. Calculate

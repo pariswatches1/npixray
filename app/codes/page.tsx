@@ -38,20 +38,20 @@ export default function CodesIndexPage() {
   return (
     <>
       <section className="relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gold/[0.03] rounded-full blur-3xl" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#2F5EA8]/[0.03] rounded-full blur-3xl" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-8 pb-12 sm:pt-12 sm:pb-16">
           <Breadcrumbs items={[{ label: "Codes", href: "/codes" }]} />
 
           <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/5 px-4 py-1.5 mb-8">
-              <BookOpen className="h-3.5 w-3.5 text-gold" />
-              <span className="text-xs font-medium text-gold">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] px-4 py-1.5 mb-8">
+              <BookOpen className="h-3.5 w-3.5 text-[#2F5EA8]" />
+              <span className="text-xs font-medium text-[#2F5EA8]">
                 Top 200 Codes
               </span>
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold tracking-tight max-w-3xl mx-auto leading-[1.1]">
               Medicare Billing Code{" "}
-              <span className="text-gold">Encyclopedia</span>
+              <span className="text-[#2F5EA8]">Encyclopedia</span>
             </h1>
             <p className="mt-6 text-lg text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed">
               Explore the top 200 HCPCS/CPT codes billed to Medicare, with real
@@ -62,13 +62,13 @@ export default function CodesIndexPage() {
           {/* Summary Stats */}
           <div className="grid grid-cols-3 gap-6 max-w-lg mx-auto mb-12">
             <div className="text-center">
-              <p className="text-2xl font-bold font-mono text-gold">200</p>
+              <p className="text-2xl font-bold font-mono text-[#2F5EA8]">200</p>
               <p className="text-[10px] text-[var(--text-secondary)] uppercase tracking-wider mt-1">
                 Codes
               </p>
             </div>
             <div className="text-center">
-              <p className="text-2xl font-bold font-mono text-gold">
+              <p className="text-2xl font-bold font-mono text-[#2F5EA8]">
                 {formatNumber(totalServices)}
               </p>
               <p className="text-[10px] text-[var(--text-secondary)] uppercase tracking-wider mt-1">
@@ -76,7 +76,7 @@ export default function CodesIndexPage() {
               </p>
             </div>
             <div className="text-center">
-              <p className="text-2xl font-bold font-mono text-gold">
+              <p className="text-2xl font-bold font-mono text-[#2F5EA8]">
                 1.175M+
               </p>
               <p className="text-[10px] text-[var(--text-secondary)] uppercase tracking-wider mt-1">
@@ -90,10 +90,10 @@ export default function CodesIndexPage() {
       {/* Codes Table */}
       <section className="pb-16 sm:pb-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="overflow-x-auto rounded-xl border border-dark-50/50">
+          <div className="overflow-x-auto rounded-xl border border-[var(--border-light)]">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-dark-50/50 bg-dark-300">
+                <tr className="border-b border-[var(--border-light)] bg-white">
                   <th className="text-left px-4 py-3 font-medium text-[var(--text-secondary)]">
                     <div className="flex items-center gap-1.5">
                       <Hash className="h-3.5 w-3.5" />
@@ -124,14 +124,14 @@ export default function CodesIndexPage() {
                 {codes.map((code, i) => (
                   <tr
                     key={code.hcpcs_code}
-                    className={`border-b border-dark-50/30 hover:bg-dark-200/50 transition-colors ${
-                      i % 2 === 0 ? "bg-dark-400/30" : ""
+                    className={`border-b border-[var(--border-light)] hover:bg-white transition-colors ${
+                      i % 2 === 0 ? "bg-white" : ""
                     }`}
                   >
                     <td className="px-4 py-3">
                       <Link
                         href={`/codes/${code.hcpcs_code}`}
-                        className="text-gold hover:text-gold-300 font-mono font-semibold transition-colors"
+                        className="text-[#2F5EA8] hover:text-[#264D8C] font-mono font-semibold transition-colors"
                       >
                         {code.hcpcs_code}
                       </Link>
@@ -142,7 +142,7 @@ export default function CodesIndexPage() {
                     <td className="px-4 py-3 text-right tabular-nums hidden sm:table-cell">
                       {formatNumber(code.totalServices)}
                     </td>
-                    <td className="px-4 py-3 text-right tabular-nums font-medium text-gold">
+                    <td className="px-4 py-3 text-right tabular-nums font-medium text-[#2F5EA8]">
                       {formatCurrency(code.avgPayment)}
                     </td>
                   </tr>

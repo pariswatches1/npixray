@@ -21,13 +21,13 @@ export default function MethodologyPage() {
   return (
     <>
       <section className="relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gold/[0.03] rounded-full blur-3xl" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#2F5EA8]/[0.03] rounded-full blur-3xl" />
         <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 pt-8 pb-12 sm:pt-12 sm:pb-16">
           <Breadcrumbs items={[{ label: "Methodology" }]} />
 
           <div className="flex items-center gap-3 mb-6">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-gold/20 bg-gold/10">
-              <Shield className="h-6 w-6 text-gold" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.06]">
+              <Shield className="h-6 w-6 text-[#2F5EA8]" />
             </div>
             <div>
               <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
@@ -48,15 +48,15 @@ export default function MethodologyPage() {
       </section>
 
       {/* Data Sources */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-2 mb-6">
-            <Database className="h-5 w-5 text-gold" />
+            <Database className="h-5 w-5 text-[#2F5EA8]" />
             <h2 className="text-2xl font-bold">Data Sources</h2>
           </div>
 
           <div className="space-y-6 text-[var(--text-secondary)] leading-relaxed">
-            <div className="rounded-xl border border-dark-50/50 bg-dark-400/50 p-6">
+            <div className="rounded-xl border border-[var(--border-light)] bg-white p-6">
               <h3 className="text-white font-semibold mb-2">
                 CMS Medicare Physician &amp; Other Practitioners Dataset
               </h3>
@@ -70,11 +70,11 @@ export default function MethodologyPage() {
                 <li>10M+ provider-service records</li>
                 <li>Every CPT/HCPCS code billed to Medicare with frequency and payment amounts</li>
                 <li>Provider specialty, geographic location, and patient demographics</li>
-                <li>Publicly available at <span className="text-gold">data.cms.gov</span></li>
+                <li>Publicly available at <span className="text-[#2F5EA8]">data.cms.gov</span></li>
               </ul>
             </div>
 
-            <div className="rounded-xl border border-dark-50/50 bg-dark-400/50 p-6">
+            <div className="rounded-xl border border-[var(--border-light)] bg-white p-6">
               <h3 className="text-white font-semibold mb-2">
                 NPPES NPI Registry
               </h3>
@@ -85,7 +85,7 @@ export default function MethodologyPage() {
               </p>
             </div>
 
-            <div className="rounded-xl border border-dark-50/50 bg-dark-400/50 p-6">
+            <div className="rounded-xl border border-[var(--border-light)] bg-white p-6">
               <h3 className="text-white font-semibold mb-2">
                 Medicare Fee Schedule
               </h3>
@@ -100,10 +100,10 @@ export default function MethodologyPage() {
       </section>
 
       {/* Revenue Score */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-2 mb-6">
-            <BarChart3 className="h-5 w-5 text-gold" />
+            <BarChart3 className="h-5 w-5 text-[#2F5EA8]" />
             <h2 className="text-2xl font-bold">Revenue Score Methodology</h2>
           </div>
 
@@ -115,7 +115,7 @@ export default function MethodologyPage() {
             </p>
 
             <div className="grid gap-4 sm:grid-cols-2">
-              <div className="rounded-lg border border-dark-50/50 p-4">
+              <div className="rounded-lg border border-[var(--border-light)] p-4">
                 <h4 className="text-white font-semibold text-sm mb-1">E&M Coding Efficiency (25%)</h4>
                 <p className="text-xs">
                   Compares the provider&apos;s E&M code distribution (99213/99214/99215) against
@@ -123,7 +123,7 @@ export default function MethodologyPage() {
                   specialty averages score higher.
                 </p>
               </div>
-              <div className="rounded-lg border border-dark-50/50 p-4">
+              <div className="rounded-lg border border-[var(--border-light)] p-4">
                 <h4 className="text-white font-semibold text-sm mb-1">CCM/RPM Adoption (25%)</h4>
                 <p className="text-xs">
                   Measures whether the provider bills Chronic Care Management (99490) and
@@ -131,14 +131,14 @@ export default function MethodologyPage() {
                   billing both at volumes above specialty median earns full marks.
                 </p>
               </div>
-              <div className="rounded-lg border border-dark-50/50 p-4">
+              <div className="rounded-lg border border-[var(--border-light)] p-4">
                 <h4 className="text-white font-semibold text-sm mb-1">BHI Adoption (25%)</h4>
                 <p className="text-xs">
                   Checks for Behavioral Health Integration (99484) billing. Given the low national
                   adoption rate, any BHI billing represents significant revenue capture.
                 </p>
               </div>
-              <div className="rounded-lg border border-dark-50/50 p-4">
+              <div className="rounded-lg border border-[var(--border-light)] p-4">
                 <h4 className="text-white font-semibold text-sm mb-1">AWV Completion (25%)</h4>
                 <p className="text-xs">
                   Evaluates Annual Wellness Visit (G0438/G0439) volume relative to the provider&apos;s
@@ -151,10 +151,10 @@ export default function MethodologyPage() {
       </section>
 
       {/* Revenue Gap Estimation */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-2 mb-6">
-            <Target className="h-5 w-5 text-gold" />
+            <Target className="h-5 w-5 text-[#2F5EA8]" />
             <h2 className="text-2xl font-bold">Revenue Gap Estimation</h2>
           </div>
 
@@ -164,8 +164,8 @@ export default function MethodologyPage() {
               straightforward gap analysis between observed adoption rates and specialty benchmarks:
             </p>
 
-            <div className="rounded-xl border border-dark-50/50 bg-dark-400/50 p-6 font-mono text-xs">
-              <div className="text-gold mb-2">{/* Revenue Gap Formula */}{"// Revenue Gap Formula"}</div>
+            <div className="rounded-xl border border-[var(--border-light)] bg-white p-6 font-mono text-xs">
+              <div className="text-[#2F5EA8] mb-2">{/* Revenue Gap Formula */}{"// Revenue Gap Formula"}</div>
               <div>adoption_gap = national_benchmark_rate - local_adoption_rate</div>
               <div>additional_providers = adoption_gap × total_providers</div>
               <div>estimated_revenue = additional_providers × payment_rate × patients_per_provider × 12</div>
@@ -187,10 +187,10 @@ export default function MethodologyPage() {
       </section>
 
       {/* Benchmarks */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-2 mb-6">
-            <Calculator className="h-5 w-5 text-gold" />
+            <Calculator className="h-5 w-5 text-[#2F5EA8]" />
             <h2 className="text-2xl font-bold">Specialty Benchmarks</h2>
           </div>
 
@@ -217,10 +217,10 @@ export default function MethodologyPage() {
       </section>
 
       {/* Confidence Levels */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-2 mb-6">
-            <AlertTriangle className="h-5 w-5 text-gold" />
+            <AlertTriangle className="h-5 w-5 text-[#2F5EA8]" />
             <h2 className="text-2xl font-bold">Confidence Levels</h2>
           </div>
 
@@ -267,7 +267,7 @@ export default function MethodologyPage() {
       </section>
 
       {/* State Rankings */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-bold mb-6">State &amp; Neighbor Comparisons</h2>
 
@@ -277,11 +277,11 @@ export default function MethodologyPage() {
               are determined by average Medicare payment per provider, calculated as:
             </p>
 
-            <div className="rounded-xl border border-dark-50/50 bg-dark-400/50 p-6 font-mono text-xs">
-              <div className="text-gold mb-2">{"// National Rank"}</div>
+            <div className="rounded-xl border border-[var(--border-light)] bg-white p-6 font-mono text-xs">
+              <div className="text-[#2F5EA8] mb-2">{"// National Rank"}</div>
               <div>state_avg_payment = SUM(all_provider_payments) / COUNT(providers_in_state)</div>
               <div>national_rank = RANK(state_avg_payment DESC) among all 50 states + DC</div>
-              <div className="mt-2 text-gold">{"// Delta vs National Average"}</div>
+              <div className="mt-2 text-[#2F5EA8]">{"// Delta vs National Average"}</div>
               <div>national_weighted_avg = SUM(state_avg × state_providers) / SUM(state_providers)</div>
               <div>delta_pct = ((state_avg - national_weighted_avg) / national_weighted_avg) × 100</div>
             </div>
@@ -296,7 +296,7 @@ export default function MethodologyPage() {
       </section>
 
       {/* Limitations */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-bold mb-6">Limitations &amp; Disclaimers</h2>
 

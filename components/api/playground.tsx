@@ -59,9 +59,9 @@ export function ApiPlayground() {
   };
 
   return (
-    <div className="rounded-2xl border border-dark-50/80 bg-dark-300/50 overflow-hidden">
+    <div className="rounded-2xl border border-[var(--border-light)] bg-white/80 overflow-hidden">
       {/* Controls */}
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 p-4 border-b border-dark-50/50">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 p-4 border-b border-[var(--border-light)]">
         <select
           value={selectedIdx}
           onChange={(e) => {
@@ -69,7 +69,7 @@ export function ApiPlayground() {
             setSelectedIdx(idx);
             setInputValue(ENDPOINTS[idx].placeholder);
           }}
-          className="rounded-lg border border-dark-50 bg-dark-500 py-2.5 px-3 text-sm focus:border-gold/50 focus:ring-1 focus:ring-gold/30 outline-none"
+          className="rounded-lg border border-[var(--border)] bg-[var(--bg)] py-2.5 px-3 text-sm focus:border-[#2F5EA8]/20/50 focus:ring-1 focus:ring-[#2F5EA8]/10 outline-none"
         >
           {ENDPOINTS.map((ep, i) => (
             <option key={ep.path} value={i}>{ep.label}</option>
@@ -91,14 +91,14 @@ export function ApiPlayground() {
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             placeholder={endpoint.placeholder}
-            className="rounded-lg border border-dark-50 bg-dark-500 py-2.5 px-3 text-sm font-mono w-full sm:w-48 focus:border-gold/50 focus:ring-1 focus:ring-gold/30 outline-none"
+            className="rounded-lg border border-[var(--border)] bg-[var(--bg)] py-2.5 px-3 text-sm font-mono w-full sm:w-48 focus:border-[#2F5EA8]/20/50 focus:ring-1 focus:ring-[#2F5EA8]/10 outline-none"
           />
         )}
 
         <button
           onClick={handleRun}
           disabled={loading}
-          className="flex items-center justify-center gap-2 rounded-lg bg-gold px-4 py-2.5 text-sm font-semibold text-dark hover:bg-gold-300 transition-all disabled:opacity-50 shrink-0"
+          className="flex items-center justify-center gap-2 rounded-lg bg-[#2F5EA8] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#264D8C] transition-all disabled:opacity-50 shrink-0"
         >
           {loading ? (
             <Loader2 className="h-4 w-4 animate-spin" />
@@ -113,7 +113,7 @@ export function ApiPlayground() {
       <div className="relative">
         {/* Status bar */}
         {statusCode !== null && (
-          <div className="flex items-center gap-4 px-4 py-2 border-b border-dark-50/50 bg-dark-500/30">
+          <div className="flex items-center gap-4 px-4 py-2 border-b border-[var(--border-light)] bg-[var(--bg)]/30">
             <span className={`text-xs font-mono font-bold ${
               statusCode >= 200 && statusCode < 300 ? "text-emerald-400" :
               statusCode >= 400 ? "text-red-400" : "text-yellow-400"

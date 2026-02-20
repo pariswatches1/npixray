@@ -74,7 +74,7 @@ export default function WidgetsPage() {
     <>
       {/* Hero */}
       <section className="relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gold/[0.03] rounded-full blur-3xl" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#2F5EA8]/[0.03] rounded-full blur-3xl" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-8 pb-12 sm:pt-12 sm:pb-16">
           <Breadcrumbs
             items={[
@@ -84,13 +84,13 @@ export default function WidgetsPage() {
           />
 
           <div className="flex items-center gap-3 mb-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-gold/20 bg-gold/10">
-              <Code2 className="h-6 w-6 text-gold" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.06]">
+              <Code2 className="h-6 w-6 text-[#2F5EA8]" />
             </div>
             <div>
               <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
                 Embeddable Medicare Data{" "}
-                <span className="text-gold">Widgets</span>
+                <span className="text-[#2F5EA8]">Widgets</span>
               </h1>
               <p className="text-sm text-[var(--text-secondary)] mt-1">
                 Free widgets for your website &mdash; just copy and paste
@@ -101,7 +101,7 @@ export default function WidgetsPage() {
       </section>
 
       {/* Widget Cards */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="space-y-8">
             {widgets.map((widget) => {
@@ -109,7 +109,7 @@ export default function WidgetsPage() {
               return (
                 <div
                   key={widget.path}
-                  className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6 sm:p-8"
+                  className="rounded-xl border border-[var(--border-light)] bg-white p-6 sm:p-8"
                 >
                   <div className="flex items-center gap-3 mb-4">
                     <div
@@ -128,12 +128,12 @@ export default function WidgetsPage() {
                     <p className="text-xs text-[var(--text-secondary)] uppercase tracking-wider mb-2">
                       Preview
                     </p>
-                    <div className="rounded-lg border border-dark-50/50 bg-dark-300 p-4 min-h-[200px] flex items-center justify-center">
+                    <div className="rounded-lg border border-[var(--border-light)] bg-white p-4 min-h-[200px] flex items-center justify-center">
                       <div className="text-center">
                         <widget.icon className="h-8 w-8 text-[var(--text-secondary)] mx-auto mb-2" />
                         <p className="text-sm text-[var(--text-secondary)]">
                           Widget preview loads at{" "}
-                          <code className="text-gold text-xs">
+                          <code className="text-[#2F5EA8] text-xs">
                             npixray.com{widget.path}
                           </code>
                         </p>
@@ -149,7 +149,7 @@ export default function WidgetsPage() {
                       </p>
                       <CopyButton text={embedCode} />
                     </div>
-                    <pre className="rounded-lg border border-dark-50/50 bg-[#0a0908] p-4 overflow-x-auto text-xs text-[var(--text-secondary)] font-mono leading-relaxed">
+                    <pre className="rounded-lg border border-[var(--border-light)] bg-[#0a0908] p-4 overflow-x-auto text-xs text-[var(--text-secondary)] font-mono leading-relaxed">
                       <code>{embedCode}</code>
                     </pre>
                   </div>
@@ -161,10 +161,10 @@ export default function WidgetsPage() {
       </section>
 
       {/* Usage Notes */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-xl font-bold mb-6">
-            Usage <span className="text-gold">Notes</span>
+            Usage <span className="text-[#2F5EA8]">Notes</span>
           </h2>
           <div className="space-y-4 max-w-2xl text-sm text-[var(--text-secondary)] leading-relaxed">
             <p>
@@ -173,12 +173,12 @@ export default function WidgetsPage() {
             </p>
             <p>
               You can customize the height by changing the{" "}
-              <code className="text-gold">height</code> attribute in the iframe
+              <code className="text-[#2F5EA8]">height</code> attribute in the iframe
               code. Width is set to 100% by default and will fill its container.
             </p>
             <p>
               Widgets include the{" "}
-              <code className="text-gold">?embed=true</code> parameter which
+              <code className="text-[#2F5EA8]">?embed=true</code> parameter which
               hides the site header and footer for a cleaner embedded
               experience.
             </p>

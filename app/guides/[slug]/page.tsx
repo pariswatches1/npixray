@@ -650,7 +650,7 @@ export default async function GuidePage({
       <nav className="mb-8" aria-label="Breadcrumb">
         <Link
           href="/guides"
-          className="inline-flex items-center gap-1.5 text-sm text-[var(--text-secondary)] hover:text-gold transition-colors"
+          className="inline-flex items-center gap-1.5 text-sm text-[var(--text-secondary)] hover:text-[#2F5EA8] transition-colors"
         >
           <ArrowLeft className="h-3.5 w-3.5" />
           All Guides
@@ -678,10 +678,10 @@ export default async function GuidePage({
           {guide.title}
         </h1>
 
-        <div className="flex items-center gap-3 rounded-xl border border-gold/20 bg-gold/5 px-4 py-3">
-          <DollarSign className="h-5 w-5 text-gold flex-shrink-0" />
+        <div className="flex items-center gap-3 rounded-xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] px-4 py-3">
+          <DollarSign className="h-5 w-5 text-[#2F5EA8] flex-shrink-0" />
           <div>
-            <p className="text-sm font-semibold text-gold">
+            <p className="text-sm font-semibold text-[#2F5EA8]">
               Revenue Opportunity: {guide.revenue}
             </p>
             <p className="text-xs text-[var(--text-secondary)]">
@@ -704,8 +704,8 @@ export default async function GuidePage({
       </div>
 
       {/* Table of Contents */}
-      <nav className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6 mb-10">
-        <h2 className="text-sm font-semibold uppercase tracking-wider text-gold mb-4 flex items-center gap-2">
+      <nav className="rounded-xl border border-[var(--border-light)] bg-white p-6 mb-10">
+        <h2 className="text-sm font-semibold uppercase tracking-wider text-[#2F5EA8] mb-4 flex items-center gap-2">
           <BookOpen className="h-4 w-4" />
           In This Guide
         </h2>
@@ -714,9 +714,9 @@ export default async function GuidePage({
             <li key={i}>
               <a
                 href={`#section-${i}`}
-                className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors flex items-center gap-2"
+                className="text-sm text-[var(--text-secondary)] hover:text-[#2F5EA8] transition-colors flex items-center gap-2"
               >
-                <span className="text-gold/50 font-mono text-xs w-5">
+                <span className="text-[#4FA3D1] font-mono text-xs w-5">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 {section.heading}
@@ -747,7 +747,7 @@ export default async function GuidePage({
               <ul className="space-y-3 mb-4">
                 {section.listItems.map((item, j) => (
                   <li key={j} className="flex gap-3 text-sm">
-                    <CheckCircle2 className="h-4 w-4 text-gold flex-shrink-0 mt-0.5" />
+                    <CheckCircle2 className="h-4 w-4 text-[#2F5EA8] flex-shrink-0 mt-0.5" />
                     <span className="text-[var(--text-secondary)] leading-relaxed">
                       {item}
                     </span>
@@ -757,9 +757,9 @@ export default async function GuidePage({
             )}
 
             {section.tip && (
-              <div className="rounded-xl border border-gold/20 bg-gold/5 p-4 my-4">
+              <div className="rounded-xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-4 my-4">
                 <p className="text-sm leading-relaxed">
-                  <span className="font-semibold text-gold">💡 Pro Tip: </span>
+                  <span className="font-semibold text-[#2F5EA8]">💡 Pro Tip: </span>
                   <span className="text-[var(--text-secondary)]">
                     {section.tip}
                   </span>
@@ -785,15 +785,15 @@ export default async function GuidePage({
       </div>
 
       {/* Key Takeaways */}
-      <div className="mt-12 rounded-xl border border-gold/20 bg-gold/5 p-6 sm:p-8">
+      <div className="mt-12 rounded-xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-6 sm:p-8">
         <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
-          <CheckCircle2 className="h-5 w-5 text-gold" />
+          <CheckCircle2 className="h-5 w-5 text-[#2F5EA8]" />
           Key Takeaways
         </h2>
         <ul className="space-y-3">
           {guide.keyTakeaways.map((takeaway, i) => (
             <li key={i} className="flex gap-3 text-sm">
-              <span className="text-gold font-mono font-bold mt-0.5 flex-shrink-0">
+              <span className="text-[#2F5EA8] font-mono font-bold mt-0.5 flex-shrink-0">
                 {i + 1}.
               </span>
               <span className="text-[var(--text-secondary)] leading-relaxed">
@@ -805,8 +805,8 @@ export default async function GuidePage({
       </div>
 
       {/* CTA */}
-      <div className="mt-12 rounded-2xl border border-dark-50/80 bg-dark-400/50 p-8 sm:p-10 text-center">
-        <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-gold/10 border border-gold/20 mx-auto mb-5">
+      <div className="mt-12 rounded-2xl border border-[var(--border-light)] bg-white p-8 sm:p-10 text-center">
+        <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-[#2F5EA8]/[0.06] border border-[#2F5EA8]/10 mx-auto mb-5">
           <Icon className={`h-7 w-7 ${guide.color}`} />
         </div>
         <h3 className="text-xl font-bold mb-3">
@@ -819,7 +819,7 @@ export default async function GuidePage({
         </p>
         <Link
           href="/"
-          className="inline-flex items-center gap-2 rounded-xl bg-gold px-8 py-3.5 text-sm font-semibold text-dark transition-all hover:bg-gold-300 hover:shadow-lg hover:shadow-gold/20"
+          className="inline-flex items-center gap-2 rounded-xl bg-[#2F5EA8] px-8 py-3.5 text-sm font-semibold text-white transition-all hover:bg-[#264D8C] hover:shadow-lg hover:shadow-[#2F5EA8]/10"
         >
           <Zap className="h-4 w-4" />
           Scan Your NPI — Free

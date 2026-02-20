@@ -978,7 +978,7 @@ export default async function SolutionPage({
         <section className="max-w-4xl mb-16">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.1] mb-6">
             {solution.headline.split(" ").slice(0, -1).join(" ")}{" "}
-            <span className="text-gold">
+            <span className="text-[#2F5EA8]">
               {solution.headline.split(" ").slice(-1)}
             </span>
           </h1>
@@ -996,7 +996,7 @@ export default async function SolutionPage({
             {solution.painPoints.map((pain, i) => (
               <div
                 key={i}
-                className="rounded-2xl border border-dark-50/80 bg-dark-400/50 p-6"
+                className="rounded-2xl border border-[var(--border-light)] bg-white p-6"
               >
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-red-500/10 border border-red-500/20 mb-4">
                   <pain.icon className="h-5 w-5 text-red-400" />
@@ -1013,16 +1013,16 @@ export default async function SolutionPage({
         {/* How NPIxray Helps */}
         <section className="mb-16">
           <h2 className="text-2xl font-bold tracking-tight mb-8">
-            How <span className="text-gold">NPIxray</span> Helps
+            How <span className="text-[#2F5EA8]">NPIxray</span> Helps
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {solution.features.map((feature, i) => (
               <div
                 key={i}
-                className="rounded-2xl border border-gold/10 bg-gold/[0.02] p-6"
+                className="rounded-2xl border border-[#2F5EA8]/[0.06] bg-[#2F5EA8]/[0.02] p-6"
               >
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gold/10 border border-gold/20 mb-4">
-                  <feature.icon className="h-5 w-5 text-gold" />
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#2F5EA8]/[0.06] border border-[#2F5EA8]/10 mb-4">
+                  <feature.icon className="h-5 w-5 text-[#2F5EA8]" />
                 </div>
                 <h3 className="text-lg font-semibold mb-2">{feature.title}</h3>
                 <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
@@ -1035,14 +1035,14 @@ export default async function SolutionPage({
 
         {/* Key Features List */}
         <section className="mb-16">
-          <div className="rounded-2xl border border-dark-50/80 bg-dark-400/50 p-8">
+          <div className="rounded-2xl border border-[var(--border-light)] bg-white p-8">
             <h2 className="text-xl font-bold mb-6">
               Key Features for Your {solution.practiceType.charAt(0).toUpperCase() + solution.practiceType.slice(1)}
             </h2>
             <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {solution.keyFeatures.map((feature, i) => (
                 <li key={i} className="flex items-start gap-3">
-                  <CheckCircle2 className="h-4 w-4 text-gold flex-shrink-0 mt-0.5" />
+                  <CheckCircle2 className="h-4 w-4 text-[#2F5EA8] flex-shrink-0 mt-0.5" />
                   <span className="text-sm text-[var(--text-secondary)] leading-relaxed">
                     {feature}
                   </span>
@@ -1054,8 +1054,8 @@ export default async function SolutionPage({
 
         {/* Stat Callout */}
         <section className="mb-16">
-          <div className="rounded-2xl border border-gold/20 bg-gold/5 p-8 sm:p-10 text-center">
-            <p className="text-4xl sm:text-5xl font-bold text-gold mb-3">
+          <div className="rounded-2xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-8 sm:p-10 text-center">
+            <p className="text-4xl sm:text-5xl font-bold text-[#2F5EA8] mb-3">
               {solution.stat.value}
             </p>
             <p className="text-[var(--text-secondary)] max-w-lg mx-auto">
@@ -1066,10 +1066,10 @@ export default async function SolutionPage({
 
         {/* Testimonial Placeholder */}
         <section className="mb-16">
-          <div className="rounded-2xl border border-dark-50/80 bg-dark-300 p-8 sm:p-10">
+          <div className="rounded-2xl border border-[var(--border-light)] bg-white p-8 sm:p-10">
             <div className="flex items-start gap-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gold/10 border border-gold/20 flex-shrink-0">
-                <User className="h-6 w-6 text-gold" />
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#2F5EA8]/[0.06] border border-[#2F5EA8]/10 flex-shrink-0">
+                <User className="h-6 w-6 text-[#2F5EA8]" />
               </div>
               <div>
                 <p className="text-[var(--text-secondary)] italic leading-relaxed mb-4">
@@ -1088,8 +1088,8 @@ export default async function SolutionPage({
 
         {/* CTA */}
         <section>
-          <div className="rounded-2xl border border-gold/20 bg-gold/5 p-8 sm:p-10 text-center">
-            <Zap className="h-8 w-8 text-gold mx-auto mb-4" />
+          <div className="rounded-2xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-8 sm:p-10 text-center">
+            <Zap className="h-8 w-8 text-[#2F5EA8] mx-auto mb-4" />
             <h2 className="text-2xl font-bold mb-2">{solution.ctaMessage}</h2>
             <p className="text-[var(--text-secondary)] mb-6 max-w-lg mx-auto">
               Enter any NPI number to instantly see missed revenue from E&M
@@ -1097,7 +1097,7 @@ export default async function SolutionPage({
             </p>
             <Link
               href="/"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-gold text-dark font-semibold hover:bg-gold-300 transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#2F5EA8] text-white font-semibold hover:bg-[#264D8C] transition-colors"
             >
               <Zap className="h-4 w-4" />
               Run Free Scan

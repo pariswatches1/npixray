@@ -104,7 +104,7 @@ export default async function OGImage({
             left: 0,
             right: 0,
             height: "4px",
-            background: "linear-gradient(90deg, #E8A824, #f0c040, #E8A824)",
+            background: "linear-gradient(90deg, #2F5EA8, #4FA3D1, #2F5EA8)",
           }}
         />
 
@@ -142,12 +142,12 @@ export default async function OGImage({
             <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
               <span style={{ fontSize: "22px", fontWeight: 700, color: "#fff" }}>
                 NPI
-                <span style={{ color: "#E8A824" }}>xray</span>
+                <span style={{ color: "#2F5EA8" }}>xray</span>
               </span>
               <span
                 style={{
                   fontSize: "11px",
-                  color: "#E8A824",
+                  color: "#2F5EA8",
                   background: "rgba(232, 168, 36, 0.12)",
                   border: "1px solid rgba(232, 168, 36, 0.25)",
                   borderRadius: "6px",
@@ -262,7 +262,7 @@ export default async function OGImage({
                 }}
               >
                 <span style={{ fontSize: "12px", color: "#999" }}>Top</span>
-                <span style={{ fontSize: "18px", fontWeight: 800, color: "#E8A824" }}>
+                <span style={{ fontSize: "18px", fontWeight: 800, color: "#2F5EA8" }}>
                   {Math.max(1, 100 - percentile)}%
                 </span>
                 <span style={{ fontSize: "12px", color: "#999" }}>of {specialty}</span>
@@ -332,7 +332,7 @@ export default async function OGImage({
                     style={{
                       fontSize: "48px",
                       fontWeight: 800,
-                      color: "#E8A824",
+                      color: "#2F5EA8",
                       lineHeight: 1,
                     }}
                   >
@@ -436,7 +436,7 @@ export default async function OGImage({
               marginTop: "12px",
             }}
           >
-            <span style={{ fontSize: "14px", color: "#E8A824", fontWeight: 600 }}>
+            <span style={{ fontSize: "14px", color: "#2F5EA8", fontWeight: 600 }}>
               Scan your NPI free → npixray.com
             </span>
             <span style={{ fontSize: "12px", color: "#555" }}>

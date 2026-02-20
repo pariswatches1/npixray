@@ -53,20 +53,20 @@ export default function EnterprisePage() {
     <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
       {/* Breadcrumb */}
       <nav className="flex items-center gap-1.5 text-sm text-[var(--text-secondary)] mb-6">
-        <Link href="/" className="hover:text-gold transition-colors">
+        <Link href="/" className="hover:text-[#2F5EA8] transition-colors">
           <Home className="h-3.5 w-3.5" />
         </Link>
-        <ChevronRight className="h-3.5 w-3.5 text-dark-50" />
+        <ChevronRight className="h-3.5 w-3.5 text-[var(--text-secondary)]" />
         <span className="text-[var(--text-primary)]">Enterprise</span>
       </nav>
 
       {/* Hero */}
       <div className="text-center mb-16">
-        <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gold/10 border border-gold/20 mx-auto mb-6">
-          <Building2 className="h-8 w-8 text-gold" />
+        <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-[#2F5EA8]/[0.06] border border-[#2F5EA8]/10 mx-auto mb-6">
+          <Building2 className="h-8 w-8 text-[#2F5EA8]" />
         </div>
         <h1 className="text-3xl sm:text-5xl font-bold tracking-tight mb-4">
-          Enterprise <span className="text-gold">Solutions</span>
+          Enterprise <span className="text-[#2F5EA8]">Solutions</span>
         </h1>
         <p className="text-lg text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed">
           Revenue intelligence at scale. Whether you manage 50 NPIs or 5,000,
@@ -81,27 +81,27 @@ export default function EnterprisePage() {
             key={sol.name}
             className={`relative rounded-2xl border p-8 flex flex-col ${
               sol.ready
-                ? "border-dark-50/80 bg-dark-400/30 hover:border-gold/20 transition-colors"
-                : "border-dark-50/40 bg-dark-400/20 opacity-70"
+                ? "border-[var(--border-light)] bg-white hover:border-[#2F5EA8]/10 transition-colors"
+                : "border-[var(--border)]/40 bg-[var(--bg)]/20 opacity-70"
             }`}
           >
             {!sol.ready && (
-              <span className="absolute top-4 right-4 rounded-full bg-dark-50/30 px-3 py-1 text-[10px] font-semibold text-[var(--text-secondary)] uppercase tracking-wider">
+              <span className="absolute top-4 right-4 rounded-full bg-gray-100 px-3 py-1 text-[10px] font-semibold text-[var(--text-secondary)] uppercase tracking-wider">
                 Coming Soon
               </span>
             )}
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gold/10 border border-gold/20 mb-4">
-              <sol.icon className="h-6 w-6 text-gold" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#2F5EA8]/[0.06] border border-[#2F5EA8]/10 mb-4">
+              <sol.icon className="h-6 w-6 text-[#2F5EA8]" />
             </div>
             <h2 className="text-xl font-bold mb-2">{sol.name}</h2>
             <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-4 flex-1">
               {sol.description}
             </p>
-            <p className="text-xs text-gold font-semibold mb-4">{sol.tagline}</p>
+            <p className="text-xs text-[#2F5EA8] font-semibold mb-4">{sol.tagline}</p>
             {sol.ready ? (
               <Link
                 href={sol.href}
-                className="flex items-center justify-center gap-2 rounded-xl bg-gold py-3 text-sm font-semibold text-dark hover:bg-gold-300 transition-all"
+                className="flex items-center justify-center gap-2 rounded-xl bg-[#2F5EA8] py-3 text-sm font-semibold text-white hover:bg-[#264D8C] transition-all"
               >
                 Learn More
                 <ArrowRight className="h-4 w-4" />
@@ -109,7 +109,7 @@ export default function EnterprisePage() {
             ) : (
               <button
                 disabled
-                className="flex items-center justify-center gap-2 rounded-xl border border-dark-50 py-3 text-sm font-medium text-[var(--text-secondary)] opacity-50 cursor-not-allowed"
+                className="flex items-center justify-center gap-2 rounded-xl border border-[var(--border)] py-3 text-sm font-medium text-[var(--text-secondary)] opacity-50 cursor-not-allowed"
               >
                 Coming Soon
               </button>
@@ -119,7 +119,7 @@ export default function EnterprisePage() {
       </div>
 
       {/* Bottom CTA */}
-      <div className="text-center rounded-2xl border border-gold/20 bg-gold/5 p-10">
+      <div className="text-center rounded-2xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-10">
         <h2 className="text-2xl font-bold mb-3">
           Not Sure Which Plan Fits?
         </h2>
@@ -128,7 +128,7 @@ export default function EnterprisePage() {
         </p>
         <a
           href="mailto:sales@npixray.com?subject=Enterprise%20Inquiry"
-          className="inline-flex items-center gap-2 rounded-xl bg-gold px-8 py-3.5 text-sm font-semibold text-dark hover:bg-gold-300 transition-all"
+          className="inline-flex items-center gap-2 rounded-xl bg-[#2F5EA8] px-8 py-3.5 text-sm font-semibold text-white hover:bg-[#264D8C] transition-all"
         >
           <Users className="h-4 w-4" />
           Contact Sales

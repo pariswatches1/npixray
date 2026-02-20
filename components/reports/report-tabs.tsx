@@ -44,14 +44,14 @@ export function ReportTabs({ states, specialties }: ReportTabsProps) {
   return (
     <div>
       {/* Tab buttons */}
-      <div className="flex items-center gap-1 rounded-xl border border-dark-50/50 bg-dark-400/50 p-1 mb-8 w-fit">
+      <div className="flex items-center gap-1 rounded-xl border border-[var(--border-light)] bg-white p-1 mb-8 w-fit">
         {tabs.map((tab) => (
           <button
             key={tab.key}
             onClick={() => setActiveTab(tab.key)}
             className={`inline-flex items-center gap-2 rounded-lg px-5 py-2.5 text-sm font-medium transition-all ${
               activeTab === tab.key
-                ? "bg-gold text-dark"
+                ? "bg-[#2F5EA8] text-white"
                 : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
             }`}
           >
@@ -72,7 +72,7 @@ export function ReportTabs({ states, specialties }: ReportTabsProps) {
               <Link
                 key={s.abbr}
                 href={`/reports/states/${s.slug}`}
-                className="group rounded-xl border border-dark-50/80 bg-dark-400/50 p-5 hover:border-gold/30 hover:shadow-lg hover:shadow-gold/5 transition-all"
+                className="group rounded-xl border border-[var(--border-light)] bg-white p-5 hover:border-[#2F5EA8]/15 hover:shadow-lg hover:shadow-[#2F5EA8]/[0.04] transition-all"
               >
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center gap-3">
@@ -82,7 +82,7 @@ export function ReportTabs({ states, specialties }: ReportTabsProps) {
                       {s.grade}
                     </span>
                     <div>
-                      <h3 className="font-semibold group-hover:text-gold transition-colors">
+                      <h3 className="font-semibold group-hover:text-[#2F5EA8] transition-colors">
                         {s.name}
                       </h3>
                       <span className="text-xs text-[var(--text-secondary)] font-mono">
@@ -90,19 +90,19 @@ export function ReportTabs({ states, specialties }: ReportTabsProps) {
                       </span>
                     </div>
                   </div>
-                  <ArrowRight className="h-4 w-4 text-[var(--text-secondary)] group-hover:text-gold group-hover:translate-x-0.5 transition-all mt-1" />
+                  <ArrowRight className="h-4 w-4 text-[var(--text-secondary)] group-hover:text-[#2F5EA8] group-hover:translate-x-0.5 transition-all mt-1" />
                 </div>
 
                 <div className="grid grid-cols-2 gap-2 text-center">
-                  <div className="rounded-lg bg-dark-500/50 p-2">
-                    <p className="text-sm font-bold font-mono text-gold">
+                  <div className="rounded-lg bg-[var(--bg)]/50 p-2">
+                    <p className="text-sm font-bold font-mono text-[#2F5EA8]">
                       {formatNumber(s.providers)}
                     </p>
                     <p className="text-[9px] text-[var(--text-secondary)] uppercase tracking-wider">
                       Providers
                     </p>
                   </div>
-                  <div className="rounded-lg bg-dark-500/50 p-2">
+                  <div className="rounded-lg bg-[var(--bg)]/50 p-2">
                     <p className="text-sm font-bold font-mono text-red-400">
                       {formatCurrency(s.missedRevenue)}
                     </p>
@@ -128,7 +128,7 @@ export function ReportTabs({ states, specialties }: ReportTabsProps) {
               <Link
                 key={s.specialty}
                 href={`/reports/specialties/${s.slug}`}
-                className="group rounded-xl border border-dark-50/80 bg-dark-400/50 p-5 hover:border-gold/30 hover:shadow-lg hover:shadow-gold/5 transition-all"
+                className="group rounded-xl border border-[var(--border-light)] bg-white p-5 hover:border-[#2F5EA8]/15 hover:shadow-lg hover:shadow-[#2F5EA8]/[0.04] transition-all"
               >
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center gap-3">
@@ -137,31 +137,31 @@ export function ReportTabs({ states, specialties }: ReportTabsProps) {
                     >
                       {s.grade}
                     </span>
-                    <h3 className="font-semibold group-hover:text-gold transition-colors leading-tight">
+                    <h3 className="font-semibold group-hover:text-[#2F5EA8] transition-colors leading-tight">
                       {s.specialty}
                     </h3>
                   </div>
-                  <ArrowRight className="h-4 w-4 text-[var(--text-secondary)] group-hover:text-gold group-hover:translate-x-0.5 transition-all mt-1 flex-shrink-0" />
+                  <ArrowRight className="h-4 w-4 text-[var(--text-secondary)] group-hover:text-[#2F5EA8] group-hover:translate-x-0.5 transition-all mt-1 flex-shrink-0" />
                 </div>
 
                 <div className="grid grid-cols-3 gap-2 text-center">
-                  <div className="rounded-lg bg-dark-500/50 p-2">
-                    <p className="text-xs font-bold font-mono text-gold">
+                  <div className="rounded-lg bg-[var(--bg)]/50 p-2">
+                    <p className="text-xs font-bold font-mono text-[#2F5EA8]">
                       {formatNumber(s.providers)}
                     </p>
                     <p className="text-[8px] text-[var(--text-secondary)] uppercase tracking-wider">
                       Providers
                     </p>
                   </div>
-                  <div className="rounded-lg bg-dark-500/50 p-2">
-                    <p className="text-xs font-bold font-mono text-gold">
+                  <div className="rounded-lg bg-[var(--bg)]/50 p-2">
+                    <p className="text-xs font-bold font-mono text-[#2F5EA8]">
                       {formatCurrency(s.avgPayment)}
                     </p>
                     <p className="text-[8px] text-[var(--text-secondary)] uppercase tracking-wider">
                       Avg Pay
                     </p>
                   </div>
-                  <div className="rounded-lg bg-dark-500/50 p-2">
+                  <div className="rounded-lg bg-[var(--bg)]/50 p-2">
                     <p className="text-xs font-bold font-mono text-red-400">
                       {formatCurrency(s.missedRevenue)}
                     </p>
@@ -181,14 +181,14 @@ export function ReportTabs({ states, specialties }: ReportTabsProps) {
         <div className="max-w-2xl">
           <Link
             href="/reports/national"
-            className="group block rounded-2xl border border-gold/20 bg-gold/5 p-8 hover:border-gold/40 hover:shadow-lg hover:shadow-gold/10 transition-all"
+            className="group block rounded-2xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-8 hover:border-[#2F5EA8]/15/40 hover:shadow-lg hover:shadow-[#2F5EA8]/[0.06] transition-all"
           >
             <div className="flex items-center gap-4 mb-4">
-              <div className="flex h-14 w-14 items-center justify-center rounded-xl border border-gold/20 bg-gold/10">
-                <Globe className="h-7 w-7 text-gold" />
+              <div className="flex h-14 w-14 items-center justify-center rounded-xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.06]">
+                <Globe className="h-7 w-7 text-[#2F5EA8]" />
               </div>
               <div>
-                <h3 className="text-2xl font-bold group-hover:text-gold transition-colors">
+                <h3 className="text-2xl font-bold group-hover:text-[#2F5EA8] transition-colors">
                   National Medicare Revenue Report 2026
                 </h3>
                 <p className="text-[var(--text-secondary)]">
@@ -196,7 +196,7 @@ export function ReportTabs({ states, specialties }: ReportTabsProps) {
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-2 text-gold font-medium">
+            <div className="flex items-center gap-2 text-[#2F5EA8] font-medium">
               View Full Report
               <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
             </div>

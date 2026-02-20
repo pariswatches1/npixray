@@ -31,12 +31,12 @@ export default async function MarketsIndexPage() {
       <Breadcrumbs items={[{ label: "Markets" }]} />
 
       <div className="text-center mb-12">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold/10 text-gold text-sm font-semibold mb-4">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#2F5EA8]/[0.06] text-[#2F5EA8] text-sm font-semibold mb-4">
           <TrendingUp className="h-4 w-4" />
           Market Intelligence
         </div>
         <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">
-          Medicare Market <span className="text-gold">Opportunities</span>
+          Medicare Market <span className="text-[#2F5EA8]">Opportunities</span>
         </h1>
         <p className="text-lg text-[var(--text-secondary)] max-w-2xl mx-auto">
           Find which cities have the biggest revenue gaps in CCM, RPM, AWV, and E&M coding.
@@ -52,11 +52,11 @@ export default async function MarketsIndexPage() {
             <Link
               key={s.state}
               href={`/markets/${stateToSlug(s.state)}`}
-              className="group rounded-xl border border-dark-50/80 bg-dark-400/50 p-4 transition-all hover:border-gold/30 hover:bg-gold/5"
+              className="group rounded-xl border border-[var(--border-light)] bg-white p-4 transition-all hover:border-[#2F5EA8]/15 hover:bg-[#2F5EA8]/[0.04]"
             >
               <div className="flex items-center gap-2 mb-2">
-                <MapPin className="h-4 w-4 text-gold/60 group-hover:text-gold transition-colors" />
-                <span className="text-sm font-bold group-hover:text-gold transition-colors">
+                <MapPin className="h-4 w-4 text-[#4FA3D1] group-hover:text-[#2F5EA8] transition-colors" />
+                <span className="text-sm font-bold group-hover:text-[#2F5EA8] transition-colors">
                   {stateAbbrToName(s.state)}
                 </span>
               </div>

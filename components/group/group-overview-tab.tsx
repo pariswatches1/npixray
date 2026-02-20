@@ -15,7 +15,7 @@ interface Props {
 
 export function GroupOverviewTab({ data }: Props) {
   const gapBreakdown = [
-    { label: "E&M Coding", amount: data.totalCodingGap, color: "#E8A824" },
+    { label: "E&M Coding", amount: data.totalCodingGap, color: "#2F5EA8" },
     { label: "CCM", amount: data.totalCcmGap, color: "#34d399" },
     { label: "RPM", amount: data.totalRpmGap, color: "#60a5fa" },
     { label: "AWV", amount: data.totalAwvGap, color: "#a78bfa" },
@@ -35,7 +35,7 @@ export function GroupOverviewTab({ data }: Props) {
           sub={data.failedScans > 0 ? `${data.failedScans} failed` : `of ${data.totalProviders}`}
         />
         <StatCard
-          icon={<DollarSign className="h-5 w-5 text-gold" />}
+          icon={<DollarSign className="h-5 w-5 text-[#2F5EA8]" />}
           label="Total Missed Revenue"
           value={formatCurrency(data.totalMissedRevenue)}
           sub="annual opportunity"
@@ -56,13 +56,13 @@ export function GroupOverviewTab({ data }: Props) {
       </div>
 
       {/* Gap Breakdown */}
-      <div className="rounded-2xl bg-dark-800/50 border border-dark-50/20 p-6">
+      <div className="rounded-2xl bg-white border border-[var(--border-light)] p-6">
         <h3 className="text-lg font-semibold text-white mb-4">Revenue Gap Breakdown</h3>
         <div className="space-y-4">
           {gapBreakdown.map((gap) => (
             <div key={gap.label} className="flex items-center gap-4">
               <span className="w-24 text-sm text-[var(--text-primary)] shrink-0">{gap.label}</span>
-              <div className="flex-1 h-6 bg-dark-900/50 rounded-full overflow-hidden">
+              <div className="flex-1 h-6 bg-[var(--bg)] rounded-full overflow-hidden">
                 <div
                   className="h-full rounded-full transition-all duration-700"
                   style={{
@@ -78,9 +78,9 @@ export function GroupOverviewTab({ data }: Props) {
             </div>
           ))}
         </div>
-        <div className="mt-4 pt-4 border-t border-dark-50/10 flex justify-between items-center">
+        <div className="mt-4 pt-4 border-t border-[var(--border-light)] flex justify-between items-center">
           <span className="text-sm text-[var(--text-secondary)]">Total Practice Opportunity</span>
-          <span className="text-lg font-bold font-mono text-gold">
+          <span className="text-lg font-bold font-mono text-[#2F5EA8]">
             {formatCurrency(data.totalMissedRevenue)}
           </span>
         </div>
@@ -88,13 +88,13 @@ export function GroupOverviewTab({ data }: Props) {
 
       {/* Specialty Mix */}
       {data.specialtyBreakdown.length > 1 && (
-        <div className="rounded-2xl bg-dark-800/50 border border-dark-50/20 p-6">
+        <div className="rounded-2xl bg-white border border-[var(--border-light)] p-6">
           <h3 className="text-lg font-semibold text-white mb-4">Specialty Mix</h3>
           <div className="grid gap-3 sm:grid-cols-2">
             {data.specialtyBreakdown.map((s) => (
               <div
                 key={s.specialty}
-                className="flex items-center justify-between rounded-xl bg-dark-900/40 px-4 py-3"
+                className="flex items-center justify-between rounded-xl bg-[var(--bg)] px-4 py-3"
               >
                 <div>
                   <p className="text-sm font-medium text-white">{s.specialty}</p>
@@ -147,8 +147,8 @@ function StatCard({
     <div
       className={`rounded-2xl border p-5 ${
         highlight
-          ? "bg-gold/5 border-gold/20"
-          : "bg-dark-800/50 border-dark-50/20"
+          ? "bg-[#2F5EA8]/[0.04] border-[#2F5EA8]/10"
+          : "bg-white border-[var(--border-light)]"
       }`}
     >
       <div className="flex items-center gap-2 mb-2">
@@ -157,7 +157,7 @@ function StatCard({
       </div>
       <p
         className={`text-2xl font-bold font-mono ${
-          highlight ? "text-gold" : "text-white"
+          highlight ? "text-[#2F5EA8]" : "text-white"
         }`}
       >
         {value}

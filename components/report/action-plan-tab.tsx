@@ -39,7 +39,7 @@ export function ActionPlanTab({ data }: { data: ScanResult }) {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="rounded-xl border border-gold/20 bg-gold/5 p-6">
+      <div className="rounded-xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-6">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <div>
             <h3 className="text-lg font-semibold mb-1">
@@ -53,7 +53,7 @@ export function ActionPlanTab({ data }: { data: ScanResult }) {
             <p className="text-xs text-[var(--text-secondary)] uppercase tracking-wider">
               Total Capturable
             </p>
-            <p className="text-2xl font-bold text-gold font-mono">
+            <p className="text-2xl font-bold text-[#2F5EA8] font-mono">
               {formatCurrency(totalCapturable)}
             </p>
           </div>
@@ -71,12 +71,12 @@ export function ActionPlanTab({ data }: { data: ScanResult }) {
           return (
             <div
               key={i}
-              className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6 hover:border-gold/20 transition-colors"
+              className="rounded-xl border border-[var(--border-light)] bg-white p-6 hover:border-[#2F5EA8]/10 transition-colors"
             >
               <div className="flex items-start gap-4">
                 {/* Priority number */}
-                <div className="flex-shrink-0 flex h-10 w-10 items-center justify-center rounded-full border border-gold/30 bg-gold/10">
-                  <span className="text-sm font-bold text-gold font-mono">
+                <div className="flex-shrink-0 flex h-10 w-10 items-center justify-center rounded-full border border-[#2F5EA8]/15 bg-[#2F5EA8]/[0.06]">
+                  <span className="text-sm font-bold text-[#2F5EA8] font-mono">
                     {item.priority}
                   </span>
                 </div>
@@ -89,7 +89,7 @@ export function ActionPlanTab({ data }: { data: ScanResult }) {
                     >
                       {diffStyle.label}
                     </span>
-                    <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-dark-200 text-[var(--text-secondary)]">
+                    <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-white text-[var(--text-secondary)]">
                       {CATEGORY_LABELS[item.category]}
                     </span>
                   </div>
@@ -100,19 +100,19 @@ export function ActionPlanTab({ data }: { data: ScanResult }) {
 
                   <div className="flex flex-wrap gap-4 text-xs">
                     <div className="flex items-center gap-1.5">
-                      <Clock className="h-3.5 w-3.5 text-gold/60" />
+                      <Clock className="h-3.5 w-3.5 text-[#4FA3D1]" />
                       <span className="text-[var(--text-secondary)]">
                         {item.timeline}
                       </span>
                     </div>
                     <div className="flex items-center gap-1.5">
-                      <DollarSign className="h-3.5 w-3.5 text-gold/60" />
-                      <span className="font-mono font-semibold text-gold">
+                      <DollarSign className="h-3.5 w-3.5 text-[#4FA3D1]" />
+                      <span className="font-mono font-semibold text-[#2F5EA8]">
                         +{formatCurrency(item.estimatedRevenue)}/year
                       </span>
                     </div>
                     <div className="flex items-center gap-1.5">
-                      <ArrowUpRight className="h-3.5 w-3.5 text-gold/60" />
+                      <ArrowUpRight className="h-3.5 w-3.5 text-[#4FA3D1]" />
                       <span className="text-[var(--text-secondary)]">
                         Cumulative: {formatCurrency(cumulative)}
                       </span>
@@ -126,8 +126,8 @@ export function ActionPlanTab({ data }: { data: ScanResult }) {
       </div>
 
       {/* CTA */}
-      <div className="rounded-xl border border-dark-50/80 bg-dark-300/50 p-8 text-center">
-        <CheckCircle2 className="h-10 w-10 text-gold mx-auto mb-4" />
+      <div className="rounded-xl border border-[var(--border-light)] bg-white/80 p-8 text-center">
+        <CheckCircle2 className="h-10 w-10 text-[#2F5EA8] mx-auto mb-4" />
         <h3 className="text-lg font-semibold mb-2">
           Ready to capture this revenue?
         </h3>
@@ -137,7 +137,7 @@ export function ActionPlanTab({ data }: { data: ScanResult }) {
         </p>
         <Link
           href="/pricing"
-          className="inline-flex items-center gap-2 rounded-xl bg-gold px-6 py-3 text-sm font-semibold text-dark transition-all hover:bg-gold-300 hover:shadow-lg hover:shadow-gold/20"
+          className="inline-flex items-center gap-2 rounded-xl bg-[#2F5EA8] px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-[#264D8C] hover:shadow-lg hover:shadow-[#2F5EA8]/10"
         >
           View Plans
           <ArrowUpRight className="h-4 w-4" />

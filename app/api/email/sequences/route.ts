@@ -127,8 +127,8 @@ function emailWrapper(
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>NPIxray</title>
 </head>
-<body style="margin:0;padding:0;background-color:#0a0a0f;color:#e5e5e5;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#0a0a0f;">
+<body style="margin:0;padding:0;background-color:#F5F7FA;color:#1A2B4A;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#F5F7FA;">
     <tr>
       <td align="center" style="padding:40px 20px;">
         <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
@@ -136,7 +136,7 @@ function emailWrapper(
           <tr>
             <td style="padding-bottom:32px;text-align:center;">
               <span style="font-size:24px;font-weight:bold;color:#ffffff;letter-spacing:-0.5px;">
-                NPI<span style="color:#E8A824;">xray</span>
+                NPI<span style="color:#2F5EA8;">xray</span>
               </span>
             </td>
           </tr>
@@ -167,7 +167,7 @@ function emailWrapper(
 }
 
 function ctaButton(text: string, url: string): string {
-  return `<a href="${url}" style="display:inline-block;background-color:#E8A824;color:#0a0a0f;text-decoration:none;font-weight:600;font-size:16px;padding:14px 32px;border-radius:12px;">
+  return `<a href="${url}" style="display:inline-block;background-color:#2F5EA8;color:#FFFFFF;text-decoration:none;font-weight:600;font-size:16px;padding:14px 32px;border-radius:12px;">
   ${text}
 </a>`;
 }
@@ -175,7 +175,7 @@ function ctaButton(text: string, url: string): string {
 function goldBox(inner: string): string {
   return `<table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 auto 24px;">
   <tr>
-    <td style="background-color:rgba(232,168,36,0.08);border:1px solid rgba(232,168,36,0.25);border-radius:12px;padding:20px 40px;text-align:center;">
+    <td style="background-color:rgba(47,94,168,0.06);border:1px solid rgba(47,94,168,0.15);border-radius:12px;padding:20px 40px;text-align:center;">
       ${inner}
     </td>
   </tr>
@@ -188,7 +188,7 @@ function buildReportEmail(data: EmailQueueEntry): string {
   return `
 <!-- Hero -->
 <tr>
-  <td style="background-color:#111118;border:1px solid rgba(232,168,36,0.2);border-radius:16px;padding:40px 32px;text-align:center;">
+  <td style="background-color:#FFFFFF;border:1px solid rgba(47,94,168,0.15);border-radius:16px;padding:40px 32px;text-align:center;">
     <p style="margin:0 0 8px;font-size:14px;color:#999;text-transform:uppercase;letter-spacing:2px;">
       Revenue Analysis Ready
     </p>
@@ -202,7 +202,7 @@ function buildReportEmail(data: EmailQueueEntry): string {
       <p style="margin:0 0 4px;font-size:12px;color:#999;text-transform:uppercase;letter-spacing:1px;">
         Estimated Missed Revenue
       </p>
-      <p style="margin:0;font-size:36px;font-weight:bold;color:#E8A824;font-family:'Courier New',monospace;">
+      <p style="margin:0;font-size:36px;font-weight:bold;color:#2F5EA8;font-family:'Courier New',monospace;">
         ${missed}<span style="font-size:16px;color:#999;font-family:-apple-system,sans-serif;">/yr</span>
       </p>
     `)}
@@ -215,7 +215,7 @@ function buildReportEmail(data: EmailQueueEntry): string {
     <p style="margin:0 0 16px;font-size:15px;color:#ccc;line-height:1.7;">
       Hi there &mdash; your NPIxray revenue scan for <strong style="color:#fff;">${data.providerName}</strong>
       is ready. Based on CMS public data, we estimate you may be missing up to
-      <strong style="color:#E8A824;">${missed}/year</strong> in billable revenue.
+      <strong style="color:#2F5EA8;">${missed}/year</strong> in billable revenue.
     </p>
     <p style="margin:0;font-size:14px;color:#999;line-height:1.6;">
       Your report includes E&amp;M coding gap analysis, program opportunities
@@ -234,7 +234,7 @@ function buildQuickWinsEmail(data: EmailQueueEntry): string {
   const awvEstimate = formatCurrency(Math.round(data.totalMissedRevenue * 0.25));
   return `
 <tr>
-  <td style="background-color:#111118;border:1px solid rgba(232,168,36,0.2);border-radius:16px;padding:40px 32px;">
+  <td style="background-color:#FFFFFF;border:1px solid rgba(47,94,168,0.15);border-radius:16px;padding:40px 32px;">
     <h1 style="margin:0 0 8px;font-size:24px;font-weight:bold;color:#ffffff;text-align:center;">
       3 Quick Wins to Capture ${missed}
     </h1>
@@ -245,7 +245,7 @@ function buildQuickWinsEmail(data: EmailQueueEntry): string {
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:20px;">
       <tr>
         <td style="width:48px;vertical-align:top;">
-          <div style="width:36px;height:36px;border-radius:8px;background-color:rgba(232,168,36,0.1);border:1px solid rgba(232,168,36,0.2);text-align:center;line-height:36px;font-size:18px;font-weight:bold;color:#E8A824;">1</div>
+          <div style="width:36px;height:36px;border-radius:8px;background-color:rgba(47,94,168,0.08);border:1px solid rgba(47,94,168,0.15);text-align:center;line-height:36px;font-size:18px;font-weight:bold;color:#2F5EA8;">1</div>
         </td>
         <td style="padding-left:12px;">
           <p style="margin:0 0 4px;font-size:15px;font-weight:600;color:#fff;">Optimize E&amp;M Coding</p>
@@ -253,7 +253,7 @@ function buildQuickWinsEmail(data: EmailQueueEntry): string {
             Shift appropriate visits from 99213 to 99214/99215 with better documentation.
             Most practices undercode by 15&ndash;25%.
           </p>
-          <p style="margin:0;font-size:14px;font-weight:600;color:#E8A824;">${codingEstimate}/yr potential</p>
+          <p style="margin:0;font-size:14px;font-weight:600;color:#2F5EA8;">${codingEstimate}/yr potential</p>
         </td>
       </tr>
     </table>
@@ -261,7 +261,7 @@ function buildQuickWinsEmail(data: EmailQueueEntry): string {
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:20px;">
       <tr>
         <td style="width:48px;vertical-align:top;">
-          <div style="width:36px;height:36px;border-radius:8px;background-color:rgba(232,168,36,0.1);border:1px solid rgba(232,168,36,0.2);text-align:center;line-height:36px;font-size:18px;font-weight:bold;color:#E8A824;">2</div>
+          <div style="width:36px;height:36px;border-radius:8px;background-color:rgba(47,94,168,0.08);border:1px solid rgba(47,94,168,0.15);text-align:center;line-height:36px;font-size:18px;font-weight:bold;color:#2F5EA8;">2</div>
         </td>
         <td style="padding-left:12px;">
           <p style="margin:0 0 4px;font-size:15px;font-weight:600;color:#fff;">Enroll CCM Patients (99490)</p>
@@ -269,7 +269,7 @@ function buildQuickWinsEmail(data: EmailQueueEntry): string {
             Patients with 2+ chronic conditions are eligible for Chronic Care Management.
             Average reimbursement is $66&ndash;$144/patient/month.
           </p>
-          <p style="margin:0;font-size:14px;font-weight:600;color:#E8A824;">${ccmEstimate}/yr potential</p>
+          <p style="margin:0;font-size:14px;font-weight:600;color:#2F5EA8;">${ccmEstimate}/yr potential</p>
         </td>
       </tr>
     </table>
@@ -277,7 +277,7 @@ function buildQuickWinsEmail(data: EmailQueueEntry): string {
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:28px;">
       <tr>
         <td style="width:48px;vertical-align:top;">
-          <div style="width:36px;height:36px;border-radius:8px;background-color:rgba(232,168,36,0.1);border:1px solid rgba(232,168,36,0.2);text-align:center;line-height:36px;font-size:18px;font-weight:bold;color:#E8A824;">3</div>
+          <div style="width:36px;height:36px;border-radius:8px;background-color:rgba(47,94,168,0.08);border:1px solid rgba(47,94,168,0.15);text-align:center;line-height:36px;font-size:18px;font-weight:bold;color:#2F5EA8;">3</div>
         </td>
         <td style="padding-left:12px;">
           <p style="margin:0 0 4px;font-size:15px;font-weight:600;color:#fff;">Bill Annual Wellness Visits (G0438/G0439)</p>
@@ -285,7 +285,7 @@ function buildQuickWinsEmail(data: EmailQueueEntry): string {
             AWVs are massively underbilled nationally. Each missed visit = $118&ndash;$174
             in lost revenue. Most Medicare patients are eligible.
           </p>
-          <p style="margin:0;font-size:14px;font-weight:600;color:#E8A824;">${awvEstimate}/yr potential</p>
+          <p style="margin:0;font-size:14px;font-weight:600;color:#2F5EA8;">${awvEstimate}/yr potential</p>
         </td>
       </tr>
     </table>
@@ -302,7 +302,7 @@ function buildCompetitiveEmail(data: EmailQueueEntry): string {
   const missed = formatCurrency(data.totalMissedRevenue);
   return `
 <tr>
-  <td style="background-color:#111118;border:1px solid rgba(232,168,36,0.2);border-radius:16px;padding:40px 32px;text-align:center;">
+  <td style="background-color:#FFFFFF;border:1px solid rgba(47,94,168,0.15);border-radius:16px;padding:40px 32px;text-align:center;">
     <p style="margin:0 0 8px;font-size:14px;color:#999;text-transform:uppercase;letter-spacing:2px;">
       Competitive Intel
     </p>
@@ -313,7 +313,7 @@ function buildCompetitiveEmail(data: EmailQueueEntry): string {
       <p style="margin:0 0 4px;font-size:12px;color:#999;text-transform:uppercase;letter-spacing:1px;">
         Your Estimated Gap
       </p>
-      <p style="margin:0;font-size:32px;font-weight:bold;color:#E8A824;font-family:'Courier New',monospace;">
+      <p style="margin:0;font-size:32px;font-weight:bold;color:#2F5EA8;font-family:'Courier New',monospace;">
         ${missed}<span style="font-size:14px;color:#999;font-family:-apple-system,sans-serif;">/yr</span>
       </p>
     `)}
@@ -325,7 +325,7 @@ function buildCompetitiveEmail(data: EmailQueueEntry): string {
     </p>
     ${ctaButton("See State Leaderboard", leaderboardUrl)}
     <p style="margin:16px 0 0;">
-      <a href="${scanUrl}" style="font-size:13px;color:#E8A824;text-decoration:none;">
+      <a href="${scanUrl}" style="font-size:13px;color:#2F5EA8;text-decoration:none;">
         View your full report &rarr;
       </a>
     </p>
@@ -343,7 +343,7 @@ function buildScoreUpdateEmail(data: EmailQueueEntry): string {
     tierColor = "#22c55e";
   } else if (score >= 60) {
     tier = "On Track";
-    tierColor = "#E8A824";
+    tierColor = "#2F5EA8";
   } else if (score >= 40) {
     tier = "Needs Attention";
     tierColor = "#f97316";
@@ -353,7 +353,7 @@ function buildScoreUpdateEmail(data: EmailQueueEntry): string {
   }
   return `
 <tr>
-  <td style="background-color:#111118;border:1px solid rgba(232,168,36,0.2);border-radius:16px;padding:40px 32px;text-align:center;">
+  <td style="background-color:#FFFFFF;border:1px solid rgba(47,94,168,0.15);border-radius:16px;padding:40px 32px;text-align:center;">
     <p style="margin:0 0 8px;font-size:14px;color:#999;text-transform:uppercase;letter-spacing:2px;">
       Revenue Score Update
     </p>
@@ -367,7 +367,7 @@ function buildScoreUpdateEmail(data: EmailQueueEntry): string {
       <p style="margin:0 0 8px;font-size:12px;color:#999;text-transform:uppercase;letter-spacing:1px;">
         Revenue Score
       </p>
-      <p style="margin:0 0 4px;font-size:48px;font-weight:bold;color:#E8A824;font-family:'Courier New',monospace;">
+      <p style="margin:0 0 4px;font-size:48px;font-weight:bold;color:#2F5EA8;font-family:'Courier New',monospace;">
         ${score}
       </p>
       <p style="margin:0;font-size:14px;font-weight:600;color:${tierColor};">
@@ -388,7 +388,7 @@ function buildReengagementEmail(data: EmailQueueEntry): string {
   const scanUrl = `${BASE_URL}/scan/${data.npi}`;
   return `
 <tr>
-  <td style="background-color:#111118;border:1px solid rgba(232,168,36,0.2);border-radius:16px;padding:40px 32px;text-align:center;">
+  <td style="background-color:#FFFFFF;border:1px solid rgba(47,94,168,0.15);border-radius:16px;padding:40px 32px;text-align:center;">
     <p style="margin:0 0 8px;font-size:14px;color:#999;text-transform:uppercase;letter-spacing:2px;">
       Data Update
     </p>
@@ -405,7 +405,7 @@ function buildReengagementEmail(data: EmailQueueEntry): string {
       <p style="margin:0 0 4px;font-size:12px;color:#999;text-transform:uppercase;letter-spacing:1px;">
         Last Estimated Gap
       </p>
-      <p style="margin:0;font-size:32px;font-weight:bold;color:#E8A824;font-family:'Courier New',monospace;">
+      <p style="margin:0;font-size:32px;font-weight:bold;color:#2F5EA8;font-family:'Courier New',monospace;">
         ${formatCurrency(data.totalMissedRevenue)}<span style="font-size:14px;color:#999;font-family:-apple-system,sans-serif;">/yr</span>
       </p>
     `)}
@@ -665,14 +665,14 @@ export async function GET(request: NextRequest) {
       `<!DOCTYPE html>
 <html lang="en">
 <head><meta charset="utf-8" /><title>Unsubscribed | NPIxray</title></head>
-<body style="margin:0;padding:60px 20px;background:#0a0a0f;color:#e5e5e5;font-family:-apple-system,sans-serif;text-align:center;">
+<body style="margin:0;padding:60px 20px;background:#F5F7FA;color:#1A2B4A;font-family:-apple-system,sans-serif;text-align:center;">
   <h1 style="font-size:24px;color:#fff;margin-bottom:8px;">
     ${found ? "You've been unsubscribed" : "No active subscription found"}
   </h1>
   <p style="color:#999;font-size:14px;">
     ${found ? "You will no longer receive emails from this sequence." : "This email address does not have an active email sequence."}
   </p>
-  <a href="${BASE_URL}" style="display:inline-block;margin-top:24px;color:#E8A824;font-size:14px;text-decoration:none;">
+  <a href="${BASE_URL}" style="display:inline-block;margin-top:24px;color:#2F5EA8;font-size:14px;text-decoration:none;">
     &larr; Back to NPIxray
   </a>
 </body>

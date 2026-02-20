@@ -37,11 +37,11 @@ export function EarlyAccessCTA({
   }
 
   return (
-    <div className="rounded-2xl border border-gold/20 bg-gold/5 p-8 sm:p-12">
+    <div className="rounded-2xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-8 sm:p-12">
       <div className="max-w-2xl mx-auto text-center">
-        <div className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/10 px-4 py-1.5 mb-6">
-          <Rocket className="h-3.5 w-3.5 text-gold" />
-          <span className="text-xs font-medium text-gold">Coming Soon — {tier}</span>
+        <div className="inline-flex items-center gap-2 rounded-full border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.06] px-4 py-1.5 mb-6">
+          <Rocket className="h-3.5 w-3.5 text-[#2F5EA8]" />
+          <span className="text-xs font-medium text-[#2F5EA8]">Coming Soon — {tier}</span>
         </div>
 
         <h3 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4">
@@ -60,12 +60,12 @@ export function EarlyAccessCTA({
               onChange={(e) => setEmail(e.target.value)}
               placeholder="work@company.com"
               required
-              className="w-full rounded-xl border border-dark-50/80 bg-dark-400/50 pl-10 pr-4 py-3 text-sm placeholder:text-zinc-500 focus:border-gold/50 focus:outline-none focus:ring-1 focus:ring-gold/30"
+              className="w-full rounded-xl border border-[var(--border-light)] bg-white pl-10 pr-4 py-3 text-sm placeholder:text-zinc-500 focus:border-[#2F5EA8]/20/50 focus:outline-none focus:ring-1 focus:ring-[#2F5EA8]/10"
             />
           </div>
           <button
             type="submit"
-            className="rounded-xl bg-gold px-6 py-3 text-sm font-semibold text-dark transition-all hover:bg-gold-300 hover:shadow-lg hover:shadow-gold/20 whitespace-nowrap"
+            className="rounded-xl bg-[#2F5EA8] px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-[#264D8C] hover:shadow-lg hover:shadow-[#2F5EA8]/10 whitespace-nowrap"
           >
             Get Early Access
           </button>

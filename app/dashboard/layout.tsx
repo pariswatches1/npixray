@@ -28,16 +28,16 @@ export default function DashboardLayout({
               <Link
                 key={item.href}
                 href={item.href}
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-[var(--text-secondary)] hover:text-gold hover:bg-gold/5 transition-colors"
+                className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-[var(--text-secondary)] hover:text-[#2F5EA8] hover:bg-[#2F5EA8]/[0.04] transition-colors"
               >
                 <item.icon className="h-4 w-4" />
                 {item.label}
               </Link>
             ))}
-            <div className="hidden md:block border-t border-dark-50/50 my-3" />
+            <div className="hidden md:block border-t border-[var(--border-light)] my-3" />
             <Link
               href="/"
-              className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-gold font-medium hover:bg-gold/5 transition-colors"
+              className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-[#2F5EA8] font-medium hover:bg-[#2F5EA8]/[0.04] transition-colors"
             >
               <Zap className="h-4 w-4" />
               New Scan

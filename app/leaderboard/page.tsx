@@ -25,12 +25,12 @@ export default async function LeaderboardIndexPage() {
       <Breadcrumbs items={[{ label: "Leaderboard" }]} />
 
       <div className="text-center mb-12">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold/10 text-gold text-sm font-semibold mb-4">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#2F5EA8]/[0.06] text-[#2F5EA8] text-sm font-semibold mb-4">
           <Trophy className="h-4 w-4" />
           Leaderboard
         </div>
         <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">
-          Revenue Score <span className="text-gold">Leaderboard</span>
+          Revenue Score <span className="text-[#2F5EA8]">Leaderboard</span>
         </h1>
         <p className="text-lg text-[var(--text-secondary)] max-w-2xl mx-auto">
           Top-performing Medicare providers ranked by Revenue Score.
@@ -40,7 +40,7 @@ export default async function LeaderboardIndexPage() {
 
       {/* By Specialty */}
       <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
-        <Stethoscope className="h-5 w-5 text-gold" />
+        <Stethoscope className="h-5 w-5 text-[#2F5EA8]" />
         By Specialty
       </h2>
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 mb-12">
@@ -48,19 +48,19 @@ export default async function LeaderboardIndexPage() {
           <Link
             key={s}
             href={`/leaderboard/specialties/${specialtyToSlug(s)}`}
-            className="group rounded-xl border border-dark-50/80 bg-dark-400/50 p-4 transition-all hover:border-gold/30 hover:bg-gold/5 flex items-center justify-between"
+            className="group rounded-xl border border-[var(--border-light)] bg-white p-4 transition-all hover:border-[#2F5EA8]/15 hover:bg-[#2F5EA8]/[0.04] flex items-center justify-between"
           >
-            <span className="text-sm font-medium group-hover:text-gold transition-colors">
+            <span className="text-sm font-medium group-hover:text-[#2F5EA8] transition-colors">
               {s}
             </span>
-            <ArrowRight className="h-3.5 w-3.5 text-dark-50 group-hover:text-gold transition-colors" />
+            <ArrowRight className="h-3.5 w-3.5 text-[var(--text-secondary)] group-hover:text-[#2F5EA8] transition-colors" />
           </Link>
         ))}
       </div>
 
       {/* By State */}
       <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
-        <MapPin className="h-5 w-5 text-gold" />
+        <MapPin className="h-5 w-5 text-[#2F5EA8]" />
         By State
       </h2>
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
@@ -71,12 +71,12 @@ export default async function LeaderboardIndexPage() {
             <Link
               key={s.state}
               href={`/leaderboard/${stateToSlug(s.state)}`}
-              className="group rounded-xl border border-dark-50/80 bg-dark-400/50 p-4 transition-all hover:border-gold/30 hover:bg-gold/5 flex items-center justify-between"
+              className="group rounded-xl border border-[var(--border-light)] bg-white p-4 transition-all hover:border-[#2F5EA8]/15 hover:bg-[#2F5EA8]/[0.04] flex items-center justify-between"
             >
-              <span className="text-sm font-medium group-hover:text-gold transition-colors">
+              <span className="text-sm font-medium group-hover:text-[#2F5EA8] transition-colors">
                 {stateAbbrToName(s.state)}
               </span>
-              <ArrowRight className="h-3.5 w-3.5 text-dark-50 group-hover:text-gold transition-colors" />
+              <ArrowRight className="h-3.5 w-3.5 text-[var(--text-secondary)] group-hover:text-[#2F5EA8] transition-colors" />
             </Link>
           ))}
       </div>

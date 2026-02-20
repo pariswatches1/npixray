@@ -37,7 +37,7 @@ export function CodeLookupTool() {
   return (
     <div>
       {/* Search Form */}
-      <div className="rounded-2xl border border-dark-50/80 bg-dark-400/50 p-6 sm:p-8">
+      <div className="rounded-2xl border border-[var(--border-light)] bg-white p-6 sm:p-8">
         <div className="flex items-center gap-3 mb-6">
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-violet-500/10 border border-violet-500/20">
             <FileCode2 className="h-5 w-5 text-violet-400" />
@@ -53,14 +53,14 @@ export function CodeLookupTool() {
               value={code}
               onChange={(e) => setCode(e.target.value.toUpperCase())}
               maxLength={10}
-              className="w-full rounded-lg border border-dark-50/50 bg-dark-200 px-4 py-3 text-white font-mono tracking-wider placeholder:text-[var(--text-secondary)]/50 focus:border-gold focus:outline-none transition-colors"
+              className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-white font-mono tracking-wider placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20 focus:outline-none transition-colors"
               aria-label="CPT or HCPCS code"
             />
           </div>
           <button
             type="submit"
             disabled={!code.trim()}
-            className="flex items-center gap-2 bg-gold text-dark font-semibold rounded-lg px-6 py-3 hover:bg-gold-300 transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex-shrink-0"
+            className="flex items-center gap-2 bg-[#2F5EA8] text-white font-semibold rounded-lg px-6 py-3 hover:bg-[#264D8C] transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex-shrink-0"
           >
             <Search className="h-4 w-4" />
             Look Up
@@ -84,13 +84,13 @@ export function CodeLookupTool() {
             <button
               key={item.code}
               onClick={() => handleCodeClick(item.code)}
-              className="group text-left rounded-xl border border-dark-50/80 bg-dark-400/50 p-4 hover:border-gold/20 hover:bg-dark-300/80 transition-all"
+              className="group text-left rounded-xl border border-[var(--border-light)] bg-white p-4 hover:border-[#2F5EA8]/10 hover:bg-[var(--bg)] transition-all"
             >
               <div className="flex items-center justify-between mb-1">
-                <span className="font-mono font-bold text-gold">
+                <span className="font-mono font-bold text-[#2F5EA8]">
                   {item.code}
                 </span>
-                <ArrowRight className="h-3.5 w-3.5 text-[var(--text-secondary)] group-hover:text-gold group-hover:translate-x-0.5 transition-all" />
+                <ArrowRight className="h-3.5 w-3.5 text-[var(--text-secondary)] group-hover:text-[#2F5EA8] group-hover:translate-x-0.5 transition-all" />
               </div>
               <p className="text-sm text-[var(--text-secondary)] leading-snug">
                 {item.desc}

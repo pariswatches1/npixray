@@ -4,7 +4,7 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 import { DollarSign, TrendingUp } from "lucide-react";
 import { ScanResult } from "@/lib/types";
 
-const COLORS = ["#E8A824", "#D49A1F", "#B07E19", "#8C6313", "#68490E"];
+const COLORS = ["#2F5EA8", "#4FA3D1", "#22C1A1", "#6366f1", "#8B5CF6"];
 
 function formatCurrency(n: number): string {
   if (n >= 1000000) return `$${(n / 1000000).toFixed(1)}M`;
@@ -24,11 +24,11 @@ export function OverviewTab({ data }: { data: ScanResult }) {
   return (
     <div className="space-y-8">
       {/* Big Number */}
-      <div className="rounded-xl border border-gold/20 bg-gold/5 p-8 text-center">
+      <div className="rounded-xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-8 text-center">
         <p className="text-sm text-[var(--text-secondary)] uppercase tracking-wider mb-2">
           Total Estimated Missed Revenue / Year
         </p>
-        <p className="text-5xl sm:text-6xl font-bold text-gold font-mono">
+        <p className="text-5xl sm:text-6xl font-bold text-[#2F5EA8] font-mono">
           {formatCurrency(data.totalMissedRevenue)}
         </p>
         <p className="mt-3 text-sm text-[var(--text-secondary)]">
@@ -42,7 +42,7 @@ export function OverviewTab({ data }: { data: ScanResult }) {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Pie Chart */}
-        <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6">
+        <div className="rounded-xl border border-[var(--border-light)] bg-white p-6">
           <h3 className="text-sm font-semibold text-[var(--text-secondary)] uppercase tracking-wider mb-4">
             Revenue Gap Breakdown
           </h3>
@@ -69,10 +69,10 @@ export function OverviewTab({ data }: { data: ScanResult }) {
                     "Annual Gap",
                   ]}
                   contentStyle={{
-                    background: "#15140e",
-                    border: "1px solid #2a2820",
+                    background: "#FFFFFF",
+                    border: "1px solid #E9EEF6",
                     borderRadius: "8px",
-                    color: "#f5f5f0",
+                    color: "#1A2B4A",
                     fontSize: "13px",
                   }}
                 />
@@ -118,11 +118,11 @@ export function OverviewTab({ data }: { data: ScanResult }) {
           ].map((stat) => (
             <div
               key={stat.label}
-              className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5"
+              className="rounded-xl border border-[var(--border-light)] bg-white p-5"
             >
               <div className="flex items-center gap-3 mb-3">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gold/10 border border-gold/20">
-                  <stat.icon className="h-4 w-4 text-gold" />
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#2F5EA8]/[0.06] border border-[#2F5EA8]/10">
+                  <stat.icon className="h-4 w-4 text-[#2F5EA8]" />
                 </div>
                 <span className="text-xs text-[var(--text-secondary)] uppercase tracking-wider">
                   {stat.label}
@@ -145,12 +145,12 @@ export function OverviewTab({ data }: { data: ScanResult }) {
             ].map((g) => (
               <div
                 key={g.label}
-                className="rounded-lg border border-dark-50/80 bg-dark-400/50 p-4"
+                className="rounded-lg border border-[var(--border-light)] bg-white p-4"
               >
                 <p className="text-[10px] text-[var(--text-secondary)] uppercase tracking-wider">
                   {g.label}
                 </p>
-                <p className="text-lg font-bold font-mono text-gold mt-1">
+                <p className="text-lg font-bold font-mono text-[#2F5EA8] mt-1">
                   {formatCurrency(g.value)}
                 </p>
               </div>

@@ -76,7 +76,7 @@ export function ScoreHistogram({ data, avgScore }: ScoreHistogramProps) {
       </div>
       {avgScore !== undefined && (
         <p className="text-center text-sm text-[var(--text-secondary)] mt-2">
-          Average Score: <span className="font-bold text-gold">{Math.round(avgScore)}</span>
+          Average Score: <span className="font-bold text-[#2F5EA8]">{Math.round(avgScore)}</span>
         </p>
       )}
     </div>

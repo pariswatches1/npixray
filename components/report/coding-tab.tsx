@@ -42,12 +42,12 @@ export function CodingTab({ data }: { data: ScanResult }) {
   return (
     <div className="space-y-8">
       {/* Coding Gap Header */}
-      <div className="rounded-xl border border-gold/20 bg-gold/5 p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="rounded-xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div>
           <p className="text-sm text-[var(--text-secondary)] uppercase tracking-wider mb-1">
             E&M Coding Gap
           </p>
-          <p className="text-3xl font-bold text-gold font-mono">
+          <p className="text-3xl font-bold text-[#2F5EA8] font-mono">
             {formatCurrency(codingGap.annualGap)}
             <span className="text-base text-[var(--text-secondary)] font-sans">
               /year
@@ -60,7 +60,7 @@ export function CodingTab({ data }: { data: ScanResult }) {
       </div>
 
       {/* Bar Chart */}
-      <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6">
+      <div className="rounded-xl border border-[var(--border-light)] bg-white p-6">
         <h3 className="text-sm font-semibold text-[var(--text-secondary)] uppercase tracking-wider mb-6">
           E&M Code Distribution — Your Practice vs {benchmark.specialty}{" "}
           Benchmark
@@ -70,17 +70,17 @@ export function CodingTab({ data }: { data: ScanResult }) {
             <BarChart data={chartData} barGap={8}>
               <CartesianGrid
                 strokeDasharray="3 3"
-                stroke="#2a2820"
+                stroke="#E9EEF6"
                 vertical={false}
               />
               <XAxis
                 dataKey="code"
-                tick={{ fill: "#a09c8c", fontSize: 13 }}
-                axisLine={{ stroke: "#2a2820" }}
+                tick={{ fill: "#6B7A99", fontSize: 13 }}
+                axisLine={{ stroke: "#E9EEF6" }}
                 tickLine={false}
               />
               <YAxis
-                tick={{ fill: "#a09c8c", fontSize: 12 }}
+                tick={{ fill: "#6B7A99", fontSize: 12 }}
                 axisLine={false}
                 tickLine={false}
                 tickFormatter={(v) => `${v}%`}
@@ -89,19 +89,19 @@ export function CodingTab({ data }: { data: ScanResult }) {
               <Tooltip
                 formatter={(value: number) => [`${value}%`, undefined]}
                 contentStyle={{
-                  background: "#15140e",
-                  border: "1px solid #2a2820",
+                  background: "#FFFFFF",
+                  border: "1px solid #E9EEF6",
                   borderRadius: "8px",
-                  color: "#f5f5f0",
+                  color: "#1A2B4A",
                   fontSize: "13px",
                 }}
               />
               <Legend
-                wrapperStyle={{ fontSize: "12px", color: "#a09c8c" }}
+                wrapperStyle={{ fontSize: "12px", color: "#6B7A99" }}
               />
               <Bar
                 dataKey="Your Practice"
-                fill="#E8A824"
+                fill="#2F5EA8"
                 radius={[4, 4, 0, 0]}
                 maxBarSize={60}
               />
@@ -149,7 +149,7 @@ export function CodingTab({ data }: { data: ScanResult }) {
         ].map((item) => (
           <div
             key={item.code}
-            className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5"
+            className="rounded-xl border border-[var(--border-light)] bg-white p-5"
           >
             <div className="flex items-center justify-between mb-3">
               <span className="text-xl font-bold font-mono">{item.code}</span>

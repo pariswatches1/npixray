@@ -92,7 +92,7 @@ export default function NotFound() {
 
       <div className="min-h-[70vh] flex flex-col items-center justify-center px-4 py-12">
         {/* 404 Number */}
-        <div className="text-[120px] sm:text-[160px] font-bold font-mono text-gold/20 leading-none select-none">
+        <div className="text-[120px] sm:text-[160px] font-bold font-mono text-[#2F5EA8]/20 leading-none select-none">
           404
         </div>
 
@@ -112,14 +112,14 @@ export default function NotFound() {
         <div className="mt-8 flex flex-col sm:flex-row gap-3">
           <Link
             href="/"
-            className="inline-flex items-center justify-center gap-2 rounded-xl bg-gold px-6 py-3 text-sm font-semibold text-dark transition-all hover:bg-gold-300 hover:shadow-lg hover:shadow-gold/20"
+            className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#2F5EA8] px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-[#264D8C] hover:shadow-lg hover:shadow-[#2F5EA8]/10"
           >
             <Zap className="h-4 w-4" />
             Scan Your NPI
           </Link>
           <Link
             href="/guides"
-            className="inline-flex items-center justify-center gap-2 rounded-xl border border-dark-50 px-6 py-3 text-sm font-medium text-[var(--text-secondary)] hover:border-gold/30 hover:text-gold transition-all"
+            className="inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--border)] px-6 py-3 text-sm font-medium text-[var(--text-secondary)] hover:border-[#2F5EA8]/15 hover:text-[#2F5EA8] transition-all"
           >
             <BookOpen className="h-4 w-4" />
             Browse Guides
@@ -138,11 +138,11 @@ export default function NotFound() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="group flex flex-col gap-2 rounded-xl border border-dark-50 bg-dark-200 p-4 transition-all hover:border-gold/30 hover:bg-dark-300"
+                  className="group flex flex-col gap-2 rounded-xl border border-[var(--border)] bg-white p-4 transition-all hover:border-[#2F5EA8]/15 hover:bg-[var(--bg)]"
                 >
                   <div className="flex items-center gap-2">
-                    <Icon className="h-4 w-4 text-gold shrink-0" />
-                    <span className="text-sm font-semibold group-hover:text-gold transition-colors">
+                    <Icon className="h-4 w-4 text-[#2F5EA8] shrink-0" />
+                    <span className="text-sm font-semibold group-hover:text-[#2F5EA8] transition-colors">
                       {link.label}
                     </span>
                   </div>
@@ -165,13 +165,13 @@ export default function NotFound() {
               <span key={tool.href} className="flex items-center">
                 <Link
                   href={tool.href}
-                  className="inline-flex items-center gap-1 text-sm text-[var(--text-secondary)] hover:text-gold transition-colors py-1 px-1"
+                  className="inline-flex items-center gap-1 text-sm text-[var(--text-secondary)] hover:text-[#2F5EA8] transition-colors py-1 px-1"
                 >
                   {tool.label}
                   <ArrowRight className="h-3 w-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
                 </Link>
                 {index < popularTools.length - 1 && (
-                  <span className="text-dark-50 mx-1" aria-hidden="true">
+                  <span className="text-[var(--text-secondary)] mx-1" aria-hidden="true">
                     /
                   </span>
                 )}

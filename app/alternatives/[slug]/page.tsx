@@ -1079,7 +1079,7 @@ export default async function AlternativesPage({
           <h2 className="text-2xl font-bold tracking-tight mb-6">
             Why People Look for Alternatives
           </h2>
-          <div className="rounded-2xl border border-dark-50/80 bg-dark-400/50 p-6 sm:p-8 space-y-4">
+          <div className="rounded-2xl border border-[var(--border-light)] bg-white p-6 sm:p-8 space-y-4">
             {data.whyAlternatives.map((reason, i) => (
               <p
                 key={i}
@@ -1098,19 +1098,19 @@ export default async function AlternativesPage({
               key={i}
               className={`rounded-2xl border p-6 sm:p-8 ${
                 alt.isNpixray
-                  ? "border-gold/30 bg-gold/[0.03]"
-                  : "border-dark-50/80 bg-dark-400/50"
+                  ? "border-[#2F5EA8]/15 bg-[#2F5EA8]/[0.03]"
+                  : "border-[var(--border-light)] bg-white"
               }`}
             >
               <div className="flex items-start justify-between gap-4 mb-4">
                 <div>
                   <div className="flex items-center gap-3 mb-2">
-                    <span className="text-sm font-mono text-gold">
+                    <span className="text-sm font-mono text-[#2F5EA8]">
                       #{i + 1}
                     </span>
                     <h3 className="text-xl font-bold">{alt.name}</h3>
                     {alt.isNpixray && (
-                      <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-gold/10 text-gold border border-gold/20 uppercase tracking-wider">
+                      <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#2F5EA8]/[0.06] text-[#2F5EA8] border border-[#2F5EA8]/10 uppercase tracking-wider">
                         Our Pick
                       </span>
                     )}
@@ -1122,13 +1122,13 @@ export default async function AlternativesPage({
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                <div className="rounded-xl bg-dark-300/50 p-4">
+                <div className="rounded-xl bg-white/80 p-4">
                   <p className="text-xs text-[var(--text-secondary)] uppercase tracking-wider mb-1">
                     Pricing
                   </p>
                   <p className="text-sm font-semibold">{alt.pricing}</p>
                 </div>
-                <div className="rounded-xl bg-dark-300/50 p-4">
+                <div className="rounded-xl bg-white/80 p-4">
                   <p className="text-xs text-[var(--text-secondary)] uppercase tracking-wider mb-1">
                     Best For
                   </p>
@@ -1143,7 +1143,7 @@ export default async function AlternativesPage({
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {alt.features.map((feature, j) => (
                     <li key={j} className="flex items-center gap-2 text-sm">
-                      <CheckCircle2 className="h-3.5 w-3.5 text-gold flex-shrink-0" />
+                      <CheckCircle2 className="h-3.5 w-3.5 text-[#2F5EA8] flex-shrink-0" />
                       <span className="text-[var(--text-secondary)]">
                         {feature}
                       </span>
@@ -1190,15 +1190,15 @@ export default async function AlternativesPage({
 
         {/* Why NPIxray Stands Out */}
         <section className="mb-16">
-          <div className="rounded-2xl border border-gold/20 bg-gold/5 p-8 sm:p-10">
+          <div className="rounded-2xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-8 sm:p-10">
             <div className="flex items-center gap-3 mb-6">
-              <Award className="h-6 w-6 text-gold" />
+              <Award className="h-6 w-6 text-[#2F5EA8]" />
               <h2 className="text-2xl font-bold">Why NPIxray Stands Out</h2>
             </div>
             <ul className="space-y-4">
               {data.whyNpixray.map((point, i) => (
                 <li key={i} className="flex items-start gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
+                  <CheckCircle2 className="h-5 w-5 text-[#2F5EA8] flex-shrink-0 mt-0.5" />
                   <span className="text-[var(--text-secondary)] leading-relaxed">
                     {point}
                   </span>
@@ -1216,7 +1216,7 @@ export default async function AlternativesPage({
           <div className="overflow-x-auto">
             <table className="w-full border-collapse">
               <thead>
-                <tr className="border-b border-dark-50/80">
+                <tr className="border-b border-[var(--border-light)]">
                   <th className="text-left text-sm font-semibold p-4 min-w-[180px]">
                     Feature
                   </th>
@@ -1224,7 +1224,7 @@ export default async function AlternativesPage({
                     <th
                       key={name}
                       className={`text-center text-sm font-semibold p-4 min-w-[120px] ${
-                        name === "NPIxray" ? "text-gold" : ""
+                        name === "NPIxray" ? "text-[#2F5EA8]" : ""
                       }`}
                     >
                       {name}
@@ -1236,7 +1236,7 @@ export default async function AlternativesPage({
                 {data.comparison.map((row, i) => (
                   <tr
                     key={i}
-                    className="border-b border-dark-50/50 hover:bg-dark-400/30 transition-colors"
+                    className="border-b border-[var(--border-light)] hover:bg-white transition-colors"
                   >
                     <td className="text-sm text-[var(--text-secondary)] p-4">
                       {row.feature}
@@ -1247,7 +1247,7 @@ export default async function AlternativesPage({
                           row.values[name] ? (
                             <CheckCircle2 className="h-4 w-4 text-emerald-400 mx-auto" />
                           ) : (
-                            <XCircle className="h-4 w-4 text-dark-50 mx-auto" />
+                            <XCircle className="h-4 w-4 text-[var(--text-secondary)] mx-auto" />
                           )
                         ) : (
                           <span className="text-sm text-[var(--text-secondary)]">

@@ -60,31 +60,31 @@ export default async function SpecialtyLeaderboardPage({
   return (
     <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
       <nav className="flex items-center gap-1.5 text-sm text-[var(--text-secondary)] mb-6 flex-wrap">
-        <Link href="/" className="hover:text-gold transition-colors"><Home className="h-3.5 w-3.5" /></Link>
-        <ChevronRight className="h-3.5 w-3.5 text-dark-50" />
-        <Link href="/leaderboard" className="hover:text-gold transition-colors">Leaderboard</Link>
-        <ChevronRight className="h-3.5 w-3.5 text-dark-50" />
+        <Link href="/" className="hover:text-[#2F5EA8] transition-colors"><Home className="h-3.5 w-3.5" /></Link>
+        <ChevronRight className="h-3.5 w-3.5 text-[var(--text-secondary)]" />
+        <Link href="/leaderboard" className="hover:text-[#2F5EA8] transition-colors">Leaderboard</Link>
+        <ChevronRight className="h-3.5 w-3.5 text-[var(--text-secondary)]" />
         <span className="text-white font-medium">{name}</span>
       </nav>
 
       <div className="mb-8">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold/10 text-gold text-sm font-semibold mb-4">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#2F5EA8]/[0.06] text-[#2F5EA8] text-sm font-semibold mb-4">
           <Trophy className="h-4 w-4" />
           National Leaderboard
         </div>
         <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
-          Top <span className="text-gold">{name}</span> Providers
+          Top <span className="text-[#2F5EA8]">{name}</span> Providers
         </h1>
         <p className="text-[var(--text-secondary)]">
           National average Revenue Score for {name}: {Math.round(avgScore)}/100.
         </p>
       </div>
 
-      <div className="rounded-2xl border border-dark-50/80 bg-dark-400/30 overflow-hidden mb-8">
+      <div className="rounded-2xl border border-[var(--border-light)] bg-white overflow-hidden mb-8">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-dark-50/50 text-xs text-[var(--text-secondary)]">
+              <tr className="border-b border-[var(--border-light)] text-xs text-[var(--text-secondary)]">
                 <th className="px-4 py-3 text-left font-medium">Rank</th>
                 <th className="px-4 py-3 text-left font-medium">Provider</th>
                 <th className="px-4 py-3 text-left font-medium">Location</th>
@@ -97,15 +97,15 @@ export default async function SpecialtyLeaderboardPage({
                 return (
                   <tr
                     key={p.npi}
-                    className="border-b border-dark-50/30 hover:bg-dark-300/30 transition-colors"
+                    className="border-b border-[var(--border-light)] hover:bg-[var(--bg)]/30 transition-colors"
                   >
                     <td className="px-4 py-3">
-                      <span className={`font-bold ${i === 0 ? "text-gold" : i < 3 ? "text-gold/70" : "text-[var(--text-secondary)]"}`}>
+                      <span className={`font-bold ${i === 0 ? "text-[#2F5EA8]" : i < 3 ? "text-[#2F5EA8]" : "text-[var(--text-secondary)]"}`}>
                         {i === 0 ? "🥇" : i === 1 ? "🥈" : i === 2 ? "🥉" : `#${i + 1}`}
                       </span>
                     </td>
                     <td className="px-4 py-3">
-                      <Link href={`/scan/${p.npi}`} className="hover:text-gold transition-colors">
+                      <Link href={`/scan/${p.npi}`} className="hover:text-[#2F5EA8] transition-colors">
                         Provider #{p.npi.slice(-4)}
                       </Link>
                     </td>
@@ -136,7 +136,7 @@ export default async function SpecialtyLeaderboardPage({
       {statesInTop.length > 0 && (
         <>
           <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
-            <MapPin className="h-5 w-5 text-gold" />
+            <MapPin className="h-5 w-5 text-[#2F5EA8]" />
             {name} Leaderboard by State
           </h2>
           <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2 mb-8">
@@ -144,9 +144,9 @@ export default async function SpecialtyLeaderboardPage({
               <Link
                 key={st}
                 href={`/leaderboard/${stateToSlug(st)}/${slug}`}
-                className="group rounded-lg border border-dark-50/80 bg-dark-400/50 p-2 text-center transition-all hover:border-gold/30 hover:bg-gold/5"
+                className="group rounded-lg border border-[var(--border-light)] bg-white p-2 text-center transition-all hover:border-[#2F5EA8]/15 hover:bg-[#2F5EA8]/[0.04]"
               >
-                <span className="text-xs group-hover:text-gold transition-colors">
+                <span className="text-xs group-hover:text-[#2F5EA8] transition-colors">
                   {stateAbbrToName(st)}
                 </span>
               </Link>
@@ -155,14 +155,14 @@ export default async function SpecialtyLeaderboardPage({
         </>
       )}
 
-      <div className="rounded-2xl border border-gold/20 bg-gold/5 p-6 text-center mb-8">
+      <div className="rounded-2xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-6 text-center mb-8">
         <h3 className="text-lg font-bold mb-2">Are you a top {name}?</h3>
         <p className="text-sm text-[var(--text-secondary)] mb-4">
           Scan your NPI to see your Revenue Score and check your national ranking.
         </p>
         <Link
           href="/"
-          className="inline-flex items-center gap-2 rounded-xl bg-gold px-6 py-3 text-sm font-semibold text-dark hover:bg-gold-300 transition-all"
+          className="inline-flex items-center gap-2 rounded-xl bg-[#2F5EA8] px-6 py-3 text-sm font-semibold text-white hover:bg-[#264D8C] transition-all"
         >
           <Trophy className="h-4 w-4" />
           Find My Ranking

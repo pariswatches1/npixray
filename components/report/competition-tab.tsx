@@ -110,10 +110,10 @@ function ComparisonBar({
       </div>
       <div className="space-y-1">
         <div className="flex items-center gap-2">
-          <span className="text-[10px] text-gold w-6">You</span>
-          <div className="flex-1 h-4 bg-dark-300 rounded-full overflow-hidden">
+          <span className="text-[10px] text-[#2F5EA8] w-6">You</span>
+          <div className="flex-1 h-4 bg-white rounded-full overflow-hidden">
             <div
-              className="h-full bg-gold rounded-full transition-all duration-700"
+              className="h-full bg-[#2F5EA8] rounded-full transition-all duration-700"
               style={{ width: `${Math.max(yourWidth, 2)}%` }}
             />
           </div>
@@ -125,9 +125,9 @@ function ComparisonBar({
           <span className="text-[10px] text-[var(--text-secondary)] w-6">
             Avg
           </span>
-          <div className="flex-1 h-4 bg-dark-300 rounded-full overflow-hidden">
+          <div className="flex-1 h-4 bg-white rounded-full overflow-hidden">
             <div
-              className="h-full bg-dark-50 rounded-full transition-all duration-700"
+              className="h-full bg-gray-200 rounded-full transition-all duration-700"
               style={{ width: `${Math.max(avgWidth, 2)}%` }}
             />
           </div>
@@ -137,7 +137,7 @@ function ComparisonBar({
         </div>
         <div className="flex items-center gap-2">
           <span className="text-[10px] text-emerald-400 w-6">Top</span>
-          <div className="flex-1 h-4 bg-dark-300 rounded-full overflow-hidden">
+          <div className="flex-1 h-4 bg-white rounded-full overflow-hidden">
             <div
               className="h-full bg-emerald-500/40 rounded-full transition-all duration-700"
               style={{ width: `${Math.max(topWidth, 2)}%` }}
@@ -176,7 +176,7 @@ export function CompetitionTab({ npi }: { npi: string }) {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-16 gap-3">
-        <Loader2 className="h-5 w-5 text-gold animate-spin" />
+        <Loader2 className="h-5 w-5 text-[#2F5EA8] animate-spin" />
         <span className="text-sm text-[var(--text-secondary)]">
           Analyzing your competition...
         </span>
@@ -202,7 +202,7 @@ export function CompetitionTab({ npi }: { npi: string }) {
   return (
     <div className="space-y-6">
       {/* Header Summary */}
-      <div className="rounded-2xl border border-dark-50/80 bg-dark-400/30 p-6">
+      <div className="rounded-2xl border border-[var(--border-light)] bg-white p-6">
         <div className="flex items-start gap-4">
           <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-violet-500/10 border border-violet-500/20 flex-shrink-0">
             <Users className="h-6 w-6 text-violet-400" />
@@ -219,31 +219,31 @@ export function CompetitionTab({ npi }: { npi: string }) {
 
         {/* Rank badges */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6">
-          <div className="rounded-xl border border-dark-50/50 bg-dark-300/30 p-3 text-center">
-            <p className="text-2xl font-bold text-gold">
+          <div className="rounded-xl border border-[var(--border-light)] bg-[var(--bg)] p-3 text-center">
+            <p className="text-2xl font-bold text-[#2F5EA8]">
               #{you.paymentRank}
             </p>
             <p className="text-[10px] text-[var(--text-secondary)] mt-1">
               Revenue Rank
             </p>
-            <p className="text-[10px] text-dark-50">
+            <p className="text-[10px] text-[var(--text-secondary)]">
               of {data.totalCompetitors}
             </p>
           </div>
           {you.score != null && (
-            <div className="rounded-xl border border-dark-50/50 bg-dark-300/30 p-3 text-center">
-              <p className="text-2xl font-bold text-gold">
+            <div className="rounded-xl border border-[var(--border-light)] bg-[var(--bg)] p-3 text-center">
+              <p className="text-2xl font-bold text-[#2F5EA8]">
                 #{you.scoreRank}
               </p>
               <p className="text-[10px] text-[var(--text-secondary)] mt-1">
                 Score Rank
               </p>
-              <p className="text-[10px] text-dark-50">
+              <p className="text-[10px] text-[var(--text-secondary)]">
                 of {data.totalCompetitors}
               </p>
             </div>
           )}
-          <div className="rounded-xl border border-dark-50/50 bg-dark-300/30 p-3 text-center">
+          <div className="rounded-xl border border-[var(--border-light)] bg-[var(--bg)] p-3 text-center">
             <div className="flex items-center justify-center gap-1">
               {isAheadOnPayment ? (
                 <TrendingUp className="h-4 w-4 text-emerald-400" />
@@ -262,7 +262,7 @@ export function CompetitionTab({ npi }: { npi: string }) {
               {isAheadOnPayment ? "Above" : "Below"} Avg
             </p>
           </div>
-          <div className="rounded-xl border border-dark-50/50 bg-dark-300/30 p-3 text-center">
+          <div className="rounded-xl border border-[var(--border-light)] bg-[var(--bg)] p-3 text-center">
             <p className="text-2xl font-bold text-emerald-400">
               {fmt$(topPerformer.payment)}
             </p>
@@ -274,9 +274,9 @@ export function CompetitionTab({ npi }: { npi: string }) {
       </div>
 
       {/* Revenue + Patient Comparison */}
-      <div className="rounded-2xl border border-dark-50/80 bg-dark-400/30 p-6 space-y-6">
+      <div className="rounded-2xl border border-[var(--border-light)] bg-white p-6 space-y-6">
         <div className="flex items-center gap-2 mb-2">
-          <BarChart3 className="h-5 w-5 text-gold" />
+          <BarChart3 className="h-5 w-5 text-[#2F5EA8]" />
           <h3 className="text-base font-bold">Revenue Comparison</h3>
         </div>
         <ComparisonBar
@@ -295,7 +295,7 @@ export function CompetitionTab({ npi }: { npi: string }) {
       </div>
 
       {/* E&M Distribution */}
-      <div className="rounded-2xl border border-dark-50/80 bg-dark-400/30 p-6">
+      <div className="rounded-2xl border border-[var(--border-light)] bg-white p-6">
         <div className="flex items-center gap-2 mb-4">
           <BarChart3 className="h-5 w-5 text-blue-400" />
           <h3 className="text-base font-bold">E&M Coding vs Local Average</h3>
@@ -310,16 +310,16 @@ export function CompetitionTab({ npi }: { npi: string }) {
               <div className="flex items-center justify-between text-xs">
                 <span className="font-medium">{row.code}</span>
                 <div className="flex gap-4">
-                  <span className="text-gold">You: {pct(row.you)}</span>
+                  <span className="text-[#2F5EA8]">You: {pct(row.you)}</span>
                   <span className="text-[var(--text-secondary)]">
                     Avg: {pct(row.avg)}
                   </span>
                 </div>
               </div>
               <div className="flex gap-1 items-center">
-                <div className="flex-1 h-3 bg-dark-300 rounded-full overflow-hidden relative">
+                <div className="flex-1 h-3 bg-white rounded-full overflow-hidden relative">
                   <div
-                    className="absolute inset-y-0 left-0 bg-gold/40 rounded-full"
+                    className="absolute inset-y-0 left-0 bg-[#2F5EA8]/40 rounded-full"
                     style={{ width: `${Math.max(row.you * 100, 1)}%` }}
                   />
                   <div
@@ -343,9 +343,9 @@ export function CompetitionTab({ npi }: { npi: string }) {
       </div>
 
       {/* Program Adoption */}
-      <div className="rounded-2xl border border-dark-50/80 bg-dark-400/30 p-6">
+      <div className="rounded-2xl border border-[var(--border-light)] bg-white p-6">
         <div className="flex items-center gap-2 mb-4">
-          <Trophy className="h-5 w-5 text-gold" />
+          <Trophy className="h-5 w-5 text-[#2F5EA8]" />
           <h3 className="text-base font-bold">
             Program Adoption vs Competition
           </h3>
@@ -392,7 +392,7 @@ export function CompetitionTab({ npi }: { npi: string }) {
                   ? "border-emerald-500/20 bg-emerald-500/5"
                   : prog.count > 0
                   ? "border-red-500/20 bg-red-500/5"
-                  : "border-dark-50/50 bg-dark-300/30"
+                  : "border-[var(--border-light)] bg-[var(--bg)]"
               }`}
             >
               <div className="flex items-center justify-between mb-2">
@@ -425,15 +425,15 @@ export function CompetitionTab({ npi }: { npi: string }) {
       </div>
 
       {/* Insights */}
-      <div className="rounded-2xl border border-gold/20 bg-gold/5 p-6">
-        <h3 className="text-base font-bold text-gold mb-3 flex items-center gap-2">
+      <div className="rounded-2xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-6">
+        <h3 className="text-base font-bold text-[#2F5EA8] mb-3 flex items-center gap-2">
           <TrendingUp className="h-5 w-5" />
           Competitive Insights
         </h3>
         <ul className="space-y-2">
           {you.paymentRank > Math.ceil(data.totalCompetitors / 2) && (
             <li className="text-sm text-[var(--text-secondary)] flex items-start gap-2">
-              <Minus className="h-4 w-4 text-gold flex-shrink-0 mt-0.5" />
+              <Minus className="h-4 w-4 text-[#2F5EA8] flex-shrink-0 mt-0.5" />
               You rank in the bottom half of {data.specialty} providers in{" "}
               {data.location} by revenue. The top earner makes{" "}
               {fmt$(topPerformer.payment)}/year.
@@ -441,28 +441,28 @@ export function CompetitionTab({ npi }: { npi: string }) {
           )}
           {!you.hasCCM && programs.ccm.count > 0 && (
             <li className="text-sm text-[var(--text-secondary)] flex items-start gap-2">
-              <Minus className="h-4 w-4 text-gold flex-shrink-0 mt-0.5" />
+              <Minus className="h-4 w-4 text-[#2F5EA8] flex-shrink-0 mt-0.5" />
               {programs.ccm.count} of {programs.ccm.total} competitors bill
               CCM. You don&apos;t — this is likely leaving revenue on the table.
             </li>
           )}
           {!you.hasRPM && programs.rpm.count > 0 && (
             <li className="text-sm text-[var(--text-secondary)] flex items-start gap-2">
-              <Minus className="h-4 w-4 text-gold flex-shrink-0 mt-0.5" />
+              <Minus className="h-4 w-4 text-[#2F5EA8] flex-shrink-0 mt-0.5" />
               {programs.rpm.count} of {programs.rpm.total} competitors bill
               RPM. You&apos;re falling behind on remote monitoring revenue.
             </li>
           )}
           {!you.hasAWV && programs.awv.count > 0 && (
             <li className="text-sm text-[var(--text-secondary)] flex items-start gap-2">
-              <Minus className="h-4 w-4 text-gold flex-shrink-0 mt-0.5" />
+              <Minus className="h-4 w-4 text-[#2F5EA8] flex-shrink-0 mt-0.5" />
               {programs.awv.count} of {programs.awv.total} competitors bill
               AWV. Annual Wellness Visits are low-hanging revenue fruit.
             </li>
           )}
           {you.em.pct214 < localAvg.em.pct214 && (
             <li className="text-sm text-[var(--text-secondary)] flex items-start gap-2">
-              <Minus className="h-4 w-4 text-gold flex-shrink-0 mt-0.5" />
+              <Minus className="h-4 w-4 text-[#2F5EA8] flex-shrink-0 mt-0.5" />
               Your 99214 coding rate is below local peers. Review your documentation
               practices — you may be undercoding.
             </li>

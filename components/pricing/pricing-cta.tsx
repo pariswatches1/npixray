@@ -96,8 +96,8 @@ export function PricingCTA({ planId, label, highlight }: PricingCTAProps) {
         disabled
           ? "border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 cursor-default"
           : highlight
-            ? "bg-gold text-dark hover:bg-gold-300 hover:shadow-lg hover:shadow-gold/20 disabled:opacity-70"
-            : "border border-dark-50 text-[var(--text-secondary)] hover:border-gold/30 hover:text-gold disabled:opacity-70"
+            ? "bg-[#2F5EA8] text-white hover:bg-[#264D8C] hover:shadow-lg hover:shadow-[#2F5EA8]/10 disabled:opacity-70"
+            : "border border-[var(--border)] text-[var(--text-secondary)] hover:border-[#2F5EA8]/15 hover:text-[#2F5EA8] disabled:opacity-70"
       }`}
     >
       {loading ? (

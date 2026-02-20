@@ -62,7 +62,7 @@ export default async function SpecialtyPage({
   const emTotal = benchmark.pct_99213 + benchmark.pct_99214 + benchmark.pct_99215;
   const emData = [
     { code: "99213", pct: benchmark.pct_99213, color: "bg-amber-500", label: "Level 3" },
-    { code: "99214", pct: benchmark.pct_99214, color: "bg-gold", label: "Level 4" },
+    { code: "99214", pct: benchmark.pct_99214, color: "bg-[#2F5EA8]", label: "Level 4" },
     { code: "99215", pct: benchmark.pct_99215, color: "bg-emerald-500", label: "Level 5" },
   ];
 
@@ -77,7 +77,7 @@ export default async function SpecialtyPage({
   return (
     <>
       <section className="relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gold/[0.03] rounded-full blur-3xl" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#2F5EA8]/[0.03] rounded-full blur-3xl" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-8 pb-12 sm:pt-12 sm:pb-16">
           <Breadcrumbs
             items={[
@@ -121,7 +121,7 @@ export default async function SpecialtyPage({
       </section>
 
       {/* ── Differentiation Layers ─────────────────────────── */}
-      <section className="border-t border-dark-50/50 py-10 sm:py-14">
+      <section className="border-t border-[var(--border-light)] py-10 sm:py-14">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8">
           {/* Layer A: Evidence Blocks — snippet-friendly data boxes */}
           <EvidenceBlocks
@@ -144,7 +144,7 @@ export default async function SpecialtyPage({
       </section>
 
       {/* Data-Driven Specialty Intro */}
-      <section className="border-t border-dark-50/50 py-10 sm:py-14">
+      <section className="border-t border-[var(--border-light)] py-10 sm:py-14">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="prose prose-invert max-w-3xl text-[var(--text-secondary)] leading-relaxed space-y-4 text-[15px]">
             <p>
@@ -223,10 +223,10 @@ export default async function SpecialtyPage({
       </section>
 
       {/* E&M Distribution */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-bold mb-2">
-            E&M Coding <span className="text-gold">Distribution</span>
+            E&M Coding <span className="text-[#2F5EA8]">Distribution</span>
           </h2>
           <p className="text-sm text-[var(--text-secondary)] mb-8 max-w-2xl">
             How {benchmark.specialty} providers distribute their E&M visits
@@ -249,11 +249,11 @@ export default async function SpecialtyPage({
                       <span className="text-lg font-bold font-mono">{item.code}</span>
                       <span className="text-sm text-[var(--text-secondary)]">{item.label}</span>
                     </div>
-                    <span className="text-lg font-bold font-mono text-gold">
+                    <span className="text-lg font-bold font-mono text-[#2F5EA8]">
                       {pctDisplay}%
                     </span>
                   </div>
-                  <div className="w-full bg-dark-500 rounded-full h-4">
+                  <div className="w-full bg-[var(--bg)] rounded-full h-4">
                     <div
                       className={`${item.color} h-4 rounded-full transition-all`}
                       style={{ width: `${Math.min(barWidth, 100)}%` }}
@@ -267,10 +267,10 @@ export default async function SpecialtyPage({
       </section>
 
       {/* Program Adoption Rates */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-bold mb-2">
-            Program <span className="text-gold">Adoption Rates</span>
+            Program <span className="text-[#2F5EA8]">Adoption Rates</span>
           </h2>
           <p className="text-sm text-[var(--text-secondary)] mb-8 max-w-2xl">
             Care management program adoption among {benchmark.specialty} providers
@@ -285,7 +285,7 @@ export default async function SpecialtyPage({
               return (
                 <div
                   key={program.name}
-                  className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5"
+                  className="rounded-xl border border-[var(--border-light)] bg-white p-5"
                 >
                   <div className="flex items-center gap-2 mb-3">
                     <program.icon className={`h-5 w-5 ${program.color}`} />
@@ -296,14 +296,14 @@ export default async function SpecialtyPage({
                       </p>
                     </div>
                   </div>
-                  <div className="w-full bg-dark-500 rounded-full h-3 mb-2">
+                  <div className="w-full bg-[var(--bg)] rounded-full h-3 mb-2">
                     <div
-                      className="bg-gold h-3 rounded-full transition-all"
+                      className="bg-[#2F5EA8] h-3 rounded-full transition-all"
                       style={{ width: `${fillPct}%` }}
                     />
                   </div>
                   <div className="flex justify-between text-xs">
-                    <span className="text-gold font-mono font-semibold">
+                    <span className="text-[#2F5EA8] font-mono font-semibold">
                       {ratePct}%
                     </span>
                     <span className="text-[var(--text-secondary)]">
@@ -319,10 +319,10 @@ export default async function SpecialtyPage({
 
       {/* Top Providers */}
       {providers.length > 0 && (
-        <section className="border-t border-dark-50/50 py-12 sm:py-16">
+        <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl font-bold mb-2">
-              Top <span className="text-gold">{benchmark.specialty}</span> Providers
+              Top <span className="text-[#2F5EA8]">{benchmark.specialty}</span> Providers
             </h2>
             <p className="text-sm text-[var(--text-secondary)] mb-8">
               Top 50 {benchmark.specialty} providers by Medicare payment volume.

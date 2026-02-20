@@ -123,7 +123,7 @@ export function NpiLookupTool() {
   return (
     <div>
       {/* Search Form */}
-      <div className="rounded-2xl border border-dark-50/80 bg-dark-400/50 p-6 sm:p-8">
+      <div className="rounded-2xl border border-[var(--border-light)] bg-white p-6 sm:p-8">
         <div className="flex items-center gap-3 mb-6">
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500/10 border border-blue-500/20">
             <Search className="h-5 w-5 text-blue-400" />
@@ -132,12 +132,12 @@ export function NpiLookupTool() {
         </div>
 
         {/* Mode Toggle */}
-        <div className="flex gap-1 p-1 rounded-lg bg-dark-500 mb-6 max-w-xs">
+        <div className="flex gap-1 p-1 rounded-lg bg-[var(--bg)] mb-6 max-w-xs">
           <button
             onClick={() => setSearchMode("npi")}
             className={`flex-1 px-4 py-2 text-sm font-medium rounded-md transition-all ${
               searchMode === "npi"
-                ? "bg-gold text-dark shadow-sm"
+                ? "bg-[#2F5EA8] text-white shadow-sm"
                 : "text-[var(--text-secondary)] hover:text-white"
             }`}
           >
@@ -147,7 +147,7 @@ export function NpiLookupTool() {
             onClick={() => setSearchMode("name")}
             className={`flex-1 px-4 py-2 text-sm font-medium rounded-md transition-all ${
               searchMode === "name"
-                ? "bg-gold text-dark shadow-sm"
+                ? "bg-[#2F5EA8] text-white shadow-sm"
                 : "text-[var(--text-secondary)] hover:text-white"
             }`}
           >
@@ -171,7 +171,7 @@ export function NpiLookupTool() {
                   const val = e.target.value.replace(/\D/g, "");
                   if (val.length <= 10) setNpi(val);
                 }}
-                className="w-full rounded-lg border border-dark-50/50 bg-dark-200 px-4 py-3 text-white font-mono tracking-wider placeholder:text-[var(--text-secondary)]/50 focus:border-gold focus:outline-none transition-colors"
+                className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-white font-mono tracking-wider placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20 focus:outline-none transition-colors"
                 aria-label="NPI number"
               />
             </div>
@@ -186,7 +186,7 @@ export function NpiLookupTool() {
                   placeholder="First name"
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
-                  className="w-full rounded-lg border border-dark-50/50 bg-dark-200 px-4 py-3 text-white placeholder:text-[var(--text-secondary)]/50 focus:border-gold focus:outline-none transition-colors"
+                  className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-white placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20 focus:outline-none transition-colors"
                   aria-label="First name"
                 />
               </div>
@@ -200,7 +200,7 @@ export function NpiLookupTool() {
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
                   required
-                  className="w-full rounded-lg border border-dark-50/50 bg-dark-200 px-4 py-3 text-white placeholder:text-[var(--text-secondary)]/50 focus:border-gold focus:outline-none transition-colors"
+                  className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-white placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20 focus:outline-none transition-colors"
                   aria-label="Last name"
                 />
               </div>
@@ -211,7 +211,7 @@ export function NpiLookupTool() {
                 <select
                   value={state}
                   onChange={(e) => setState(e.target.value)}
-                  className="w-full rounded-lg border border-dark-50/50 bg-dark-200 px-4 py-3 text-white focus:border-gold focus:outline-none transition-colors appearance-none cursor-pointer"
+                  className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-white focus:border-[#2F5EA8]/20 focus:outline-none transition-colors appearance-none cursor-pointer"
                   aria-label="State"
                 >
                   <option value="">All states</option>
@@ -229,7 +229,7 @@ export function NpiLookupTool() {
                   placeholder="e.g. Cardiology"
                   value={specialty}
                   onChange={(e) => setSpecialty(e.target.value)}
-                  className="w-full rounded-lg border border-dark-50/50 bg-dark-200 px-4 py-3 text-white placeholder:text-[var(--text-secondary)]/50 focus:border-gold focus:outline-none transition-colors"
+                  className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-white placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20 focus:outline-none transition-colors"
                   aria-label="Specialty"
                 />
               </div>
@@ -239,7 +239,7 @@ export function NpiLookupTool() {
           <button
             type="submit"
             disabled={loading || (searchMode === "npi" ? npi.length !== 10 : !lastName.trim())}
-            className="mt-6 w-full sm:w-auto flex items-center justify-center gap-2 bg-gold text-dark font-semibold rounded-lg px-6 py-3 hover:bg-gold-300 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            className="mt-6 w-full sm:w-auto flex items-center justify-center gap-2 bg-[#2F5EA8] text-white font-semibold rounded-lg px-6 py-3 hover:bg-[#264D8C] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
           >
             {loading ? (
               <>
@@ -274,7 +274,7 @@ export function NpiLookupTool() {
           </h3>
 
           {results.length === 0 && (
-            <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-8 text-center">
+            <div className="rounded-xl border border-[var(--border-light)] bg-white p-8 text-center">
               <Search className="h-8 w-8 text-[var(--text-secondary)]/30 mx-auto mb-3" />
               <p className="text-[var(--text-secondary)]">
                 No providers found matching your search. Try adjusting your criteria.
@@ -286,13 +286,13 @@ export function NpiLookupTool() {
             {results.map((provider) => (
               <div
                 key={provider.npi}
-                className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5 hover:border-gold/20 transition-colors"
+                className="rounded-xl border border-[var(--border-light)] bg-white p-5 hover:border-[#2F5EA8]/10 transition-colors"
               >
                 <div className="flex flex-col sm:flex-row sm:items-center gap-4">
                   <div className="flex-1 min-w-0">
                     <p className="font-semibold text-lg">{provider.name}</p>
                     <div className="flex flex-wrap gap-x-4 gap-y-1 mt-1.5 text-sm text-[var(--text-secondary)]">
-                      <span className="font-mono text-gold/80">
+                      <span className="font-mono text-[#2F5EA8]/80">
                         NPI: {provider.npi}
                       </span>
                       {provider.specialty && (
@@ -313,14 +313,14 @@ export function NpiLookupTool() {
                   <div className="flex items-center gap-2 flex-shrink-0">
                     <Link
                       href={`/scan/${provider.npi}`}
-                      className="inline-flex items-center gap-1.5 bg-gold text-dark font-semibold rounded-lg px-4 py-2 text-sm hover:bg-gold-300 transition-colors"
+                      className="inline-flex items-center gap-1.5 bg-[#2F5EA8] text-white font-semibold rounded-lg px-4 py-2 text-sm hover:bg-[#264D8C] transition-colors"
                     >
                       <Zap className="h-3.5 w-3.5" />
                       Scan
                     </Link>
                     <Link
                       href={`/provider/${provider.npi}`}
-                      className="inline-flex items-center gap-1.5 border border-dark-50 rounded-lg px-4 py-2 text-sm text-[var(--text-secondary)] hover:border-gold/30 hover:text-gold transition-colors"
+                      className="inline-flex items-center gap-1.5 border border-[var(--border)] rounded-lg px-4 py-2 text-sm text-[var(--text-secondary)] hover:border-[#2F5EA8]/15 hover:text-[#2F5EA8] transition-colors"
                     >
                       Profile
                       <ArrowRight className="h-3.5 w-3.5" />

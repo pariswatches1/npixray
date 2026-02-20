@@ -153,9 +153,9 @@ const TOOLS = [
     description:
       "Analyze 2-20 practices as a portfolio. See combined acquisition scores, total upside revenue, and optimization roadmap.",
     icon: Briefcase,
-    color: "text-gold",
-    bgColor: "bg-gold/10",
-    borderColor: "border-gold/20",
+    color: "text-[#2F5EA8]",
+    bgColor: "bg-[#2F5EA8]/[0.06]",
+    borderColor: "border-[#2F5EA8]/10",
   },
   {
     slug: "forecast",
@@ -206,22 +206,22 @@ export default function ToolsIndexPage() {
       />
 
       <section className="relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gold/[0.03] rounded-full blur-3xl" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#2F5EA8]/[0.03] rounded-full blur-3xl" />
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-20 pb-12 sm:pt-28 sm:pb-16">
           <Breadcrumbs items={[{ label: "Tools" }]} />
 
           <div className="text-center">
-            <div className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/5 px-4 py-1.5 mb-8">
-              <Wrench className="h-3.5 w-3.5 text-gold" />
-              <span className="text-xs font-medium text-gold">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] px-4 py-1.5 mb-8">
+              <Wrench className="h-3.5 w-3.5 text-[#2F5EA8]" />
+              <span className="text-xs font-medium text-[#2F5EA8]">
                 13 Free Tools
               </span>
             </div>
 
             <h1 className="text-4xl sm:text-5xl font-bold tracking-tight max-w-3xl mx-auto leading-[1.1]">
               Free Medicare Billing{" "}
-              <span className="text-gold">Tools</span>
+              <span className="text-[#2F5EA8]">Tools</span>
             </h1>
 
             <p className="mt-6 text-lg text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed">
@@ -239,7 +239,7 @@ export default function ToolsIndexPage() {
               <Link
                 key={tool.slug}
                 href={`/tools/${tool.slug}`}
-                className="group rounded-2xl border border-dark-50/80 bg-dark-400/50 p-6 transition-all hover:border-gold/30 hover:shadow-lg hover:shadow-gold/5 flex flex-col"
+                className="group rounded-2xl border border-[var(--border-light)] bg-white p-6 transition-all hover:border-[#2F5EA8]/15 hover:shadow-lg hover:shadow-[#2F5EA8]/[0.04] flex flex-col"
               >
                 <div
                   className={`flex h-12 w-12 items-center justify-center rounded-xl border ${tool.borderColor} ${tool.bgColor} mb-4`}
@@ -247,14 +247,14 @@ export default function ToolsIndexPage() {
                   <tool.icon className={`h-6 w-6 ${tool.color}`} />
                 </div>
 
-                <h2 className="text-lg font-bold mb-2 group-hover:text-gold transition-colors">
+                <h2 className="text-lg font-bold mb-2 group-hover:text-[#2F5EA8] transition-colors">
                   {tool.title}
                 </h2>
                 <p className="text-sm text-[var(--text-secondary)] leading-relaxed flex-1">
                   {tool.description}
                 </p>
 
-                <div className="flex items-center gap-1 text-xs font-medium text-[var(--text-secondary)] group-hover:text-gold transition-colors mt-5 pt-4 border-t border-dark-50/50">
+                <div className="flex items-center gap-1 text-xs font-medium text-[var(--text-secondary)] group-hover:text-[#2F5EA8] transition-colors mt-5 pt-4 border-t border-[var(--border-light)]">
                   Use Tool
                   <ArrowRight className="h-3 w-3 group-hover:translate-x-0.5 transition-transform" />
                 </div>
@@ -264,11 +264,11 @@ export default function ToolsIndexPage() {
         </div>
       </section>
 
-      <section className="border-t border-dark-50/50">
+      <section className="border-t border-[var(--border-light)]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 sm:py-20 text-center">
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4">
             Want a Personalized{" "}
-            <span className="text-gold">Revenue Analysis</span>?
+            <span className="text-[#2F5EA8]">Revenue Analysis</span>?
           </h2>
           <p className="text-[var(--text-secondary)] max-w-xl mx-auto mb-8">
             These tools use national averages. Scan your NPI for a
@@ -276,7 +276,7 @@ export default function ToolsIndexPage() {
           </p>
           <Link
             href="/"
-            className="inline-flex items-center gap-2 rounded-xl bg-gold px-8 py-4 text-base font-semibold text-dark transition-all hover:bg-gold-300 hover:shadow-lg hover:shadow-gold/20"
+            className="inline-flex items-center gap-2 rounded-xl bg-[#2F5EA8] px-8 py-4 text-base font-semibold text-white transition-all hover:bg-[#264D8C] hover:shadow-lg hover:shadow-[#2F5EA8]/10"
           >
             <Zap className="h-5 w-5" />
             Scan Your NPI — Free

@@ -148,28 +148,28 @@ export default function BillingCompaniesPage() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-1.5 text-sm text-[var(--text-secondary)] mb-6">
-          <Link href="/" className="hover:text-gold transition-colors">
+          <Link href="/" className="hover:text-[#2F5EA8] transition-colors">
             <Home className="h-3.5 w-3.5" />
           </Link>
-          <ChevronRight className="h-3.5 w-3.5 text-dark-50" />
-          <Link href="/enterprise" className="hover:text-gold transition-colors">
+          <ChevronRight className="h-3.5 w-3.5 text-[var(--text-secondary)]" />
+          <Link href="/enterprise" className="hover:text-[#2F5EA8] transition-colors">
             Enterprise
           </Link>
-          <ChevronRight className="h-3.5 w-3.5 text-dark-50" />
+          <ChevronRight className="h-3.5 w-3.5 text-[var(--text-secondary)]" />
           <span className="text-[var(--text-primary)]">Billing Companies</span>
         </nav>
 
         {/* Hero */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/5 px-4 py-1.5 mb-6">
-            <Building2 className="h-3.5 w-3.5 text-gold" />
-            <span className="text-xs font-medium text-gold">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] px-4 py-1.5 mb-6">
+            <Building2 className="h-3.5 w-3.5 text-[#2F5EA8]" />
+            <span className="text-xs font-medium text-[#2F5EA8]">
               Built for billing companies managing 50\u2013500+ NPIs
             </span>
           </div>
           <h1 className="text-3xl sm:text-5xl font-bold tracking-tight mb-4 max-w-3xl mx-auto leading-[1.1]">
             Revenue Intelligence for{" "}
-            <span className="text-gold">Billing Companies</span>
+            <span className="text-[#2F5EA8]">Billing Companies</span>
           </h1>
           <p className="text-lg text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed mb-8">
             Manage every client NPI from one dashboard. Prove ROI with automated
@@ -179,7 +179,7 @@ export default function BillingCompaniesPage() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
               href="mailto:sales@npixray.com?subject=Billing%20Company%20Demo%20Request"
-              className="inline-flex items-center gap-2 rounded-xl bg-gold px-8 py-3.5 text-sm font-semibold text-dark hover:bg-gold-300 transition-all"
+              className="inline-flex items-center gap-2 rounded-xl bg-[#2F5EA8] px-8 py-3.5 text-sm font-semibold text-white hover:bg-[#264D8C] transition-all"
             >
               <Calendar className="h-4 w-4" />
               Book a Demo
@@ -187,7 +187,7 @@ export default function BillingCompaniesPage() {
             </a>
             <a
               href="mailto:sales@npixray.com?subject=Request%20Sample%20Report"
-              className="inline-flex items-center gap-2 rounded-xl border border-dark-50 px-8 py-3.5 text-sm font-medium text-[var(--text-secondary)] hover:border-gold/30 hover:text-gold transition-all"
+              className="inline-flex items-center gap-2 rounded-xl border border-[var(--border)] px-8 py-3.5 text-sm font-medium text-[var(--text-secondary)] hover:border-[#2F5EA8]/15 hover:text-[#2F5EA8] transition-all"
             >
               <Mail className="h-4 w-4" />
               Request Sample Report
@@ -198,7 +198,7 @@ export default function BillingCompaniesPage() {
         {/* Pain Points */}
         <section className="mb-16">
           <h2 className="text-2xl font-bold text-center mb-10">
-            Sound <span className="text-gold">Familiar?</span>
+            Sound <span className="text-[#2F5EA8]">Familiar?</span>
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {PAIN_POINTS.map((pain) => (
@@ -222,7 +222,7 @@ export default function BillingCompaniesPage() {
         <section className="mb-16">
           <h2 className="text-2xl font-bold text-center mb-3">
             Everything You Need to{" "}
-            <span className="text-gold">Prove Value</span>
+            <span className="text-[#2F5EA8]">Prove Value</span>
           </h2>
           <p className="text-[var(--text-secondary)] text-center mb-10 max-w-xl mx-auto">
             One platform to monitor, analyze, and report on revenue performance
@@ -232,10 +232,10 @@ export default function BillingCompaniesPage() {
             {FEATURES.map((feat) => (
               <div
                 key={feat.title}
-                className="rounded-2xl border border-dark-50/80 bg-dark-400/30 p-6"
+                className="rounded-2xl border border-[var(--border-light)] bg-white p-6"
               >
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gold/10 border border-gold/20 mb-4">
-                  <feat.icon className="h-5 w-5 text-gold" />
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#2F5EA8]/[0.06] border border-[#2F5EA8]/10 mb-4">
+                  <feat.icon className="h-5 w-5 text-[#2F5EA8]" />
                 </div>
                 <h3 className="font-bold mb-2">{feat.title}</h3>
                 <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
@@ -247,9 +247,9 @@ export default function BillingCompaniesPage() {
         </section>
 
         {/* How It Works */}
-        <section className="mb-16 rounded-2xl border border-dark-50/50 bg-dark-400/20 p-8 sm:p-12">
+        <section className="mb-16 rounded-2xl border border-[var(--border-light)] bg-[var(--bg)]/20 p-8 sm:p-12">
           <h2 className="text-2xl font-bold text-center mb-10">
-            How It <span className="text-gold">Works</span>
+            How It <span className="text-[#2F5EA8]">Works</span>
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
             {[
@@ -270,8 +270,8 @@ export default function BillingCompaniesPage() {
               },
             ].map((s) => (
               <div key={s.step} className="text-center">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gold/10 border border-gold/20 mx-auto mb-4">
-                  <span className="text-xl font-bold text-gold">{s.step}</span>
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#2F5EA8]/[0.06] border border-[#2F5EA8]/10 mx-auto mb-4">
+                  <span className="text-xl font-bold text-[#2F5EA8]">{s.step}</span>
                 </div>
                 <h3 className="font-bold mb-2">{s.title}</h3>
                 <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
@@ -285,7 +285,7 @@ export default function BillingCompaniesPage() {
         {/* Pricing */}
         <section className="mb-16">
           <h2 className="text-2xl font-bold text-center mb-3">
-            Simple, <span className="text-gold">Scalable Pricing</span>
+            Simple, <span className="text-[#2F5EA8]">Scalable Pricing</span>
           </h2>
           <p className="text-[var(--text-secondary)] text-center mb-10 max-w-lg mx-auto">
             Pay based on the number of NPIs you manage. All plans include full
@@ -297,12 +297,12 @@ export default function BillingCompaniesPage() {
                 key={tier.name}
                 className={`rounded-2xl border p-8 text-center ${
                   tier.highlight
-                    ? "border-gold/40 bg-gold/[0.03] shadow-lg shadow-gold/10"
-                    : "border-dark-50/80 bg-dark-400/30"
+                    ? "border-[#2F5EA8]/20 bg-[#2F5EA8]/[0.03] shadow-lg shadow-[#2F5EA8]/[0.06]"
+                    : "border-[var(--border-light)] bg-white"
                 }`}
               >
                 {tier.highlight && (
-                  <span className="inline-flex items-center gap-1 rounded-full bg-gold px-3 py-1 text-[10px] font-semibold text-dark uppercase tracking-wider mb-4">
+                  <span className="inline-flex items-center gap-1 rounded-full bg-[#2F5EA8] px-3 py-1 text-[10px] font-semibold text-white uppercase tracking-wider mb-4">
                     Most Popular
                   </span>
                 )}
@@ -310,7 +310,7 @@ export default function BillingCompaniesPage() {
                 <p className="text-xs text-[var(--text-secondary)] mb-4">
                   {tier.npis}
                 </p>
-                <p className="text-3xl font-bold font-mono text-gold mb-1">
+                <p className="text-3xl font-bold font-mono text-[#2F5EA8] mb-1">
                   {tier.price}
                 </p>
                 <p className="text-xs text-[var(--text-secondary)] mb-6">/month</p>
@@ -324,7 +324,7 @@ export default function BillingCompaniesPage() {
                     "Email support",
                   ].map((f) => (
                     <li key={f} className="flex items-center gap-2">
-                      <CheckCircle2 className="h-3.5 w-3.5 text-gold flex-shrink-0" />
+                      <CheckCircle2 className="h-3.5 w-3.5 text-[#2F5EA8] flex-shrink-0" />
                       {f}
                     </li>
                   ))}
@@ -333,8 +333,8 @@ export default function BillingCompaniesPage() {
                   href="mailto:sales@npixray.com?subject=Enterprise%20-%20Billing%20Companies%20-%20{tier.name}"
                   className={`flex items-center justify-center gap-2 rounded-xl py-3 text-sm font-semibold transition-all w-full ${
                     tier.highlight
-                      ? "bg-gold text-dark hover:bg-gold-300"
-                      : "border border-dark-50 text-[var(--text-secondary)] hover:border-gold/30 hover:text-gold"
+                      ? "bg-[#2F5EA8] text-white hover:bg-[#264D8C]"
+                      : "border border-[var(--border)] text-[var(--text-secondary)] hover:border-[#2F5EA8]/15 hover:text-[#2F5EA8]"
                   }`}
                 >
                   Get Started
@@ -346,7 +346,7 @@ export default function BillingCompaniesPage() {
         </section>
 
         {/* Trust / Social Proof */}
-        <section className="mb-16 rounded-2xl border border-dark-50/50 bg-dark-400/20 p-8">
+        <section className="mb-16 rounded-2xl border border-[var(--border-light)] bg-[var(--bg)]/20 p-8">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
             {[
               { label: "Providers Analyzed", value: "1.175M+" },
@@ -355,7 +355,7 @@ export default function BillingCompaniesPage() {
               { label: "States Covered", value: "50" },
             ].map((stat) => (
               <div key={stat.label}>
-                <p className="text-2xl font-bold font-mono text-gold">
+                <p className="text-2xl font-bold font-mono text-[#2F5EA8]">
                   {stat.value}
                 </p>
                 <p className="text-xs text-[var(--text-secondary)] mt-1">
@@ -367,8 +367,8 @@ export default function BillingCompaniesPage() {
         </section>
 
         {/* Final CTA */}
-        <section className="text-center rounded-2xl border border-gold/20 bg-gold/5 p-10 mb-8">
-          <Shield className="h-10 w-10 text-gold mx-auto mb-4" />
+        <section className="text-center rounded-2xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-10 mb-8">
+          <Shield className="h-10 w-10 text-[#2F5EA8] mx-auto mb-4" />
           <h2 className="text-2xl font-bold mb-3">
             Ready to Prove Your Value?
           </h2>
@@ -379,7 +379,7 @@ export default function BillingCompaniesPage() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
               href="mailto:sales@npixray.com?subject=Billing%20Company%20Demo%20Request"
-              className="inline-flex items-center gap-2 rounded-xl bg-gold px-8 py-3.5 text-sm font-semibold text-dark hover:bg-gold-300 transition-all"
+              className="inline-flex items-center gap-2 rounded-xl bg-[#2F5EA8] px-8 py-3.5 text-sm font-semibold text-white hover:bg-[#264D8C] transition-all"
             >
               <Calendar className="h-4 w-4" />
               Book a Demo
@@ -387,7 +387,7 @@ export default function BillingCompaniesPage() {
             </a>
             <Link
               href="/api-docs"
-              className="inline-flex items-center gap-2 rounded-xl border border-dark-50 px-8 py-3.5 text-sm font-medium text-[var(--text-secondary)] hover:border-gold/30 hover:text-gold transition-all"
+              className="inline-flex items-center gap-2 rounded-xl border border-[var(--border)] px-8 py-3.5 text-sm font-medium text-[var(--text-secondary)] hover:border-[#2F5EA8]/15 hover:text-[#2F5EA8] transition-all"
             >
               <Code2 className="h-4 w-4" />
               View API Docs

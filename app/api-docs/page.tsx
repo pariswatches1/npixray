@@ -32,7 +32,7 @@ export const metadata: Metadata = {
 
 function CodeBlock({ children, language }: { children: string; language?: string }) {
   return (
-    <pre className="rounded-lg border border-dark-50/50 bg-[#0a0908] p-4 overflow-x-auto text-xs font-mono leading-relaxed">
+    <pre className="rounded-lg border border-[var(--border-light)] bg-[#0a0908] p-4 overflow-x-auto text-xs font-mono leading-relaxed">
       {language && (
         <div className="text-[10px] text-[var(--text-secondary)]/60 uppercase tracking-wider mb-2">{language}</div>
       )}
@@ -57,14 +57,14 @@ function EndpointSection({
   example: string;
 }) {
   return (
-    <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6 mb-6">
+    <div className="rounded-xl border border-[var(--border-light)] bg-white p-6 mb-6">
       <div className="flex items-center gap-3 mb-3">
         <span className="rounded-md bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 text-xs font-mono font-bold text-emerald-400">
           {method}
         </span>
-        <code className="text-sm sm:text-base font-mono text-gold">{path}</code>
+        <code className="text-sm sm:text-base font-mono text-[#2F5EA8]">{path}</code>
         {tier === "pro" && (
-          <span className="rounded-full bg-gold/10 border border-gold/20 px-2 py-0.5 text-[10px] font-bold text-gold uppercase tracking-wider">
+          <span className="rounded-full bg-[#2F5EA8]/[0.06] border border-[#2F5EA8]/10 px-2 py-0.5 text-[10px] font-bold text-[#2F5EA8] uppercase tracking-wider">
             Pro
           </span>
         )}
@@ -72,10 +72,10 @@ function EndpointSection({
       <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-4">{description}</p>
 
       {params.length > 0 && (
-        <div className="rounded-lg border border-dark-50/50 bg-dark-500/50 p-3 mb-4">
+        <div className="rounded-lg border border-[var(--border-light)] bg-[var(--bg)]/50 p-3 mb-4">
           {params.map((p, i) => (
-            <div key={p.name} className={`flex items-start gap-3 text-sm ${i > 0 ? "mt-2 pt-2 border-t border-dark-50/30" : ""}`}>
-              <code className="text-gold font-mono text-xs shrink-0">{p.name}</code>
+            <div key={p.name} className={`flex items-start gap-3 text-sm ${i > 0 ? "mt-2 pt-2 border-t border-[var(--border-light)]" : ""}`}>
+              <code className="text-[#2F5EA8] font-mono text-xs shrink-0">{p.name}</code>
               <span className="text-[var(--text-secondary)] text-xs">
                 <span className="text-[var(--text-secondary)]/60">({p.location})</span> {p.desc}
               </span>
@@ -94,17 +94,17 @@ export default function ApiDocsPage() {
     <>
       {/* Hero */}
       <section className="relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gold/[0.03] rounded-full blur-3xl" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#2F5EA8]/[0.03] rounded-full blur-3xl" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-8 pb-12 sm:pt-12 sm:pb-16">
           <Breadcrumbs items={[{ label: "API Documentation" }]} />
 
           <div className="flex items-center gap-3 mb-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-gold/20 bg-gold/10">
-              <Code2 className="h-6 w-6 text-gold" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.06]">
+              <Code2 className="h-6 w-6 text-[#2F5EA8]" />
             </div>
             <div>
               <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
-                NPIxray <span className="text-gold">API</span>
+                NPIxray <span className="text-[#2F5EA8]">API</span>
               </h1>
               <p className="text-sm text-[var(--text-secondary)] mt-1">
                 Medicare billing intelligence for developers
@@ -119,30 +119,30 @@ export default function ApiDocsPage() {
 
           {/* Quick Info Cards */}
           <div className="mt-8 grid grid-cols-1 sm:grid-cols-4 gap-4 max-w-3xl">
-            <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-4">
+            <div className="rounded-xl border border-[var(--border-light)] bg-white p-4">
               <div className="flex items-center gap-2 mb-2">
-                <Zap className="h-4 w-4 text-gold" />
+                <Zap className="h-4 w-4 text-[#2F5EA8]" />
                 <p className="text-sm font-semibold">Base URL</p>
               </div>
-              <code className="text-xs text-gold font-mono">npixray.com/api/v1</code>
+              <code className="text-xs text-[#2F5EA8] font-mono">npixray.com/api/v1</code>
             </div>
-            <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-4">
+            <div className="rounded-xl border border-[var(--border-light)] bg-white p-4">
               <div className="flex items-center gap-2 mb-2">
-                <Clock className="h-4 w-4 text-gold" />
+                <Clock className="h-4 w-4 text-[#2F5EA8]" />
                 <p className="text-sm font-semibold">Free Tier</p>
               </div>
               <p className="text-xs text-[var(--text-secondary)]">100 req/day, no key</p>
             </div>
-            <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-4">
+            <div className="rounded-xl border border-[var(--border-light)] bg-white p-4">
               <div className="flex items-center gap-2 mb-2">
-                <Key className="h-4 w-4 text-gold" />
+                <Key className="h-4 w-4 text-[#2F5EA8]" />
                 <p className="text-sm font-semibold">Pro Tier</p>
               </div>
               <p className="text-xs text-[var(--text-secondary)]">10K req/day, API key</p>
             </div>
-            <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-4">
+            <div className="rounded-xl border border-[var(--border-light)] bg-white p-4">
               <div className="flex items-center gap-2 mb-2">
-                <Lock className="h-4 w-4 text-gold" />
+                <Lock className="h-4 w-4 text-[#2F5EA8]" />
                 <p className="text-sm font-semibold">Auth</p>
               </div>
               <p className="text-xs text-[var(--text-secondary)]">X-API-Key header</p>
@@ -152,10 +152,10 @@ export default function ApiDocsPage() {
       </section>
 
       {/* Live Playground */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-bold mb-2">
-            API <span className="text-gold">Playground</span>
+            API <span className="text-[#2F5EA8]">Playground</span>
           </h2>
           <p className="text-sm text-[var(--text-secondary)] mb-6">
             Try the API live — enter an NPI number and see the response.
@@ -165,11 +165,11 @@ export default function ApiDocsPage() {
       </section>
 
       {/* Authentication */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <h2 className="text-2xl font-bold mb-6">
-              <span className="text-gold">Authentication</span>
+              <span className="text-[#2F5EA8]">Authentication</span>
             </h2>
             <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-4">
               Free tier endpoints require no authentication. For Pro endpoints, include your
@@ -183,7 +183,7 @@ X-API-Key: npx_your_api_key_here
 Authorization: Bearer npx_your_api_key_here`}</CodeBlock>
 
             <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5">
+              <div className="rounded-xl border border-[var(--border-light)] bg-white p-5">
                 <h3 className="font-semibold mb-2">Free Tier</h3>
                 <ul className="text-sm text-[var(--text-secondary)] space-y-1.5">
                   <li>100 requests per day per IP</li>
@@ -193,9 +193,9 @@ Authorization: Bearer npx_your_api_key_here`}</CodeBlock>
                   <li>State aggregate stats</li>
                 </ul>
               </div>
-              <div className="rounded-xl border border-gold/20 bg-gold/5 p-5">
+              <div className="rounded-xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-5">
                 <div className="flex items-center gap-2 mb-2">
-                  <Star className="h-4 w-4 text-gold" />
+                  <Star className="h-4 w-4 text-[#2F5EA8]" />
                   <h3 className="font-semibold">Pro Tier — $49/mo</h3>
                 </div>
                 <ul className="text-sm text-[var(--text-secondary)] space-y-1.5">
@@ -210,7 +210,7 @@ Authorization: Bearer npx_your_api_key_here`}</CodeBlock>
                 </ul>
                 <Link
                   href="/login?callbackUrl=/api-docs"
-                  className="mt-4 flex items-center justify-center gap-2 rounded-lg bg-gold px-4 py-2.5 text-sm font-semibold text-dark hover:bg-gold-300 transition-all w-full"
+                  className="mt-4 flex items-center justify-center gap-2 rounded-lg bg-[#2F5EA8] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#264D8C] transition-all w-full"
                 >
                   <Key className="h-4 w-4" />
                   Get API Key — $49/mo
@@ -223,11 +223,11 @@ Authorization: Bearer npx_your_api_key_here`}</CodeBlock>
       </section>
 
       {/* Free Endpoints */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <h2 className="text-2xl font-bold mb-6">
-              Free <span className="text-gold">Endpoints</span>
+              Free <span className="text-[#2F5EA8]">Endpoints</span>
             </h2>
 
             <EndpointSection
@@ -336,14 +336,14 @@ Authorization: Bearer npx_your_api_key_here`}</CodeBlock>
       </section>
 
       {/* Pro Endpoints */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <h2 className="text-2xl font-bold mb-2">
-              Pro <span className="text-gold">Endpoints</span>
+              Pro <span className="text-[#2F5EA8]">Endpoints</span>
             </h2>
             <p className="text-sm text-[var(--text-secondary)] mb-6">
-              Require a Pro API key ($49/mo). <Link href="/developers" className="text-gold hover:underline">Get your key</Link>
+              Require a Pro API key ($49/mo). <Link href="/developers" className="text-[#2F5EA8] hover:underline">Get your key</Link>
             </p>
 
             <EndpointSection
@@ -527,13 +527,13 @@ Authorization: Bearer npx_your_api_key_here`}</CodeBlock>
       </section>
 
       {/* FHIR & EHR Integration */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <div className="flex items-center gap-3 mb-2">
-              <Heart className="h-5 w-5 text-gold" />
+              <Heart className="h-5 w-5 text-[#2F5EA8]" />
               <h2 className="text-2xl font-bold">
-                FHIR & <span className="text-gold">EHR Integration</span>
+                FHIR & <span className="text-[#2F5EA8]">EHR Integration</span>
               </h2>
             </div>
             <p className="text-sm text-[var(--text-secondary)] mb-6">
@@ -587,15 +587,15 @@ Authorization: Bearer npx_your_api_key_here`}</CodeBlock>
   title="NPIxray Revenue Score">
 </iframe>`}</CodeBlock>
 
-            <div className="mt-6 rounded-xl border border-dark-50/80 bg-dark-400/50 p-5">
+            <div className="mt-6 rounded-xl border border-[var(--border-light)] bg-white p-5">
               <h4 className="font-semibold mb-2 flex items-center gap-2">
-                <Plug className="h-4 w-4 text-gold" />
+                <Plug className="h-4 w-4 text-[#2F5EA8]" />
                 EHR Vendor Integration
               </h4>
               <ul className="text-sm text-[var(--text-secondary)] space-y-1.5">
                 <li>FHIR R4 Practitioner resource for CDS Hooks / SMART on FHIR</li>
                 <li>Iframe widget for embedded dashboards within EHR chrome</li>
-                <li>Custom extensions under <code className="text-gold text-xs">npixray.com/fhir/extension/</code></li>
+                <li>Custom extensions under <code className="text-[#2F5EA8] text-xs">npixray.com/fhir/extension/</code></li>
                 <li>No PHI transmitted — uses public CMS data only</li>
               </ul>
             </div>
@@ -604,13 +604,13 @@ Authorization: Bearer npx_your_api_key_here`}</CodeBlock>
       </section>
 
       {/* OpenAPI Spec */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <div className="flex items-center gap-3 mb-2">
-              <FileJson className="h-5 w-5 text-gold" />
+              <FileJson className="h-5 w-5 text-[#2F5EA8]" />
               <h2 className="text-2xl font-bold">
-                OpenAPI <span className="text-gold">Specification</span>
+                OpenAPI <span className="text-[#2F5EA8]">Specification</span>
               </h2>
             </div>
             <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-4">
@@ -624,7 +624,7 @@ curl https://npixray.com/api/v1/openapi
             <div className="mt-4">
               <Link
                 href="/api/v1/openapi"
-                className="inline-flex items-center gap-2 rounded-lg border border-gold/20 bg-gold/5 px-4 py-2 text-sm font-medium text-gold hover:bg-gold/10 transition-colors"
+                className="inline-flex items-center gap-2 rounded-lg border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] px-4 py-2 text-sm font-medium text-[#2F5EA8] hover:bg-[#264D8C]/10 transition-colors"
                 target="_blank"
               >
                 <FileJson className="h-4 w-4" />
@@ -637,11 +637,11 @@ curl https://npixray.com/api/v1/openapi
       </section>
 
       {/* Code Examples */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <h2 className="text-2xl font-bold mb-6">
-              Code <span className="text-gold">Examples</span>
+              Code <span className="text-[#2F5EA8]">Examples</span>
             </h2>
 
             <h3 className="text-sm font-semibold mb-2">Python</h3>
@@ -706,11 +706,11 @@ curl -H "X-API-Key: npx_your_key" \\
       </section>
 
       {/* Rate Limits */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <h2 className="text-2xl font-bold mb-6">
-              Rate Limits & <span className="text-gold">Headers</span>
+              Rate Limits & <span className="text-[#2F5EA8]">Headers</span>
             </h2>
             <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-4">
               Every response includes rate limit headers:
@@ -719,10 +719,10 @@ curl -H "X-API-Key: npx_your_key" \\
 X-RateLimit-Remaining: 87
 X-RateLimit-Reset: 2026-02-18T00:00:00.000Z`}</CodeBlock>
 
-            <div className="mt-6 overflow-x-auto rounded-lg border border-dark-50/50">
+            <div className="mt-6 overflow-x-auto rounded-lg border border-[var(--border-light)]">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-dark-50/50 bg-dark-300">
+                  <tr className="border-b border-[var(--border-light)] bg-white">
                     <th className="text-left px-4 py-2 font-medium text-[var(--text-secondary)]">Tier</th>
                     <th className="text-left px-4 py-2 font-medium text-[var(--text-secondary)]">Daily Limit</th>
                     <th className="text-left px-4 py-2 font-medium text-[var(--text-secondary)]">Auth</th>
@@ -730,21 +730,21 @@ X-RateLimit-Reset: 2026-02-18T00:00:00.000Z`}</CodeBlock>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="border-b border-dark-50/30">
+                  <tr className="border-b border-[var(--border-light)]">
                     <td className="px-4 py-2 font-medium">Anonymous</td>
-                    <td className="px-4 py-2 font-mono text-gold">100</td>
+                    <td className="px-4 py-2 font-mono text-[#2F5EA8]">100</td>
                     <td className="px-4 py-2 text-[var(--text-secondary)]">None (IP-based)</td>
                     <td className="px-4 py-2 text-[var(--text-secondary)]">Free endpoints only</td>
                   </tr>
-                  <tr className="border-b border-dark-50/30 bg-dark-400/30">
+                  <tr className="border-b border-[var(--border-light)] bg-white">
                     <td className="px-4 py-2 font-medium">Free Key</td>
-                    <td className="px-4 py-2 font-mono text-gold">100</td>
+                    <td className="px-4 py-2 font-mono text-[#2F5EA8]">100</td>
                     <td className="px-4 py-2 text-[var(--text-secondary)]">API Key</td>
                     <td className="px-4 py-2 text-[var(--text-secondary)]">Free endpoints only</td>
                   </tr>
-                  <tr className="bg-dark-400/30">
-                    <td className="px-4 py-2 font-medium text-gold">Pro Key</td>
-                    <td className="px-4 py-2 font-mono text-gold">10,000</td>
+                  <tr className="bg-white">
+                    <td className="px-4 py-2 font-medium text-[#2F5EA8]">Pro Key</td>
+                    <td className="px-4 py-2 font-mono text-[#2F5EA8]">10,000</td>
                     <td className="px-4 py-2 text-[var(--text-secondary)]">API Key</td>
                     <td className="px-4 py-2 text-[var(--text-secondary)]">All endpoints</td>
                   </tr>
@@ -756,11 +756,11 @@ X-RateLimit-Reset: 2026-02-18T00:00:00.000Z`}</CodeBlock>
       </section>
 
       {/* Data Source */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <h2 className="text-xl font-bold mb-6">
-              Data <span className="text-gold">Source</span>
+              Data <span className="text-[#2F5EA8]">Source</span>
             </h2>
             <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-6">
               All data is sourced from the CMS Medicare Physician &amp; Other
@@ -771,7 +771,7 @@ X-RateLimit-Reset: 2026-02-18T00:00:00.000Z`}</CodeBlock>
             </p>
             <Link
               href="/developers"
-              className="inline-flex items-center gap-2 rounded-xl bg-gold px-6 py-3 text-sm font-semibold text-dark hover:bg-gold-300 transition-all"
+              className="inline-flex items-center gap-2 rounded-xl bg-[#2F5EA8] px-6 py-3 text-sm font-semibold text-white hover:bg-[#264D8C] transition-all"
             >
               <Code2 className="h-4 w-4" />
               Start Building

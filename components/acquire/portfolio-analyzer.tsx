@@ -86,7 +86,7 @@ export function PortfolioAnalyzer() {
   return (
     <div>
       {/* Input Section */}
-      <div className="rounded-2xl border border-dark-50/80 bg-dark-400/30 p-6 mb-8">
+      <div className="rounded-2xl border border-[var(--border-light)] bg-white p-6 mb-8">
         <div className="flex items-center justify-between mb-4">
           <h3 className="font-bold text-lg">Enter Practice NPIs</h3>
           <span className="text-xs text-[var(--text-secondary)]">
@@ -102,12 +102,12 @@ export function PortfolioAnalyzer() {
                 value={npi}
                 onChange={(e) => updateNpi(i, e.target.value)}
                 placeholder={`NPI #${i + 1}`}
-                className="flex-1 rounded-lg border border-dark-50/80 bg-dark-400/50 px-3 py-2 text-sm placeholder:text-zinc-500 focus:border-gold/50 focus:outline-none focus:ring-1 focus:ring-gold/30 font-mono"
+                className="flex-1 rounded-lg border border-[var(--border-light)] bg-white px-3 py-2 text-sm placeholder:text-zinc-500 focus:border-[#2F5EA8]/20/50 focus:outline-none focus:ring-1 focus:ring-[#2F5EA8]/10 font-mono"
               />
               {npis.length > 2 && (
                 <button
                   onClick={() => removeField(i)}
-                  className="rounded-lg border border-dark-50/80 px-2 text-zinc-500 hover:text-red-400 hover:border-red-400/30 transition-colors"
+                  className="rounded-lg border border-[var(--border-light)] px-2 text-zinc-500 hover:text-red-400 hover:border-red-400/30 transition-colors"
                 >
                   <X className="h-4 w-4" />
                 </button>
@@ -120,7 +120,7 @@ export function PortfolioAnalyzer() {
           {npis.length < 20 && (
             <button
               onClick={addField}
-              className="flex items-center justify-center gap-2 rounded-xl border border-dark-50/80 px-4 py-2.5 text-sm text-[var(--text-secondary)] hover:border-gold/30 hover:text-gold transition-all"
+              className="flex items-center justify-center gap-2 rounded-xl border border-[var(--border-light)] px-4 py-2.5 text-sm text-[var(--text-secondary)] hover:border-[#2F5EA8]/15 hover:text-[#2F5EA8] transition-all"
             >
               <Plus className="h-4 w-4" />
               Add Practice (up to 20)
@@ -129,7 +129,7 @@ export function PortfolioAnalyzer() {
           <button
             onClick={analyze}
             disabled={loading}
-            className="flex items-center justify-center gap-2 rounded-xl bg-gold px-6 py-2.5 text-sm font-semibold text-dark transition-all hover:bg-gold-300 hover:shadow-lg hover:shadow-gold/20 disabled:opacity-50"
+            className="flex items-center justify-center gap-2 rounded-xl bg-[#2F5EA8] px-6 py-2.5 text-sm font-semibold text-white transition-all hover:bg-[#264D8C] hover:shadow-lg hover:shadow-[#2F5EA8]/10 disabled:opacity-50"
           >
             {loading ? (
               <>
@@ -168,12 +168,12 @@ export function PortfolioAnalyzer() {
                 {formatAcquisitionCurrency(results.totalCurrentRevenue)}
               </p>
             </div>
-            <div className="rounded-xl border border-gold/20 bg-gold/5 p-4">
+            <div className="rounded-xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-4">
               <div className="flex items-center gap-2 mb-2">
-                <TrendingUp className="h-4 w-4 text-gold" />
+                <TrendingUp className="h-4 w-4 text-[#2F5EA8]" />
                 <span className="text-xs text-[var(--text-secondary)]">Total Upside</span>
               </div>
-              <p className="text-2xl font-bold text-gold">
+              <p className="text-2xl font-bold text-[#2F5EA8]">
                 +{formatAcquisitionCurrency(results.totalUpside)}
               </p>
             </div>
@@ -185,12 +185,12 @@ export function PortfolioAnalyzer() {
 
           {/* Prioritized Actions */}
           {results.prioritizedActions.length > 0 && (
-            <div className="rounded-2xl border border-gold/20 bg-gold/5 p-6">
+            <div className="rounded-2xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-6">
               <h3 className="font-bold text-lg mb-4">Optimization Roadmap</h3>
               <ul className="space-y-2">
                 {results.prioritizedActions.map((action, i) => (
                   <li key={i} className="flex items-start gap-3">
-                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-gold/20 text-xs font-bold text-gold flex-shrink-0 mt-0.5">
+                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#2F5EA8]/10 text-xs font-bold text-[#2F5EA8] flex-shrink-0 mt-0.5">
                       {i + 1}
                     </span>
                     <span className="text-sm">{action}</span>
@@ -207,7 +207,7 @@ export function PortfolioAnalyzer() {
               {results.providers.map((p, i) => (
                 <div
                   key={p.npi}
-                  className="rounded-xl border border-dark-50/80 bg-dark-400/30 p-5"
+                  className="rounded-xl border border-[var(--border-light)] bg-white p-5"
                 >
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex-1 min-w-0">
@@ -234,25 +234,25 @@ export function PortfolioAnalyzer() {
                   </div>
 
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-3">
-                    <div className="text-center rounded-lg bg-dark-400/50 p-2">
+                    <div className="text-center rounded-lg bg-white p-2">
                       <p className="text-xs text-[var(--text-secondary)]">Current</p>
                       <p className="text-sm font-bold">{formatAcquisitionCurrency(p.currentRevenue)}</p>
                     </div>
-                    <div className="text-center rounded-lg bg-dark-400/50 p-2">
+                    <div className="text-center rounded-lg bg-white p-2">
                       <p className="text-xs text-[var(--text-secondary)]">Projected</p>
                       <p className="text-sm font-bold text-emerald-400">
                         {formatAcquisitionCurrency(p.acquisitionScore.projectedOptimizedRevenue)}
                       </p>
                     </div>
-                    <div className="text-center rounded-lg bg-dark-400/50 p-2">
+                    <div className="text-center rounded-lg bg-white p-2">
                       <p className="text-xs text-[var(--text-secondary)]">Upside</p>
-                      <p className="text-sm font-bold text-gold">
+                      <p className="text-sm font-bold text-[#2F5EA8]">
                         +{formatAcquisitionCurrency(p.acquisitionScore.estimatedUpsideRevenue)}
                       </p>
                     </div>
-                    <div className="text-center rounded-lg bg-dark-400/50 p-2">
+                    <div className="text-center rounded-lg bg-white p-2">
                       <p className="text-xs text-[var(--text-secondary)]">Growth</p>
-                      <p className="text-sm font-bold text-gold">
+                      <p className="text-sm font-bold text-[#2F5EA8]">
                         +{p.acquisitionScore.revenueIncreasePct}%
                       </p>
                     </div>
@@ -271,9 +271,9 @@ export function PortfolioAnalyzer() {
                           <span className="text-[10px] text-[var(--text-secondary)]">{sub.label}</span>
                           <span className="text-[10px] font-bold">{sub.value}</span>
                         </div>
-                        <div className="h-1.5 rounded-full bg-dark-400/80 overflow-hidden">
+                        <div className="h-1.5 rounded-full bg-[var(--bg)]/80 overflow-hidden">
                           <div
-                            className="h-full rounded-full bg-gold transition-all"
+                            className="h-full rounded-full bg-[#2F5EA8] transition-all"
                             style={{ width: `${sub.value}%` }}
                           />
                         </div>
@@ -283,7 +283,7 @@ export function PortfolioAnalyzer() {
 
                   <Link
                     href={`/provider/${p.npi}`}
-                    className="flex items-center gap-1 text-xs font-medium text-[var(--text-secondary)] hover:text-gold transition-colors mt-3 pt-3 border-t border-dark-50/50"
+                    className="flex items-center gap-1 text-xs font-medium text-[var(--text-secondary)] hover:text-[#2F5EA8] transition-colors mt-3 pt-3 border-t border-[var(--border-light)]"
                   >
                     Full provider analysis
                     <ArrowRight className="h-3 w-3" />

@@ -59,18 +59,18 @@ export default function EmbedPage() {
     <>
       {/* Hero */}
       <section className="relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gold/[0.03] rounded-full blur-3xl" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#2F5EA8]/[0.03] rounded-full blur-3xl" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-20 pb-12 sm:pt-28 sm:pb-16">
           <div className="text-center">
-            <div className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/5 px-4 py-1.5 mb-8">
-              <Code2 className="h-3.5 w-3.5 text-gold" />
-              <span className="text-xs font-medium text-gold">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] px-4 py-1.5 mb-8">
+              <Code2 className="h-3.5 w-3.5 text-[#2F5EA8]" />
+              <span className="text-xs font-medium text-[#2F5EA8]">
                 Free Embeddable Widgets
               </span>
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold tracking-tight max-w-3xl mx-auto leading-[1.1]">
               Embed Medicare Report Cards{" "}
-              <span className="text-gold">on Your Website</span>
+              <span className="text-[#2F5EA8]">on Your Website</span>
             </h1>
             <p className="mt-6 text-lg text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed">
               Add real CMS Medicare data widgets to your website, blog, or
@@ -84,7 +84,7 @@ export default function EmbedPage() {
       <section className="pb-16 sm:pb-24">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           {/* Controls */}
-          <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6 mb-8">
+          <div className="rounded-xl border border-[var(--border-light)] bg-white p-6 mb-8">
             <h2 className="text-lg font-semibold mb-4">Configure Widget</h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
@@ -98,8 +98,8 @@ export default function EmbedPage() {
                     onClick={() => setWidgetType("state")}
                     className={`flex-1 py-2.5 px-4 rounded-lg text-sm font-medium transition-all ${
                       widgetType === "state"
-                        ? "bg-gold text-dark"
-                        : "bg-dark-500 border border-dark-50 text-[var(--text-secondary)] hover:border-gold/30"
+                        ? "bg-[#2F5EA8] text-white"
+                        : "bg-[var(--bg)] border border-[var(--border)] text-[var(--text-secondary)] hover:border-[#2F5EA8]/15"
                     }`}
                   >
                     State
@@ -108,8 +108,8 @@ export default function EmbedPage() {
                     onClick={() => setWidgetType("specialty")}
                     className={`flex-1 py-2.5 px-4 rounded-lg text-sm font-medium transition-all ${
                       widgetType === "specialty"
-                        ? "bg-gold text-dark"
-                        : "bg-dark-500 border border-dark-50 text-[var(--text-secondary)] hover:border-gold/30"
+                        ? "bg-[#2F5EA8] text-white"
+                        : "bg-[var(--bg)] border border-[var(--border)] text-[var(--text-secondary)] hover:border-[#2F5EA8]/15"
                     }`}
                   >
                     Specialty
@@ -127,7 +127,7 @@ export default function EmbedPage() {
                     <select
                       value={stateId}
                       onChange={(e) => setStateId(e.target.value)}
-                      className="w-full appearance-none rounded-lg border border-dark-50 bg-dark-500 py-2.5 px-4 pr-10 text-sm focus:border-gold/50 focus:ring-1 focus:ring-gold/30 outline-none transition-all"
+                      className="w-full appearance-none rounded-lg border border-[var(--border)] bg-[var(--bg)] py-2.5 px-4 pr-10 text-sm focus:border-[#2F5EA8]/20/50 focus:ring-1 focus:ring-[#2F5EA8]/10 outline-none transition-all"
                     >
                       {STATE_LIST.map((s) => (
                         <option key={s.abbr} value={s.abbr}>
@@ -139,7 +139,7 @@ export default function EmbedPage() {
                     <select
                       value={specialtyId}
                       onChange={(e) => setSpecialtyId(e.target.value)}
-                      className="w-full appearance-none rounded-lg border border-dark-50 bg-dark-500 py-2.5 px-4 pr-10 text-sm focus:border-gold/50 focus:ring-1 focus:ring-gold/30 outline-none transition-all"
+                      className="w-full appearance-none rounded-lg border border-[var(--border)] bg-[var(--bg)] py-2.5 px-4 pr-10 text-sm focus:border-[#2F5EA8]/20/50 focus:ring-1 focus:ring-[#2F5EA8]/10 outline-none transition-all"
                     >
                       {SPECIALTY_LIST.map((s) => (
                         <option key={s} value={s}>
@@ -155,15 +155,15 @@ export default function EmbedPage() {
           </div>
 
           {/* Preview */}
-          <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6 mb-8">
+          <div className="rounded-xl border border-[var(--border-light)] bg-white p-6 mb-8">
             <div className="flex items-center gap-2 mb-4">
-              <Eye className="h-4 w-4 text-gold" />
+              <Eye className="h-4 w-4 text-[#2F5EA8]" />
               <h2 className="text-lg font-semibold">Preview</h2>
               <span className="text-xs text-[var(--text-secondary)]">
                 {currentLabel}
               </span>
             </div>
-            <div className="flex justify-center bg-dark-500/50 rounded-lg p-6 border border-dark-50/30">
+            <div className="flex justify-center bg-[var(--bg)]/50 rounded-lg p-6 border border-[var(--border-light)]">
               <iframe
                 key={iframeUrl}
                 src={iframeUrl}
@@ -181,15 +181,15 @@ export default function EmbedPage() {
           </div>
 
           {/* Embed Code */}
-          <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6">
+          <div className="rounded-xl border border-[var(--border-light)] bg-white p-6">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
-                <Code2 className="h-4 w-4 text-gold" />
+                <Code2 className="h-4 w-4 text-[#2F5EA8]" />
                 <h2 className="text-lg font-semibold">Embed Code</h2>
               </div>
               <button
                 onClick={handleCopy}
-                className="flex items-center gap-2 rounded-lg border border-dark-50 px-4 py-2 text-sm text-[var(--text-secondary)] hover:text-gold hover:border-gold/30 transition-all"
+                className="flex items-center gap-2 rounded-lg border border-[var(--border)] px-4 py-2 text-sm text-[var(--text-secondary)] hover:text-[#2F5EA8] hover:border-[#2F5EA8]/15 transition-all"
               >
                 {copied ? (
                   <>
@@ -204,7 +204,7 @@ export default function EmbedPage() {
                 )}
               </button>
             </div>
-            <div className="bg-dark-500 rounded-lg p-4 border border-dark-50/30 overflow-x-auto">
+            <div className="bg-[var(--bg)] rounded-lg p-4 border border-[var(--border-light)] overflow-x-auto">
               <code className="text-sm text-[var(--text-secondary)] font-mono whitespace-pre-wrap break-all">
                 {embedCode}
               </code>
@@ -217,27 +217,27 @@ export default function EmbedPage() {
 
           {/* Instructions */}
           <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-6">
-            <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5">
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gold/10 mb-3">
-                <span className="text-gold font-bold">1</span>
+            <div className="rounded-xl border border-[var(--border-light)] bg-white p-5">
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#2F5EA8]/[0.06] mb-3">
+                <span className="text-[#2F5EA8] font-bold">1</span>
               </div>
               <h3 className="font-semibold mb-1">Choose Report</h3>
               <p className="text-sm text-[var(--text-secondary)]">
                 Select a state or specialty for your widget
               </p>
             </div>
-            <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5">
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gold/10 mb-3">
-                <span className="text-gold font-bold">2</span>
+            <div className="rounded-xl border border-[var(--border-light)] bg-white p-5">
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#2F5EA8]/[0.06] mb-3">
+                <span className="text-[#2F5EA8] font-bold">2</span>
               </div>
               <h3 className="font-semibold mb-1">Copy Code</h3>
               <p className="text-sm text-[var(--text-secondary)]">
                 Click &quot;Copy Code&quot; to grab the embed snippet
               </p>
             </div>
-            <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5">
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gold/10 mb-3">
-                <span className="text-gold font-bold">3</span>
+            <div className="rounded-xl border border-[var(--border-light)] bg-white p-5">
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#2F5EA8]/[0.06] mb-3">
+                <span className="text-[#2F5EA8] font-bold">3</span>
               </div>
               <h3 className="font-semibold mb-1">Paste &amp; Publish</h3>
               <p className="text-sm text-[var(--text-secondary)]">

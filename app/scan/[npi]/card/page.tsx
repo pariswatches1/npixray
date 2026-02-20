@@ -161,11 +161,11 @@ function GapCard({
       : `$${value.toLocaleString()}`;
 
   return (
-    <div className="flex items-center gap-3 rounded-xl border border-dark-50/50 bg-dark-400/30 p-3">
+    <div className="flex items-center gap-3 rounded-xl border border-[var(--border-light)] bg-white p-3">
       <span className="text-lg">{icon}</span>
       <div className="flex-1 min-w-0">
         <p className="text-xs text-[var(--text-secondary)]">{label}</p>
-        <p className="text-sm font-bold text-gold">{display}/yr</p>
+        <p className="text-sm font-bold text-[#2F5EA8]">{display}/yr</p>
       </div>
     </div>
   );
@@ -258,7 +258,7 @@ export default function ReportCardPage() {
   if (loading) {
     return (
       <div className="min-h-[70vh] flex flex-col items-center justify-center gap-4">
-        <Loader2 className="h-8 w-8 text-gold animate-spin" />
+        <Loader2 className="h-8 w-8 text-[#2F5EA8] animate-spin" />
         <p className="text-sm text-[var(--text-secondary)]">
           Generating your report card...
         </p>
@@ -277,7 +277,7 @@ export default function ReportCardPage() {
         <p className="text-sm text-[var(--text-secondary)]">{error}</p>
         <button
           onClick={runScan}
-          className="inline-flex items-center gap-2 rounded-lg bg-gold px-6 py-2.5 text-sm font-semibold text-dark hover:bg-gold-300"
+          className="inline-flex items-center gap-2 rounded-lg bg-[#2F5EA8] px-6 py-2.5 text-sm font-semibold text-white hover:bg-[#264D8C]"
         >
           <RefreshCw className="h-4 w-4" />
           Retry
@@ -324,7 +324,7 @@ export default function ReportCardPage() {
       <div className="flex items-center justify-between mb-6">
         <Link
           href={`/scan/${npi}`}
-          className="inline-flex items-center gap-1.5 text-sm text-[var(--text-secondary)] hover:text-gold transition-colors"
+          className="inline-flex items-center gap-1.5 text-sm text-[var(--text-secondary)] hover:text-[#2F5EA8] transition-colors"
         >
           <ArrowLeft className="h-3.5 w-3.5" />
           Full Report
@@ -333,7 +333,7 @@ export default function ReportCardPage() {
           <button
             onClick={handleDownloadImage}
             disabled={downloading}
-            className="inline-flex items-center gap-2 rounded-lg border border-dark-50 px-3 py-2 text-sm font-medium text-[var(--text-secondary)] hover:border-gold/30 hover:text-gold transition-all disabled:opacity-50"
+            className="inline-flex items-center gap-2 rounded-lg border border-[var(--border)] px-3 py-2 text-sm font-medium text-[var(--text-secondary)] hover:border-[#2F5EA8]/15 hover:text-[#2F5EA8] transition-all disabled:opacity-50"
           >
             {downloading ? (
               <Loader2 className="h-4 w-4 animate-spin" />
@@ -346,7 +346,7 @@ export default function ReportCardPage() {
           </button>
           <button
             onClick={handleCopy}
-            className="inline-flex items-center gap-2 rounded-lg border border-dark-50 px-3 py-2 text-sm font-medium text-[var(--text-secondary)] hover:border-gold/30 hover:text-gold transition-all"
+            className="inline-flex items-center gap-2 rounded-lg border border-[var(--border)] px-3 py-2 text-sm font-medium text-[var(--text-secondary)] hover:border-[#2F5EA8]/15 hover:text-[#2F5EA8] transition-all"
           >
             {copied ? (
               <>
@@ -366,20 +366,20 @@ export default function ReportCardPage() {
       {/* ═══ THE REPORT CARD ═══ */}
       <div
         ref={cardRef}
-        className="rounded-2xl border border-dark-50/80 bg-gradient-to-br from-dark-400/80 via-dark-400/50 to-dark-400/80 overflow-hidden"
+        className="rounded-2xl border border-[var(--border-light)] bg-gradient-to-br from-dark-400/80 via-dark-400/50 to-dark-400/80 overflow-hidden"
       >
         {/* Gold top accent */}
-        <div className="h-1 bg-gradient-to-r from-gold/40 via-gold to-gold/40" />
+        <div className="h-1 bg-gradient-to-r from-[#2F5EA8]/40 via-[#2F5EA8] to-[#2F5EA8]/40" />
 
         {/* Card header */}
         <div className="px-6 sm:px-8 pt-6 pb-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Zap className="h-5 w-5 text-gold" />
+            <Zap className="h-5 w-5 text-[#2F5EA8]" />
             <span className="text-lg font-bold">
-              NPI<span className="text-gold">xray</span>
+              NPI<span className="text-[#2F5EA8]">xray</span>
             </span>
           </div>
-          <span className="text-[10px] sm:text-xs font-bold text-gold uppercase tracking-[2px] bg-gold/10 border border-gold/20 rounded-md px-3 py-1">
+          <span className="text-[10px] sm:text-xs font-bold text-[#2F5EA8] uppercase tracking-[2px] bg-[#2F5EA8]/[0.06] border border-[#2F5EA8]/10 rounded-md px-3 py-1">
             Revenue Report Card
           </span>
         </div>
@@ -405,11 +405,11 @@ export default function ReportCardPage() {
               {data.provider.specialty} · {data.provider.address.city},{" "}
               {data.provider.address.state}
             </p>
-            <div className="mt-3 inline-flex items-center gap-2 bg-gold/[0.06] border border-gold/20 rounded-lg px-4 py-2">
-              <TrendingUp className="h-4 w-4 text-gold" />
+            <div className="mt-3 inline-flex items-center gap-2 bg-[#2F5EA8]/[0.06] border border-[#2F5EA8]/10 rounded-lg px-4 py-2">
+              <TrendingUp className="h-4 w-4 text-[#2F5EA8]" />
               <span className="text-sm text-[var(--text-secondary)]">
                 Top{" "}
-                <span className="text-gold font-bold text-lg">
+                <span className="text-[#2F5EA8] font-bold text-lg">
                   {Math.max(1, 100 - percentile)}%
                 </span>{" "}
                 of {data.provider.specialty} providers
@@ -419,16 +419,16 @@ export default function ReportCardPage() {
         </div>
 
         {/* Divider */}
-        <div className="mx-6 sm:mx-8 border-t border-dark-50/50" />
+        <div className="mx-6 sm:mx-8 border-t border-[var(--border-light)]" />
 
         {/* Missed Revenue Hero */}
         <div className="px-6 sm:px-8 py-6">
-          <div className="rounded-xl bg-gold/[0.04] border border-gold/15 p-5">
+          <div className="rounded-xl bg-[#2F5EA8]/[0.04] border border-[#2F5EA8]/20/15 p-5">
             <p className="text-[10px] uppercase tracking-[2px] text-[var(--text-secondary)] mb-2">
               Estimated Missed Revenue
             </p>
             <div className="flex items-baseline gap-2">
-              <span className="text-4xl sm:text-5xl font-black text-gold tabular-nums">
+              <span className="text-4xl sm:text-5xl font-black text-[#2F5EA8] tabular-nums">
                 {missed}
               </span>
               <span className="text-lg text-[var(--text-secondary)]">/yr</span>
@@ -472,20 +472,20 @@ export default function ReportCardPage() {
         )}
 
         {/* Card Footer */}
-        <div className="px-6 sm:px-8 py-4 border-t border-dark-50/30 bg-dark-400/30 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="px-6 sm:px-8 py-4 border-t border-[var(--border-light)] bg-white flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-xs text-[var(--text-secondary)]">
             Based on CMS Medicare Public Data · NPI {npi}
           </p>
-          <p className="text-xs font-semibold text-gold">
+          <p className="text-xs font-semibold text-[#2F5EA8]">
             Scan your NPI free → npixray.com
           </p>
         </div>
       </div>
 
       {/* ═══ SHARE SECTION ═══ */}
-      <div className="mt-8 rounded-xl border border-dark-50/80 bg-dark-400/50 p-6">
+      <div className="mt-8 rounded-xl border border-[var(--border-light)] bg-white p-6">
         <div className="flex items-center gap-2 mb-4">
-          <Share2 className="h-4 w-4 text-gold" />
+          <Share2 className="h-4 w-4 text-[#2F5EA8]" />
           <h3 className="text-sm font-semibold">Share Your Report Card</h3>
         </div>
 
@@ -495,7 +495,7 @@ export default function ReportCardPage() {
             href={twitterUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-lg border border-dark-50 px-4 py-2.5 text-sm font-medium text-[var(--text-secondary)] hover:border-gold/30 hover:text-gold transition-all"
+            className="inline-flex items-center gap-2 rounded-lg border border-[var(--border)] px-4 py-2.5 text-sm font-medium text-[var(--text-secondary)] hover:border-[#2F5EA8]/15 hover:text-[#2F5EA8] transition-all"
             onClick={() =>
               trackEvent({ action: "card_share", category: "card", label: "twitter" })
             }
@@ -511,7 +511,7 @@ export default function ReportCardPage() {
             href={linkedinUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-lg border border-dark-50 px-4 py-2.5 text-sm font-medium text-[var(--text-secondary)] hover:border-blue-500/30 hover:text-blue-400 transition-all"
+            className="inline-flex items-center gap-2 rounded-lg border border-[var(--border)] px-4 py-2.5 text-sm font-medium text-[var(--text-secondary)] hover:border-blue-500/30 hover:text-blue-400 transition-all"
             onClick={() =>
               trackEvent({ action: "card_share", category: "card", label: "linkedin" })
             }
@@ -525,7 +525,7 @@ export default function ReportCardPage() {
           {/* Copy Link */}
           <button
             onClick={handleCopy}
-            className="inline-flex items-center gap-2 rounded-lg border border-dark-50 px-4 py-2.5 text-sm font-medium text-[var(--text-secondary)] hover:border-gold/30 hover:text-gold transition-all"
+            className="inline-flex items-center gap-2 rounded-lg border border-[var(--border)] px-4 py-2.5 text-sm font-medium text-[var(--text-secondary)] hover:border-[#2F5EA8]/15 hover:text-[#2F5EA8] transition-all"
           >
             {copied ? (
               <>
@@ -544,7 +544,7 @@ export default function ReportCardPage() {
           <button
             onClick={handleDownloadImage}
             disabled={downloading}
-            className="inline-flex items-center gap-2 rounded-lg border border-dark-50 px-4 py-2.5 text-sm font-medium text-[var(--text-secondary)] hover:border-gold/30 hover:text-gold transition-all disabled:opacity-50"
+            className="inline-flex items-center gap-2 rounded-lg border border-[var(--border)] px-4 py-2.5 text-sm font-medium text-[var(--text-secondary)] hover:border-[#2F5EA8]/15 hover:text-[#2F5EA8] transition-all disabled:opacity-50"
           >
             {downloading ? (
               <Loader2 className="h-4 w-4 animate-spin" />
@@ -570,14 +570,14 @@ export default function ReportCardPage() {
       <div className="mt-6 flex flex-col sm:flex-row gap-3">
         <Link
           href={`/scan/${npi}`}
-          className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-gold px-6 py-3.5 text-sm font-semibold text-dark hover:bg-gold-300 transition-all"
+          className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-[#2F5EA8] px-6 py-3.5 text-sm font-semibold text-white hover:bg-[#264D8C] transition-all"
         >
           View Full Revenue Report
           <ArrowRight className="h-4 w-4" />
         </Link>
         <Link
           href={`/coach/${npi}`}
-          className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl border border-gold/30 px-6 py-3.5 text-sm font-semibold text-gold hover:bg-gold/5 transition-all"
+          className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl border border-[#2F5EA8]/15 px-6 py-3.5 text-sm font-semibold text-[#2F5EA8] hover:bg-[#2F5EA8]/[0.04] transition-all"
         >
           <Sparkles className="h-4 w-4" />
           Ask AI Revenue Coach
@@ -591,7 +591,7 @@ export default function ReportCardPage() {
         </p>
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-sm font-semibold text-gold hover:underline"
+          className="inline-flex items-center gap-2 text-sm font-semibold text-[#2F5EA8] hover:underline"
         >
           <Zap className="h-4 w-4" />
           Get your own free report card
@@ -644,7 +644,7 @@ ${cardUrl}
   };
 
   return (
-    <div className="rounded-xl border border-dark-50/50 bg-dark-400/30 p-4">
+    <div className="rounded-xl border border-[var(--border-light)] bg-white p-4">
       <div className="flex items-center justify-between mb-3">
         <p className="text-xs font-medium text-[var(--text-secondary)] uppercase tracking-wider">
           One-Click LinkedIn Post

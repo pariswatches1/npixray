@@ -63,7 +63,7 @@ export function ShareButtons({ url, twitterText, linkedinText, title }: ShareBut
           href={twitterUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-lg border border-dark-50/80 bg-dark-400/50 px-4 py-2 text-sm font-medium hover:border-gold/30 hover:text-gold transition-all"
+          className="inline-flex items-center gap-2 rounded-lg border border-[var(--border-light)] bg-white px-4 py-2 text-sm font-medium hover:border-[#2F5EA8]/15 hover:text-[#2F5EA8] transition-all"
           aria-label="Share on X (Twitter)"
         >
           <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
@@ -77,7 +77,7 @@ export function ShareButtons({ url, twitterText, linkedinText, title }: ShareBut
           href={linkedinUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-lg border border-dark-50/80 bg-dark-400/50 px-4 py-2 text-sm font-medium hover:border-blue-500/30 hover:text-blue-400 transition-all"
+          className="inline-flex items-center gap-2 rounded-lg border border-[var(--border-light)] bg-white px-4 py-2 text-sm font-medium hover:border-blue-500/30 hover:text-blue-400 transition-all"
           aria-label="Share on LinkedIn"
         >
           <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
@@ -91,7 +91,7 @@ export function ShareButtons({ url, twitterText, linkedinText, title }: ShareBut
           href={facebookUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-lg border border-dark-50/80 bg-dark-400/50 px-4 py-2 text-sm font-medium hover:border-blue-600/30 hover:text-blue-500 transition-all"
+          className="inline-flex items-center gap-2 rounded-lg border border-[var(--border-light)] bg-white px-4 py-2 text-sm font-medium hover:border-blue-600/30 hover:text-blue-500 transition-all"
           aria-label="Share on Facebook"
         >
           <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
@@ -103,7 +103,7 @@ export function ShareButtons({ url, twitterText, linkedinText, title }: ShareBut
         {/* Copy Link */}
         <button
           onClick={copyLink}
-          className="inline-flex items-center gap-2 rounded-lg border border-dark-50/80 bg-dark-400/50 px-4 py-2 text-sm font-medium hover:border-gold/30 hover:text-gold transition-all"
+          className="inline-flex items-center gap-2 rounded-lg border border-[var(--border-light)] bg-white px-4 py-2 text-sm font-medium hover:border-[#2F5EA8]/15 hover:text-[#2F5EA8] transition-all"
           aria-label="Copy link"
         >
           {copied ? (
@@ -121,7 +121,7 @@ export function ShareButtons({ url, twitterText, linkedinText, title }: ShareBut
       </div>
 
       {/* LinkedIn pre-written post */}
-      <div className="rounded-xl border border-dark-50/50 bg-dark-400/30 p-4">
+      <div className="rounded-xl border border-[var(--border-light)] bg-white p-4">
         <div className="flex items-center justify-between mb-3">
           <p className="text-xs font-medium text-[var(--text-secondary)] uppercase tracking-wider">
             One-Click LinkedIn Post

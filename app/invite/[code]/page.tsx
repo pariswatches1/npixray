@@ -36,7 +36,7 @@ function formatCurrency(n: number): string {
 
 function scoreColor(score: number): string {
   if (score >= 80) return "text-emerald-400";
-  if (score >= 60) return "text-gold";
+  if (score >= 60) return "text-[#2F5EA8]";
   if (score >= 40) return "text-orange-400";
   return "text-red-400";
 }
@@ -124,7 +124,7 @@ export default function InviteLandingPage() {
     return (
       <div className="min-h-[70vh] flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
-          <Loader2 className="h-8 w-8 text-gold animate-spin" />
+          <Loader2 className="h-8 w-8 text-[#2F5EA8] animate-spin" />
           <p className="text-sm text-[var(--text-secondary)]">Loading your report...</p>
         </div>
       </div>
@@ -146,7 +146,7 @@ export default function InviteLandingPage() {
         </div>
         <Link
           href="/"
-          className="mt-4 inline-flex items-center gap-2 rounded-lg bg-gold px-6 py-2.5 text-sm font-semibold text-dark hover:bg-gold-300 transition-colors"
+          className="mt-4 inline-flex items-center gap-2 rounded-lg bg-[#2F5EA8] px-6 py-2.5 text-sm font-semibold text-white hover:bg-[#264D8C] transition-colors"
         >
           Scan Your NPI
           <ArrowRight className="h-4 w-4" />
@@ -164,26 +164,26 @@ export default function InviteLandingPage() {
       <div
         className="absolute inset-0 opacity-[0.03]"
         style={{
-          backgroundImage: `linear-gradient(rgba(232,168,36,0.5) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(232,168,36,0.5) 1px, transparent 1px)`,
+          backgroundImage: `linear-gradient(rgba(47,94,168,0.15) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(47,94,168,0.15) 1px, transparent 1px)`,
           backgroundSize: "60px 60px",
         }}
       />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-gold/[0.04] rounded-full blur-3xl" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-[#2F5EA8]/[0.04] rounded-full blur-3xl" />
 
       <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 pt-16 pb-24 sm:pt-24 sm:pb-32">
         {/* Personalized header */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/5 px-4 py-1.5 mb-6">
-            <div className="h-1.5 w-1.5 rounded-full bg-gold animate-pulse" />
-            <span className="text-xs font-medium text-gold">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] px-4 py-1.5 mb-6">
+            <div className="h-1.5 w-1.5 rounded-full bg-[#2F5EA8] animate-pulse" />
+            <span className="text-xs font-medium text-[#2F5EA8]">
               Personalized Revenue Analysis
             </span>
           </div>
 
           <h1 className="text-3xl sm:text-5xl font-bold tracking-tight leading-[1.1] text-balance">
             Dr. {firstName}, your practice may be missing{" "}
-            <span className="text-gold">{formattedGap}/year</span>
+            <span className="text-[#2F5EA8]">{formattedGap}/year</span>
           </h1>
 
           <p className="mt-6 text-lg text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed">
@@ -195,7 +195,7 @@ export default function InviteLandingPage() {
 
         {/* Revenue Score Card */}
         <div className="mx-auto max-w-2xl mb-12">
-          <div className="rounded-2xl border border-dark-50/80 bg-dark-300/50 backdrop-blur-sm p-8 glow-gold">
+          <div className="rounded-2xl border border-[var(--border-light)] bg-white/80 backdrop-blur-sm p-8 glow-blue">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
               {/* Revenue Score */}
               <div className="text-center">
@@ -215,7 +215,7 @@ export default function InviteLandingPage() {
                 <p className="text-[10px] text-[var(--text-secondary)] uppercase tracking-wider font-semibold mb-2">
                   Estimated Missed Revenue
                 </p>
-                <p className="text-5xl font-bold font-mono text-gold">
+                <p className="text-5xl font-bold font-mono text-[#2F5EA8]">
                   {formattedGap}
                 </p>
                 <p className="text-sm text-[var(--text-secondary)] mt-1">/year</p>
@@ -234,7 +234,7 @@ export default function InviteLandingPage() {
             </div>
 
             {/* Key findings preview */}
-            <div className="border-t border-dark-50/50 pt-6 mb-6">
+            <div className="border-t border-[var(--border-light)] pt-6 mb-6">
               <p className="text-sm font-semibold mb-4">Your report includes:</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {[
@@ -243,9 +243,9 @@ export default function InviteLandingPage() {
                   { icon: Users, label: "Specialty Benchmarks", desc: "How you compare to peers nationally" },
                   { icon: TrendingUp, label: "90-Day Action Plan", desc: "Prioritized steps to capture revenue" },
                 ].map((item) => (
-                  <div key={item.label} className="flex items-start gap-3 p-3 rounded-lg border border-dark-50/50 bg-dark-500/30">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gold/10 shrink-0">
-                      <item.icon className="h-4 w-4 text-gold" />
+                  <div key={item.label} className="flex items-start gap-3 p-3 rounded-lg border border-[var(--border-light)] bg-[var(--bg)]/30">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#2F5EA8]/[0.06] shrink-0">
+                      <item.icon className="h-4 w-4 text-[#2F5EA8]" />
                     </div>
                     <div>
                       <p className="text-sm font-medium">{item.label}</p>
@@ -258,9 +258,9 @@ export default function InviteLandingPage() {
 
             {/* Email capture gate */}
             {!emailCaptured ? (
-              <div className="rounded-xl border border-gold/20 bg-gold/5 p-6">
+              <div className="rounded-xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-6">
                 <div className="flex items-center gap-2 mb-3">
-                  <Mail className="h-5 w-5 text-gold" />
+                  <Mail className="h-5 w-5 text-[#2F5EA8]" />
                   <p className="text-sm font-semibold">Save your report &amp; get your action plan</p>
                 </div>
                 <p className="text-xs text-[var(--text-secondary)] mb-4">
@@ -273,13 +273,13 @@ export default function InviteLandingPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="you@practice.com"
-                    className="flex-1 rounded-lg border border-dark-50 bg-dark-500 py-3 px-4 text-sm placeholder:text-[var(--text-secondary)]/50 focus:border-gold/50 focus:ring-1 focus:ring-gold/30 outline-none transition-all"
+                    className="flex-1 rounded-lg border border-[var(--border)] bg-[var(--bg)] py-3 px-4 text-sm placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20/50 focus:ring-1 focus:ring-[#2F5EA8]/10 outline-none transition-all"
                     required
                   />
                   <button
                     type="submit"
                     disabled={emailSubmitting}
-                    className="flex items-center justify-center gap-2 rounded-lg bg-gold px-6 py-3 text-sm font-semibold text-dark hover:bg-gold-300 transition-all disabled:opacity-50 whitespace-nowrap"
+                    className="flex items-center justify-center gap-2 rounded-lg bg-[#2F5EA8] px-6 py-3 text-sm font-semibold text-white hover:bg-[#264D8C] transition-all disabled:opacity-50 whitespace-nowrap"
                   >
                     {emailSubmitting ? (
                       <Loader2 className="h-4 w-4 animate-spin" />
@@ -299,7 +299,7 @@ export default function InviteLandingPage() {
                 </p>
                 <Link
                   href={`/scan/${invite.npi}`}
-                  className="mt-4 inline-flex items-center gap-2 rounded-lg bg-gold px-6 py-2.5 text-sm font-semibold text-dark hover:bg-gold-300 transition-colors"
+                  className="mt-4 inline-flex items-center gap-2 rounded-lg bg-[#2F5EA8] px-6 py-2.5 text-sm font-semibold text-white hover:bg-[#264D8C] transition-colors"
                 >
                   View Full Report
                   <ArrowRight className="h-4 w-4" />
@@ -312,15 +312,15 @@ export default function InviteLandingPage() {
         {/* Trust indicators */}
         <div className="flex flex-wrap justify-center gap-x-8 gap-y-3 text-xs text-[var(--text-secondary)]">
           <div className="flex items-center gap-2">
-            <Shield className="h-3.5 w-3.5 text-gold/60" />
+            <Shield className="h-3.5 w-3.5 text-[#4FA3D1]" />
             100% Free Analysis
           </div>
           <div className="flex items-center gap-2">
-            <Activity className="h-3.5 w-3.5 text-gold/60" />
+            <Activity className="h-3.5 w-3.5 text-[#4FA3D1]" />
             CMS Public Data Only
           </div>
           <div className="flex items-center gap-2">
-            <Users className="h-3.5 w-3.5 text-gold/60" />
+            <Users className="h-3.5 w-3.5 text-[#4FA3D1]" />
             1.2M+ Providers Indexed
           </div>
         </div>

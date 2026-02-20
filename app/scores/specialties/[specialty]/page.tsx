@@ -59,34 +59,34 @@ export default async function SpecialtyScorePage({
   return (
     <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
       <nav className="flex items-center gap-1.5 text-sm text-[var(--text-secondary)] mb-6 flex-wrap">
-        <Link href="/" className="hover:text-gold transition-colors"><Home className="h-3.5 w-3.5" /></Link>
-        <ChevronRight className="h-3.5 w-3.5 text-dark-50" />
-        <Link href="/scores" className="hover:text-gold transition-colors">Scores</Link>
-        <ChevronRight className="h-3.5 w-3.5 text-dark-50" />
+        <Link href="/" className="hover:text-[#2F5EA8] transition-colors"><Home className="h-3.5 w-3.5" /></Link>
+        <ChevronRight className="h-3.5 w-3.5 text-[var(--text-secondary)]" />
+        <Link href="/scores" className="hover:text-[#2F5EA8] transition-colors">Scores</Link>
+        <ChevronRight className="h-3.5 w-3.5 text-[var(--text-secondary)]" />
         <span className="text-[var(--text-primary)]">{name}</span>
       </nav>
 
       <div className="flex items-center gap-3 mb-8">
-        <Stethoscope className="h-6 w-6 text-gold" />
+        <Stethoscope className="h-6 w-6 text-[#2F5EA8]" />
         <div>
           <h1 className="text-3xl font-bold">{name} Revenue Scores</h1>
           <p className="text-sm text-[var(--text-secondary)]">
-            Average: <span className="font-bold text-gold">{Math.round(avgScore)}</span>
+            Average: <span className="font-bold text-[#2F5EA8]">{Math.round(avgScore)}</span>
           </p>
         </div>
       </div>
 
       {/* Distribution */}
       {distribution.length > 0 ? (
-        <section className="mb-10 rounded-2xl border border-dark-50/80 bg-dark-400/30 p-6">
+        <section className="mb-10 rounded-2xl border border-[var(--border-light)] bg-white p-6">
           <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
-            <BarChart3 className="h-5 w-5 text-gold" />
+            <BarChart3 className="h-5 w-5 text-[#2F5EA8]" />
             Score Distribution
           </h2>
           <ScoreHistogram data={distribution} avgScore={avgScore} />
         </section>
       ) : (
-        <section className="mb-10 rounded-2xl border border-dark-50/80 bg-dark-400/30 p-6 text-center">
+        <section className="mb-10 rounded-2xl border border-[var(--border-light)] bg-white p-6 text-center">
           <p className="text-[var(--text-secondary)]">Scores being calculated. Check back soon!</p>
         </section>
       )}

@@ -70,7 +70,7 @@ interface SwitchPageData {
 // ────────────────────────────────────────────────────────────
 
 function BenefitIcon({ icon }: { icon: Benefit["icon"] }) {
-  const cls = "h-5 w-5 text-gold";
+  const cls = "h-5 w-5 text-[#2F5EA8]";
   switch (icon) {
     case "trending":
       return <TrendingUp className={cls} />;
@@ -868,7 +868,7 @@ export default async function SwitchPage({
 
       {/* Hero */}
       <section className="relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gold/[0.03] rounded-full blur-3xl" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#2F5EA8]/[0.03] rounded-full blur-3xl" />
         <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 pt-8 pb-12 sm:pt-12 sm:pb-16">
           <Breadcrumbs
             items={[
@@ -876,9 +876,9 @@ export default async function SwitchPage({
               { label: `From ${page.source}` },
             ]}
           />
-          <div className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/5 px-4 py-1.5 mb-6">
-            <RefreshCw className="h-3.5 w-3.5 text-gold" />
-            <span className="text-xs font-medium text-gold">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] px-4 py-1.5 mb-6">
+            <RefreshCw className="h-3.5 w-3.5 text-[#2F5EA8]" />
+            <span className="text-xs font-medium text-[#2F5EA8]">
               Migration Guide
             </span>
           </div>
@@ -887,7 +887,7 @@ export default async function SwitchPage({
             <span className="text-[var(--text-secondary)]">
               {page.source}
             </span>{" "}
-            to <span className="text-gold">NPIxray</span>
+            to <span className="text-[#2F5EA8]">NPIxray</span>
           </h1>
           <p className="text-lg text-[var(--text-secondary)] max-w-3xl leading-relaxed">
             {page.heroSubtitle}
@@ -895,7 +895,7 @@ export default async function SwitchPage({
           <div className="mt-8">
             <Link
               href="/"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-gold text-dark font-semibold hover:bg-gold-300 transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#2F5EA8] text-white font-semibold hover:bg-[#264D8C] transition-colors"
             >
               <Zap className="h-4 w-4" />
               Run Free Scan Now
@@ -906,11 +906,11 @@ export default async function SwitchPage({
       </section>
 
       {/* Why Switch */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-xl font-bold mb-2">
             Why Switch from{" "}
-            <span className="text-gold">{page.source}</span>?
+            <span className="text-[#2F5EA8]">{page.source}</span>?
           </h2>
           <p className="text-sm text-[var(--text-secondary)] mb-8">
             Common pain points that drive practices to seek a better solution.
@@ -919,7 +919,7 @@ export default async function SwitchPage({
             {page.painPoints.map((point, i) => (
               <div
                 key={i}
-                className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6"
+                className="rounded-xl border border-[var(--border-light)] bg-white p-6"
               >
                 <div className="flex items-start gap-3 mb-3">
                   <AlertTriangle className="h-5 w-5 text-amber-400 flex-shrink-0 mt-0.5" />
@@ -935,10 +935,10 @@ export default async function SwitchPage({
       </section>
 
       {/* Step-by-Step Guide */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-xl font-bold mb-2">
-            How to <span className="text-gold">Switch</span> — Step by Step
+            How to <span className="text-[#2F5EA8]">Switch</span> — Step by Step
           </h2>
           <p className="text-sm text-[var(--text-secondary)] mb-8">
             A simple migration path that takes minutes, not weeks.
@@ -947,15 +947,15 @@ export default async function SwitchPage({
             {page.steps.map((step, i) => (
               <div
                 key={i}
-                className="flex gap-4 sm:gap-6 rounded-xl border border-dark-50/80 bg-dark-400/50 p-6"
+                className="flex gap-4 sm:gap-6 rounded-xl border border-[var(--border-light)] bg-white p-6"
               >
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gold/10 border border-gold/20 text-gold font-bold text-sm flex-shrink-0">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#2F5EA8]/[0.06] border border-[#2F5EA8]/10 text-[#2F5EA8] font-bold text-sm flex-shrink-0">
                   {i + 1}
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 mb-2">
                     <h3 className="font-semibold">{step.title}</h3>
-                    <span className="inline-flex items-center gap-1 text-xs text-gold">
+                    <span className="inline-flex items-center gap-1 text-xs text-[#2F5EA8]">
                       <Clock className="h-3 w-3" />
                       {step.duration}
                     </span>
@@ -971,10 +971,10 @@ export default async function SwitchPage({
       </section>
 
       {/* What You Gain */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-xl font-bold mb-2">
-            What You <span className="text-gold">Gain</span>
+            What You <span className="text-[#2F5EA8]">Gain</span>
           </h2>
           <p className="text-sm text-[var(--text-secondary)] mb-8">
             The benefits of switching to data-driven revenue intelligence.
@@ -983,9 +983,9 @@ export default async function SwitchPage({
             {page.benefits.map((benefit, i) => (
               <div
                 key={i}
-                className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5"
+                className="rounded-xl border border-[var(--border-light)] bg-white p-5"
               >
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gold/10 border border-gold/20 mb-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#2F5EA8]/[0.06] border border-[#2F5EA8]/10 mb-3">
                   <BenefitIcon icon={benefit.icon} />
                 </div>
                 <h3 className="font-semibold text-sm mb-1.5">
@@ -1001,18 +1001,18 @@ export default async function SwitchPage({
       </section>
 
       {/* Success Metrics */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-xl font-bold mb-8">
-            What to <span className="text-gold">Expect</span>
+            What to <span className="text-[#2F5EA8]">Expect</span>
           </h2>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {page.metrics.map((metric, i) => (
               <div
                 key={i}
-                className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5 text-center"
+                className="rounded-xl border border-[var(--border-light)] bg-white p-5 text-center"
               >
-                <p className="text-2xl sm:text-3xl font-bold font-mono text-gold mb-1">
+                <p className="text-2xl sm:text-3xl font-bold font-mono text-[#2F5EA8] mb-1">
                   {metric.value}
                 </p>
                 <p className="text-xs font-semibold mb-1">{metric.label}</p>
@@ -1026,10 +1026,10 @@ export default async function SwitchPage({
       </section>
 
       {/* Common Concerns FAQ */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-xl font-bold mb-2">
-            Common <span className="text-gold">Concerns</span>
+            Common <span className="text-[#2F5EA8]">Concerns</span>
           </h2>
           <p className="text-sm text-[var(--text-secondary)] mb-8">
             Answers to the questions practices ask most when considering the switch.
@@ -1038,9 +1038,9 @@ export default async function SwitchPage({
             {page.concerns.map((concern, i) => (
               <details
                 key={i}
-                className="group rounded-xl border border-dark-50/80 bg-dark-400/50 overflow-hidden"
+                className="group rounded-xl border border-[var(--border-light)] bg-white overflow-hidden"
               >
-                <summary className="flex items-center justify-between gap-4 px-6 py-4 cursor-pointer hover:bg-dark-300/50 transition-colors list-none [&::-webkit-details-marker]:hidden">
+                <summary className="flex items-center justify-between gap-4 px-6 py-4 cursor-pointer hover:bg-[var(--bg)] transition-colors list-none [&::-webkit-details-marker]:hidden">
                   <span className="font-semibold text-sm">
                     {concern.question}
                   </span>

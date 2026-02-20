@@ -36,9 +36,9 @@ export default function BillingPage() {
       </div>
 
       {/* Current Plan */}
-      <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6">
+      <div className="rounded-xl border border-[var(--border-light)] bg-white p-6">
         <div className="flex items-center gap-3 mb-4">
-          <CreditCard className="h-5 w-5 text-gold" />
+          <CreditCard className="h-5 w-5 text-[#2F5EA8]" />
           <h2 className="text-lg font-semibold">Current Plan</h2>
         </div>
 
@@ -57,7 +57,7 @@ export default function BillingPage() {
           {isActive ? (
             <button
               onClick={handleManageBilling}
-              className="inline-flex items-center gap-2 rounded-lg border border-dark-50/80 px-4 py-2 text-sm font-medium text-[var(--text-secondary)] hover:border-gold/30 hover:text-gold transition-all"
+              className="inline-flex items-center gap-2 rounded-lg border border-[var(--border-light)] px-4 py-2 text-sm font-medium text-[var(--text-secondary)] hover:border-[#2F5EA8]/15 hover:text-[#2F5EA8] transition-all"
             >
               Manage Billing
               <ExternalLink className="h-3.5 w-3.5" />
@@ -65,7 +65,7 @@ export default function BillingPage() {
           ) : (
             <Link
               href="/pricing"
-              className="inline-flex items-center gap-2 rounded-lg bg-gold px-5 py-2.5 text-sm font-semibold text-dark hover:bg-gold-300 transition-all"
+              className="inline-flex items-center gap-2 rounded-lg bg-[#2F5EA8] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#264D8C] transition-all"
             >
               Upgrade Plan
             </Link>
@@ -75,9 +75,9 @@ export default function BillingPage() {
 
       {/* Stripe not configured notice */}
       {plan === "free" && (
-        <div className="rounded-xl border border-dark-50/50 bg-dark-400/30 p-6">
+        <div className="rounded-xl border border-[var(--border-light)] bg-white p-6">
           <div className="flex items-start gap-3">
-            <Shield className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
+            <Shield className="h-5 w-5 text-[#2F5EA8] flex-shrink-0 mt-0.5" />
             <div>
               <p className="text-sm font-medium">Secure payments via Stripe</p>
               <p className="text-xs text-[var(--text-secondary)] mt-1 leading-relaxed">

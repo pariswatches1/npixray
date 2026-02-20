@@ -44,8 +44,8 @@ export default function GroupResultsPageWrapper() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-dark-900 flex items-center justify-center">
-          <Loader2 className="h-8 w-8 text-gold animate-spin" />
+        <div className="min-h-screen bg-[var(--bg)] flex items-center justify-center">
+          <Loader2 className="h-8 w-8 text-[#2F5EA8] animate-spin" />
         </div>
       }
     >
@@ -115,7 +115,7 @@ function GroupResultsPage() {
   // Loading state
   if (loading) {
     return (
-      <div className="min-h-screen bg-dark-900">
+      <div className="min-h-screen bg-[var(--bg)]">
         <GroupProgress total={npis.length} completed={0} failed={0} />
       </div>
     );
@@ -124,14 +124,14 @@ function GroupResultsPage() {
   // Error state
   if (error || !data) {
     return (
-      <div className="min-h-screen bg-dark-900 flex items-center justify-center">
+      <div className="min-h-screen bg-[var(--bg)] flex items-center justify-center">
         <div className="text-center px-4">
           <AlertCircle className="h-12 w-12 text-red-400 mx-auto mb-4" />
           <h2 className="text-xl font-semibold text-white mb-2">Scan Error</h2>
           <p className="text-[var(--text-secondary)] mb-6">{error || "Something went wrong"}</p>
           <Link
             href="/group"
-            className="inline-flex items-center gap-2 rounded-xl bg-gold px-6 py-3 font-bold text-dark-900 hover:bg-gold/90 transition-colors"
+            className="inline-flex items-center gap-2 rounded-xl bg-[#2F5EA8] px-6 py-3 font-bold text-white hover:bg-[#264D8C]/90 transition-colors"
           >
             Try Again
           </Link>
@@ -141,12 +141,12 @@ function GroupResultsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-dark-900">
+    <div className="min-h-screen bg-[var(--bg)]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
         {/* Back link */}
         <Link
           href="/group"
-          className="inline-flex items-center gap-1.5 text-sm text-[var(--text-secondary)] hover:text-gold transition-colors mb-6"
+          className="inline-flex items-center gap-1.5 text-sm text-[var(--text-secondary)] hover:text-[#2F5EA8] transition-colors mb-6"
         >
           <ArrowLeft className="h-4 w-4" />
           New Group Scan
@@ -156,7 +156,7 @@ function GroupResultsPage() {
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
           <div>
             <div className="flex items-center gap-3 mb-2">
-              <Building2 className="h-6 w-6 text-gold" />
+              <Building2 className="h-6 w-6 text-[#2F5EA8]" />
               <h1 className="text-2xl sm:text-3xl font-bold text-white">
                 {data.practiceName}
               </h1>
@@ -179,13 +179,13 @@ function GroupResultsPage() {
               <p className="text-xs text-[var(--text-secondary)]/60 uppercase tracking-wider mb-1">
                 Total Missed Revenue
               </p>
-              <p className="text-3xl font-bold font-mono text-gold">
+              <p className="text-3xl font-bold font-mono text-[#2F5EA8]">
                 {formatCurrency(data.totalMissedRevenue)}
               </p>
             </div>
             <button
               onClick={handleShare}
-              className="rounded-xl bg-dark-800 border border-dark-50/20 px-4 py-3 text-sm text-[var(--text-primary)] hover:text-gold hover:border-gold/30 transition-colors"
+              className="rounded-xl bg-[var(--bg)] border border-[var(--border-light)] px-4 py-3 text-sm text-[var(--text-primary)] hover:text-[#2F5EA8] hover:border-[#2F5EA8]/15 transition-colors"
             >
               <Share2 className="h-4 w-4" />
               <span className="sr-only">Share</span>
@@ -201,7 +201,7 @@ function GroupResultsPage() {
         )}
 
         {/* Tab Navigation */}
-        <div className="border-b border-dark-50/30 mb-8">
+        <div className="border-b border-[var(--border-light)] mb-8">
           <div className="flex gap-1 -mb-px overflow-x-auto scrollbar-hide">
             {TABS.map((tab) => {
               const Icon = tab.icon;
@@ -212,8 +212,8 @@ function GroupResultsPage() {
                   onClick={() => setActiveTab(tab.id)}
                   className={`flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
                     isActive
-                      ? "border-gold text-gold"
-                      : "border-transparent text-[var(--text-secondary)] hover:text-white hover:border-dark-50/50"
+                      ? "border-[#2F5EA8]/20 text-[#2F5EA8]"
+                      : "border-transparent text-[var(--text-secondary)] hover:text-white hover:border-[var(--border)]/50"
                   }`}
                 >
                   <Icon className="h-4 w-4" />

@@ -132,8 +132,8 @@ export default function AdminSocialPage() {
       <div className="min-h-[70vh] flex items-center justify-center px-4">
         <div className="w-full max-w-sm">
           <div className="text-center mb-8">
-            <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gold/10 border border-gold/20 mb-4">
-              <Lock className="h-7 w-7 text-gold" />
+            <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-[#2F5EA8]/[0.06] border border-[#2F5EA8]/10 mb-4">
+              <Lock className="h-7 w-7 text-[#2F5EA8]" />
             </div>
             <h1 className="text-2xl font-bold">Social Content Generator</h1>
             <p className="text-sm text-[var(--text-secondary)] mt-1">
@@ -147,7 +147,7 @@ export default function AdminSocialPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Admin password"
-              className="w-full rounded-xl border border-dark-50 bg-dark-500 py-3.5 px-4 text-sm placeholder:text-[var(--text-secondary)]/50 focus:border-gold/50 focus:ring-1 focus:ring-gold/30 outline-none transition-all mb-4"
+              className="w-full rounded-xl border border-[var(--border)] bg-[var(--bg)] py-3.5 px-4 text-sm placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20/50 focus:ring-1 focus:ring-[#2F5EA8]/10 outline-none transition-all mb-4"
               autoFocus
             />
             {authError && (
@@ -156,7 +156,7 @@ export default function AdminSocialPage() {
             <button
               type="submit"
               disabled={authLoading}
-              className="w-full flex items-center justify-center gap-2 rounded-xl bg-gold py-3.5 text-sm font-semibold text-dark transition-all hover:bg-gold-300 disabled:opacity-50"
+              className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#2F5EA8] py-3.5 text-sm font-semibold text-white transition-all hover:bg-[#264D8C] disabled:opacity-50"
             >
               {authLoading ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -185,7 +185,7 @@ export default function AdminSocialPage() {
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold">
-            Social <span className="text-gold">Content Generator</span>
+            Social <span className="text-[#2F5EA8]">Content Generator</span>
           </h1>
           <p className="text-sm text-[var(--text-secondary)] mt-1">
             Ready-to-post content for Twitter and LinkedIn
@@ -194,7 +194,7 @@ export default function AdminSocialPage() {
         <button
           onClick={fetchPosts}
           disabled={loading}
-          className="flex items-center gap-2 rounded-lg border border-dark-50 px-4 py-2 text-sm text-[var(--text-secondary)] hover:text-gold hover:border-gold/30 transition-all disabled:opacity-50"
+          className="flex items-center gap-2 rounded-lg border border-[var(--border)] px-4 py-2 text-sm text-[var(--text-secondary)] hover:text-[#2F5EA8] hover:border-[#2F5EA8]/15 transition-all disabled:opacity-50"
         >
           <RefreshCw className={`h-4 w-4 ${loading ? "animate-spin" : ""}`} />
           Refresh
@@ -203,37 +203,37 @@ export default function AdminSocialPage() {
 
       {/* Stats */}
       <div className="grid grid-cols-3 gap-4 mb-8">
-        <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5">
+        <div className="rounded-xl border border-[var(--border-light)] bg-white p-5">
           <div className="flex items-center gap-3 mb-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gold/10">
-              <Globe className="h-4 w-4 text-gold" />
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#2F5EA8]/[0.06]">
+              <Globe className="h-4 w-4 text-[#2F5EA8]" />
             </div>
             <p className="text-sm text-[var(--text-secondary)]">National</p>
           </div>
-          <p className="text-3xl font-bold font-mono text-gold">{counts.national}</p>
+          <p className="text-3xl font-bold font-mono text-[#2F5EA8]">{counts.national}</p>
         </div>
-        <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5">
+        <div className="rounded-xl border border-[var(--border-light)] bg-white p-5">
           <div className="flex items-center gap-3 mb-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gold/10">
-              <MapPin className="h-4 w-4 text-gold" />
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#2F5EA8]/[0.06]">
+              <MapPin className="h-4 w-4 text-[#2F5EA8]" />
             </div>
             <p className="text-sm text-[var(--text-secondary)]">State Posts</p>
           </div>
-          <p className="text-3xl font-bold font-mono text-gold">{counts.states}</p>
+          <p className="text-3xl font-bold font-mono text-[#2F5EA8]">{counts.states}</p>
         </div>
-        <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5">
+        <div className="rounded-xl border border-[var(--border-light)] bg-white p-5">
           <div className="flex items-center gap-3 mb-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gold/10">
-              <Stethoscope className="h-4 w-4 text-gold" />
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#2F5EA8]/[0.06]">
+              <Stethoscope className="h-4 w-4 text-[#2F5EA8]" />
             </div>
             <p className="text-sm text-[var(--text-secondary)]">Specialty Posts</p>
           </div>
-          <p className="text-3xl font-bold font-mono text-gold">{counts.specialties}</p>
+          <p className="text-3xl font-bold font-mono text-[#2F5EA8]">{counts.specialties}</p>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-2 mb-8 border-b border-dark-50/50 pb-4">
+      <div className="flex gap-2 mb-8 border-b border-[var(--border-light)] pb-4">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           return (
@@ -242,16 +242,16 @@ export default function AdminSocialPage() {
               onClick={() => setActiveTab(tab.key)}
               className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
                 activeTab === tab.key
-                  ? "bg-gold text-dark"
-                  : "bg-dark-500 border border-dark-50 text-[var(--text-secondary)] hover:border-gold/30"
+                  ? "bg-[#2F5EA8] text-white"
+                  : "bg-[var(--bg)] border border-[var(--border)] text-[var(--text-secondary)] hover:border-[#2F5EA8]/15"
               }`}
             >
               <Icon className="h-4 w-4" />
               {tab.label}
               <span className={`text-xs px-1.5 py-0.5 rounded ${
                 activeTab === tab.key
-                  ? "bg-dark/20 text-dark"
-                  : "bg-dark-400 text-[var(--text-secondary)]"
+                  ? "bg-gray-100 text-white"
+                  : "bg-[var(--bg)] text-[var(--text-secondary)]"
               }`}>
                 {tab.count}
               </span>
@@ -263,10 +263,10 @@ export default function AdminSocialPage() {
       {/* Posts */}
       {loading ? (
         <div className="flex items-center justify-center py-20">
-          <Loader2 className="h-8 w-8 animate-spin text-gold" />
+          <Loader2 className="h-8 w-8 animate-spin text-[#2F5EA8]" />
         </div>
       ) : filteredPosts.length === 0 ? (
-        <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-12 text-center">
+        <div className="rounded-xl border border-[var(--border-light)] bg-white p-12 text-center">
           <Hash className="h-12 w-12 text-[var(--text-secondary)]/30 mx-auto mb-4" />
           <p className="text-[var(--text-secondary)]">No data available.</p>
           <p className="text-sm text-[var(--text-secondary)]/60 mt-1">
@@ -278,13 +278,13 @@ export default function AdminSocialPage() {
           {filteredPosts.map((post) => (
             <div
               key={post.id}
-              className="rounded-xl border border-dark-50/80 bg-dark-400/50 overflow-hidden"
+              className="rounded-xl border border-[var(--border-light)] bg-white overflow-hidden"
             >
               {/* Post header */}
-              <div className="flex items-center gap-3 px-5 py-3 border-b border-dark-50/50 bg-dark-500/30">
-                {post.category === "national" && <Globe className="h-4 w-4 text-gold" />}
-                {post.category === "state" && <MapPin className="h-4 w-4 text-gold" />}
-                {post.category === "specialty" && <Stethoscope className="h-4 w-4 text-gold" />}
+              <div className="flex items-center gap-3 px-5 py-3 border-b border-[var(--border-light)] bg-[var(--bg)]/30">
+                {post.category === "national" && <Globe className="h-4 w-4 text-[#2F5EA8]" />}
+                {post.category === "state" && <MapPin className="h-4 w-4 text-[#2F5EA8]" />}
+                {post.category === "specialty" && <Stethoscope className="h-4 w-4 text-[#2F5EA8]" />}
                 <span className="font-semibold text-sm">{post.label}</span>
               </div>
 
@@ -306,7 +306,7 @@ export default function AdminSocialPage() {
                       </span>
                       <button
                         onClick={() => handleCopy(post.twitter, `${post.id}-twitter`)}
-                        className="flex items-center gap-1.5 rounded-md border border-dark-50 px-3 py-1.5 text-xs text-[var(--text-secondary)] hover:text-gold hover:border-gold/30 transition-all"
+                        className="flex items-center gap-1.5 rounded-md border border-[var(--border)] px-3 py-1.5 text-xs text-[var(--text-secondary)] hover:text-[#2F5EA8] hover:border-[#2F5EA8]/15 transition-all"
                       >
                         {copiedId === `${post.id}-twitter` ? (
                           <>
@@ -322,7 +322,7 @@ export default function AdminSocialPage() {
                       </button>
                     </div>
                   </div>
-                  <div className="bg-dark-500/50 rounded-lg p-3 border border-dark-50/30">
+                  <div className="bg-[var(--bg)]/50 rounded-lg p-3 border border-[var(--border-light)]">
                     <p className="text-sm text-[var(--text-secondary)] whitespace-pre-wrap leading-relaxed">
                       {post.twitter}
                     </p>
@@ -344,7 +344,7 @@ export default function AdminSocialPage() {
                       </span>
                       <button
                         onClick={() => handleCopy(post.linkedin, `${post.id}-linkedin`)}
-                        className="flex items-center gap-1.5 rounded-md border border-dark-50 px-3 py-1.5 text-xs text-[var(--text-secondary)] hover:text-gold hover:border-gold/30 transition-all"
+                        className="flex items-center gap-1.5 rounded-md border border-[var(--border)] px-3 py-1.5 text-xs text-[var(--text-secondary)] hover:text-[#2F5EA8] hover:border-[#2F5EA8]/15 transition-all"
                       >
                         {copiedId === `${post.id}-linkedin` ? (
                           <>
@@ -360,7 +360,7 @@ export default function AdminSocialPage() {
                       </button>
                     </div>
                   </div>
-                  <div className="bg-dark-500/50 rounded-lg p-3 border border-dark-50/30">
+                  <div className="bg-[var(--bg)]/50 rounded-lg p-3 border border-[var(--border-light)]">
                     <p className="text-sm text-[var(--text-secondary)] whitespace-pre-wrap leading-relaxed">
                       {post.linkedin}
                     </p>

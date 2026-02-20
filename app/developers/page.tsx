@@ -110,13 +110,13 @@ export default function DevelopersPage() {
       <Breadcrumbs items={[{ label: "Developers" }]} />
       {/* Hero */}
       <div className="text-center mb-20">
-        <div className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/5 px-4 py-1.5 mb-6">
-          <Terminal className="h-3.5 w-3.5 text-gold" />
-          <span className="text-xs font-medium text-gold">Developer Platform</span>
+        <div className="inline-flex items-center gap-2 rounded-full border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] px-4 py-1.5 mb-6">
+          <Terminal className="h-3.5 w-3.5 text-[#2F5EA8]" />
+          <span className="text-xs font-medium text-[#2F5EA8]">Developer Platform</span>
         </div>
 
         <h1 className="text-4xl sm:text-5xl font-bold tracking-tight leading-[1.1] text-balance max-w-3xl mx-auto">
-          Build on <span className="text-gold">NPIxray</span> Data
+          Build on <span className="text-[#2F5EA8]">NPIxray</span> Data
         </h1>
 
         <p className="mt-6 text-lg text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed">
@@ -128,14 +128,14 @@ export default function DevelopersPage() {
         <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
           <Link
             href="/api-docs"
-            className="inline-flex items-center gap-2 rounded-xl bg-gold px-8 py-3.5 text-base font-semibold text-dark hover:bg-gold-300 transition-all"
+            className="inline-flex items-center gap-2 rounded-xl bg-[#2F5EA8] px-8 py-3.5 text-base font-semibold text-white hover:bg-[#264D8C] transition-all"
           >
             <Code2 className="h-5 w-5" />
             View API Docs
           </Link>
           <a
             href="mailto:api@npixray.com?subject=Pro API Key Request"
-            className="inline-flex items-center gap-2 rounded-xl border border-dark-50 px-8 py-3.5 text-base font-medium text-[var(--text-secondary)] hover:text-gold hover:border-gold/30 transition-all"
+            className="inline-flex items-center gap-2 rounded-xl border border-[var(--border)] px-8 py-3.5 text-base font-medium text-[var(--text-secondary)] hover:text-[#2F5EA8] hover:border-[#2F5EA8]/15 transition-all"
           >
             <Key className="h-5 w-5" />
             Get API Key
@@ -146,10 +146,10 @@ export default function DevelopersPage() {
       {/* Quick start */}
       <div className="mb-20">
         <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8">
-          Quick <span className="text-gold">Start</span>
+          Quick <span className="text-[#2F5EA8]">Start</span>
         </h2>
-        <div className="mx-auto max-w-2xl rounded-2xl border border-dark-50/80 bg-dark-300/50 overflow-hidden">
-          <div className="px-6 py-4 border-b border-dark-50/50 flex items-center gap-3">
+        <div className="mx-auto max-w-2xl rounded-2xl border border-[var(--border-light)] bg-white/80 overflow-hidden">
+          <div className="px-6 py-4 border-b border-[var(--border-light)] flex items-center gap-3">
             <div className="flex gap-1.5">
               <div className="h-3 w-3 rounded-full bg-red-500/50" />
               <div className="h-3 w-3 rounded-full bg-yellow-500/50" />
@@ -164,25 +164,25 @@ export default function DevelopersPage() {
               {"\n\n"}
               <span className="text-[var(--text-secondary)]/60">{`{`}</span>
               {"\n  "}
-              <span className="text-gold">&quot;data&quot;</span>
+              <span className="text-[#2F5EA8]">&quot;data&quot;</span>
               <span className="text-[var(--text-secondary)]/60">: {`{`}</span>
               {"\n    "}
-              <span className="text-gold">&quot;name&quot;</span>
+              <span className="text-[#2F5EA8]">&quot;name&quot;</span>
               <span className="text-[var(--text-secondary)]/60">: </span>
               <span className="text-emerald-400">&quot;JAMES MARTINEZ&quot;</span>
               <span className="text-[var(--text-secondary)]/60">,</span>
               {"\n    "}
-              <span className="text-gold">&quot;specialty&quot;</span>
+              <span className="text-[#2F5EA8]">&quot;specialty&quot;</span>
               <span className="text-[var(--text-secondary)]/60">: </span>
               <span className="text-emerald-400">&quot;Urology&quot;</span>
               <span className="text-[var(--text-secondary)]/60">,</span>
               {"\n    "}
-              <span className="text-gold">&quot;revenue_score&quot;</span>
+              <span className="text-[#2F5EA8]">&quot;revenue_score&quot;</span>
               <span className="text-[var(--text-secondary)]/60">: </span>
               <span className="text-orange-400">42</span>
               <span className="text-[var(--text-secondary)]/60">,</span>
               {"\n    "}
-              <span className="text-gold">&quot;total_medicare_payment&quot;</span>
+              <span className="text-[#2F5EA8]">&quot;total_medicare_payment&quot;</span>
               <span className="text-[var(--text-secondary)]/60">: </span>
               <span className="text-orange-400">245832.50</span>
               {"\n  "}
@@ -200,7 +200,7 @@ export default function DevelopersPage() {
       {/* What you can access */}
       <div className="mb-20">
         <h2 className="text-2xl sm:text-3xl font-bold text-center mb-4">
-          What You Can <span className="text-gold">Access</span>
+          What You Can <span className="text-[#2F5EA8]">Access</span>
         </h2>
         <p className="text-center text-[var(--text-secondary)] mb-12 max-w-lg mx-auto">
           CMS public data enriched with Revenue Scores and opportunity analysis.
@@ -214,9 +214,9 @@ export default function DevelopersPage() {
             { icon: Globe, title: "Market Intelligence", desc: "Aggregate stats by state, city, and specialty. Adoption rates and missed revenue estimates." },
             { icon: Zap, title: "Opportunity Analysis", desc: "CCM, RPM, BHI, AWV gaps and estimated missed revenue for every provider." },
           ].map((item) => (
-            <div key={item.title} className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6 hover:border-gold/20 transition-colors">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gold/10 border border-gold/20 mb-4">
-                <item.icon className="h-5 w-5 text-gold" />
+            <div key={item.title} className="rounded-xl border border-[var(--border-light)] bg-white p-6 hover:border-[#2F5EA8]/10 transition-colors">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#2F5EA8]/[0.06] border border-[#2F5EA8]/10 mb-4">
+                <item.icon className="h-5 w-5 text-[#2F5EA8]" />
               </div>
               <h3 className="font-bold mb-2">{item.title}</h3>
               <p className="text-sm text-[var(--text-secondary)] leading-relaxed">{item.desc}</p>
@@ -228,21 +228,21 @@ export default function DevelopersPage() {
       {/* Use cases */}
       <div className="mb-20">
         <h2 className="text-2xl sm:text-3xl font-bold text-center mb-4">
-          What You Can <span className="text-gold">Build</span>
+          What You Can <span className="text-[#2F5EA8]">Build</span>
         </h2>
         <p className="text-center text-[var(--text-secondary)] mb-12 max-w-lg mx-auto">
           Every developer who builds on NPIxray becomes a distribution channel.
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {USE_CASES.map((uc) => (
-            <div key={uc.title} className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6 hover:border-gold/20 transition-colors">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gold/10 border border-gold/20 mb-4">
-                <uc.icon className="h-5 w-5 text-gold" />
+            <div key={uc.title} className="rounded-xl border border-[var(--border-light)] bg-white p-6 hover:border-[#2F5EA8]/10 transition-colors">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#2F5EA8]/[0.06] border border-[#2F5EA8]/10 mb-4">
+                <uc.icon className="h-5 w-5 text-[#2F5EA8]" />
               </div>
               <h3 className="font-bold mb-2">{uc.title}</h3>
               <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-3">{uc.description}</p>
-              <div className="rounded-lg border border-dark-50/50 bg-dark-500/50 px-3 py-2">
-                <p className="text-xs text-gold font-mono">{uc.example}</p>
+              <div className="rounded-lg border border-[var(--border-light)] bg-[var(--bg)]/50 px-3 py-2">
+                <p className="text-xs text-[#2F5EA8] font-mono">{uc.example}</p>
               </div>
             </div>
           ))}
@@ -252,17 +252,17 @@ export default function DevelopersPage() {
       {/* Showcase */}
       <div className="mb-20">
         <h2 className="text-2xl sm:text-3xl font-bold text-center mb-4">
-          Built With <span className="text-gold">NPIxray</span>
+          Built With <span className="text-[#2F5EA8]">NPIxray</span>
         </h2>
         <p className="text-center text-[var(--text-secondary)] mb-12 max-w-lg mx-auto">
           Ideas for what you can build. Ship something cool and we&apos;ll feature it here.
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           {SHOWCASE.map((item) => (
-            <div key={item.name} className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6">
+            <div key={item.name} className="rounded-xl border border-[var(--border-light)] bg-white p-6">
               <h3 className="font-bold mb-1">{item.name}</h3>
               <p className="text-sm text-[var(--text-secondary)] mb-3">{item.description}</p>
-              <span className="text-xs text-gold font-mono">{item.tech}</span>
+              <span className="text-xs text-[#2F5EA8] font-mono">{item.tech}</span>
             </div>
           ))}
         </div>
@@ -271,12 +271,12 @@ export default function DevelopersPage() {
       {/* Pricing */}
       <div className="mb-20">
         <h2 className="text-2xl sm:text-3xl font-bold text-center mb-12">
-          API <span className="text-gold">Pricing</span>
+          API <span className="text-[#2F5EA8]">Pricing</span>
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
-          <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6">
+          <div className="rounded-xl border border-[var(--border-light)] bg-white p-6">
             <h3 className="text-xl font-bold mb-1">Free</h3>
-            <p className="text-3xl font-bold font-mono text-gold mb-4">$0<span className="text-sm text-[var(--text-secondary)] font-normal">/mo</span></p>
+            <p className="text-3xl font-bold font-mono text-[#2F5EA8] mb-4">$0<span className="text-sm text-[var(--text-secondary)] font-normal">/mo</span></p>
             <ul className="text-sm text-[var(--text-secondary)] space-y-2 mb-6">
               <li>100 requests/day</li>
               <li>Provider lookup + Revenue Score</li>
@@ -286,18 +286,18 @@ export default function DevelopersPage() {
             </ul>
             <Link
               href="/api-docs"
-              className="w-full flex items-center justify-center gap-2 rounded-lg border border-dark-50 py-2.5 text-sm font-medium text-[var(--text-secondary)] hover:text-gold hover:border-gold/30 transition-all"
+              className="w-full flex items-center justify-center gap-2 rounded-lg border border-[var(--border)] py-2.5 text-sm font-medium text-[var(--text-secondary)] hover:text-[#2F5EA8] hover:border-[#2F5EA8]/15 transition-all"
             >
               Get Started
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
-          <div className="rounded-xl border border-gold/30 bg-gold/5 p-6 relative">
-            <div className="absolute -top-3 right-4 rounded-full bg-gold px-3 py-0.5 text-xs font-bold text-dark">
+          <div className="rounded-xl border border-[#2F5EA8]/15 bg-[#2F5EA8]/[0.04] p-6 relative">
+            <div className="absolute -top-3 right-4 rounded-full bg-[#2F5EA8] px-3 py-0.5 text-xs font-bold text-white">
               Most Popular
             </div>
             <h3 className="text-xl font-bold mb-1">Pro</h3>
-            <p className="text-3xl font-bold font-mono text-gold mb-4">$49<span className="text-sm text-[var(--text-secondary)] font-normal">/mo</span></p>
+            <p className="text-3xl font-bold font-mono text-[#2F5EA8] mb-4">$49<span className="text-sm text-[var(--text-secondary)] font-normal">/mo</span></p>
             <ul className="text-sm text-[var(--text-secondary)] space-y-2 mb-6">
               <li>10,000 requests/day</li>
               <li>Everything in Free +</li>
@@ -309,7 +309,7 @@ export default function DevelopersPage() {
             </ul>
             <a
               href="mailto:api@npixray.com?subject=Pro API Key Request"
-              className="w-full flex items-center justify-center gap-2 rounded-lg bg-gold py-2.5 text-sm font-semibold text-dark hover:bg-gold-300 transition-all"
+              className="w-full flex items-center justify-center gap-2 rounded-lg bg-[#2F5EA8] py-2.5 text-sm font-semibold text-white hover:bg-[#264D8C] transition-all"
             >
               <Key className="h-4 w-4" />
               Get Pro Key
@@ -321,7 +321,7 @@ export default function DevelopersPage() {
       {/* CTA */}
       <div className="text-center">
         <h2 className="text-2xl sm:text-3xl font-bold mb-4">
-          Start Building <span className="text-gold">Today</span>
+          Start Building <span className="text-[#2F5EA8]">Today</span>
         </h2>
         <p className="text-[var(--text-secondary)] mb-8 max-w-lg mx-auto">
           No API key needed for the free tier. Just start making requests.
@@ -329,14 +329,14 @@ export default function DevelopersPage() {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Link
             href="/api-docs"
-            className="inline-flex items-center gap-2 rounded-xl bg-gold px-8 py-3.5 text-base font-semibold text-dark hover:bg-gold-300 transition-all"
+            className="inline-flex items-center gap-2 rounded-xl bg-[#2F5EA8] px-8 py-3.5 text-base font-semibold text-white hover:bg-[#264D8C] transition-all"
           >
             <Code2 className="h-5 w-5" />
             Read the Docs
           </Link>
           <Link
             href="/api-docs#playground"
-            className="inline-flex items-center gap-2 rounded-xl border border-dark-50 px-8 py-3.5 text-base font-medium text-[var(--text-secondary)] hover:text-gold hover:border-gold/30 transition-all"
+            className="inline-flex items-center gap-2 rounded-xl border border-[var(--border)] px-8 py-3.5 text-base font-medium text-[var(--text-secondary)] hover:text-[#2F5EA8] hover:border-[#2F5EA8]/15 transition-all"
           >
             <Terminal className="h-5 w-5" />
             Try the Playground

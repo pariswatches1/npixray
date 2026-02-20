@@ -46,9 +46,9 @@ export function CiteBlock({ title, year, url }: CiteBlockProps) {
   };
 
   return (
-    <div className="rounded-xl border border-dark-50/50 bg-dark-400/50 p-6">
+    <div className="rounded-xl border border-[var(--border-light)] bg-white p-6">
       <div className="flex items-center gap-2 mb-4">
-        <FileText className="h-5 w-5 text-gold" />
+        <FileText className="h-5 w-5 text-[#2F5EA8]" />
         <h3 className="text-lg font-semibold">Cite This Report</h3>
       </div>
 
@@ -60,8 +60,8 @@ export function CiteBlock({ title, year, url }: CiteBlockProps) {
             onClick={() => setFormat(f)}
             className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
               format === f
-                ? "bg-gold/20 text-gold border border-gold/30"
-                : "border border-dark-50/50 text-[var(--text-secondary)] hover:text-white"
+                ? "bg-[#2F5EA8]/10 text-[#2F5EA8] border border-[#2F5EA8]/15"
+                : "border border-[var(--border-light)] text-[var(--text-secondary)] hover:text-white"
             }`}
           >
             {f === "apa" ? "APA" : f === "bibtex" ? "BibTeX" : "Plain Text"}
@@ -71,12 +71,12 @@ export function CiteBlock({ title, year, url }: CiteBlockProps) {
 
       {/* Citation text */}
       <div className="relative">
-        <pre className="rounded-lg bg-dark-500/50 border border-dark-50/30 p-4 text-xs text-[var(--text-secondary)] whitespace-pre-wrap font-mono leading-relaxed overflow-x-auto">
+        <pre className="rounded-lg bg-[var(--bg)]/50 border border-[var(--border-light)] p-4 text-xs text-[var(--text-secondary)] whitespace-pre-wrap font-mono leading-relaxed overflow-x-auto">
           {citations[format]}
         </pre>
         <button
           onClick={handleCopy}
-          className="absolute top-3 right-3 flex items-center gap-1.5 rounded-md bg-dark-400 border border-dark-50/50 px-2.5 py-1.5 text-xs text-[var(--text-secondary)] hover:text-gold transition-colors"
+          className="absolute top-3 right-3 flex items-center gap-1.5 rounded-md bg-[var(--bg)] border border-[var(--border-light)] px-2.5 py-1.5 text-xs text-[var(--text-secondary)] hover:text-[#2F5EA8] transition-colors"
         >
           {copied ? (
             <>

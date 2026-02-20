@@ -44,7 +44,7 @@ function formatCurrency(n: number): string {
 
 function scoreColor(score: number): string {
   if (score >= 80) return "text-emerald-400";
-  if (score >= 60) return "text-gold";
+  if (score >= 60) return "text-[#2F5EA8]";
   if (score >= 40) return "text-orange-400";
   return "text-red-400";
 }
@@ -205,8 +205,8 @@ export default function OutreachDashboard() {
       <div className="min-h-[70vh] flex items-center justify-center px-4">
         <div className="w-full max-w-sm">
           <div className="text-center mb-8">
-            <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gold/10 border border-gold/20 mb-4">
-              <Lock className="h-7 w-7 text-gold" />
+            <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-[#2F5EA8]/[0.06] border border-[#2F5EA8]/10 mb-4">
+              <Lock className="h-7 w-7 text-[#2F5EA8]" />
             </div>
             <h1 className="text-2xl font-bold">Outreach Dashboard</h1>
             <p className="text-sm text-[var(--text-secondary)] mt-1">
@@ -219,14 +219,14 @@ export default function OutreachDashboard() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Admin password"
-              className="w-full rounded-xl border border-dark-50 bg-dark-500 py-3.5 px-4 text-sm placeholder:text-[var(--text-secondary)]/50 focus:border-gold/50 focus:ring-1 focus:ring-gold/30 outline-none transition-all mb-4"
+              className="w-full rounded-xl border border-[var(--border)] bg-[var(--bg)] py-3.5 px-4 text-sm placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20/50 focus:ring-1 focus:ring-[#2F5EA8]/10 outline-none transition-all mb-4"
               autoFocus
             />
             {authError && <p className="text-xs text-red-400 mb-3">{authError}</p>}
             <button
               type="submit"
               disabled={authLoading}
-              className="w-full flex items-center justify-center gap-2 rounded-xl bg-gold py-3.5 text-sm font-semibold text-dark transition-all hover:bg-gold-300 disabled:opacity-50"
+              className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#2F5EA8] py-3.5 text-sm font-semibold text-white transition-all hover:bg-[#264D8C] disabled:opacity-50"
             >
               {authLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <LogIn className="h-4 w-4" />}
               Sign In
@@ -250,7 +250,7 @@ export default function OutreachDashboard() {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold">
-            Outreach <span className="text-gold">Dashboard</span>
+            Outreach <span className="text-[#2F5EA8]">Dashboard</span>
           </h1>
           <p className="text-sm text-[var(--text-secondary)] mt-1">
             Filter providers by revenue gaps for targeted outreach
@@ -260,7 +260,7 @@ export default function OutreachDashboard() {
           <button
             onClick={handleExportCSV}
             disabled={providers.length === 0}
-            className="flex items-center gap-2 rounded-lg border border-dark-50 px-4 py-2 text-sm text-[var(--text-secondary)] hover:text-gold hover:border-gold/30 transition-all disabled:opacity-50"
+            className="flex items-center gap-2 rounded-lg border border-[var(--border)] px-4 py-2 text-sm text-[var(--text-secondary)] hover:text-[#2F5EA8] hover:border-[#2F5EA8]/15 transition-all disabled:opacity-50"
           >
             <Download className="h-4 w-4" />
             Export CSV
@@ -268,7 +268,7 @@ export default function OutreachDashboard() {
           <button
             onClick={handleGenerateInvites}
             disabled={providers.length === 0 || generating}
-            className="flex items-center gap-2 rounded-lg bg-gold px-4 py-2 text-sm font-semibold text-dark hover:bg-gold-300 transition-all disabled:opacity-50"
+            className="flex items-center gap-2 rounded-lg bg-[#2F5EA8] px-4 py-2 text-sm font-semibold text-white hover:bg-[#264D8C] transition-all disabled:opacity-50"
           >
             {generating ? <Loader2 className="h-4 w-4 animate-spin" /> : <LinkIcon className="h-4 w-4" />}
             Generate Invite Links ({selectedNPIs.size > 0 ? selectedNPIs.size : providers.length})
@@ -278,34 +278,34 @@ export default function OutreachDashboard() {
 
       {/* Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 mb-8">
-        <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5">
+        <div className="rounded-xl border border-[var(--border-light)] bg-white p-5">
           <div className="flex items-center gap-3 mb-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gold/10">
-              <Users className="h-4 w-4 text-gold" />
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#2F5EA8]/[0.06]">
+              <Users className="h-4 w-4 text-[#2F5EA8]" />
             </div>
             <p className="text-sm text-[var(--text-secondary)]">Providers</p>
           </div>
-          <p className="text-3xl font-bold font-mono text-gold">{providers.length.toLocaleString()}</p>
+          <p className="text-3xl font-bold font-mono text-[#2F5EA8]">{providers.length.toLocaleString()}</p>
         </div>
-        <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5">
+        <div className="rounded-xl border border-[var(--border-light)] bg-white p-5">
           <div className="flex items-center gap-3 mb-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gold/10">
-              <DollarSign className="h-4 w-4 text-gold" />
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#2F5EA8]/[0.06]">
+              <DollarSign className="h-4 w-4 text-[#2F5EA8]" />
             </div>
             <p className="text-sm text-[var(--text-secondary)]">Total Revenue Gap</p>
           </div>
-          <p className="text-3xl font-bold font-mono text-gold">{formatCurrency(totalGap)}</p>
+          <p className="text-3xl font-bold font-mono text-[#2F5EA8]">{formatCurrency(totalGap)}</p>
         </div>
-        <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5">
+        <div className="rounded-xl border border-[var(--border-light)] bg-white p-5">
           <div className="flex items-center gap-3 mb-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gold/10">
-              <TrendingDown className="h-4 w-4 text-gold" />
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#2F5EA8]/[0.06]">
+              <TrendingDown className="h-4 w-4 text-[#2F5EA8]" />
             </div>
             <p className="text-sm text-[var(--text-secondary)]">Avg Revenue Score</p>
           </div>
           <p className={`text-3xl font-bold font-mono ${scoreColor(avgScore)}`}>{avgScore}</p>
         </div>
-        <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5">
+        <div className="rounded-xl border border-[var(--border-light)] bg-white p-5">
           <div className="flex items-center gap-3 mb-2">
             <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-red-500/10">
               <TrendingDown className="h-4 w-4 text-red-400" />
@@ -317,9 +317,9 @@ export default function OutreachDashboard() {
       </div>
 
       {/* Filters */}
-      <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5 mb-6">
+      <div className="rounded-xl border border-[var(--border-light)] bg-white p-5 mb-6">
         <div className="flex items-center gap-2 mb-4">
-          <Filter className="h-4 w-4 text-gold" />
+          <Filter className="h-4 w-4 text-[#2F5EA8]" />
           <p className="text-sm font-semibold">Filter Providers</p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
@@ -328,7 +328,7 @@ export default function OutreachDashboard() {
             <select
               value={filterState}
               onChange={(e) => setFilterState(e.target.value)}
-              className="w-full rounded-lg border border-dark-50 bg-dark-500 py-2.5 px-3 text-sm focus:border-gold/50 focus:ring-1 focus:ring-gold/30 outline-none"
+              className="w-full rounded-lg border border-[var(--border)] bg-[var(--bg)] py-2.5 px-3 text-sm focus:border-[#2F5EA8]/20/50 focus:ring-1 focus:ring-[#2F5EA8]/10 outline-none"
             >
               <option value="">All States</option>
               {filters.states.map((s) => (
@@ -343,7 +343,7 @@ export default function OutreachDashboard() {
               value={filterCity}
               onChange={(e) => setFilterCity(e.target.value)}
               placeholder="e.g. Miami"
-              className="w-full rounded-lg border border-dark-50 bg-dark-500 py-2.5 px-3 text-sm placeholder:text-[var(--text-secondary)]/50 focus:border-gold/50 focus:ring-1 focus:ring-gold/30 outline-none"
+              className="w-full rounded-lg border border-[var(--border)] bg-[var(--bg)] py-2.5 px-3 text-sm placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20/50 focus:ring-1 focus:ring-[#2F5EA8]/10 outline-none"
             />
           </div>
           <div>
@@ -351,7 +351,7 @@ export default function OutreachDashboard() {
             <select
               value={filterSpecialty}
               onChange={(e) => setFilterSpecialty(e.target.value)}
-              className="w-full rounded-lg border border-dark-50 bg-dark-500 py-2.5 px-3 text-sm focus:border-gold/50 focus:ring-1 focus:ring-gold/30 outline-none"
+              className="w-full rounded-lg border border-[var(--border)] bg-[var(--bg)] py-2.5 px-3 text-sm focus:border-[#2F5EA8]/20/50 focus:ring-1 focus:ring-[#2F5EA8]/10 outline-none"
             >
               <option value="">All Specialties</option>
               {filters.specialties.map((s) => (
@@ -369,7 +369,7 @@ export default function OutreachDashboard() {
                 placeholder="0"
                 min={0}
                 max={100}
-                className="w-full rounded-lg border border-dark-50 bg-dark-500 py-2.5 px-3 text-sm font-mono focus:border-gold/50 focus:ring-1 focus:ring-gold/30 outline-none"
+                className="w-full rounded-lg border border-[var(--border)] bg-[var(--bg)] py-2.5 px-3 text-sm font-mono focus:border-[#2F5EA8]/20/50 focus:ring-1 focus:ring-[#2F5EA8]/10 outline-none"
               />
               <span className="text-[var(--text-secondary)]">–</span>
               <input
@@ -379,7 +379,7 @@ export default function OutreachDashboard() {
                 placeholder="100"
                 min={0}
                 max={100}
-                className="w-full rounded-lg border border-dark-50 bg-dark-500 py-2.5 px-3 text-sm font-mono focus:border-gold/50 focus:ring-1 focus:ring-gold/30 outline-none"
+                className="w-full rounded-lg border border-[var(--border)] bg-[var(--bg)] py-2.5 px-3 text-sm font-mono focus:border-[#2F5EA8]/20/50 focus:ring-1 focus:ring-[#2F5EA8]/10 outline-none"
               />
             </div>
           </div>
@@ -394,7 +394,7 @@ export default function OutreachDashboard() {
               placeholder="0"
               min={0}
               step={10000}
-              className="w-full rounded-lg border border-dark-50 bg-dark-500 py-2.5 px-3 text-sm font-mono focus:border-gold/50 focus:ring-1 focus:ring-gold/30 outline-none"
+              className="w-full rounded-lg border border-[var(--border)] bg-[var(--bg)] py-2.5 px-3 text-sm font-mono focus:border-[#2F5EA8]/20/50 focus:ring-1 focus:ring-[#2F5EA8]/10 outline-none"
             />
           </div>
           <div>
@@ -406,14 +406,14 @@ export default function OutreachDashboard() {
               placeholder="0"
               min={0}
               step={10000}
-              className="w-full rounded-lg border border-dark-50 bg-dark-500 py-2.5 px-3 text-sm font-mono focus:border-gold/50 focus:ring-1 focus:ring-gold/30 outline-none"
+              className="w-full rounded-lg border border-[var(--border)] bg-[var(--bg)] py-2.5 px-3 text-sm font-mono focus:border-[#2F5EA8]/20/50 focus:ring-1 focus:ring-[#2F5EA8]/10 outline-none"
             />
           </div>
           <div className="flex items-end">
             <button
               onClick={fetchProviders}
               disabled={loading}
-              className="w-full flex items-center justify-center gap-2 rounded-lg bg-gold py-2.5 text-sm font-semibold text-dark hover:bg-gold-300 transition-all disabled:opacity-50"
+              className="w-full flex items-center justify-center gap-2 rounded-lg bg-[#2F5EA8] py-2.5 text-sm font-semibold text-white hover:bg-[#264D8C] transition-all disabled:opacity-50"
             >
               {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Search className="h-4 w-4" />}
               Search
@@ -430,7 +430,7 @@ export default function OutreachDashboard() {
                 setMinGap("0");
                 setMinCCMGap("0");
               }}
-              className="w-full flex items-center justify-center gap-2 rounded-lg border border-dark-50 py-2.5 text-sm text-[var(--text-secondary)] hover:text-gold hover:border-gold/30 transition-all"
+              className="w-full flex items-center justify-center gap-2 rounded-lg border border-[var(--border)] py-2.5 text-sm text-[var(--text-secondary)] hover:text-[#2F5EA8] hover:border-[#2F5EA8]/15 transition-all"
             >
               <RefreshCw className="h-4 w-4" />
               Reset
@@ -441,7 +441,7 @@ export default function OutreachDashboard() {
 
       {/* Results Table */}
       {providers.length === 0 ? (
-        <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-12 text-center">
+        <div className="rounded-xl border border-[var(--border-light)] bg-white p-12 text-center">
           <Search className="h-12 w-12 text-[var(--text-secondary)]/30 mx-auto mb-4" />
           <p className="text-[var(--text-secondary)]">No providers found.</p>
           <p className="text-sm text-[var(--text-secondary)]/60 mt-1">
@@ -449,17 +449,17 @@ export default function OutreachDashboard() {
           </p>
         </div>
       ) : (
-        <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 overflow-hidden">
+        <div className="rounded-xl border border-[var(--border-light)] bg-white overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-dark-50/50">
+                <tr className="border-b border-[var(--border-light)]">
                   <th className="text-left px-3 py-3 w-10">
                     <input
                       type="checkbox"
                       checked={selectedNPIs.size === providers.length && providers.length > 0}
                       onChange={toggleSelectAll}
-                      className="accent-gold"
+                      className="accent-[#2F5EA8]"
                     />
                   </th>
                   <th className="text-left px-3 py-3 text-[10px] text-[var(--text-secondary)] uppercase tracking-wider font-semibold">NPI</th>
@@ -475,8 +475,8 @@ export default function OutreachDashboard() {
                 {providers.map((p) => (
                   <tr
                     key={p.npi}
-                    className={`border-b border-dark-50/30 hover:bg-dark-500/30 transition-colors ${
-                      selectedNPIs.has(p.npi) ? "bg-gold/5" : ""
+                    className={`border-b border-[var(--border-light)] hover:bg-[var(--bg)]/30 transition-colors ${
+                      selectedNPIs.has(p.npi) ? "bg-[#2F5EA8]/[0.04]" : ""
                     }`}
                   >
                     <td className="px-3 py-3">
@@ -484,7 +484,7 @@ export default function OutreachDashboard() {
                         type="checkbox"
                         checked={selectedNPIs.has(p.npi)}
                         onChange={() => toggleSelect(p.npi)}
-                        className="accent-gold"
+                        className="accent-[#2F5EA8]"
                       />
                     </td>
                     <td className="px-3 py-3 font-mono text-xs text-[var(--text-secondary)]">{p.npi}</td>
@@ -501,7 +501,7 @@ export default function OutreachDashboard() {
                     <td className={`px-3 py-3 text-right font-mono font-bold ${scoreColor(p.revenueScore)}`}>
                       {p.revenueScore}
                     </td>
-                    <td className="px-3 py-3 text-right font-mono text-gold">
+                    <td className="px-3 py-3 text-right font-mono text-[#2F5EA8]">
                       {formatCurrency(p.totalGap)}
                     </td>
                     <td className="px-3 py-3 text-right font-mono text-orange-400">

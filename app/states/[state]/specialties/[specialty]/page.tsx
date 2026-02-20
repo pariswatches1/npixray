@@ -112,7 +112,7 @@ export default async function StateSpecialtyPage({
   return (
     <>
       <section className="relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gold/[0.03] rounded-full blur-3xl" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#2F5EA8]/[0.03] rounded-full blur-3xl" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-8 pb-12 sm:pt-12 sm:pb-16">
           <Breadcrumbs
             items={[
@@ -124,13 +124,13 @@ export default async function StateSpecialtyPage({
           />
 
           <div className="flex items-center gap-3 mb-6">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-gold/20 bg-gold/10">
-              <Stethoscope className="h-6 w-6 text-gold" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.06]">
+              <Stethoscope className="h-6 w-6 text-[#2F5EA8]" />
             </div>
             <div>
               <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
                 {specialtyName} in{" "}
-                <span className="text-gold">{stateName}</span>
+                <span className="text-[#2F5EA8]">{stateName}</span>
               </h1>
               <p className="text-sm text-[var(--text-secondary)]">
                 CMS Medicare Physician &amp; Other Practitioners data
@@ -140,9 +140,9 @@ export default async function StateSpecialtyPage({
 
           {/* Comparison callout */}
           {comparisonText && (
-            <div className="mt-4 rounded-xl border border-gold/20 bg-gold/5 p-5">
+            <div className="mt-4 rounded-xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-5">
               <p className="text-sm leading-relaxed">
-                <span className="font-semibold text-gold">Key Insight: </span>
+                <span className="font-semibold text-[#2F5EA8]">Key Insight: </span>
                 <span className="text-[var(--text-secondary)]">
                   {comparisonText}
                 </span>
@@ -182,7 +182,7 @@ export default async function StateSpecialtyPage({
       </section>
 
       {/* Evidence Blocks — snippet-friendly data summary */}
-      <section className="border-t border-dark-50/50 py-10">
+      <section className="border-t border-[var(--border-light)] py-10">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <EvidenceBlocks
             keyStats={keyStats}
@@ -194,7 +194,7 @@ export default async function StateSpecialtyPage({
 
       {/* Benchmark Comparison — state vs neighbors for this specialty */}
       {comparison && comparison.neighborComparisons.length > 0 && (
-        <section className="border-t border-dark-50/50 py-10">
+        <section className="border-t border-[var(--border-light)] py-10">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <SpecialtyBenchmarkComparison
               specialty={specialtyName}
@@ -213,7 +213,7 @@ export default async function StateSpecialtyPage({
 
       {/* Revenue Opportunities — top 3 specific gaps */}
       {opportunities.length > 0 && (
-        <section className="border-t border-dark-50/50 py-10">
+        <section className="border-t border-[var(--border-light)] py-10">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <RevenueOpportunities
               opportunities={opportunities}
@@ -225,11 +225,11 @@ export default async function StateSpecialtyPage({
 
       {/* Top Providers */}
       {providers.length > 0 && (
-        <section className="border-t border-dark-50/50 py-12 sm:py-16">
+        <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl font-bold mb-8">
               Top {specialtyName} Providers in{" "}
-              <span className="text-gold">{stateName}</span>
+              <span className="text-[#2F5EA8]">{stateName}</span>
             </h2>
             <ProviderTable providers={providers} showCity={true} showSpecialty={false} />
           </div>

@@ -60,7 +60,7 @@ export default function SpecialtyComparisonPage() {
         <div className="max-w-4xl">
           <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
             Specialty{" "}
-            <span className="text-gold">Comparison</span> Tool
+            <span className="text-[#2F5EA8]">Comparison</span> Tool
           </h1>
           <p className="text-lg text-[var(--text-secondary)] mb-10 max-w-2xl">
             Compare two medical specialties side-by-side on Medicare revenue,

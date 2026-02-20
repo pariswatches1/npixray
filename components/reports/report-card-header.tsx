@@ -32,13 +32,13 @@ export function ReportCardHeader({
         {/* Grade circle */}
         <div className="flex-shrink-0">
           <div
-            className={`relative flex h-24 w-24 items-center justify-center rounded-full border-4 ${grade.borderColor} bg-dark-400`}
+            className={`relative flex h-24 w-24 items-center justify-center rounded-full border-4 ${grade.borderColor} bg-[var(--bg)]`}
           >
             <span className={`text-5xl font-bold ${grade.color}`}>
               {grade.grade}
             </span>
             <span
-              className={`absolute -bottom-2 left-1/2 -translate-x-1/2 rounded-full ${grade.bgColor} px-3 py-0.5 text-[10px] font-bold uppercase tracking-wider text-dark whitespace-nowrap`}
+              className={`absolute -bottom-2 left-1/2 -translate-x-1/2 rounded-full ${grade.bgColor} px-3 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white whitespace-nowrap`}
             >
               {grade.label}
             </span>
@@ -47,7 +47,7 @@ export function ReportCardHeader({
 
         {/* Title and subtitle */}
         <div className="flex-1">
-          <p className="text-xs font-medium text-gold uppercase tracking-widest mb-1">
+          <p className="text-xs font-medium text-[#2F5EA8] uppercase tracking-widest mb-1">
             Medicare Revenue Report Card {year}
           </p>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight">
@@ -64,7 +64,7 @@ export function ReportCardHeader({
         <div className="flex-shrink-0">
           <a
             href={`/api/reports/pdf?type=${reportType}&id=${encodeURIComponent(reportId)}`}
-            className="inline-flex items-center gap-2 rounded-lg border border-dark-50/80 bg-dark-400/50 px-4 py-2.5 text-sm font-medium hover:border-gold/30 hover:text-gold transition-all"
+            className="inline-flex items-center gap-2 rounded-lg border border-[var(--border-light)] bg-white px-4 py-2.5 text-sm font-medium hover:border-[#2F5EA8]/15 hover:text-[#2F5EA8] transition-all"
           >
             <FileDown className="h-4 w-4" />
             Download PDF

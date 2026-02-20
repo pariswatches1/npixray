@@ -165,20 +165,20 @@ export default async function NationalReportPage() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         {/* Breadcrumb */}
         <nav className="flex items-center gap-1.5 text-sm text-[var(--text-secondary)] mb-6">
-          <Link href="/" className="hover:text-gold transition-colors">
+          <Link href="/" className="hover:text-[#2F5EA8] transition-colors">
             <Home className="h-3.5 w-3.5" />
           </Link>
-          <ChevronRight className="h-3.5 w-3.5 text-dark-50" />
-          <Link href="/reports" className="hover:text-gold transition-colors">
+          <ChevronRight className="h-3.5 w-3.5 text-[var(--text-secondary)]" />
+          <Link href="/reports" className="hover:text-[#2F5EA8] transition-colors">
             Reports
           </Link>
-          <ChevronRight className="h-3.5 w-3.5 text-dark-50" />
+          <ChevronRight className="h-3.5 w-3.5 text-[var(--text-secondary)]" />
           <span className="text-[var(--text-primary)]">National</span>
         </nav>
 
         {/* Hero */}
         <div className="text-center mb-10">
-          <Globe className="h-12 w-12 text-gold mx-auto mb-4" />
+          <Globe className="h-12 w-12 text-[#2F5EA8] mx-auto mb-4" />
           <h1 className="text-3xl sm:text-5xl font-bold mb-3">
             National Medicare Revenue Report
           </h1>
@@ -198,11 +198,11 @@ export default async function NationalReportPage() {
           ].map((s, i) => (
             <div
               key={i}
-              className={`rounded-xl border p-5 ${s.highlight ? "border-gold/30 bg-gold/5" : "border-dark-50/80 bg-dark-400/30"}`}
+              className={`rounded-xl border p-5 ${s.highlight ? "border-[#2F5EA8]/15 bg-[#2F5EA8]/[0.04]" : "border-[var(--border-light)] bg-white"}`}
             >
-              <s.icon className={`h-6 w-6 mb-2 ${s.highlight ? "text-gold" : "text-[var(--text-secondary)]"}`} />
+              <s.icon className={`h-6 w-6 mb-2 ${s.highlight ? "text-[#2F5EA8]" : "text-[var(--text-secondary)]"}`} />
               <p className="text-xs text-[var(--text-secondary)] mb-1">{s.label}</p>
-              <p className={`text-2xl font-bold ${s.highlight ? "text-gold" : ""}`}>{s.value}</p>
+              <p className={`text-2xl font-bold ${s.highlight ? "text-[#2F5EA8]" : ""}`}>{s.value}</p>
             </div>
           ))}
         </div>
@@ -210,7 +210,7 @@ export default async function NationalReportPage() {
         {/* State Rankings */}
         <section className="mb-12">
           <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-            <MapPin className="h-6 w-6 text-gold" />
+            <MapPin className="h-6 w-6 text-[#2F5EA8]" />
             State Rankings
           </h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-5 gap-3">
@@ -218,7 +218,7 @@ export default async function NationalReportPage() {
               <Link
                 key={s.abbr}
                 href={`/reports/states/${stateToSlug(s.abbr)}`}
-                className="group rounded-xl border border-dark-50/80 bg-dark-400/30 p-3 hover:border-gold/20 transition-colors"
+                className="group rounded-xl border border-[var(--border-light)] bg-white p-3 hover:border-[#2F5EA8]/10 transition-colors"
               >
                 <div className="flex items-center justify-between mb-1">
                   <span className="text-xs text-[var(--text-secondary)]">
@@ -228,7 +228,7 @@ export default async function NationalReportPage() {
                     {s.grade}
                   </span>
                 </div>
-                <p className="font-semibold text-sm group-hover:text-gold transition-colors">
+                <p className="font-semibold text-sm group-hover:text-[#2F5EA8] transition-colors">
                   {s.abbr}
                 </p>
                 <p className="text-xs text-[var(--text-secondary)]">
@@ -242,7 +242,7 @@ export default async function NationalReportPage() {
         {/* Specialty Analysis */}
         <section className="mb-12">
           <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-            <Stethoscope className="h-6 w-6 text-gold" />
+            <Stethoscope className="h-6 w-6 text-[#2F5EA8]" />
             Specialty Rankings
           </h2>
           <div className="space-y-3">
@@ -250,7 +250,7 @@ export default async function NationalReportPage() {
               <Link
                 key={s.specialty}
                 href={`/reports/specialties/${specialtyToSlug(s.specialty)}`}
-                className="group flex items-center gap-4 rounded-xl border border-dark-50/80 bg-dark-400/30 p-4 hover:border-gold/20 transition-colors"
+                className="group flex items-center gap-4 rounded-xl border border-[var(--border-light)] bg-white p-4 hover:border-[#2F5EA8]/10 transition-colors"
               >
                 <span className="text-sm text-[var(--text-secondary)] w-8">
                   #{i + 1}
@@ -259,7 +259,7 @@ export default async function NationalReportPage() {
                   {s.grade}
                 </span>
                 <div className="flex-1 min-w-0">
-                  <p className="font-semibold group-hover:text-gold transition-colors truncate">
+                  <p className="font-semibold group-hover:text-[#2F5EA8] transition-colors truncate">
                     {s.specialty}
                   </p>
                   <p className="text-xs text-[var(--text-secondary)]">
@@ -268,7 +268,7 @@ export default async function NationalReportPage() {
                   </p>
                 </div>
                 <div className="text-right flex-shrink-0">
-                  <p className="text-sm font-semibold text-gold">
+                  <p className="text-sm font-semibold text-[#2F5EA8]">
                     ~{formatCurrency(s.gap)} gap
                   </p>
                 </div>
@@ -280,7 +280,7 @@ export default async function NationalReportPage() {
         {/* Program Adoption */}
         <section className="mb-12">
           <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-            <Heart className="h-6 w-6 text-gold" />
+            <Heart className="h-6 w-6 text-[#2F5EA8]" />
             National Program Adoption
           </h2>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -292,19 +292,19 @@ export default async function NationalReportPage() {
             ].map((p) => (
               <div
                 key={p.name}
-                className="rounded-xl border border-dark-50/80 bg-dark-400/30 p-5"
+                className="rounded-xl border border-[var(--border-light)] bg-white p-5"
               >
-                <p.icon className="h-7 w-7 text-gold mb-3" />
+                <p.icon className="h-7 w-7 text-[#2F5EA8] mb-3" />
                 <p className="text-lg font-bold">{p.name}</p>
                 <p className="text-xs text-[var(--text-secondary)] mb-3">
                   {p.fullName}
                 </p>
-                <p className="text-3xl font-bold text-gold">
+                <p className="text-3xl font-bold text-[#2F5EA8]">
                   {p.rate.toFixed(1)}%
                 </p>
-                <div className="h-2 rounded-full bg-dark-400/80 mt-3 overflow-hidden">
+                <div className="h-2 rounded-full bg-[var(--bg)]/80 mt-3 overflow-hidden">
                   <div
-                    className="h-full rounded-full bg-gold"
+                    className="h-full rounded-full bg-[#2F5EA8]"
                     style={{
                       width: `${Math.min((p.rate / p.target) * 100, 100)}%`,
                     }}
@@ -321,7 +321,7 @@ export default async function NationalReportPage() {
         {/* E&M Distribution */}
         <section className="mb-12">
           <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-            <BarChart3 className="h-6 w-6 text-gold" />
+            <BarChart3 className="h-6 w-6 text-[#2F5EA8]" />
             National E&M Coding Distribution
           </h2>
           <div className="grid grid-cols-3 gap-4">
@@ -332,13 +332,13 @@ export default async function NationalReportPage() {
             ].map((em) => (
               <div
                 key={em.code}
-                className="rounded-xl border border-dark-50/80 bg-dark-400/30 p-5 text-center"
+                className="rounded-xl border border-[var(--border-light)] bg-white p-5 text-center"
               >
                 <p className="text-2xl font-bold">{em.code}</p>
                 <p className="text-xs text-[var(--text-secondary)] mb-3">
                   {em.label}
                 </p>
-                <p className="text-3xl font-bold text-gold">
+                <p className="text-3xl font-bold text-[#2F5EA8]">
                   {em.pct.toFixed(1)}%
                 </p>
                 <p className="text-xs text-[var(--text-secondary)] mt-1">
@@ -350,7 +350,7 @@ export default async function NationalReportPage() {
         </section>
 
         {/* Methodology */}
-        <section className="mb-12 rounded-xl border border-dark-50/80 bg-dark-400/30 p-6">
+        <section className="mb-12 rounded-xl border border-[var(--border-light)] bg-white p-6">
           <h2 className="text-lg font-bold mb-3">Methodology</h2>
           <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
             This report analyzes the CMS Medicare Physician & Other
@@ -368,7 +368,7 @@ export default async function NationalReportPage() {
         {/* Share */}
         <section className="mb-10">
           <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
-            <Share2 className="h-5 w-5 text-gold" />
+            <Share2 className="h-5 w-5 text-[#2F5EA8]" />
             Share This Report
           </h2>
           <ShareButtons

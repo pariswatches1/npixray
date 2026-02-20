@@ -25,7 +25,7 @@ export function GroupProgress({ total, completed, failed }: GroupProgressProps) 
           <circle
             cx="50" cy="50" r="42"
             fill="none"
-            stroke="#E8A824"
+            stroke="#2F5EA8"
             strokeWidth="6"
             strokeLinecap="round"
             strokeDasharray={`${pct * 2.64} 264`}
@@ -39,7 +39,7 @@ export function GroupProgress({ total, completed, failed }: GroupProgressProps) 
       </div>
 
       <div className="flex items-center justify-center gap-2 mb-3">
-        <Loader2 className="h-5 w-5 text-gold animate-spin" />
+        <Loader2 className="h-5 w-5 text-[#2F5EA8] animate-spin" />
         <h2 className="text-xl font-semibold text-white">
           Scanning providers...
         </h2>
@@ -50,9 +50,9 @@ export function GroupProgress({ total, completed, failed }: GroupProgressProps) 
       </p>
 
       {/* Progress bar */}
-      <div className="h-2 bg-dark-800 rounded-full overflow-hidden max-w-md mx-auto">
+      <div className="h-2 bg-[var(--bg)] rounded-full overflow-hidden max-w-md mx-auto">
         <div
-          className="h-full bg-gold rounded-full transition-all duration-500"
+          className="h-full bg-[#2F5EA8] rounded-full transition-all duration-500"
           style={{ width: `${pct}%` }}
         />
       </div>

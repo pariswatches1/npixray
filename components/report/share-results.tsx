@@ -65,9 +65,9 @@ export function ShareResults({ npi, providerName, missedRevenue }: ShareResultsP
   };
 
   return (
-    <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5">
+    <div className="rounded-xl border border-[var(--border-light)] bg-white p-5">
       <div className="flex items-center gap-2 mb-4">
-        <Share2 className="h-4 w-4 text-gold" />
+        <Share2 className="h-4 w-4 text-[#2F5EA8]" />
         <h3 className="text-sm font-semibold">Share This Report</h3>
       </div>
 
@@ -78,7 +78,7 @@ export function ShareResults({ npi, providerName, missedRevenue }: ShareResultsP
           className={`flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium transition-all ${
             copied
               ? "bg-green-500/10 border border-green-500/30 text-green-400"
-              : "border border-dark-50 text-[var(--text-secondary)] hover:border-gold/30 hover:text-gold"
+              : "border border-[var(--border)] text-[var(--text-secondary)] hover:border-[#2F5EA8]/15 hover:text-[#2F5EA8]"
           }`}
         >
           {copied ? (
@@ -97,7 +97,7 @@ export function ShareResults({ npi, providerName, missedRevenue }: ShareResultsP
         {/* Twitter/X */}
         <button
           onClick={handleTwitter}
-          className="flex items-center gap-2 rounded-lg border border-dark-50 px-4 py-2.5 text-sm font-medium text-[var(--text-secondary)] hover:border-gold/30 hover:text-gold transition-all"
+          className="flex items-center gap-2 rounded-lg border border-[var(--border)] px-4 py-2.5 text-sm font-medium text-[var(--text-secondary)] hover:border-[#2F5EA8]/15 hover:text-[#2F5EA8] transition-all"
         >
           <Twitter className="h-4 w-4" />
           Twitter / X
@@ -106,7 +106,7 @@ export function ShareResults({ npi, providerName, missedRevenue }: ShareResultsP
         {/* LinkedIn */}
         <button
           onClick={handleLinkedIn}
-          className="flex items-center gap-2 rounded-lg border border-dark-50 px-4 py-2.5 text-sm font-medium text-[var(--text-secondary)] hover:border-gold/30 hover:text-gold transition-all"
+          className="flex items-center gap-2 rounded-lg border border-[var(--border)] px-4 py-2.5 text-sm font-medium text-[var(--text-secondary)] hover:border-[#2F5EA8]/15 hover:text-[#2F5EA8] transition-all"
         >
           <LinkedInIcon className="h-4 w-4" />
           LinkedIn

@@ -13,15 +13,15 @@ import {
 import { TrendingUp, Sliders, Download, ChevronDown, ChevronUp } from "lucide-react";
 
 const TOOLTIP_STYLE = {
-  background: "#15140e",
-  border: "1px solid #2a2820",
+  background: "#FFFFFF",
+  border: "1px solid #E9EEF6",
   borderRadius: "8px",
-  color: "#f5f5f0",
+  color: "#1A2B4A",
   fontSize: "13px",
 };
 
 const PROGRAM_COLORS = {
-  ccm: "#E8A824",
+  ccm: "#2F5EA8",
   rpm: "#34d399",
   bhi: "#a78bfa",
   awv: "#38bdf8",
@@ -52,9 +52,9 @@ export function ForecastTab({ data }: ForecastTabProps) {
     <div className="space-y-8">
       {/* Summary Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="rounded-xl border border-gold/20 bg-gold/5 p-4">
+        <div className="rounded-xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-4">
           <p className="text-xs text-[var(--text-secondary)] mb-1">Year 1 Additional Revenue</p>
-          <p className="text-2xl font-bold text-gold">
+          <p className="text-2xl font-bold text-[#2F5EA8]">
             +{formatForecastCurrency(forecast.totalYear1Additional)}
           </p>
         </div>
@@ -79,15 +79,15 @@ export function ForecastTab({ data }: ForecastTabProps) {
       </div>
 
       {/* Program Toggles */}
-      <div className="rounded-2xl border border-dark-50/80 bg-dark-400/30 p-6">
+      <div className="rounded-2xl border border-[var(--border-light)] bg-white p-6">
         <div className="flex items-center justify-between mb-4">
           <h3 className="font-bold text-lg flex items-center gap-2">
-            <TrendingUp className="h-5 w-5 text-gold" />
+            <TrendingUp className="h-5 w-5 text-[#2F5EA8]" />
             Revenue Programs
           </h3>
           <button
             onClick={() => setShowSliders(!showSliders)}
-            className="flex items-center gap-1 text-xs text-[var(--text-secondary)] hover:text-gold transition-colors"
+            className="flex items-center gap-1 text-xs text-[var(--text-secondary)] hover:text-[#2F5EA8] transition-colors"
           >
             <Sliders className="h-3.5 w-3.5" />
             {showSliders ? "Hide" : "Adjust"} Enrollment
@@ -108,8 +108,8 @@ export function ForecastTab({ data }: ForecastTabProps) {
                 onClick={() => toggleProgram(prog.key)}
                 className={`w-full rounded-lg border p-3 text-left transition-all ${
                   config[prog.key]
-                    ? "border-gold/30 bg-gold/5"
-                    : "border-dark-50/50 bg-dark-400/30 opacity-50"
+                    ? "border-[#2F5EA8]/15 bg-[#2F5EA8]/[0.04]"
+                    : "border-[var(--border-light)] bg-white opacity-50"
                 }`}
               >
                 <div className="flex items-center gap-2 mb-1">
@@ -131,7 +131,7 @@ export function ForecastTab({ data }: ForecastTabProps) {
                     step={5}
                     value={config[prog.sliderKey] as number}
                     onChange={(e) => updateSlider(prog.sliderKey!, Number(e.target.value))}
-                    className="w-full h-1 bg-dark-50/30 rounded-full appearance-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gold"
+                    className="w-full h-1 bg-gray-100 rounded-full appearance-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#2F5EA8]"
                   />
                   <p className="text-[10px] text-center text-[var(--text-secondary)]">
                     {config[prog.sliderKey]}% enrollment
@@ -144,7 +144,7 @@ export function ForecastTab({ data }: ForecastTabProps) {
       </div>
 
       {/* 12-Month Revenue Chart */}
-      <div className="rounded-2xl border border-dark-50/80 bg-dark-400/30 p-6">
+      <div className="rounded-2xl border border-[var(--border-light)] bg-white p-6">
         <h3 className="font-bold text-lg mb-6">12-Month Revenue Projection</h3>
 
         <div className="h-[350px]">
@@ -172,14 +172,14 @@ export function ForecastTab({ data }: ForecastTabProps) {
                   <stop offset="100%" stopColor={PROGRAM_COLORS.emCoding} stopOpacity={0.02} />
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="#2a2820" vertical={false} />
-              <XAxis dataKey="label" tick={{ fill: "#a09c8c", fontSize: 12 }} axisLine={{ stroke: "#2a2820" }} />
-              <YAxis tick={{ fill: "#a09c8c", fontSize: 12 }} tickFormatter={(v) => `$${(v / 1000).toFixed(0)}K`} axisLine={{ stroke: "#2a2820" }} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#E9EEF6" vertical={false} />
+              <XAxis dataKey="label" tick={{ fill: "#6B7A99", fontSize: 12 }} axisLine={{ stroke: "#E9EEF6" }} />
+              <YAxis tick={{ fill: "#6B7A99", fontSize: 12 }} tickFormatter={(v) => `$${(v / 1000).toFixed(0)}K`} axisLine={{ stroke: "#E9EEF6" }} />
               <Tooltip
                 formatter={(value: number, name: string) => [`$${value.toLocaleString()}`, name]}
                 contentStyle={TOOLTIP_STYLE}
               />
-              <Legend wrapperStyle={{ fontSize: "11px", color: "#a09c8c" }} />
+              <Legend wrapperStyle={{ fontSize: "11px", color: "#6B7A99" }} />
               {config.ccmEnabled && <Area type="monotone" dataKey="ccm" name="CCM" stackId="1" stroke={PROGRAM_COLORS.ccm} fill="url(#gradCcm)" />}
               {config.rpmEnabled && <Area type="monotone" dataKey="rpm" name="RPM" stackId="1" stroke={PROGRAM_COLORS.rpm} fill="url(#gradRpm)" />}
               {config.bhiEnabled && <Area type="monotone" dataKey="bhi" name="BHI" stackId="1" stroke={PROGRAM_COLORS.bhi} fill="url(#gradBhi)" />}
@@ -191,24 +191,24 @@ export function ForecastTab({ data }: ForecastTabProps) {
       </div>
 
       {/* Cumulative Revenue Chart */}
-      <div className="rounded-2xl border border-dark-50/80 bg-dark-400/30 p-6">
+      <div className="rounded-2xl border border-[var(--border-light)] bg-white p-6">
         <h3 className="font-bold text-lg mb-2">Cumulative Revenue Captured</h3>
         <p className="text-sm text-[var(--text-secondary)] mb-6">
           By Month 12, you could be generating an additional{" "}
-          <span className="text-gold font-bold">{formatForecastCurrency(forecast.month12MonthlyRate * 12)}/year</span>
+          <span className="text-[#2F5EA8] font-bold">{formatForecastCurrency(forecast.month12MonthlyRate * 12)}/year</span>
         </p>
 
         <div className="h-[250px]">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={forecast.monthly} margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#2a2820" vertical={false} />
-              <XAxis dataKey="label" tick={{ fill: "#a09c8c", fontSize: 12 }} axisLine={{ stroke: "#2a2820" }} />
-              <YAxis tick={{ fill: "#a09c8c", fontSize: 12 }} tickFormatter={(v) => `$${(v / 1000).toFixed(0)}K`} axisLine={{ stroke: "#2a2820" }} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#E9EEF6" vertical={false} />
+              <XAxis dataKey="label" tick={{ fill: "#6B7A99", fontSize: 12 }} axisLine={{ stroke: "#E9EEF6" }} />
+              <YAxis tick={{ fill: "#6B7A99", fontSize: 12 }} tickFormatter={(v) => `$${(v / 1000).toFixed(0)}K`} axisLine={{ stroke: "#E9EEF6" }} />
               <Tooltip
                 formatter={(value: number) => [`$${value.toLocaleString()}`, "Cumulative Revenue"]}
                 contentStyle={TOOLTIP_STYLE}
               />
-              <Line type="monotone" dataKey="cumulative" stroke="#E8A824" strokeWidth={3} dot={{ fill: "#E8A824", r: 3 }} />
+              <Line type="monotone" dataKey="cumulative" stroke="#2F5EA8" strokeWidth={3} dot={{ fill: "#2F5EA8", r: 3 }} />
             </LineChart>
           </ResponsiveContainer>
         </div>
@@ -229,7 +229,7 @@ export function ForecastTab({ data }: ForecastTabProps) {
             return (
               <div
                 key={prog.programName}
-                className="rounded-xl border border-dark-50/80 bg-dark-400/30 p-5"
+                className="rounded-xl border border-[var(--border-light)] bg-white p-5"
               >
                 <div className="flex items-center gap-2 mb-3">
                   <div className="h-3 w-3 rounded-full" style={{ backgroundColor: color }} />
@@ -261,7 +261,7 @@ export function ForecastTab({ data }: ForecastTabProps) {
                 </div>
 
                 {/* Monthly milestones */}
-                <div className="flex justify-between mt-3 pt-3 border-t border-dark-50/30 text-[10px] text-[var(--text-secondary)]">
+                <div className="flex justify-between mt-3 pt-3 border-t border-[var(--border-light)] text-[10px] text-[var(--text-secondary)]">
                   {[1, 3, 6, 12].map((m) => {
                     const mp = forecast.monthly[m - 1];
                     const val = mp[colorKey as keyof typeof mp] as number;
@@ -285,7 +285,7 @@ export function ForecastTab({ data }: ForecastTabProps) {
       <div>
         <button
           onClick={() => setShowScenarios(!showScenarios)}
-          className="flex items-center gap-2 text-sm font-bold text-[var(--text-secondary)] hover:text-gold transition-colors mb-4"
+          className="flex items-center gap-2 text-sm font-bold text-[var(--text-secondary)] hover:text-[#2F5EA8] transition-colors mb-4"
         >
           {showScenarios ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
           Compare Scenarios
@@ -296,7 +296,7 @@ export function ForecastTab({ data }: ForecastTabProps) {
             {scenarios.map((scenario) => (
               <div
                 key={scenario.name}
-                className="rounded-xl border border-dark-50/80 bg-dark-400/30 p-5"
+                className="rounded-xl border border-[var(--border-light)] bg-white p-5"
               >
                 <h4 className="font-bold text-sm mb-1">{scenario.name}</h4>
                 <p className="text-[10px] text-[var(--text-secondary)] mb-3">
@@ -305,7 +305,7 @@ export function ForecastTab({ data }: ForecastTabProps) {
                 <div className="space-y-2">
                   <div className="flex justify-between text-xs">
                     <span className="text-[var(--text-secondary)]">Year 1</span>
-                    <span className="font-bold text-gold">
+                    <span className="font-bold text-[#2F5EA8]">
                       +{formatForecastCurrency(scenario.result.totalYear1Additional)}
                     </span>
                   </div>
@@ -322,12 +322,12 @@ export function ForecastTab({ data }: ForecastTabProps) {
                     </span>
                   </div>
                 </div>
-                <div className="flex gap-1 mt-3 pt-2 border-t border-dark-50/30">
+                <div className="flex gap-1 mt-3 pt-2 border-t border-[var(--border-light)]">
                   {Object.entries(scenario.programs).map(([key, enabled]) => (
                     <span
                       key={key}
                       className={`text-[9px] rounded px-1.5 py-0.5 ${
-                        enabled ? "bg-gold/15 text-gold" : "bg-dark-50/20 text-zinc-500"
+                        enabled ? "bg-[#2F5EA8]/10 text-[#2F5EA8]" : "bg-gray-100 text-zinc-500"
                       }`}
                     >
                       {key.toUpperCase()}
@@ -341,8 +341,8 @@ export function ForecastTab({ data }: ForecastTabProps) {
       </div>
 
       {/* PDF CTA */}
-      <div className="rounded-2xl border border-gold/20 bg-gold/5 p-6 text-center">
-        <Download className="h-8 w-8 text-gold mx-auto mb-3" />
+      <div className="rounded-2xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-6 text-center">
+        <Download className="h-8 w-8 text-[#2F5EA8] mx-auto mb-3" />
         <h3 className="font-bold text-lg mb-2">Download Forecast Report</h3>
         <p className="text-sm text-[var(--text-secondary)] max-w-md mx-auto mb-4">
           Get a printable 12-month revenue projection broken down by program.
@@ -352,7 +352,7 @@ export function ForecastTab({ data }: ForecastTabProps) {
           href={`/api/reports/forecast?npi=${data.provider.npi}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-xl bg-gold px-6 py-3 text-sm font-semibold text-dark transition-all hover:bg-gold-300 hover:shadow-lg hover:shadow-gold/20"
+          className="inline-flex items-center gap-2 rounded-xl bg-[#2F5EA8] px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-[#264D8C] hover:shadow-lg hover:shadow-[#2F5EA8]/10"
         >
           <Download className="h-4 w-4" />
           View Forecast Report

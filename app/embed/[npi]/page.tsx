@@ -58,7 +58,7 @@ const embedStyles = `
   }
   .npx-spinner {
     width: 16px; height: 16px; border: 2px solid #292524;
-    border-top-color: #E8A824; border-radius: 50%;
+    border-top-color: #2F5EA8; border-radius: 50%;
     animation: spin 0.8s linear infinite;
   }
   @keyframes spin { to { transform: rotate(360deg); } }
@@ -71,7 +71,7 @@ const embedStyles = `
     display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
   }
   .npx-logo {
-    font-size: 11px; font-weight: 700; color: #E8A824;
+    font-size: 11px; font-weight: 700; color: #2F5EA8;
     letter-spacing: 1px; text-transform: uppercase;
   }
   .npx-name { font-size: 15px; font-weight: 600; color: #fafaf9; }
@@ -103,7 +103,7 @@ const embedStyles = `
 
   .npx-link {
     display: block; text-align: center; padding: 8px;
-    color: #E8A824; font-size: 12px; text-decoration: none;
+    color: #2F5EA8; font-size: 12px; text-decoration: none;
     border-top: 1px solid #292524; margin-top: 4px; padding-top: 12px;
   }
   .npx-link:hover { text-decoration: underline; }
@@ -131,7 +131,7 @@ function embedScript(npi: string): string {
     // Determine tier styling
     const score = p.revenue_score || 0;
     let tier, color;
-    if (score >= 90) { tier = 'Elite'; color = '#E8A824'; }
+    if (score >= 90) { tier = 'Elite'; color = '#2F5EA8'; }
     else if (score >= 75) { tier = 'Strong'; color = '#34d399'; }
     else if (score >= 60) { tier = 'Average'; color = '#facc15'; }
     else if (score >= 40) { tier = 'Below Avg'; color = '#fb923c'; }
@@ -159,7 +159,7 @@ function embedScript(npi: string): string {
       '<a class="npx-link" href="https://npixray.com/scan/' + p.npi + '" target="_blank" rel="noopener">View Full Report on NPIxray &rarr;</a>' +
       '</div>';
   } catch(e) {
-    widget.innerHTML = '<div class="npx-error">Provider not found. <a href="https://npixray.com" target="_blank" style="color:#E8A824">Visit NPIxray</a></div>';
+    widget.innerHTML = '<div class="npx-error">Provider not found. <a href="https://npixray.com" target="_blank" style="color:#2F5EA8">Visit NPIxray</a></div>';
   }
 })();
 `;

@@ -22,7 +22,7 @@ export default function DashboardPage() {
       {/* Welcome */}
       <div>
         <h1 className="text-2xl font-bold">
-          Welcome back, <span className="text-gold">{firstName}</span>
+          Welcome back, <span className="text-[#2F5EA8]">{firstName}</span>
         </h1>
         <p className="text-sm text-[var(--text-secondary)] mt-1">
           Your revenue intelligence dashboard
@@ -31,11 +31,11 @@ export default function DashboardPage() {
 
       {/* Plan badge */}
       {plan === "free" && (
-        <div className="rounded-xl border border-gold/20 bg-gold/[0.03] p-6 flex items-center justify-between gap-4 flex-wrap">
+        <div className="rounded-xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.03] p-6 flex items-center justify-between gap-4 flex-wrap">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <Crown className="h-4 w-4 text-gold" />
-              <span className="text-sm font-semibold text-gold">
+              <Crown className="h-4 w-4 text-[#2F5EA8]" />
+              <span className="text-sm font-semibold text-[#2F5EA8]">
                 Upgrade to Intelligence
               </span>
             </div>
@@ -46,7 +46,7 @@ export default function DashboardPage() {
           </div>
           <Link
             href="/pricing"
-            className="inline-flex items-center gap-2 rounded-lg bg-gold px-5 py-2.5 text-sm font-semibold text-dark hover:bg-gold-300 transition-all"
+            className="inline-flex items-center gap-2 rounded-lg bg-[#2F5EA8] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#264D8C] transition-all"
           >
             View Plans
             <ArrowRight className="h-4 w-4" />
@@ -84,7 +84,7 @@ export default function DashboardPage() {
 
       {/* Coming soon section for paid features */}
       {plan !== "free" && (
-        <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-8 text-center">
+        <div className="rounded-xl border border-[var(--border-light)] bg-white p-8 text-center">
           <h2 className="text-lg font-bold mb-2">Intelligence Dashboard</h2>
           <p className="text-sm text-[var(--text-secondary)] max-w-md mx-auto">
             CSV upload, patient eligibility lists, AI coding recommendations,
@@ -111,10 +111,10 @@ function QuickAction({
   return (
     <Link
       href={href}
-      className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5 hover:border-gold/30 hover:bg-gold/[0.03] transition-all group"
+      className="rounded-xl border border-[var(--border-light)] bg-white p-5 hover:border-[#2F5EA8]/15 hover:bg-[#264D8C]/[0.03] transition-all group"
     >
-      <Icon className="h-5 w-5 text-gold mb-3" />
-      <h3 className="text-sm font-semibold group-hover:text-gold transition-colors">
+      <Icon className="h-5 w-5 text-[#2F5EA8] mb-3" />
+      <h3 className="text-sm font-semibold group-hover:text-[#2F5EA8] transition-colors">
         {title}
       </h3>
       <p className="text-xs text-[var(--text-secondary)] mt-0.5">{description}</p>

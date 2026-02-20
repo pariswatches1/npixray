@@ -13,15 +13,15 @@ import { BENCHMARKS } from "@/lib/benchmark-data";
 import { TrendingUp, BarChart3, Mail, CheckCircle } from "lucide-react";
 
 const TOOLTIP_STYLE = {
-  background: "#15140e",
-  border: "1px solid #2a2820",
+  background: "#FFFFFF",
+  border: "1px solid #E9EEF6",
   borderRadius: "8px",
-  color: "#f5f5f0",
+  color: "#1A2B4A",
   fontSize: "13px",
 };
 
 const PROGRAM_COLORS = {
-  ccm: "#E8A824",
+  ccm: "#2F5EA8",
   rpm: "#34d399",
   bhi: "#a78bfa",
   awv: "#38bdf8",
@@ -81,7 +81,7 @@ export function ForecastTool() {
   return (
     <div className="space-y-8">
       {/* Input Form */}
-      <div className="rounded-2xl border border-dark-50/80 bg-dark-400/30 p-6">
+      <div className="rounded-2xl border border-[var(--border-light)] bg-white p-6">
         <h3 className="font-bold text-lg mb-4">Practice Details</h3>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
@@ -90,7 +90,7 @@ export function ForecastTool() {
             <select
               value={specialty}
               onChange={(e) => setSpecialty(e.target.value)}
-              className="w-full rounded-lg border border-dark-50/80 bg-dark-400/50 px-3 py-2 text-sm focus:border-gold/50 focus:outline-none"
+              className="w-full rounded-lg border border-[var(--border-light)] bg-white px-3 py-2 text-sm focus:border-[#2F5EA8]/20/50 focus:outline-none"
             >
               {SPECIALTY_OPTIONS.map((s) => <option key={s} value={s}>{s}</option>)}
             </select>
@@ -103,7 +103,7 @@ export function ForecastTool() {
               type="number"
               value={patientCount}
               onChange={(e) => setPatientCount(Math.max(1, Number(e.target.value)))}
-              className="w-full rounded-lg border border-dark-50/80 bg-dark-400/50 px-3 py-2 text-sm focus:border-gold/50 focus:outline-none"
+              className="w-full rounded-lg border border-[var(--border-light)] bg-white px-3 py-2 text-sm focus:border-[#2F5EA8]/20/50 focus:outline-none"
             />
           </div>
           <div>
@@ -116,7 +116,7 @@ export function ForecastTool() {
               max={80}
               value={chronicPct}
               onChange={(e) => setChronicPct(Number(e.target.value))}
-              className="w-full h-2 bg-dark-50/30 rounded-full appearance-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gold"
+              className="w-full h-2 bg-gray-100 rounded-full appearance-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#2F5EA8]"
             />
           </div>
           <div>
@@ -131,7 +131,7 @@ export function ForecastTool() {
                   className={`rounded px-2 py-1 text-[10px] font-bold uppercase transition-all ${
                     currentPrograms[prog]
                       ? "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30"
-                      : "bg-dark-50/10 text-[var(--text-secondary)] border border-dark-50/30"
+                      : "bg-gray-50 text-[var(--text-secondary)] border border-[var(--border-light)]"
                   }`}
                 >
                   {prog}
@@ -152,7 +152,7 @@ export function ForecastTool() {
             <div key={slider.key}>
               <div className="flex items-center justify-between mb-1">
                 <label className="text-[10px] text-[var(--text-secondary)]">{slider.label}</label>
-                <span className="text-[10px] font-bold text-gold">{config[slider.key]}%</span>
+                <span className="text-[10px] font-bold text-[#2F5EA8]">{config[slider.key]}%</span>
               </div>
               <input
                 type="range"
@@ -161,7 +161,7 @@ export function ForecastTool() {
                 step={5}
                 value={config[slider.key] as number}
                 onChange={(e) => setConfig((c) => ({ ...c, [slider.key]: Number(e.target.value) }))}
-                className="w-full h-1 bg-dark-50/30 rounded-full appearance-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gold"
+                className="w-full h-1 bg-gray-100 rounded-full appearance-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#2F5EA8]"
               />
             </div>
           ))}
@@ -170,9 +170,9 @@ export function ForecastTool() {
 
       {/* Summary Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="rounded-xl border border-gold/20 bg-gold/5 p-4">
+        <div className="rounded-xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-4">
           <p className="text-xs text-[var(--text-secondary)] mb-1">Year 1 Revenue</p>
-          <p className="text-2xl font-bold text-gold">
+          <p className="text-2xl font-bold text-[#2F5EA8]">
             +{formatForecastCurrency(forecast.totalYear1Additional)}
           </p>
         </div>
@@ -197,7 +197,7 @@ export function ForecastTool() {
       </div>
 
       {/* Chart */}
-      <div className="rounded-2xl border border-dark-50/80 bg-dark-400/30 p-6">
+      <div className="rounded-2xl border border-[var(--border-light)] bg-white p-6">
         <h3 className="font-bold text-lg mb-6">12-Month Revenue Projection</h3>
 
         <div className="h-[350px]">
@@ -211,14 +211,14 @@ export function ForecastTool() {
                   </linearGradient>
                 ))}
               </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="#2a2820" vertical={false} />
-              <XAxis dataKey="label" tick={{ fill: "#a09c8c", fontSize: 12 }} axisLine={{ stroke: "#2a2820" }} />
-              <YAxis tick={{ fill: "#a09c8c", fontSize: 12 }} tickFormatter={(v) => `$${(v / 1000).toFixed(0)}K`} axisLine={{ stroke: "#2a2820" }} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#E9EEF6" vertical={false} />
+              <XAxis dataKey="label" tick={{ fill: "#6B7A99", fontSize: 12 }} axisLine={{ stroke: "#E9EEF6" }} />
+              <YAxis tick={{ fill: "#6B7A99", fontSize: 12 }} tickFormatter={(v) => `$${(v / 1000).toFixed(0)}K`} axisLine={{ stroke: "#E9EEF6" }} />
               <Tooltip
                 formatter={(value: number, name: string) => [`$${value.toLocaleString()}`, name]}
                 contentStyle={TOOLTIP_STYLE}
               />
-              <Legend wrapperStyle={{ fontSize: "11px", color: "#a09c8c" }} />
+              <Legend wrapperStyle={{ fontSize: "11px", color: "#6B7A99" }} />
               <Area type="monotone" dataKey="ccm" name="CCM" stackId="1" stroke={PROGRAM_COLORS.ccm} fill="url(#fg-ccm)" />
               <Area type="monotone" dataKey="rpm" name="RPM" stackId="1" stroke={PROGRAM_COLORS.rpm} fill="url(#fg-rpm)" />
               <Area type="monotone" dataKey="bhi" name="BHI" stackId="1" stroke={PROGRAM_COLORS.bhi} fill="url(#fg-bhi)" />
@@ -230,9 +230,9 @@ export function ForecastTool() {
       </div>
 
       {/* Scenario Comparison */}
-      <div className="rounded-2xl border border-dark-50/80 bg-dark-400/30 p-6">
+      <div className="rounded-2xl border border-[var(--border-light)] bg-white p-6">
         <div className="flex items-center gap-2 mb-6">
-          <BarChart3 className="h-5 w-5 text-gold" />
+          <BarChart3 className="h-5 w-5 text-[#2F5EA8]" />
           <h3 className="font-bold text-lg">Compare Scenarios</h3>
         </div>
 
@@ -242,13 +242,13 @@ export function ForecastTool() {
             { name: "Scenario B: CCM + RPM", result: scenarioB, desc: "Add CCM and RPM together" },
             { name: "Scenario C: Full Optimization", result: scenarioC, desc: "All programs + E&M coding" },
           ].map((s) => (
-            <div key={s.name} className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5">
+            <div key={s.name} className="rounded-xl border border-[var(--border-light)] bg-white p-5">
               <h4 className="font-bold text-sm mb-1">{s.name}</h4>
               <p className="text-[10px] text-[var(--text-secondary)] mb-4">{s.desc}</p>
               <div className="space-y-2">
                 <div className="flex justify-between text-xs">
                   <span className="text-[var(--text-secondary)]">Year 1</span>
-                  <span className="font-bold text-gold">
+                  <span className="font-bold text-[#2F5EA8]">
                     +{formatForecastCurrency(s.result.totalYear1Additional)}
                   </span>
                 </div>
@@ -271,7 +271,7 @@ export function ForecastTool() {
       </div>
 
       {/* Email Capture */}
-      <div className="rounded-2xl border border-gold/20 bg-gold/5 p-8 text-center">
+      <div className="rounded-2xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-8 text-center">
         {emailSubmitted ? (
           <>
             <CheckCircle className="h-10 w-10 text-emerald-400 mx-auto mb-3" />
@@ -282,7 +282,7 @@ export function ForecastTool() {
           </>
         ) : (
           <>
-            <TrendingUp className="h-10 w-10 text-gold mx-auto mb-3" />
+            <TrendingUp className="h-10 w-10 text-[#2F5EA8] mx-auto mb-3" />
             <h3 className="font-bold text-lg mb-2">Get Your Custom Forecast Report</h3>
             <p className="text-sm text-[var(--text-secondary)] max-w-md mx-auto mb-6">
               Receive a detailed PDF breakdown by program with month-by-month projections.
@@ -299,12 +299,12 @@ export function ForecastTool() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="you@practice.com"
                   required
-                  className="w-full rounded-xl border border-dark-50/80 bg-dark-400/50 pl-10 pr-4 py-3 text-sm placeholder:text-zinc-500 focus:border-gold/50 focus:outline-none"
+                  className="w-full rounded-xl border border-[var(--border-light)] bg-white pl-10 pr-4 py-3 text-sm placeholder:text-zinc-500 focus:border-[#2F5EA8]/20/50 focus:outline-none"
                 />
               </div>
               <button
                 type="submit"
-                className="rounded-xl bg-gold px-6 py-3 text-sm font-semibold text-dark transition-all hover:bg-gold-300 whitespace-nowrap"
+                className="rounded-xl bg-[#2F5EA8] px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-[#264D8C] whitespace-nowrap"
               >
                 Send Report
               </button>

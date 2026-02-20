@@ -159,26 +159,26 @@ export default async function AnswerPage({
         >
           <Link
             href="/"
-            className="hover:text-gold transition-colors flex items-center gap-1"
+            className="hover:text-[#2F5EA8] transition-colors flex items-center gap-1"
           >
             <Home className="h-3.5 w-3.5" />
             <span className="sr-only sm:not-sr-only">Home</span>
           </Link>
-          <ChevronRight className="h-3.5 w-3.5 text-dark-50" />
+          <ChevronRight className="h-3.5 w-3.5 text-[var(--text-secondary)]" />
           <Link
             href="/answers"
-            className="hover:text-gold transition-colors"
+            className="hover:text-[#2F5EA8] transition-colors"
           >
             Answers
           </Link>
-          <ChevronRight className="h-3.5 w-3.5 text-dark-50" />
+          <ChevronRight className="h-3.5 w-3.5 text-[var(--text-secondary)]" />
           <span className="text-[var(--text-primary)]">{data.question}</span>
         </nav>
 
         {/* Header */}
         <header className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <span className="text-[10px] font-semibold px-2.5 py-1 rounded-full bg-gold/10 text-gold uppercase tracking-wider">
+            <span className="text-[10px] font-semibold px-2.5 py-1 rounded-full bg-[#2F5EA8]/[0.06] text-[#2F5EA8] uppercase tracking-wider">
               {data.category}
             </span>
           </div>
@@ -189,10 +189,10 @@ export default async function AnswerPage({
         </header>
 
         {/* Direct answer block */}
-        <div className="rounded-2xl border border-gold/20 bg-gold/5 p-6 sm:p-8 mb-10">
+        <div className="rounded-2xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-6 sm:p-8 mb-10">
           <div className="flex items-start gap-3 mb-3">
-            <MessageSquare className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
-            <h2 className="text-sm font-semibold text-gold uppercase tracking-wider">
+            <MessageSquare className="h-5 w-5 text-[#2F5EA8] flex-shrink-0 mt-0.5" />
+            <h2 className="text-sm font-semibold text-[#2F5EA8] uppercase tracking-wider">
               Quick Answer
             </h2>
           </div>
@@ -207,9 +207,9 @@ export default async function AnswerPage({
             {data.dataPoints.map((point, i) => (
               <div
                 key={i}
-                className="flex items-start gap-3 rounded-xl border border-dark-50/80 bg-dark-400/50 p-4"
+                className="flex items-start gap-3 rounded-xl border border-[var(--border-light)] bg-white p-4"
               >
-                <BarChart3 className="h-4 w-4 text-gold flex-shrink-0 mt-0.5" />
+                <BarChart3 className="h-4 w-4 text-[#2F5EA8] flex-shrink-0 mt-0.5" />
                 <span className="text-sm text-[var(--text-secondary)]">
                   {point}
                 </span>
@@ -220,8 +220,8 @@ export default async function AnswerPage({
 
         {/* Table of Contents */}
         {data.tableOfContents.length > 1 && (
-          <nav className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6 mb-10">
-            <h2 className="text-sm font-semibold uppercase tracking-wider text-gold mb-4 flex items-center gap-2">
+          <nav className="rounded-xl border border-[var(--border-light)] bg-white p-6 mb-10">
+            <h2 className="text-sm font-semibold uppercase tracking-wider text-[#2F5EA8] mb-4 flex items-center gap-2">
               <BookOpen className="h-4 w-4" />
               Table of Contents
             </h2>
@@ -230,9 +230,9 @@ export default async function AnswerPage({
                 <li key={i}>
                   <a
                     href={`#section-${i}`}
-                    className="text-sm text-[var(--text-secondary)] hover:text-gold transition-colors flex items-center gap-2"
+                    className="text-sm text-[var(--text-secondary)] hover:text-[#2F5EA8] transition-colors flex items-center gap-2"
                   >
-                    <span className="text-gold/50 font-mono text-xs w-5">
+                    <span className="text-[#4FA3D1] font-mono text-xs w-5">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     {heading}
@@ -266,18 +266,18 @@ export default async function AnswerPage({
         {data.faqs.length > 0 && (
           <div className="mt-12">
             <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
-              <MessageSquare className="h-5 w-5 text-gold" />
+              <MessageSquare className="h-5 w-5 text-[#2F5EA8]" />
               Frequently Asked Questions
             </h2>
             <div className="space-y-4">
               {data.faqs.map((faq, i) => (
                 <details
                   key={i}
-                  className="group rounded-xl border border-dark-50/80 bg-dark-400/30"
+                  className="group rounded-xl border border-[var(--border-light)] bg-white"
                 >
-                  <summary className="flex items-center justify-between cursor-pointer p-5 text-sm font-semibold hover:text-gold transition-colors">
+                  <summary className="flex items-center justify-between cursor-pointer p-5 text-sm font-semibold hover:text-[#2F5EA8] transition-colors">
                     {faq.question}
-                    <ChevronRight className="h-4 w-4 text-gold/50 group-open:rotate-90 transition-transform flex-shrink-0 ml-4" />
+                    <ChevronRight className="h-4 w-4 text-[#4FA3D1] group-open:rotate-90 transition-transform flex-shrink-0 ml-4" />
                   </summary>
                   <div className="px-5 pb-5 pt-0">
                     <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
@@ -291,8 +291,8 @@ export default async function AnswerPage({
         )}
 
         {/* CTA */}
-        <div className="mt-12 rounded-2xl border border-gold/20 bg-gold/5 p-8 text-center">
-          <Zap className="h-8 w-8 text-gold mx-auto mb-4" />
+        <div className="mt-12 rounded-2xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-8 text-center">
+          <Zap className="h-8 w-8 text-[#2F5EA8] mx-auto mb-4" />
           <h2 className="text-2xl font-bold mb-2">
             See Your Practice&apos;s Specific Numbers
           </h2>
@@ -303,7 +303,7 @@ export default async function AnswerPage({
           </p>
           <Link
             href="/"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-gold text-dark font-semibold hover:bg-gold-300 transition-colors"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#2F5EA8] text-white font-semibold hover:bg-[#264D8C] transition-colors"
           >
             <Zap className="h-4 w-4" />
             Scan Your NPI
@@ -321,7 +321,7 @@ export default async function AnswerPage({
 
         {/* Related Questions */}
         {data.relatedQuestions.length > 0 && (
-          <div className="mt-12 pt-8 border-t border-dark-50/50">
+          <div className="mt-12 pt-8 border-t border-[var(--border-light)]">
             <h3 className="text-sm font-semibold uppercase tracking-wider text-[var(--text-secondary)] mb-4">
               Related Questions
             </h3>
@@ -330,13 +330,13 @@ export default async function AnswerPage({
                 <Link
                   key={related.slug}
                   href={`/answers/${related.slug}`}
-                  className="group flex items-center gap-3 rounded-xl border border-dark-50/80 bg-dark-400/30 p-4 hover:border-gold/20 transition-colors"
+                  className="group flex items-center gap-3 rounded-xl border border-[var(--border-light)] bg-white p-4 hover:border-[#2F5EA8]/10 transition-colors"
                 >
-                  <CheckCircle2 className="h-4 w-4 text-gold/50 group-hover:text-gold transition-colors flex-shrink-0" />
-                  <span className="text-sm group-hover:text-gold transition-colors">
+                  <CheckCircle2 className="h-4 w-4 text-[#4FA3D1] group-hover:text-[#2F5EA8] transition-colors flex-shrink-0" />
+                  <span className="text-sm group-hover:text-[#2F5EA8] transition-colors">
                     {related.question}
                   </span>
-                  <ArrowRight className="h-3 w-3 ml-auto text-[var(--text-secondary)] group-hover:text-gold group-hover:translate-x-0.5 transition-all flex-shrink-0" />
+                  <ArrowRight className="h-3 w-3 ml-auto text-[var(--text-secondary)] group-hover:text-[#2F5EA8] group-hover:translate-x-0.5 transition-all flex-shrink-0" />
                 </Link>
               ))}
             </div>

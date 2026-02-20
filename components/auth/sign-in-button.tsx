@@ -6,7 +6,7 @@ export function SignInButton() {
   return (
     <button
       onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
-      className="flex items-center justify-center gap-3 w-full rounded-xl border border-dark-50/80 bg-white/5 px-6 py-3.5 text-sm font-semibold transition-all hover:bg-white/10 hover:border-gold/30"
+      className="flex items-center justify-center gap-3 w-full rounded-xl border border-[var(--border-light)] bg-white/5 px-6 py-3.5 text-sm font-semibold transition-all hover:bg-white/10 hover:border-[#2F5EA8]/15"
     >
       {/* Google G icon */}
       <svg className="h-5 w-5" viewBox="0 0 24 24">

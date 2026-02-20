@@ -23,7 +23,7 @@ function ProgramCard({
   const captureWidth = Math.max(2, Math.min(100, gap.captureRate * 100));
 
   return (
-    <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6">
+    <div className="rounded-xl border border-[var(--border-light)] bg-white p-6">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
           <div
@@ -43,7 +43,7 @@ function ProgramCard({
           </div>
         </div>
         <div className="text-right">
-          <p className="text-xl font-bold font-mono text-gold">
+          <p className="text-xl font-bold font-mono text-[#2F5EA8]">
             {formatCurrency(gap.annualGap)}
           </p>
           <p className="text-[10px] text-[var(--text-secondary)] uppercase tracking-wider">
@@ -95,7 +95,7 @@ function ProgramCard({
             {Math.round(gap.captureRate * 100)}%
           </span>
         </div>
-        <div className="h-2 rounded-full bg-dark-200 overflow-hidden">
+        <div className="h-2 rounded-full bg-white overflow-hidden">
           <div
             className="h-full rounded-full transition-all duration-1000"
             style={{
@@ -108,7 +108,7 @@ function ProgramCard({
 
       {/* Revenue comparison */}
       <div className="mt-5 grid grid-cols-2 gap-3">
-        <div className="rounded-lg bg-dark-200/50 p-3">
+        <div className="rounded-lg bg-white p-3">
           <p className="text-[10px] text-[var(--text-secondary)] uppercase tracking-wider">
             Current/Year
           </p>
@@ -116,11 +116,11 @@ function ProgramCard({
             {formatCurrency(gap.currentAnnualRevenue)}
           </p>
         </div>
-        <div className="rounded-lg bg-dark-200/50 p-3">
+        <div className="rounded-lg bg-white p-3">
           <p className="text-[10px] text-[var(--text-secondary)] uppercase tracking-wider">
             Potential/Year
           </p>
-          <p className="text-sm font-bold font-mono mt-1 text-gold">
+          <p className="text-sm font-bold font-mono mt-1 text-[#2F5EA8]">
             {formatCurrency(gap.potentialAnnualRevenue)}
           </p>
         </div>
@@ -135,7 +135,7 @@ export function ProgramsTab({ data }: { data: ScanResult }) {
       <ProgramCard
         gap={data.ccmGap}
         icon={Users}
-        color="#E8A824"
+        color="#2F5EA8"
         description={`${data.ccmGap.eligiblePatients} patients have 2+ chronic conditions and qualify for monthly CCM billing. Currently only ${data.ccmGap.currentPatients} are enrolled.`}
       />
       <ProgramCard

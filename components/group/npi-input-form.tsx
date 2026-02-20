@@ -132,7 +132,7 @@ export function NpiInputForm({ onSubmit, loading = false }: NpiInputFormProps) {
             value={practiceName}
             onChange={(e) => setPracticeName(e.target.value)}
             placeholder="e.g., Valley Medical Associates"
-            className="w-full rounded-xl bg-dark-800 border border-dark-50/30 pl-10 pr-4 py-3 text-white placeholder:text-[var(--text-secondary)]/40 focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-gold/50"
+            className="w-full rounded-xl bg-[var(--bg)] border border-[var(--border-light)] pl-10 pr-4 py-3 text-white placeholder:text-[var(--text-secondary)]/40 focus:outline-none focus:ring-2 focus:ring-[#2F5EA8]/10 focus:border-[#2F5EA8]/20/50"
           />
         </div>
       </div>
@@ -144,8 +144,8 @@ export function NpiInputForm({ onSubmit, loading = false }: NpiInputFormProps) {
           onClick={() => setMode("grid")}
           className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
             mode === "grid"
-              ? "bg-gold/15 text-gold border border-gold/30"
-              : "bg-dark-800 text-[var(--text-secondary)] border border-dark-50/20 hover:border-dark-50/40"
+              ? "bg-[#2F5EA8]/10 text-[#2F5EA8] border border-[#2F5EA8]/15"
+              : "bg-[var(--bg)] text-[var(--text-secondary)] border border-[var(--border-light)] hover:border-[var(--border)]"
           }`}
         >
           <Search className="h-4 w-4" />
@@ -156,8 +156,8 @@ export function NpiInputForm({ onSubmit, loading = false }: NpiInputFormProps) {
           onClick={() => setMode("paste")}
           className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
             mode === "paste"
-              ? "bg-gold/15 text-gold border border-gold/30"
-              : "bg-dark-800 text-[var(--text-secondary)] border border-dark-50/20 hover:border-dark-50/40"
+              ? "bg-[#2F5EA8]/10 text-[#2F5EA8] border border-[#2F5EA8]/15"
+              : "bg-[var(--bg)] text-[var(--text-secondary)] border border-[var(--border-light)] hover:border-[var(--border)]"
           }`}
         >
           <ClipboardPaste className="h-4 w-4" />
@@ -173,13 +173,13 @@ export function NpiInputForm({ onSubmit, loading = false }: NpiInputFormProps) {
             onChange={(e) => setPasteText(e.target.value)}
             rows={6}
             placeholder="Paste NPIs here — separated by commas, spaces, tabs, or newlines.&#10;&#10;Example:&#10;1234567890, 2345678901&#10;3456789012"
-            className="w-full rounded-xl bg-dark-800 border border-dark-50/30 p-4 text-white placeholder:text-[var(--text-secondary)]/40 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-gold/50 resize-none"
+            className="w-full rounded-xl bg-[var(--bg)] border border-[var(--border-light)] p-4 text-white placeholder:text-[var(--text-secondary)]/40 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-[#2F5EA8]/10 focus:border-[#2F5EA8]/20/50 resize-none"
           />
           <button
             type="button"
             onClick={parsePaste}
             disabled={!pasteText.trim()}
-            className="w-full rounded-xl bg-gold/15 border border-gold/30 text-gold py-3 font-semibold hover:bg-gold/20 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            className="w-full rounded-xl bg-[#2F5EA8]/10 border border-[#2F5EA8]/15 text-[#2F5EA8] py-3 font-semibold hover:bg-[#2F5EA8]/10 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
           >
             Parse NPIs
           </button>
@@ -200,11 +200,11 @@ export function NpiInputForm({ onSubmit, loading = false }: NpiInputFormProps) {
                     value={field.value}
                     onChange={(e) => updateField(i, e.target.value)}
                     placeholder="10-digit NPI"
-                    className="w-full rounded-lg bg-dark-800 border border-dark-50/30 px-4 py-2.5 text-white font-mono text-sm placeholder:text-[var(--text-secondary)]/40 focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-gold/50"
+                    className="w-full rounded-lg bg-[var(--bg)] border border-[var(--border-light)] px-4 py-2.5 text-white font-mono text-sm placeholder:text-[var(--text-secondary)]/40 focus:outline-none focus:ring-2 focus:ring-[#2F5EA8]/10 focus:border-[#2F5EA8]/20/50"
                   />
                   {/* Status indicator */}
                   <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                    {field.loading && <Loader2 className="h-4 w-4 text-gold animate-spin" />}
+                    {field.loading && <Loader2 className="h-4 w-4 text-[#2F5EA8] animate-spin" />}
                     {field.name && <CheckCircle2 className="h-4 w-4 text-emerald-400" />}
                     {field.error && <AlertCircle className="h-4 w-4 text-red-400" />}
                   </div>
@@ -241,7 +241,7 @@ export function NpiInputForm({ onSubmit, loading = false }: NpiInputFormProps) {
             <button
               type="button"
               onClick={addField}
-              className="flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-gold transition-colors px-7"
+              className="flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-[#2F5EA8] transition-colors px-7"
             >
               <Plus className="h-4 w-4" />
               Add Provider
@@ -261,7 +261,7 @@ export function NpiInputForm({ onSubmit, loading = false }: NpiInputFormProps) {
         <button
           type="submit"
           disabled={!canSubmit}
-          className="w-full sm:w-auto flex items-center justify-center gap-2 rounded-xl bg-gold px-8 py-3 font-bold text-dark-900 hover:bg-gold/90 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+          className="w-full sm:w-auto flex items-center justify-center gap-2 rounded-xl bg-[#2F5EA8] px-8 py-3 font-bold text-white hover:bg-[#264D8C]/90 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
         >
           {loading ? (
             <>

@@ -58,16 +58,16 @@ export default async function StateLeaderboardPage({
   return (
     <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
       <nav className="flex items-center gap-1.5 text-sm text-[var(--text-secondary)] mb-6 flex-wrap">
-        <Link href="/" className="hover:text-gold transition-colors"><Home className="h-3.5 w-3.5" /></Link>
-        <ChevronRight className="h-3.5 w-3.5 text-dark-50" />
-        <Link href="/leaderboard" className="hover:text-gold transition-colors">Leaderboard</Link>
-        <ChevronRight className="h-3.5 w-3.5 text-dark-50" />
+        <Link href="/" className="hover:text-[#2F5EA8] transition-colors"><Home className="h-3.5 w-3.5" /></Link>
+        <ChevronRight className="h-3.5 w-3.5 text-[var(--text-secondary)]" />
+        <Link href="/leaderboard" className="hover:text-[#2F5EA8] transition-colors">Leaderboard</Link>
+        <ChevronRight className="h-3.5 w-3.5 text-[var(--text-secondary)]" />
         <span className="text-white font-medium">{name}</span>
       </nav>
 
       <div className="mb-8">
         <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
-          {name} Revenue Score <span className="text-gold">Leaderboard</span>
+          {name} Revenue Score <span className="text-[#2F5EA8]">Leaderboard</span>
         </h1>
         <p className="text-[var(--text-secondary)]">
           Top 20 highest-scoring providers in {name}. Average score: {Math.round(avgScore)}/100.
@@ -75,11 +75,11 @@ export default async function StateLeaderboardPage({
       </div>
 
       {/* Leaderboard Table */}
-      <div className="rounded-2xl border border-dark-50/80 bg-dark-400/30 overflow-hidden mb-8">
+      <div className="rounded-2xl border border-[var(--border-light)] bg-white overflow-hidden mb-8">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-dark-50/50 text-xs text-[var(--text-secondary)]">
+              <tr className="border-b border-[var(--border-light)] text-xs text-[var(--text-secondary)]">
                 <th className="px-4 py-3 text-left font-medium">Rank</th>
                 <th className="px-4 py-3 text-left font-medium">Provider</th>
                 <th className="px-4 py-3 text-left font-medium">Specialty</th>
@@ -93,17 +93,17 @@ export default async function StateLeaderboardPage({
                 return (
                   <tr
                     key={p.npi}
-                    className="border-b border-dark-50/30 hover:bg-dark-300/30 transition-colors"
+                    className="border-b border-[var(--border-light)] hover:bg-[var(--bg)]/30 transition-colors"
                   >
                     <td className="px-4 py-3">
-                      <span className={`font-bold ${i < 3 ? "text-gold" : "text-[var(--text-secondary)]"}`}>
+                      <span className={`font-bold ${i < 3 ? "text-[#2F5EA8]" : "text-[var(--text-secondary)]"}`}>
                         #{i + 1}
                       </span>
                     </td>
                     <td className="px-4 py-3">
                       <Link
                         href={`/scan/${p.npi}`}
-                        className="text-sm hover:text-gold transition-colors"
+                        className="text-sm hover:text-[#2F5EA8] transition-colors"
                       >
                         NPI {p.npi}
                       </Link>
@@ -136,7 +136,7 @@ export default async function StateLeaderboardPage({
 
       {/* Specialty links */}
       <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
-        <Stethoscope className="h-5 w-5 text-gold" />
+        <Stethoscope className="h-5 w-5 text-[#2F5EA8]" />
         Leaderboard by Specialty in {name}
       </h2>
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-8">
@@ -144,17 +144,17 @@ export default async function StateLeaderboardPage({
           <Link
             key={s.specialty}
             href={`/leaderboard/${slug}/${specialtyToSlug(s.specialty)}`}
-            className="group rounded-xl border border-dark-50/80 bg-dark-400/50 p-3 transition-all hover:border-gold/30 hover:bg-gold/5 flex items-center justify-between"
+            className="group rounded-xl border border-[var(--border-light)] bg-white p-3 transition-all hover:border-[#2F5EA8]/15 hover:bg-[#2F5EA8]/[0.04] flex items-center justify-between"
           >
             <div>
-              <span className="text-xs font-medium group-hover:text-gold transition-colors">
+              <span className="text-xs font-medium group-hover:text-[#2F5EA8] transition-colors">
                 {s.specialty}
               </span>
               <p className="text-[10px] text-[var(--text-secondary)]">
                 {Number(s.count).toLocaleString()} providers
               </p>
             </div>
-            <ArrowRight className="h-3 w-3 text-dark-50 group-hover:text-gold" />
+            <ArrowRight className="h-3 w-3 text-[var(--text-secondary)] group-hover:text-[#2F5EA8]" />
           </Link>
         ))}
       </div>

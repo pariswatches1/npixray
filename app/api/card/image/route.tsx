@@ -117,7 +117,7 @@ export async function GET(request: NextRequest) {
             left: 0,
             right: 0,
             height: "5px",
-            background: "linear-gradient(90deg, #E8A824, #f0c040, #E8A824)",
+            background: "linear-gradient(90deg, #2F5EA8, #4FA3D1, #2F5EA8)",
           }}
         />
 
@@ -157,13 +157,13 @@ export async function GET(request: NextRequest) {
           >
             <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
               <span style={{ fontSize: "26px", fontWeight: 700, color: "#fff" }}>
-                NPI<span style={{ color: "#E8A824" }}>xray</span>
+                NPI<span style={{ color: "#2F5EA8" }}>xray</span>
               </span>
             </div>
             <span
               style={{
                 fontSize: "12px",
-                color: "#E8A824",
+                color: "#2F5EA8",
                 background: "rgba(232, 168, 36, 0.1)",
                 border: "1px solid rgba(232, 168, 36, 0.25)",
                 borderRadius: "8px",
@@ -264,7 +264,7 @@ export async function GET(request: NextRequest) {
             }}
           >
             <span style={{ fontSize: "14px", color: "#999" }}>Top</span>
-            <span style={{ fontSize: "22px", fontWeight: 800, color: "#E8A824" }}>
+            <span style={{ fontSize: "22px", fontWeight: 800, color: "#2F5EA8" }}>
               {Math.max(1, 100 - percentile)}%
             </span>
             <span style={{ fontSize: "14px", color: "#999" }}>of {specialty}</span>
@@ -330,7 +330,7 @@ export async function GET(request: NextRequest) {
                 style={{
                   fontSize: "52px",
                   fontWeight: 800,
-                  color: "#E8A824",
+                  color: "#2F5EA8",
                   lineHeight: 1,
                 }}
               >
@@ -427,7 +427,7 @@ export async function GET(request: NextRequest) {
               paddingTop: "16px",
             }}
           >
-            <span style={{ fontSize: "15px", color: "#E8A824", fontWeight: 600 }}>
+            <span style={{ fontSize: "15px", color: "#2F5EA8", fontWeight: 600 }}>
               Scan your NPI free → npixray.com
             </span>
             <span style={{ fontSize: "13px", color: "#555" }}>

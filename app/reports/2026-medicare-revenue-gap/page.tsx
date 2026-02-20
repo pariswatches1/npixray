@@ -197,7 +197,7 @@ export default async function MedicareRevenueGapReport() {
 
       {/* Hero */}
       <section className="relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gold/[0.03] rounded-full blur-3xl" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#2F5EA8]/[0.03] rounded-full blur-3xl" />
         <div className="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pt-8 pb-12 sm:pt-12 sm:pb-16">
           <Breadcrumbs
             items={[
@@ -207,7 +207,7 @@ export default async function MedicareRevenueGapReport() {
           />
 
           <div className="text-center">
-            <Globe className="h-14 w-14 text-gold mx-auto mb-4" />
+            <Globe className="h-14 w-14 text-[#2F5EA8] mx-auto mb-4" />
             <h1 className="text-3xl sm:text-5xl font-bold mb-3">
               2026 Medicare Revenue Gap Report
             </h1>
@@ -220,13 +220,13 @@ export default async function MedicareRevenueGapReport() {
             <div className="flex flex-wrap justify-center gap-3">
               <a
                 href="/api/reports/pdf?type=national"
-                className="inline-flex items-center gap-2 rounded-lg bg-gold px-5 py-2.5 text-sm font-semibold text-dark-500 hover:bg-gold-300 transition-colors"
+                className="inline-flex items-center gap-2 rounded-lg bg-[#2F5EA8] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#264D8C] transition-colors"
               >
                 <FileDown className="h-4 w-4" /> Download PDF
               </a>
               <Link
                 href="/methodology"
-                className="inline-flex items-center gap-2 rounded-lg border border-dark-50/50 px-5 py-2.5 text-sm font-medium text-[var(--text-secondary)] hover:border-gold/30 hover:text-gold transition-colors"
+                className="inline-flex items-center gap-2 rounded-lg border border-[var(--border-light)] px-5 py-2.5 text-sm font-medium text-[var(--text-secondary)] hover:border-[#2F5EA8]/15 hover:text-[#2F5EA8] transition-colors"
               >
                 Methodology
               </Link>
@@ -236,7 +236,7 @@ export default async function MedicareRevenueGapReport() {
       </section>
 
       {/* Executive Summary */}
-      <section className="border-t border-dark-50/50 py-12">
+      <section className="border-t border-[var(--border-light)] py-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-bold mb-6">Executive Summary</h2>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
@@ -268,13 +268,13 @@ export default async function MedicareRevenueGapReport() {
                 key={i}
                 className={`rounded-xl border p-5 ${
                   s.highlight
-                    ? "border-gold/30 bg-gold/5"
-                    : "border-dark-50/80 bg-dark-400/30"
+                    ? "border-[#2F5EA8]/15 bg-[#2F5EA8]/[0.04]"
+                    : "border-[var(--border-light)] bg-white"
                 }`}
               >
                 <s.icon
                   className={`h-6 w-6 mb-2 ${
-                    s.highlight ? "text-gold" : "text-[var(--text-secondary)]"
+                    s.highlight ? "text-[#2F5EA8]" : "text-[var(--text-secondary)]"
                   }`}
                 />
                 <p className="text-xs text-[var(--text-secondary)] mb-1">
@@ -282,7 +282,7 @@ export default async function MedicareRevenueGapReport() {
                 </p>
                 <p
                   className={`text-2xl font-bold ${
-                    s.highlight ? "text-gold" : ""
+                    s.highlight ? "text-[#2F5EA8]" : ""
                   }`}
                 >
                   {s.value}
@@ -296,9 +296,9 @@ export default async function MedicareRevenueGapReport() {
             ))}
           </div>
 
-          <div className="rounded-xl border border-gold/20 bg-gold/5 p-5">
+          <div className="rounded-xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-5">
             <p className="text-sm leading-relaxed text-[var(--text-secondary)]">
-              <span className="font-semibold text-gold">Key Finding: </span>
+              <span className="font-semibold text-[#2F5EA8]">Key Finding: </span>
               An estimated {formatCurrency(totalMissed)} in Medicare revenue goes
               uncaptured annually across {formatNumber(national?.totalProviders || 0)}{" "}
               providers. The largest contributor is underutilization of{" "}
@@ -311,16 +311,16 @@ export default async function MedicareRevenueGapReport() {
       </section>
 
       {/* 50-State Comparison Table */}
-      <section className="border-t border-dark-50/50 py-12">
+      <section className="border-t border-[var(--border-light)] py-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-            <MapPin className="h-6 w-6 text-gold" />
+            <MapPin className="h-6 w-6 text-[#2F5EA8]" />
             50-State Revenue Gap Comparison
           </h2>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-dark-50/50 text-left text-[var(--text-secondary)]">
+                <tr className="border-b border-[var(--border-light)] text-left text-[var(--text-secondary)]">
                   <th className="pb-3 pr-3 font-medium">Rank</th>
                   <th className="pb-3 pr-3 font-medium">State</th>
                   <th className="pb-3 pr-3 font-medium text-center">Grade</th>
@@ -337,14 +337,14 @@ export default async function MedicareRevenueGapReport() {
               </thead>
               <tbody className="divide-y divide-dark-50/30">
                 {stateRankings.map((s: any, i: number) => (
-                  <tr key={s.abbr} className="hover:bg-dark-400/30">
+                  <tr key={s.abbr} className="hover:bg-white">
                     <td className="py-2.5 pr-3 text-[var(--text-secondary)]">
                       {i + 1}
                     </td>
                     <td className="py-2.5 pr-3">
                       <Link
                         href={`/states/${stateToSlug(s.abbr)}`}
-                        className="text-gold hover:underline font-medium"
+                        className="text-[#2F5EA8] hover:underline font-medium"
                       >
                         {s.name}
                       </Link>
@@ -370,10 +370,10 @@ export default async function MedicareRevenueGapReport() {
       </section>
 
       {/* Top 5 Specialty Breakdown */}
-      <section className="border-t border-dark-50/50 py-12">
+      <section className="border-t border-[var(--border-light)] py-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-            <Stethoscope className="h-6 w-6 text-gold" />
+            <Stethoscope className="h-6 w-6 text-[#2F5EA8]" />
             Top 5 Specialties by Provider Count
           </h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
@@ -381,18 +381,18 @@ export default async function MedicareRevenueGapReport() {
               <Link
                 key={s.specialty}
                 href={`/specialties/${specialtyToSlug(s.specialty)}`}
-                className="group rounded-xl border border-dark-50/50 bg-dark-400/30 p-5 hover:border-gold/30 transition-all"
+                className="group rounded-xl border border-[var(--border-light)] bg-white p-5 hover:border-[#2F5EA8]/15 transition-all"
               >
                 <span className={`text-2xl font-bold ${s.color}`}>
                   {s.grade}
                 </span>
-                <h3 className="font-semibold text-sm mt-2 group-hover:text-gold transition-colors">
+                <h3 className="font-semibold text-sm mt-2 group-hover:text-[#2F5EA8] transition-colors">
                   {s.specialty}
                 </h3>
                 <p className="text-xs text-[var(--text-secondary)] mt-1">
                   {formatNumber(s.provider_count)} providers
                 </p>
-                <p className="text-xs text-gold mt-2">
+                <p className="text-xs text-[#2F5EA8] mt-2">
                   ~{formatCurrency(s.gap)} gap/provider
                 </p>
               </Link>
@@ -401,7 +401,7 @@ export default async function MedicareRevenueGapReport() {
           <div className="mt-4 text-center">
             <Link
               href="/specialties"
-              className="text-sm text-gold hover:underline"
+              className="text-sm text-[#2F5EA8] hover:underline"
             >
               View all {benchmarks.length} specialties →
             </Link>
@@ -410,10 +410,10 @@ export default async function MedicareRevenueGapReport() {
       </section>
 
       {/* Program Adoption Overview */}
-      <section className="border-t border-dark-50/50 py-12">
+      <section className="border-t border-[var(--border-light)] py-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-            <Heart className="h-6 w-6 text-gold" />
+            <Heart className="h-6 w-6 text-[#2F5EA8]" />
             National Program Adoption Rates
           </h2>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -454,21 +454,21 @@ export default async function MedicareRevenueGapReport() {
               <Link
                 key={p.name}
                 href={p.href}
-                className="group rounded-xl border border-dark-50/80 bg-dark-400/30 p-5 hover:border-gold/30 transition-all"
+                className="group rounded-xl border border-[var(--border-light)] bg-white p-5 hover:border-[#2F5EA8]/15 transition-all"
               >
-                <p.icon className="h-7 w-7 text-gold mb-3" />
-                <p className="text-lg font-bold group-hover:text-gold transition-colors">
+                <p.icon className="h-7 w-7 text-[#2F5EA8] mb-3" />
+                <p className="text-lg font-bold group-hover:text-[#2F5EA8] transition-colors">
                   {p.name}
                 </p>
                 <p className="text-xs text-[var(--text-secondary)] mb-3">
                   {p.fullName}
                 </p>
-                <p className="text-3xl font-bold text-gold">
+                <p className="text-3xl font-bold text-[#2F5EA8]">
                   {p.rate.toFixed(1)}%
                 </p>
-                <div className="h-2 rounded-full bg-dark-400/80 mt-3 overflow-hidden">
+                <div className="h-2 rounded-full bg-[var(--bg)]/80 mt-3 overflow-hidden">
                   <div
-                    className="h-full rounded-full bg-gold"
+                    className="h-full rounded-full bg-[#2F5EA8]"
                     style={{
                       width: `${Math.min((p.rate / p.target) * 100, 100)}%`,
                     }}
@@ -484,17 +484,17 @@ export default async function MedicareRevenueGapReport() {
       </section>
 
       {/* Embeddable Chart */}
-      <section className="border-t border-dark-50/50 py-12">
+      <section className="border-t border-[var(--border-light)] py-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
-            <Code className="h-6 w-6 text-gold" />
+            <Code className="h-6 w-6 text-[#2F5EA8]" />
             Embed This Data
           </h2>
           <p className="text-sm text-[var(--text-secondary)] mb-4">
             Use the embed code below to display the national revenue gap summary
             on your website. Links back to the full report.
           </p>
-          <div className="rounded-xl border border-dark-50/50 bg-dark-500/50 p-4 font-mono text-xs text-[var(--text-secondary)] overflow-x-auto">
+          <div className="rounded-xl border border-[var(--border-light)] bg-[var(--bg)]/50 p-4 font-mono text-xs text-[var(--text-secondary)] overflow-x-auto">
             <code>
               {`<iframe src="https://npixray.com/reports/embed/national" width="100%" height="400" frameborder="0" title="2026 Medicare Revenue Gap Report - NPIxray"></iframe>`}
             </code>
@@ -503,7 +503,7 @@ export default async function MedicareRevenueGapReport() {
       </section>
 
       {/* Citation Block */}
-      <section className="border-t border-dark-50/50 py-12">
+      <section className="border-t border-[var(--border-light)] py-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <CiteBlock
             title="2026 Medicare Revenue Gap Report: 50-State Analysis"
@@ -519,10 +519,10 @@ export default async function MedicareRevenueGapReport() {
       </section>
 
       {/* Share */}
-      <section className="border-t border-dark-50/50 py-10">
+      <section className="border-t border-[var(--border-light)] py-10">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
-            <Share2 className="h-5 w-5 text-gold" />
+            <Share2 className="h-5 w-5 text-[#2F5EA8]" />
             Share This Report
           </h2>
           <ShareButtons
@@ -535,27 +535,27 @@ export default async function MedicareRevenueGapReport() {
       </section>
 
       {/* Internal Links Grid */}
-      <section className="border-t border-dark-50/50 py-12">
+      <section className="border-t border-[var(--border-light)] py-12">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-bold mb-6">Explore the Data</h2>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {/* States */}
-            <div className="rounded-xl border border-dark-50/50 bg-dark-400/30 p-5">
-              <MapPin className="h-5 w-5 text-gold mb-3" />
+            <div className="rounded-xl border border-[var(--border-light)] bg-white p-5">
+              <MapPin className="h-5 w-5 text-[#2F5EA8] mb-3" />
               <h3 className="font-semibold text-sm mb-3">Browse by State</h3>
               <div className="flex flex-wrap gap-1.5">
                 {stateRankings.slice(0, 10).map((s: any) => (
                   <Link
                     key={s.abbr}
                     href={`/states/${stateToSlug(s.abbr)}`}
-                    className="text-xs rounded-md border border-dark-50/50 px-2 py-1 text-[var(--text-secondary)] hover:border-gold/30 hover:text-gold transition-all"
+                    className="text-xs rounded-md border border-[var(--border-light)] px-2 py-1 text-[var(--text-secondary)] hover:border-[#2F5EA8]/15 hover:text-[#2F5EA8] transition-all"
                   >
                     {s.abbr}
                   </Link>
                 ))}
                 <Link
                   href="/states"
-                  className="text-xs rounded-md border border-gold/20 bg-gold/5 px-2 py-1 text-gold"
+                  className="text-xs rounded-md border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] px-2 py-1 text-[#2F5EA8]"
                 >
                   All 50 →
                 </Link>
@@ -563,8 +563,8 @@ export default async function MedicareRevenueGapReport() {
             </div>
 
             {/* Specialties */}
-            <div className="rounded-xl border border-dark-50/50 bg-dark-400/30 p-5">
-              <Stethoscope className="h-5 w-5 text-gold mb-3" />
+            <div className="rounded-xl border border-[var(--border-light)] bg-white p-5">
+              <Stethoscope className="h-5 w-5 text-[#2F5EA8] mb-3" />
               <h3 className="font-semibold text-sm mb-3">
                 Browse by Specialty
               </h3>
@@ -573,14 +573,14 @@ export default async function MedicareRevenueGapReport() {
                   <Link
                     key={b.specialty}
                     href={`/specialties/${specialtyToSlug(b.specialty)}`}
-                    className="text-xs rounded-md border border-dark-50/50 px-2 py-1 text-[var(--text-secondary)] hover:border-gold/30 hover:text-gold transition-all"
+                    className="text-xs rounded-md border border-[var(--border-light)] px-2 py-1 text-[var(--text-secondary)] hover:border-[#2F5EA8]/15 hover:text-[#2F5EA8] transition-all"
                   >
                     {b.specialty}
                   </Link>
                 ))}
                 <Link
                   href="/specialties"
-                  className="text-xs rounded-md border border-gold/20 bg-gold/5 px-2 py-1 text-gold"
+                  className="text-xs rounded-md border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] px-2 py-1 text-[#2F5EA8]"
                 >
                   All →
                 </Link>
@@ -588,8 +588,8 @@ export default async function MedicareRevenueGapReport() {
             </div>
 
             {/* Programs */}
-            <div className="rounded-xl border border-dark-50/50 bg-dark-400/30 p-5">
-              <Heart className="h-5 w-5 text-gold mb-3" />
+            <div className="rounded-xl border border-[var(--border-light)] bg-white p-5">
+              <Heart className="h-5 w-5 text-[#2F5EA8] mb-3" />
               <h3 className="font-semibold text-sm mb-3">
                 Revenue Programs
               </h3>
@@ -604,7 +604,7 @@ export default async function MedicareRevenueGapReport() {
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="text-xs text-[var(--text-secondary)] hover:text-gold transition-colors flex items-center gap-1"
+                      className="text-xs text-[var(--text-secondary)] hover:text-[#2F5EA8] transition-colors flex items-center gap-1"
                     >
                       <ArrowRight className="h-3 w-3" /> {link.label}
                     </Link>

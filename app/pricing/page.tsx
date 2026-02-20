@@ -132,20 +132,20 @@ export default function PricingPage() {
       />
       {/* Hero */}
       <section className="relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gold/[0.03] rounded-full blur-3xl" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#2F5EA8]/[0.03] rounded-full blur-3xl" />
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-20 pb-16 sm:pt-28 sm:pb-20">
           <Breadcrumbs items={[{ label: "Pricing" }]} />
           <div className="text-center">
-            <div className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/5 px-4 py-1.5 mb-8">
-              <Shield className="h-3.5 w-3.5 text-gold" />
-              <span className="text-xs font-medium text-gold">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] px-4 py-1.5 mb-8">
+              <Shield className="h-3.5 w-3.5 text-[#2F5EA8]" />
+              <span className="text-xs font-medium text-[#2F5EA8]">
                 No credit card required for Free tier
               </span>
             </div>
 
             <h1 className="text-4xl sm:text-5xl font-bold tracking-tight max-w-3xl mx-auto leading-[1.1]">
-              Capture Every <span className="text-gold">Dollar</span> You&apos;re
+              Capture Every <span className="text-[#2F5EA8]">Dollar</span> You&apos;re
               Missing
             </h1>
 
@@ -166,14 +166,14 @@ export default function PricingPage() {
                 key={tier.name}
                 className={`relative rounded-2xl border p-8 flex flex-col ${
                   tier.highlight
-                    ? "border-gold/40 bg-gold/[0.03] shadow-lg shadow-gold/10"
-                    : "border-dark-50/80 bg-dark-400/50"
+                    ? "border-[#2F5EA8]/20 bg-[#2F5EA8]/[0.03] shadow-lg shadow-[#2F5EA8]/[0.06]"
+                    : "border-[var(--border-light)] bg-white"
                 }`}
               >
                 {/* Popular badge */}
                 {tier.badge && (
                   <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
-                    <span className="inline-flex items-center gap-1.5 rounded-full bg-gold px-4 py-1 text-xs font-semibold text-dark">
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-[#2F5EA8] px-4 py-1 text-xs font-semibold text-white">
                       <Star className="h-3 w-3" />
                       {tier.badge}
                     </span>
@@ -185,11 +185,11 @@ export default function PricingPage() {
                   <div
                     className={`flex h-10 w-10 items-center justify-center rounded-lg border ${
                       tier.highlight
-                        ? "bg-gold/15 border-gold/30"
-                        : "bg-gold/10 border-gold/20"
+                        ? "bg-[#2F5EA8]/10 border-[#2F5EA8]/15"
+                        : "bg-[#2F5EA8]/[0.06] border-[#2F5EA8]/10"
                     }`}
                   >
-                    <tier.icon className="h-5 w-5 text-gold" />
+                    <tier.icon className="h-5 w-5 text-[#2F5EA8]" />
                   </div>
                   <h3 className="text-xl font-bold">{tier.name}</h3>
                 </div>
@@ -208,7 +208,7 @@ export default function PricingPage() {
                   {tier.description}
                 </p>
                 {(tier as any).subtext && (
-                  <p className="text-xs text-gold font-medium mb-4">
+                  <p className="text-xs text-[#2F5EA8] font-medium mb-4">
                     {(tier as any).subtext}
                   </p>
                 )}
@@ -225,7 +225,7 @@ export default function PricingPage() {
                 <ul className="space-y-3 flex-1">
                   {tier.features.map((feature) => (
                     <li key={feature} className="flex items-start gap-3 text-sm">
-                      <Check className="h-4 w-4 text-gold flex-shrink-0 mt-0.5" />
+                      <Check className="h-4 w-4 text-[#2F5EA8] flex-shrink-0 mt-0.5" />
                       <span className="text-[var(--text-secondary)] leading-relaxed">
                         {feature}
                       </span>
@@ -239,17 +239,17 @@ export default function PricingPage() {
       </section>
 
       {/* FAQ / Bottom CTA */}
-      <section className="border-t border-dark-50/50">
+      <section className="border-t border-[var(--border-light)]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20 sm:py-28 text-center">
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
-            Questions? <span className="text-gold">We&apos;ve got answers.</span>
+            Questions? <span className="text-[#2F5EA8]">We&apos;ve got answers.</span>
           </h2>
 
           <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto text-left">
             {FAQS.map((faq) => (
               <div
                 key={faq.q}
-                className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6"
+                className="rounded-xl border border-[var(--border-light)] bg-white p-6"
               >
                 <h4 className="font-semibold mb-2">{faq.q}</h4>
                 <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
@@ -262,7 +262,7 @@ export default function PricingPage() {
           <div className="mt-16">
             <Link
               href="/"
-              className="inline-flex items-center gap-2 rounded-xl bg-gold px-8 py-4 text-base font-semibold text-dark transition-all hover:bg-gold-300 hover:shadow-lg hover:shadow-gold/20"
+              className="inline-flex items-center gap-2 rounded-xl bg-[#2F5EA8] px-8 py-4 text-base font-semibold text-white transition-all hover:bg-[#264D8C] hover:shadow-lg hover:shadow-[#2F5EA8]/10"
             >
               <Zap className="h-5 w-5" />
               Start With a Free Scan

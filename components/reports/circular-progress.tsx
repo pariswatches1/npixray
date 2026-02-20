@@ -15,7 +15,7 @@ export function CircularProgress({
   sublabel,
   size = 120,
   strokeWidth = 8,
-  color = "#E8A824",
+  color = "#2F5EA8",
 }: CircularProgressProps) {
   const radius = (size - strokeWidth) / 2;
   const circumference = radius * 2 * Math.PI;
@@ -33,7 +33,7 @@ export function CircularProgress({
             cy={size / 2}
             r={radius}
             fill="none"
-            stroke="#2a2820"
+            stroke="#E9EEF6"
             strokeWidth={strokeWidth}
           />
           {/* Progress circle */}

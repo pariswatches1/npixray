@@ -35,8 +35,8 @@ function buildEmailHtml({
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Your NPIxray Revenue Report</title>
 </head>
-<body style="margin:0;padding:0;background-color:#0a0a0f;color:#e5e5e5;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#0a0a0f;">
+<body style="margin:0;padding:0;background-color:#F5F7FA;color:#1A2B4A;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#F5F7FA;">
     <tr>
       <td align="center" style="padding:40px 20px;">
         <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
@@ -45,14 +45,14 @@ function buildEmailHtml({
           <tr>
             <td style="padding-bottom:32px;text-align:center;">
               <span style="font-size:24px;font-weight:bold;color:#ffffff;letter-spacing:-0.5px;">
-                NPI<span style="color:#E8A824;">xray</span>
+                NPI<span style="color:#2F5EA8;">xray</span>
               </span>
             </td>
           </tr>
 
           <!-- Hero -->
           <tr>
-            <td style="background-color:#111118;border:1px solid rgba(232,168,36,0.2);border-radius:16px;padding:40px 32px;text-align:center;">
+            <td style="background-color:#FFFFFF;border:1px solid rgba(47,94,168,0.15);border-radius:16px;padding:40px 32px;text-align:center;">
               <p style="margin:0 0 8px;font-size:14px;color:#999;text-transform:uppercase;letter-spacing:2px;">
                 Revenue Analysis Ready
               </p>
@@ -66,11 +66,11 @@ function buildEmailHtml({
               <!-- Missed Revenue Box -->
               <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 auto 24px;">
                 <tr>
-                  <td style="background-color:rgba(232,168,36,0.08);border:1px solid rgba(232,168,36,0.25);border-radius:12px;padding:20px 40px;text-align:center;">
+                  <td style="background-color:rgba(47,94,168,0.06);border:1px solid rgba(47,94,168,0.15);border-radius:12px;padding:20px 40px;text-align:center;">
                     <p style="margin:0 0 4px;font-size:12px;color:#999;text-transform:uppercase;letter-spacing:1px;">
                       Estimated Missed Revenue
                     </p>
-                    <p style="margin:0;font-size:36px;font-weight:bold;color:#E8A824;font-family:'Courier New',monospace;">
+                    <p style="margin:0;font-size:36px;font-weight:bold;color:#2F5EA8;font-family:'Courier New',monospace;">
                       ${missed}<span style="font-size:16px;color:#999;font-family:-apple-system,sans-serif;">/yr</span>
                     </p>
                   </td>
@@ -78,7 +78,7 @@ function buildEmailHtml({
               </table>
 
               <!-- CTA -->
-              <a href="${scanUrl}" style="display:inline-block;background-color:#E8A824;color:#0a0a0f;text-decoration:none;font-weight:600;font-size:16px;padding:14px 32px;border-radius:12px;">
+              <a href="${scanUrl}" style="display:inline-block;background-color:#2F5EA8;color:#FFFFFF;text-decoration:none;font-weight:600;font-size:16px;padding:14px 32px;border-radius:12px;">
                 View Full Report
               </a>
             </td>
@@ -99,7 +99,7 @@ function buildEmailHtml({
                 ].map(item => `
                 <tr>
                   <td style="padding:8px 0;font-size:14px;color:#ccc;">
-                    <span style="color:#E8A824;margin-right:8px;">&#x2713;</span>
+                    <span style="color:#2F5EA8;margin-right:8px;">&#x2713;</span>
                     ${item}
                   </td>
                 </tr>`).join("")}
@@ -109,15 +109,15 @@ function buildEmailHtml({
 
           <!-- Upsell -->
           <tr>
-            <td style="background-color:#111118;border:1px solid rgba(232,168,36,0.15);border-radius:12px;padding:24px 32px;">
-              <h3 style="margin:0 0 8px;font-size:16px;color:#E8A824;font-weight:600;">
+            <td style="background-color:#FFFFFF;border:1px solid rgba(47,94,168,0.1);border-radius:12px;padding:24px 32px;">
+              <h3 style="margin:0 0 8px;font-size:16px;color:#2F5EA8;font-weight:600;">
                 Want Patient-Level Insights?
               </h3>
               <p style="margin:0 0 16px;font-size:14px;color:#999;line-height:1.6;">
                 Upgrade to NPIxray Intelligence ($99/mo) for CSV billing uploads,
                 patient eligibility lists, AI coding recommendations, and MIPS tracking.
               </p>
-              <a href="https://npixray.com/pricing" style="font-size:14px;color:#E8A824;text-decoration:none;font-weight:600;">
+              <a href="https://npixray.com/pricing" style="font-size:14px;color:#2F5EA8;text-decoration:none;font-weight:600;">
                 View Plans &rarr;
               </a>
             </td>
