@@ -61,7 +61,7 @@ export default function NpiLookupPage() {
 
         <div className="max-w-4xl">
           <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
-            NPI <span className="text-gold">Lookup</span> Tool
+            NPI <span className="text-[#2F5EA8]">Lookup</span> Tool
           </h1>
           <p className="text-lg text-[var(--text-secondary)] mb-10 max-w-2xl">
             Search 1.175M+ Medicare providers by NPI number, name, specialty, or

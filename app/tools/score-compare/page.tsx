@@ -41,12 +41,12 @@ export default function ScoreComparePage() {
           ]}
         />
         <div className="text-center mb-10">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold/10 text-gold text-sm font-semibold mb-4">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#2F5EA8]/[0.06] text-[#2F5EA8] text-sm font-semibold mb-4">
             <BarChart3 className="h-4 w-4" />
             Score Compare
           </div>
           <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
-            Revenue Score <span className="text-gold">Comparison</span>
+            Revenue Score <span className="text-[#2F5EA8]">Comparison</span>
           </h1>
           <p className="text-[var(--text-secondary)] max-w-xl mx-auto">
             Enter 2-5 NPI numbers to compare Revenue Scores side by side. Great for group

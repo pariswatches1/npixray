@@ -96,7 +96,7 @@ export function StateComparisonTool() {
   return (
     <div>
       {/* Inputs */}
-      <div className="rounded-2xl border border-dark-50/80 bg-dark-400/50 p-6 sm:p-8">
+      <div className="rounded-2xl border border-[var(--border-light)] bg-white p-6 sm:p-8">
         <div className="flex items-center gap-3 mb-6">
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-cyan-500/10 border border-cyan-500/20">
             <MapPin className="h-5 w-5 text-cyan-400" />
@@ -112,7 +112,7 @@ export function StateComparisonTool() {
             <select
               value={stateA}
               onChange={(e) => { setStateA(e.target.value); setCompared(false); }}
-              className="w-full rounded-lg border border-dark-50/50 bg-dark-200 px-4 py-3 text-white focus:border-gold focus:outline-none transition-colors appearance-none cursor-pointer"
+              className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-white focus:border-[#2F5EA8]/20 focus:outline-none transition-colors appearance-none cursor-pointer"
               aria-label="First state"
             >
               <option value="">Select state</option>
@@ -128,7 +128,7 @@ export function StateComparisonTool() {
             <select
               value={stateB}
               onChange={(e) => { setStateB(e.target.value); setCompared(false); }}
-              className="w-full rounded-lg border border-dark-50/50 bg-dark-200 px-4 py-3 text-white focus:border-gold focus:outline-none transition-colors appearance-none cursor-pointer"
+              className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-white focus:border-[#2F5EA8]/20 focus:outline-none transition-colors appearance-none cursor-pointer"
               aria-label="Second state"
             >
               <option value="">Select state</option>
@@ -142,7 +142,7 @@ export function StateComparisonTool() {
         <button
           onClick={handleCompare}
           disabled={!stateA || !stateB}
-          className="mt-6 w-full sm:w-auto bg-gold text-dark font-semibold rounded-lg px-6 py-3 hover:bg-gold-300 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+          className="mt-6 w-full sm:w-auto bg-[#2F5EA8] text-white font-semibold rounded-lg px-6 py-3 hover:bg-[#264D8C] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
         >
           Compare States
         </button>
@@ -174,9 +174,9 @@ export function StateComparisonTool() {
               const max = Math.max(metric.valA, metric.valB) || 1;
               const diff = metric.valA - metric.valB;
               return (
-                <div key={metric.label} className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5">
+                <div key={metric.label} className="rounded-xl border border-[var(--border-light)] bg-white p-5">
                   <div className="flex items-center gap-2 text-sm text-[var(--text-secondary)] mb-3">
-                    <metric.icon className="h-4 w-4 text-gold" />
+                    <metric.icon className="h-4 w-4 text-[#2F5EA8]" />
                     {metric.label}
                   </div>
                   <div className="space-y-3">
@@ -185,7 +185,7 @@ export function StateComparisonTool() {
                         <span className="text-blue-400">{stateNameA}</span>
                         <span className="font-mono font-semibold">{metric.format(metric.valA)}</span>
                       </div>
-                      <div className="h-3 rounded-full bg-dark-200 overflow-hidden">
+                      <div className="h-3 rounded-full bg-white overflow-hidden">
                         <div
                           className="h-full rounded-full bg-blue-500 transition-all duration-500"
                           style={{ width: `${(metric.valA / max) * 100}%` }}
@@ -197,7 +197,7 @@ export function StateComparisonTool() {
                         <span className="text-emerald-400">{stateNameB}</span>
                         <span className="font-mono font-semibold">{metric.format(metric.valB)}</span>
                       </div>
-                      <div className="h-3 rounded-full bg-dark-200 overflow-hidden">
+                      <div className="h-3 rounded-full bg-white overflow-hidden">
                         <div
                           className="h-full rounded-full bg-emerald-500 transition-all duration-500"
                           style={{ width: `${(metric.valB / max) * 100}%` }}
@@ -207,7 +207,7 @@ export function StateComparisonTool() {
                     {diff !== 0 && (
                       <p className="text-xs text-[var(--text-secondary)]">
                         {diff > 0 ? stateNameA : stateNameB} is{" "}
-                        <span className="text-gold font-medium">
+                        <span className="text-[#2F5EA8] font-medium">
                           {Math.abs(((diff / Math.min(metric.valA, metric.valB)) * 100)).toFixed(1)}% higher
                         </span>
                       </p>
@@ -219,14 +219,14 @@ export function StateComparisonTool() {
           </div>
 
           {/* Top Specialty */}
-          <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6">
+          <div className="rounded-xl border border-[var(--border-light)] bg-white p-6">
             <h3 className="text-base font-semibold mb-4">Top Specialty by State</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="flex items-center justify-between p-3 rounded-lg bg-dark-200">
+              <div className="flex items-center justify-between p-3 rounded-lg bg-white">
                 <span className="text-blue-400 font-medium">{stateNameA}</span>
                 <span className="text-sm">{a.topSpecialty}</span>
               </div>
-              <div className="flex items-center justify-between p-3 rounded-lg bg-dark-200">
+              <div className="flex items-center justify-between p-3 rounded-lg bg-white">
                 <span className="text-emerald-400 font-medium">{stateNameB}</span>
                 <span className="text-sm">{b.topSpecialty}</span>
               </div>
@@ -237,14 +237,14 @@ export function StateComparisonTool() {
           <div className="flex flex-wrap gap-3">
             <Link
               href={`/states/${stateA.toLowerCase()}`}
-              className="inline-flex items-center gap-1.5 text-sm text-[var(--text-secondary)] hover:text-gold transition-colors"
+              className="inline-flex items-center gap-1.5 text-sm text-[var(--text-secondary)] hover:text-[#2F5EA8] transition-colors"
             >
               View {stateNameA} details
               <ArrowRight className="h-3.5 w-3.5" />
             </Link>
             <Link
               href={`/states/${stateB.toLowerCase()}`}
-              className="inline-flex items-center gap-1.5 text-sm text-[var(--text-secondary)] hover:text-gold transition-colors"
+              className="inline-flex items-center gap-1.5 text-sm text-[var(--text-secondary)] hover:text-[#2F5EA8] transition-colors"
             >
               View {stateNameB} details
               <ArrowRight className="h-3.5 w-3.5" />

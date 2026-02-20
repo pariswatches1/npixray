@@ -141,20 +141,20 @@ export default function InsightsIndexPage() {
   return (
     <>
       <section className="relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gold/[0.03] rounded-full blur-3xl" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#2F5EA8]/[0.03] rounded-full blur-3xl" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-8 pb-12 sm:pt-12 sm:pb-16">
           <Breadcrumbs items={[{ label: "Insights", href: "/insights" }]} />
 
           <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/5 px-4 py-1.5 mb-8">
-              <TrendingUp className="h-3.5 w-3.5 text-gold" />
-              <span className="text-xs font-medium text-gold">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] px-4 py-1.5 mb-8">
+              <TrendingUp className="h-3.5 w-3.5 text-[#2F5EA8]" />
+              <span className="text-xs font-medium text-[#2F5EA8]">
                 {insights.length} Data Reports
               </span>
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold tracking-tight max-w-3xl mx-auto leading-[1.1]">
               Medicare Data{" "}
-              <span className="text-gold">Insights & Reports</span>
+              <span className="text-[#2F5EA8]">Insights & Reports</span>
             </h1>
             <p className="mt-6 text-lg text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed">
               In-depth analysis of Medicare billing data across specialties,
@@ -175,15 +175,15 @@ export default function InsightsIndexPage() {
                 <Link
                   key={insight.slug}
                   href={`/insights/${insight.slug}`}
-                  className="group rounded-xl border border-dark-50/80 bg-dark-400/50 p-6 hover:border-gold/30 hover:shadow-lg hover:shadow-gold/5 transition-all"
+                  className="group rounded-xl border border-[var(--border-light)] bg-white p-6 hover:border-[#2F5EA8]/15 hover:shadow-lg hover:shadow-[#2F5EA8]/[0.04] transition-all"
                 >
                   <div className="flex items-start justify-between mb-4">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gold/10 border border-gold/20">
-                      <Icon className="h-5 w-5 text-gold" />
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#2F5EA8]/[0.06] border border-[#2F5EA8]/10">
+                      <Icon className="h-5 w-5 text-[#2F5EA8]" />
                     </div>
-                    <ArrowRight className="h-4 w-4 text-[var(--text-secondary)] group-hover:text-gold group-hover:translate-x-0.5 transition-all mt-1" />
+                    <ArrowRight className="h-4 w-4 text-[var(--text-secondary)] group-hover:text-[#2F5EA8] group-hover:translate-x-0.5 transition-all mt-1" />
                   </div>
-                  <h2 className="font-semibold mb-2 group-hover:text-gold transition-colors">
+                  <h2 className="font-semibold mb-2 group-hover:text-[#2F5EA8] transition-colors">
                     {insight.title}
                   </h2>
                   <p className="text-sm text-[var(--text-secondary)] leading-relaxed">

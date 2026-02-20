@@ -107,13 +107,13 @@ function FeatureIcon({ value }: { value: boolean | string }) {
 
 function FAQItem({ faq, isOpen, onToggle }: { faq: FAQ; isOpen: boolean; onToggle: () => void }) {
   return (
-    <div className="border-b border-dark-50/50 last:border-b-0">
+    <div className="border-b border-[var(--border-light)] last:border-b-0">
       <button
         onClick={onToggle}
         className="flex items-center justify-between w-full py-5 text-left group"
         aria-expanded={isOpen}
       >
-        <span className="text-base font-medium pr-4 group-hover:text-gold transition-colors">
+        <span className="text-base font-medium pr-4 group-hover:text-[#2F5EA8] transition-colors">
           {faq.question}
         </span>
         <ChevronDown
@@ -155,22 +155,22 @@ export function CompetitorComparison({
     <>
       {/* Hero Section */}
       <section className="relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gold/[0.03] rounded-full blur-3xl" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#2F5EA8]/[0.03] rounded-full blur-3xl" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-8 pb-12 sm:pt-12 sm:pb-16">
           {/* VS Badge */}
           <div className="flex flex-col items-center text-center mb-10">
             <div className="inline-flex items-center gap-3 sm:gap-4 mb-6">
-              <div className="rounded-xl border border-gold/30 bg-gold/10 px-4 py-2 sm:px-6 sm:py-3">
-                <span className="text-gold font-bold text-lg sm:text-2xl">
+              <div className="rounded-xl border border-[#2F5EA8]/15 bg-[#2F5EA8]/[0.06] px-4 py-2 sm:px-6 sm:py-3">
+                <span className="text-[#2F5EA8] font-bold text-lg sm:text-2xl">
                   NPIxray
                 </span>
               </div>
-              <div className="rounded-full border border-dark-50/80 bg-dark-400/80 w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center">
+              <div className="rounded-full border border-[var(--border-light)] bg-[var(--bg)]/80 w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center">
                 <span className="text-sm sm:text-base font-bold text-[var(--text-secondary)]">
                   VS
                 </span>
               </div>
-              <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 px-4 py-2 sm:px-6 sm:py-3">
+              <div className="rounded-xl border border-[var(--border-light)] bg-white px-4 py-2 sm:px-6 sm:py-3">
                 <span className="font-bold text-lg sm:text-2xl">
                   {competitor.name}
                 </span>
@@ -179,7 +179,7 @@ export function CompetitorComparison({
 
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight max-w-3xl leading-[1.1]">
               NPIxray vs {competitor.name}{" "}
-              <span className="text-gold">Comparison</span>
+              <span className="text-[#2F5EA8]">Comparison</span>
             </h1>
             <p className="mt-4 text-lg text-[var(--text-secondary)] max-w-2xl leading-relaxed">
               Compare features, pricing, and capabilities. See which platform
@@ -189,15 +189,15 @@ export function CompetitorComparison({
 
           {/* Quick Score */}
           <div className="grid grid-cols-2 gap-4 max-w-lg mx-auto">
-            <div className="rounded-xl border border-gold/20 bg-gold/5 p-4 text-center">
-              <p className="text-3xl font-bold font-mono text-gold">
+            <div className="rounded-xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-4 text-center">
+              <p className="text-3xl font-bold font-mono text-[#2F5EA8]">
                 {npixrayFeatureCount}/{FEATURE_LIST.length}
               </p>
               <p className="text-xs text-[var(--text-secondary)] mt-1">
                 NPIxray Features
               </p>
             </div>
-            <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-4 text-center">
+            <div className="rounded-xl border border-[var(--border-light)] bg-white p-4 text-center">
               <p className="text-3xl font-bold font-mono">
                 {competitorFeatureCount}/{FEATURE_LIST.length}
               </p>
@@ -210,16 +210,16 @@ export function CompetitorComparison({
       </section>
 
       {/* Overview Cards */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* NPIxray Card */}
-            <div className="rounded-2xl border border-gold/20 bg-gold/5 p-6">
+            <div className="rounded-2xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-6">
               <div className="flex items-center gap-3 mb-3">
-                <div className="rounded-lg bg-gold/20 p-2">
-                  <Zap className="h-5 w-5 text-gold" />
+                <div className="rounded-lg bg-[#2F5EA8]/10 p-2">
+                  <Zap className="h-5 w-5 text-[#2F5EA8]" />
                 </div>
-                <h2 className="text-xl font-bold text-gold">NPIxray</h2>
+                <h2 className="text-xl font-bold text-[#2F5EA8]">NPIxray</h2>
               </div>
               <p className="text-sm text-[var(--text-secondary)] mb-1">
                 {NPIXRAY.tagline}
@@ -236,9 +236,9 @@ export function CompetitorComparison({
             </div>
 
             {/* Competitor Card */}
-            <div className="rounded-2xl border border-dark-50/80 bg-dark-400/50 p-6">
+            <div className="rounded-2xl border border-[var(--border-light)] bg-white p-6">
               <div className="flex items-center gap-3 mb-3">
-                <div className="rounded-lg bg-dark-300 p-2">
+                <div className="rounded-lg bg-white p-2">
                   <Target className="h-5 w-5 text-[var(--text-secondary)]" />
                 </div>
                 <h2 className="text-xl font-bold">{competitor.name}</h2>
@@ -261,22 +261,22 @@ export function CompetitorComparison({
       </section>
 
       {/* Feature Comparison Table */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-bold mb-2">
-            Feature <span className="text-gold">Comparison</span>
+            Feature <span className="text-[#2F5EA8]">Comparison</span>
           </h2>
           <p className="text-[var(--text-secondary)] mb-8">
             Side-by-side breakdown of key capabilities.
           </p>
-          <div className="overflow-x-auto rounded-xl border border-dark-50/50">
+          <div className="overflow-x-auto rounded-xl border border-[var(--border-light)]">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-dark-50/50 bg-dark-300">
+                <tr className="border-b border-[var(--border-light)] bg-white">
                   <th className="text-left px-4 sm:px-6 py-4 font-medium text-[var(--text-secondary)]">
                     Feature
                   </th>
-                  <th className="text-center px-4 sm:px-6 py-4 font-medium text-gold w-36 sm:w-48">
+                  <th className="text-center px-4 sm:px-6 py-4 font-medium text-[#2F5EA8] w-36 sm:w-48">
                     NPIxray
                   </th>
                   <th className="text-center px-4 sm:px-6 py-4 font-medium text-[var(--text-secondary)] w-36 sm:w-48">
@@ -294,7 +294,7 @@ export function CompetitorComparison({
                   return (
                     <tr
                       key={feature}
-                      className="border-b border-dark-50/30 hover:bg-dark-200/50 transition-colors"
+                      className="border-b border-[var(--border-light)] hover:bg-white transition-colors"
                     >
                       <td className="px-4 sm:px-6 py-4 font-medium">
                         {feature}
@@ -319,26 +319,26 @@ export function CompetitorComparison({
       </section>
 
       {/* Pricing Comparison */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-bold mb-8">
-            Pricing <span className="text-gold">Comparison</span>
+            Pricing <span className="text-[#2F5EA8]">Comparison</span>
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="rounded-2xl border border-gold/20 bg-gold/5 p-6">
+            <div className="rounded-2xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-6">
               <div className="flex items-center gap-2 mb-4">
-                <DollarSign className="h-5 w-5 text-gold" />
-                <h3 className="text-lg font-bold text-gold">NPIxray Pricing</h3>
+                <DollarSign className="h-5 w-5 text-[#2F5EA8]" />
+                <h3 className="text-lg font-bold text-[#2F5EA8]">NPIxray Pricing</h3>
               </div>
               <p className="text-[var(--text-secondary)] text-sm leading-relaxed mb-4">
                 {NPIXRAY.pricing}
               </p>
-              <div className="rounded-lg bg-dark-400/50 p-3 text-xs text-[var(--text-secondary)]">
+              <div className="rounded-lg bg-white p-3 text-xs text-[var(--text-secondary)]">
                 Start with a free NPI scan, no credit card required. Upgrade
                 when you need deeper analysis.
               </div>
             </div>
-            <div className="rounded-2xl border border-dark-50/80 bg-dark-400/50 p-6">
+            <div className="rounded-2xl border border-[var(--border-light)] bg-white p-6">
               <div className="flex items-center gap-2 mb-4">
                 <DollarSign className="h-5 w-5 text-[var(--text-secondary)]" />
                 <h3 className="text-lg font-bold">
@@ -348,7 +348,7 @@ export function CompetitorComparison({
               <p className="text-[var(--text-secondary)] text-sm leading-relaxed mb-4">
                 {competitor.pricing}
               </p>
-              <div className="rounded-lg bg-dark-300 p-3 text-xs text-[var(--text-secondary)]">
+              <div className="rounded-lg bg-white p-3 text-xs text-[var(--text-secondary)]">
                 Visit{" "}
                 <span className="text-[var(--text-primary)]">
                   {competitor.website}
@@ -361,15 +361,15 @@ export function CompetitorComparison({
       </section>
 
       {/* Key Differences / Strengths & Weaknesses */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-bold mb-8">
-            Key <span className="text-gold">Differences</span>
+            Key <span className="text-[#2F5EA8]">Differences</span>
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* NPIxray Strengths */}
             <div>
-              <h3 className="text-base font-semibold text-gold mb-4 flex items-center gap-2">
+              <h3 className="text-base font-semibold text-[#2F5EA8] mb-4 flex items-center gap-2">
                 <Shield className="h-4 w-4" />
                 NPIxray Advantages
               </h3>
@@ -437,12 +437,12 @@ export function CompetitorComparison({
       </section>
 
       {/* FAQ Section */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-bold mb-8">
-            Frequently Asked <span className="text-gold">Questions</span>
+            Frequently Asked <span className="text-[#2F5EA8]">Questions</span>
           </h2>
-          <div className="max-w-3xl mx-auto rounded-xl border border-dark-50/50 bg-dark-400/30 px-6">
+          <div className="max-w-3xl mx-auto rounded-xl border border-[var(--border-light)] bg-white px-6">
             {faqs.map((faq, i) => (
               <FAQItem
                 key={i}
@@ -456,10 +456,10 @@ export function CompetitorComparison({
       </section>
 
       {/* CTA */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="rounded-2xl border border-gold/20 bg-gold/5 p-8 sm:p-12 text-center">
-            <Zap className="h-10 w-10 text-gold mx-auto mb-4" />
+          <div className="rounded-2xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-8 sm:p-12 text-center">
+            <Zap className="h-10 w-10 text-[#2F5EA8] mx-auto mb-4" />
             <h2 className="text-2xl sm:text-3xl font-bold mb-3">
               Try NPIxray Free &mdash; Scan Your NPI Now
             </h2>
@@ -469,7 +469,7 @@ export function CompetitorComparison({
             </p>
             <Link
               href="/"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-gold text-dark font-semibold hover:bg-gold-300 transition-colors text-lg"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-[#2F5EA8] text-white font-semibold hover:bg-[#264D8C] transition-colors text-lg"
             >
               <Zap className="h-5 w-5" />
               Run Free NPI Scan

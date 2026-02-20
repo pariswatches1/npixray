@@ -42,7 +42,7 @@ export default async function TopSpecialtiesPage() {
     <>
       {/* Hero */}
       <section className="relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gold/[0.03] rounded-full blur-3xl" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#2F5EA8]/[0.03] rounded-full blur-3xl" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-8 pb-12 sm:pt-12 sm:pb-16">
           <Breadcrumbs
             items={[
@@ -52,13 +52,13 @@ export default async function TopSpecialtiesPage() {
           />
 
           <div className="flex items-center gap-3 mb-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-gold/20 bg-gold/10">
-              <TrendingUp className="h-6 w-6 text-gold" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.06]">
+              <TrendingUp className="h-6 w-6 text-[#2F5EA8]" />
             </div>
             <div>
               <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
                 Medicare Specialties{" "}
-                <span className="text-gold">Ranked by Revenue</span>
+                <span className="text-[#2F5EA8]">Ranked by Revenue</span>
               </h1>
               <p className="text-sm text-[var(--text-secondary)] mt-1">
                 {benchmarks.length} specialties sorted by avg total Medicare
@@ -70,12 +70,12 @@ export default async function TopSpecialtiesPage() {
       </section>
 
       {/* Rankings Table */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="overflow-x-auto rounded-xl border border-dark-50/50">
+          <div className="overflow-x-auto rounded-xl border border-[var(--border-light)]">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-dark-50/50 bg-dark-300">
+                <tr className="border-b border-[var(--border-light)] bg-white">
                   <th className="text-left px-4 py-3 font-medium text-[var(--text-secondary)] w-12">
                     #
                   </th>
@@ -101,8 +101,8 @@ export default async function TopSpecialtiesPage() {
                 {benchmarks.map((b, i) => (
                   <tr
                     key={b.specialty}
-                    className={`border-b border-dark-50/30 hover:bg-dark-200/50 transition-colors ${
-                      i % 2 === 0 ? "bg-dark-400/30" : ""
+                    className={`border-b border-[var(--border-light)] hover:bg-white transition-colors ${
+                      i % 2 === 0 ? "bg-white" : ""
                     }`}
                   >
                     <td className="px-4 py-3 font-mono text-[var(--text-secondary)]">
@@ -111,7 +111,7 @@ export default async function TopSpecialtiesPage() {
                     <td className="px-4 py-3">
                       <Link
                         href={`/specialties/${specialtyToSlug(b.specialty)}`}
-                        className="text-gold hover:text-gold-300 font-medium transition-colors"
+                        className="text-[#2F5EA8] hover:text-[#264D8C] font-medium transition-colors"
                       >
                         {b.specialty}
                       </Link>
@@ -119,7 +119,7 @@ export default async function TopSpecialtiesPage() {
                     <td className="px-4 py-3 text-right tabular-nums hidden sm:table-cell">
                       {formatNumber(b.provider_count)}
                     </td>
-                    <td className="px-4 py-3 text-right tabular-nums font-medium text-gold">
+                    <td className="px-4 py-3 text-right tabular-nums font-medium text-[#2F5EA8]">
                       {formatCurrency(b.avg_total_payment)}
                     </td>
                     <td className="px-4 py-3 text-right tabular-nums hidden md:table-cell">
@@ -131,7 +131,7 @@ export default async function TopSpecialtiesPage() {
                     <td className="px-4 py-3">
                       <Link
                         href={`/specialties/${specialtyToSlug(b.specialty)}`}
-                        className="text-[var(--text-secondary)] hover:text-gold transition-colors"
+                        className="text-[var(--text-secondary)] hover:text-[#2F5EA8] transition-colors"
                       >
                         <ArrowRight className="h-4 w-4" />
                       </Link>

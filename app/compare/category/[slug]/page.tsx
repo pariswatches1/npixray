@@ -1942,7 +1942,7 @@ function renderStars(rating: number) {
   const half = rating - full >= 0.5;
   const empty = 5 - full - (half ? 1 : 0);
   return (
-    <span className="text-gold text-sm tracking-wide" aria-label={`${rating} out of 5 stars`}>
+    <span className="text-[#2F5EA8] text-sm tracking-wide" aria-label={`${rating} out of 5 stars`}>
       {"★".repeat(full)}
       {half && "★"}
       {"☆".repeat(empty)}
@@ -2020,7 +2020,7 @@ export default async function CategoryComparisonPage({
 
       {/* Hero */}
       <section className="relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gold/[0.03] rounded-full blur-3xl" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#2F5EA8]/[0.03] rounded-full blur-3xl" />
         <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 pt-8 pb-12 sm:pt-12 sm:pb-16">
           <Breadcrumbs
             items={[
@@ -2028,9 +2028,9 @@ export default async function CategoryComparisonPage({
               { label: cat.title },
             ]}
           />
-          <div className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/5 px-4 py-1.5 mb-6">
-            <Award className="h-3.5 w-3.5 text-gold" />
-            <span className="text-xs font-medium text-gold">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] px-4 py-1.5 mb-6">
+            <Award className="h-3.5 w-3.5 text-[#2F5EA8]" />
+            <span className="text-xs font-medium text-[#2F5EA8]">
               2026 Buyer&apos;s Guide
             </span>
           </div>
@@ -2044,21 +2044,21 @@ export default async function CategoryComparisonPage({
       </section>
 
       {/* Ranked Tool Cards */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-xl font-bold mb-8">
-            Ranked <span className="text-gold">Reviews</span>
+            Ranked <span className="text-[#2F5EA8]">Reviews</span>
           </h2>
           <div className="space-y-6">
             {cat.tools.map((tool) => (
               <div
                 key={tool.name}
                 id={`tool-${tool.rank}`}
-                className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6 sm:p-8 hover:border-gold/20 transition-colors scroll-mt-24"
+                className="rounded-xl border border-[var(--border-light)] bg-white p-6 sm:p-8 hover:border-[#2F5EA8]/10 transition-colors scroll-mt-24"
               >
                 {/* Header */}
                 <div className="flex flex-col sm:flex-row sm:items-start gap-4 mb-5">
-                  <div className="flex items-center justify-center h-12 w-12 rounded-xl bg-dark-300 border border-dark-50/80 text-gold font-bold text-lg flex-shrink-0">
+                  <div className="flex items-center justify-center h-12 w-12 rounded-xl bg-white border border-[var(--border-light)] text-[#2F5EA8] font-bold text-lg flex-shrink-0">
                     #{tool.rank}
                   </div>
                   <div className="flex-1 min-w-0">
@@ -2074,12 +2074,12 @@ export default async function CategoryComparisonPage({
 
                 {/* Meta badges */}
                 <div className="flex flex-wrap gap-2 mb-5">
-                  <span className="inline-flex items-center gap-1.5 text-xs rounded-full border border-dark-50/80 bg-dark-300 px-3 py-1">
-                    <DollarSign className="h-3 w-3 text-gold" />
+                  <span className="inline-flex items-center gap-1.5 text-xs rounded-full border border-[var(--border-light)] bg-white px-3 py-1">
+                    <DollarSign className="h-3 w-3 text-[#2F5EA8]" />
                     {tool.pricing}
                   </span>
-                  <span className="inline-flex items-center gap-1.5 text-xs rounded-full border border-dark-50/80 bg-dark-300 px-3 py-1">
-                    <Users className="h-3 w-3 text-gold" />
+                  <span className="inline-flex items-center gap-1.5 text-xs rounded-full border border-[var(--border-light)] bg-white px-3 py-1">
+                    <Users className="h-3 w-3 text-[#2F5EA8]" />
                     Best for: {tool.bestFor}
                   </span>
                 </div>
@@ -2116,12 +2116,12 @@ export default async function CategoryComparisonPage({
 
                 {/* NPIxray highlight */}
                 {tool.name === "NPIxray" && (
-                  <div className="rounded-lg border border-gold/20 bg-gold/5 px-4 py-3 flex items-center gap-3">
-                    <Zap className="h-4 w-4 text-gold flex-shrink-0" />
+                  <div className="rounded-lg border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] px-4 py-3 flex items-center gap-3">
+                    <Zap className="h-4 w-4 text-[#2F5EA8] flex-shrink-0" />
                     <p className="text-sm text-[var(--text-secondary)]">
                       <Link
                         href="/"
-                        className="font-semibold text-gold hover:underline"
+                        className="font-semibold text-[#2F5EA8] hover:underline"
                       >
                         Try NPIxray free
                       </Link>{" "}
@@ -2136,16 +2136,16 @@ export default async function CategoryComparisonPage({
       </section>
 
       {/* Feature Comparison Matrix */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-xl font-bold mb-6">
-            Feature <span className="text-gold">Comparison Matrix</span>
+            Feature <span className="text-[#2F5EA8]">Comparison Matrix</span>
           </h2>
-          <div className="overflow-x-auto rounded-xl border border-dark-50/50">
+          <div className="overflow-x-auto rounded-xl border border-[var(--border-light)]">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-dark-50/50 bg-dark-300">
-                  <th className="text-left px-4 py-3 font-medium text-[var(--text-secondary)] sticky left-0 bg-dark-300 z-10 min-w-[140px]">
+                <tr className="border-b border-[var(--border-light)] bg-white">
+                  <th className="text-left px-4 py-3 font-medium text-[var(--text-secondary)] sticky left-0 bg-white z-10 min-w-[140px]">
                     Feature
                   </th>
                   {cat.tools.map((tool) => (
@@ -2162,9 +2162,9 @@ export default async function CategoryComparisonPage({
                 {cat.features.map((feature) => (
                   <tr
                     key={feature}
-                    className="border-b border-dark-50/30 hover:bg-dark-200/50 transition-colors"
+                    className="border-b border-[var(--border-light)] hover:bg-white transition-colors"
                   >
-                    <td className="px-4 py-3 font-medium sticky left-0 bg-dark-400/90 z-10">
+                    <td className="px-4 py-3 font-medium sticky left-0 bg-[var(--bg)]/90 z-10">
                       {feature}
                     </td>
                     {cat.tools.map((tool) => (
@@ -2172,7 +2172,7 @@ export default async function CategoryComparisonPage({
                         {tool.features[feature] ? (
                           <Check className="h-4 w-4 text-emerald-400 mx-auto" />
                         ) : (
-                          <X className="h-4 w-4 text-dark-50 mx-auto" />
+                          <X className="h-4 w-4 text-[var(--text-secondary)] mx-auto" />
                         )}
                       </td>
                     ))}
@@ -2185,15 +2185,15 @@ export default async function CategoryComparisonPage({
       </section>
 
       {/* Pricing Overview */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-xl font-bold mb-6">
-            Pricing <span className="text-gold">Overview</span>
+            Pricing <span className="text-[#2F5EA8]">Overview</span>
           </h2>
-          <div className="overflow-x-auto rounded-xl border border-dark-50/50">
+          <div className="overflow-x-auto rounded-xl border border-[var(--border-light)]">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-dark-50/50 bg-dark-300">
+                <tr className="border-b border-[var(--border-light)] bg-white">
                   <th className="text-left px-4 py-3 font-medium text-[var(--text-secondary)]">
                     Tool
                   </th>
@@ -2212,12 +2212,12 @@ export default async function CategoryComparisonPage({
                 {cat.tools.map((tool) => (
                   <tr
                     key={tool.name}
-                    className="border-b border-dark-50/30 hover:bg-dark-200/50 transition-colors"
+                    className="border-b border-[var(--border-light)] hover:bg-white transition-colors"
                   >
                     <td className="px-4 py-3 font-semibold">
                       <a
                         href={`#tool-${tool.rank}`}
-                        className="hover:text-gold transition-colors"
+                        className="hover:text-[#2F5EA8] transition-colors"
                       >
                         #{tool.rank} {tool.name}
                       </a>
@@ -2240,12 +2240,12 @@ export default async function CategoryComparisonPage({
       </section>
 
       {/* Our Recommendation */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <div className="rounded-2xl border border-gold/20 bg-gold/5 p-8 sm:p-10">
+          <div className="rounded-2xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-8 sm:p-10">
             <div className="flex items-center gap-3 mb-4">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gold/10 border border-gold/20">
-                <Award className="h-5 w-5 text-gold" />
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#2F5EA8]/[0.06] border border-[#2F5EA8]/10">
+                <Award className="h-5 w-5 text-[#2F5EA8]" />
               </div>
               <h2 className="text-xl font-bold">Our Recommendation</h2>
             </div>
@@ -2254,7 +2254,7 @@ export default async function CategoryComparisonPage({
             </p>
             <Link
               href="/"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-gold text-dark font-semibold hover:bg-gold-300 transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#2F5EA8] text-white font-semibold hover:bg-[#264D8C] transition-colors"
             >
               <Zap className="h-4 w-4" />
               Run Free NPI Scan
@@ -2265,18 +2265,18 @@ export default async function CategoryComparisonPage({
       </section>
 
       {/* FAQ */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-xl font-bold mb-8">
-            Frequently Asked <span className="text-gold">Questions</span>
+            Frequently Asked <span className="text-[#2F5EA8]">Questions</span>
           </h2>
           <div className="space-y-4">
             {cat.faqs.map((faq, i) => (
               <details
                 key={i}
-                className="group rounded-xl border border-dark-50/80 bg-dark-400/50 overflow-hidden"
+                className="group rounded-xl border border-[var(--border-light)] bg-white overflow-hidden"
               >
-                <summary className="flex items-center justify-between gap-4 px-6 py-4 cursor-pointer hover:bg-dark-300/50 transition-colors list-none [&::-webkit-details-marker]:hidden">
+                <summary className="flex items-center justify-between gap-4 px-6 py-4 cursor-pointer hover:bg-[var(--bg)] transition-colors list-none [&::-webkit-details-marker]:hidden">
                   <span className="font-semibold text-sm">{faq.question}</span>
                   <ChevronDown className="h-4 w-4 text-[var(--text-secondary)] flex-shrink-0 group-open:rotate-180 transition-transform" />
                 </summary>

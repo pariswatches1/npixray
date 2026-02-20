@@ -62,7 +62,7 @@ export default function EmAuditPage() {
         <div className="max-w-4xl">
           <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
             E&M Coding{" "}
-            <span className="text-gold">Audit</span> Tool
+            <span className="text-[#2F5EA8]">Audit</span> Tool
           </h1>
           <p className="text-lg text-[var(--text-secondary)] mb-10 max-w-2xl">
             Compare your 99213/99214/99215 distribution against specialty

@@ -25,7 +25,8 @@ export async function GET() {
     );
 
     // City pages
-    const cities = await getDistinctCities(stateAbbr, 5);
+    // Only include cities with 20+ providers in sitemap (matches noindex threshold)
+    const cities = await getDistinctCities(stateAbbr, 20);
     for (const city of cities) {
       const cSlug = cityToSlug(city);
       urls.push(

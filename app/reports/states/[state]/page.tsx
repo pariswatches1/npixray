@@ -180,7 +180,7 @@ export default async function StateReportPage({
     <>
       {/* Hero with Grade */}
       <section className="relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gold/[0.03] rounded-full blur-3xl" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#2F5EA8]/[0.03] rounded-full blur-3xl" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-8 pb-12 sm:pt-12 sm:pb-16">
           <Breadcrumbs
             items={[
@@ -230,10 +230,10 @@ export default async function StateReportPage({
       </section>
 
       {/* Program Adoption Rates */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-bold mb-2">
-            Care Management <span className="text-gold">Program Adoption</span>
+            Care Management <span className="text-[#2F5EA8]">Program Adoption</span>
           </h2>
           <p className="text-sm text-[var(--text-secondary)] mb-8 max-w-2xl">
             How {stateName} providers compare to the national average in adopting
@@ -242,7 +242,7 @@ export default async function StateReportPage({
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Chart */}
-            <div className="rounded-xl border border-dark-50/50 bg-dark-300 p-6">
+            <div className="rounded-xl border border-[var(--border-light)] bg-white p-6">
               <AdoptionChart data={adoptionChartData} entityLabel={stateName} />
             </div>
 
@@ -259,7 +259,7 @@ export default async function StateReportPage({
                 return (
                   <div
                     key={p.name}
-                    className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5"
+                    className="rounded-xl border border-[var(--border-light)] bg-white p-5"
                   >
                     <div className="flex items-center gap-2 mb-3">
                       <p.icon className={`h-5 w-5 ${p.color}`} />
@@ -269,16 +269,16 @@ export default async function StateReportPage({
                       </div>
                     </div>
                     <div className="flex items-baseline justify-between mb-2">
-                      <span className="text-2xl font-bold font-mono text-gold">
+                      <span className="text-2xl font-bold font-mono text-[#2F5EA8]">
                         {(p.rate * 100).toFixed(1)}%
                       </span>
                       <span className={`text-xs font-medium ${isAbove ? "text-emerald-400" : "text-red-400"}`}>
                         {isAbove ? "+" : ""}{((p.rate - p.national) * 100).toFixed(1)}% vs national
                       </span>
                     </div>
-                    <div className="w-full bg-dark-500 rounded-full h-2">
+                    <div className="w-full bg-[var(--bg)] rounded-full h-2">
                       <div
-                        className="bg-gold h-2 rounded-full transition-all"
+                        className="bg-[#2F5EA8] h-2 rounded-full transition-all"
                         style={{ width: `${Math.min(p.rate * 100 * 5, 100)}%` }}
                       />
                     </div>
@@ -294,10 +294,10 @@ export default async function StateReportPage({
       </section>
 
       {/* E&M Distribution */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-bold mb-2">
-            E&M Coding <span className="text-gold">Distribution</span>
+            E&M Coding <span className="text-[#2F5EA8]">Distribution</span>
           </h2>
           <p className="text-sm text-[var(--text-secondary)] mb-8 max-w-2xl">
             How {stateName} providers distribute evaluation and management visits
@@ -306,7 +306,7 @@ export default async function StateReportPage({
           </p>
 
           <div className="max-w-2xl">
-            <div className="rounded-xl border border-dark-50/50 bg-dark-300 p-6">
+            <div className="rounded-xl border border-[var(--border-light)] bg-white p-6">
               <EMDistributionChart data={emChartData} entityLabel={stateName} />
             </div>
 
@@ -316,10 +316,10 @@ export default async function StateReportPage({
                 { code: "99214", label: "Level 4", actual: emDist.pct99214, benchmark: nationalEM.pct99214 },
                 { code: "99215", label: "Level 5", actual: emDist.pct99215, benchmark: nationalEM.pct99215 },
               ].map((item) => (
-                <div key={item.code} className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-4 text-center">
+                <div key={item.code} className="rounded-xl border border-[var(--border-light)] bg-white p-4 text-center">
                   <p className="text-lg font-bold font-mono">{item.code}</p>
                   <p className="text-xs text-[var(--text-secondary)] mb-2">{item.label}</p>
-                  <p className="text-xl font-bold font-mono text-gold">
+                  <p className="text-xl font-bold font-mono text-[#2F5EA8]">
                     {(item.actual * 100).toFixed(1)}%
                   </p>
                   <p className="text-[10px] text-[var(--text-secondary)]">
@@ -334,15 +334,15 @@ export default async function StateReportPage({
 
       {/* Top Specialties */}
       {specialties.length > 0 && (
-        <section className="border-t border-dark-50/50 py-12 sm:py-16">
+        <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl font-bold mb-8">
-              Top Specialties in <span className="text-gold">{stateName}</span>
+              Top Specialties in <span className="text-[#2F5EA8]">{stateName}</span>
             </h2>
-            <div className="overflow-x-auto rounded-xl border border-dark-50/50">
+            <div className="overflow-x-auto rounded-xl border border-[var(--border-light)]">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-dark-50/50 bg-dark-300">
+                  <tr className="border-b border-[var(--border-light)] bg-white">
                     <th className="text-left px-4 py-3 font-medium text-[var(--text-secondary)]">Specialty</th>
                     <th className="text-right px-4 py-3 font-medium text-[var(--text-secondary)]">Providers</th>
                     <th className="text-right px-4 py-3 font-medium text-[var(--text-secondary)]">Avg Payment</th>
@@ -351,21 +351,21 @@ export default async function StateReportPage({
                 </thead>
                 <tbody>
                   {specialties.map((s, i) => (
-                    <tr key={s.specialty} className={`border-b border-dark-50/30 hover:bg-dark-200/50 transition-colors ${i % 2 === 0 ? "bg-dark-400/30" : ""}`}>
+                    <tr key={s.specialty} className={`border-b border-[var(--border-light)] hover:bg-white transition-colors ${i % 2 === 0 ? "bg-white" : ""}`}>
                       <td className="px-4 py-3">
                         <Link
                           href={`/reports/specialties/${specialtyToSlug(s.specialty)}`}
-                          className="text-gold hover:text-gold-300 font-medium transition-colors"
+                          className="text-[#2F5EA8] hover:text-[#264D8C] font-medium transition-colors"
                         >
                           {s.specialty}
                         </Link>
                       </td>
                       <td className="px-4 py-3 text-right tabular-nums">{s.count.toLocaleString()}</td>
-                      <td className="px-4 py-3 text-right tabular-nums font-medium text-gold">{formatCurrency(s.avgPayment)}</td>
+                      <td className="px-4 py-3 text-right tabular-nums font-medium text-[#2F5EA8]">{formatCurrency(s.avgPayment)}</td>
                       <td className="px-4 py-3 text-right hidden sm:table-cell">
                         <Link
                           href={`/reports/specialties/${specialtyToSlug(s.specialty)}`}
-                          className="inline-flex items-center gap-1 text-xs text-[var(--text-secondary)] hover:text-gold transition-colors"
+                          className="inline-flex items-center gap-1 text-xs text-[var(--text-secondary)] hover:text-[#2F5EA8] transition-colors"
                         >
                           View <ArrowRight className="h-3 w-3" />
                         </Link>
@@ -381,27 +381,27 @@ export default async function StateReportPage({
 
       {/* Top Cities */}
       {cities.length > 0 && (
-        <section className="border-t border-dark-50/50 py-12 sm:py-16">
+        <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl font-bold mb-8">
-              City Report Cards in <span className="text-gold">{stateName}</span>
+              City Report Cards in <span className="text-[#2F5EA8]">{stateName}</span>
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               {cities.map((c, i) => (
                 <Link
                   key={c.city}
                   href={`/reports/cities/${slug}/${cityToSlug(c.city)}`}
-                  className="group rounded-xl border border-dark-50/80 bg-dark-400/50 p-5 hover:border-gold/20 hover:shadow-lg hover:shadow-gold/5 transition-all"
+                  className="group rounded-xl border border-[var(--border-light)] bg-white p-5 hover:border-[#2F5EA8]/10 hover:shadow-lg hover:shadow-[#2F5EA8]/[0.04] transition-all"
                 >
                   <div className="flex items-center gap-2 mb-2">
                     <Building2 className="h-4 w-4 text-[var(--text-secondary)]" />
-                    <span className="text-xs text-gold/50 font-mono">#{i + 1}</span>
+                    <span className="text-xs text-[#4FA3D1] font-mono">#{i + 1}</span>
                   </div>
-                  <h3 className="font-semibold group-hover:text-gold transition-colors mb-1">
+                  <h3 className="font-semibold group-hover:text-[#2F5EA8] transition-colors mb-1">
                     {c.city}
                   </h3>
                   <div className="flex items-center justify-between text-sm">
-                    <span className="font-mono text-gold">{c.count.toLocaleString()} providers</span>
+                    <span className="font-mono text-[#2F5EA8]">{c.count.toLocaleString()} providers</span>
                     <span className="text-[var(--text-secondary)]">{formatCurrency(c.avgPayment)} avg</span>
                   </div>
                 </Link>
@@ -413,10 +413,10 @@ export default async function StateReportPage({
 
       {/* Top Providers */}
       {displayProviders.length > 0 && (
-        <section className="border-t border-dark-50/50 py-12 sm:py-16">
+        <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl font-bold mb-2">
-              Top 20 Providers in <span className="text-gold">{stateName}</span>
+              Top 20 Providers in <span className="text-[#2F5EA8]">{stateName}</span>
             </h2>
             <p className="text-sm text-[var(--text-secondary)] mb-8">
               Highest-volume Medicare providers by total payment.

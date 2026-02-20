@@ -84,13 +84,13 @@ export default function PartnersPage() {
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
       {/* Hero */}
       <div className="text-center mb-20">
-        <div className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/5 px-4 py-1.5 mb-6">
-          <Handshake className="h-3.5 w-3.5 text-gold" />
-          <span className="text-xs font-medium text-gold">Partner Program</span>
+        <div className="inline-flex items-center gap-2 rounded-full border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] px-4 py-1.5 mb-6">
+          <Handshake className="h-3.5 w-3.5 text-[#2F5EA8]" />
+          <span className="text-xs font-medium text-[#2F5EA8]">Partner Program</span>
         </div>
 
         <h1 className="text-4xl sm:text-5xl font-bold tracking-tight leading-[1.1] text-balance max-w-3xl mx-auto">
-          Offer <span className="text-gold">Revenue Intelligence</span> to Your Healthcare Clients
+          Offer <span className="text-[#2F5EA8]">Revenue Intelligence</span> to Your Healthcare Clients
         </h1>
 
         <p className="mt-6 text-lg text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed">
@@ -101,14 +101,14 @@ export default function PartnersPage() {
         <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
           <a
             href="mailto:partners@npixray.com?subject=Partner Program Application"
-            className="inline-flex items-center gap-2 rounded-xl bg-gold px-8 py-3.5 text-base font-semibold text-dark hover:bg-gold-300 transition-all"
+            className="inline-flex items-center gap-2 rounded-xl bg-[#2F5EA8] px-8 py-3.5 text-base font-semibold text-white hover:bg-[#264D8C] transition-all"
           >
             <Zap className="h-5 w-5" />
             Apply to Partner Program
           </a>
           <Link
             href="/about"
-            className="inline-flex items-center gap-2 rounded-xl border border-dark-50 px-8 py-3.5 text-base font-medium text-[var(--text-secondary)] hover:text-gold hover:border-gold/30 transition-all"
+            className="inline-flex items-center gap-2 rounded-xl border border-[var(--border)] px-8 py-3.5 text-base font-medium text-[var(--text-secondary)] hover:text-[#2F5EA8] hover:border-[#2F5EA8]/15 transition-all"
           >
             Learn About NPIxray
             <ArrowRight className="h-4 w-4" />
@@ -119,24 +119,24 @@ export default function PartnersPage() {
       {/* Partner types */}
       <div className="mb-20">
         <h2 className="text-2xl sm:text-3xl font-bold text-center mb-12">
-          Who Should <span className="text-gold">Partner</span> With Us?
+          Who Should <span className="text-[#2F5EA8]">Partner</span> With Us?
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {PARTNER_TYPES.map((type) => (
             <div
               key={type.title}
-              className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6 hover:border-gold/20 transition-colors"
+              className="rounded-xl border border-[var(--border-light)] bg-white p-6 hover:border-[#2F5EA8]/10 transition-colors"
             >
               <div className="flex items-start gap-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gold/10 border border-gold/20 shrink-0">
-                  <type.icon className="h-6 w-6 text-gold" />
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#2F5EA8]/[0.06] border border-[#2F5EA8]/10 shrink-0">
+                  <type.icon className="h-6 w-6 text-[#2F5EA8]" />
                 </div>
                 <div>
                   <h3 className="text-lg font-bold mb-2">{type.title}</h3>
                   <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-3">
                     {type.description}
                   </p>
-                  <p className="text-sm font-medium text-gold">{type.benefit}</p>
+                  <p className="text-sm font-medium text-[#2F5EA8]">{type.benefit}</p>
                 </div>
               </div>
             </div>
@@ -147,15 +147,15 @@ export default function PartnersPage() {
       {/* How it works */}
       <div className="mb-20">
         <h2 className="text-2xl sm:text-3xl font-bold text-center mb-12">
-          How It <span className="text-gold">Works</span>
+          How It <span className="text-[#2F5EA8]">Works</span>
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-4 gap-6">
           {HOW_IT_WORKS.map((step) => (
             <div
               key={step.step}
-              className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6 text-center"
+              className="rounded-xl border border-[var(--border-light)] bg-white p-6 text-center"
             >
-              <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-gold/10 border border-gold/20 text-gold font-bold text-xl mb-4">
+              <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-[#2F5EA8]/[0.06] border border-[#2F5EA8]/10 text-[#2F5EA8] font-bold text-xl mb-4">
                 {step.step}
               </div>
               <h3 className="font-bold mb-2">{step.title}</h3>
@@ -168,9 +168,9 @@ export default function PartnersPage() {
       </div>
 
       {/* What partners get */}
-      <div className="mb-20 rounded-2xl border border-gold/20 bg-gold/5 p-8 sm:p-12">
+      <div className="mb-20 rounded-2xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-8 sm:p-12">
         <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8">
-          What You <span className="text-gold">Get</span>
+          What You <span className="text-[#2F5EA8]">Get</span>
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           {[
@@ -209,8 +209,8 @@ export default function PartnersPage() {
               key={item.title}
               className="flex items-start gap-3"
             >
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gold/10 shrink-0">
-                <item.icon className="h-5 w-5 text-gold" />
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#2F5EA8]/[0.06] shrink-0">
+                <item.icon className="h-5 w-5 text-[#2F5EA8]" />
               </div>
               <div>
                 <p className="font-semibold mb-1">{item.title}</p>
@@ -224,14 +224,14 @@ export default function PartnersPage() {
       {/* CTA */}
       <div className="text-center">
         <h2 className="text-2xl sm:text-3xl font-bold mb-4">
-          Ready to <span className="text-gold">Partner</span>?
+          Ready to <span className="text-[#2F5EA8]">Partner</span>?
         </h2>
         <p className="text-[var(--text-secondary)] mb-8 max-w-lg mx-auto">
           Join healthcare companies already using NPIxray to generate leads and close deals faster.
         </p>
         <a
           href="mailto:partners@npixray.com?subject=Partner Program Application"
-          className="inline-flex items-center gap-2 rounded-xl bg-gold px-8 py-3.5 text-base font-semibold text-dark hover:bg-gold-300 transition-all"
+          className="inline-flex items-center gap-2 rounded-xl bg-[#2F5EA8] px-8 py-3.5 text-base font-semibold text-white hover:bg-[#264D8C] transition-all"
         >
           <Handshake className="h-5 w-5" />
           Apply Now

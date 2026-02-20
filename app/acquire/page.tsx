@@ -96,22 +96,22 @@ export default async function AcquirePage() {
 
       {/* Hero */}
       <section className="relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-gold/[0.03] rounded-full blur-3xl" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-[#2F5EA8]/[0.03] rounded-full blur-3xl" />
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-20 pb-12 sm:pt-28 sm:pb-16">
           <Breadcrumbs items={[{ label: "Acquisition Intelligence" }]} />
 
           <div className="text-center">
-            <div className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/5 px-4 py-1.5 mb-8">
-              <Target className="h-3.5 w-3.5 text-gold" />
-              <span className="text-xs font-medium text-gold">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] px-4 py-1.5 mb-8">
+              <Target className="h-3.5 w-3.5 text-[#2F5EA8]" />
+              <span className="text-xs font-medium text-[#2F5EA8]">
                 Acquisition Intelligence
               </span>
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight max-w-4xl mx-auto leading-[1.1]">
               Find Medical Practices{" "}
-              <span className="text-gold">Worth Acquiring</span>
+              <span className="text-[#2F5EA8]">Worth Acquiring</span>
             </h1>
 
             <p className="mt-6 text-lg sm:text-xl text-[var(--text-secondary)] max-w-3xl mx-auto leading-relaxed">
@@ -141,7 +141,7 @@ export default async function AcquirePage() {
       <section className="py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-center mb-12">
-            Why <span className="text-gold">Acquisition Intelligence</span> Matters
+            Why <span className="text-[#2F5EA8]">Acquisition Intelligence</span> Matters
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -151,9 +151,9 @@ export default async function AcquirePage() {
                 title: "Identify Hidden Gems",
                 description:
                   "Practices with 500+ patients but Revenue Scores below 40 represent massive upside. Our scoring pinpoints these opportunities across every state and specialty.",
-                color: "text-gold",
-                borderColor: "border-gold/20",
-                bgColor: "bg-gold/5",
+                color: "text-[#2F5EA8]",
+                borderColor: "border-[#2F5EA8]/10",
+                bgColor: "bg-[#2F5EA8]/[0.04]",
               },
               {
                 icon: TrendingUp,
@@ -190,13 +190,13 @@ export default async function AcquirePage() {
       </section>
 
       {/* Browse by State */}
-      <section className="py-12 sm:py-16 border-t border-dark-50/50">
+      <section className="py-12 sm:py-16 border-t border-[var(--border-light)]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-8">
             <div>
               <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">
                 Acquisition Markets by{" "}
-                <span className="text-gold">State</span>
+                <span className="text-[#2F5EA8]">State</span>
               </h2>
               <p className="mt-2 text-[var(--text-secondary)]">
                 Browse acquisition opportunities in {STATE_LIST.length} states
@@ -209,18 +209,18 @@ export default async function AcquirePage() {
               <Link
                 key={state.state}
                 href={`/acquire/markets/${stateToSlug(state.state)}`}
-                className="group rounded-xl border border-dark-50/80 bg-dark-400/30 p-4 transition-all hover:border-gold/30"
+                className="group rounded-xl border border-[var(--border-light)] bg-white p-4 transition-all hover:border-[#2F5EA8]/15"
               >
                 <div className="flex items-center gap-2 mb-2">
-                  <MapPin className="h-3.5 w-3.5 text-[var(--text-secondary)] group-hover:text-gold transition-colors" />
-                  <span className="font-bold text-sm group-hover:text-gold transition-colors">
+                  <MapPin className="h-3.5 w-3.5 text-[var(--text-secondary)] group-hover:text-[#2F5EA8] transition-colors" />
+                  <span className="font-bold text-sm group-hover:text-[#2F5EA8] transition-colors">
                     {state.state}
                   </span>
                 </div>
                 <p className="text-xs text-[var(--text-secondary)]">
                   {Number(state.totalProviders).toLocaleString()} practices
                 </p>
-                <p className="text-xs text-gold font-medium">
+                <p className="text-xs text-[#2F5EA8] font-medium">
                   {formatCurrency(state.totalPayment)} revenue
                 </p>
               </Link>
@@ -236,7 +236,7 @@ export default async function AcquirePage() {
                   <Link
                     key={s.abbr}
                     href={`/acquire/markets/${stateToSlug(s.abbr)}`}
-                    className="text-gold hover:underline"
+                    className="text-[#2F5EA8] hover:underline"
                   >
                     {s.abbr}
                   </Link>
@@ -252,12 +252,12 @@ export default async function AcquirePage() {
       </section>
 
       {/* Browse by Specialty */}
-      <section className="py-12 sm:py-16 border-t border-dark-50/50">
+      <section className="py-12 sm:py-16 border-t border-[var(--border-light)]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-8">
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">
               Opportunity by{" "}
-              <span className="text-gold">Specialty</span>
+              <span className="text-[#2F5EA8]">Specialty</span>
             </h2>
             <p className="mt-2 text-[var(--text-secondary)]">
               Some specialties have significantly more acquisition upside than others
@@ -268,7 +268,7 @@ export default async function AcquirePage() {
             {topSpecialties.map((spec: any) => (
               <div
                 key={spec.specialty}
-                className="rounded-xl border border-dark-50/80 bg-dark-400/30 p-5"
+                className="rounded-xl border border-[var(--border-light)] bg-white p-5"
               >
                 <div className="flex items-start justify-between mb-3">
                   <div>
@@ -285,7 +285,7 @@ export default async function AcquirePage() {
                   </span>
                   <Link
                     href={`/reports/specialties/${specialtyToSlug(spec.specialty)}`}
-                    className="flex items-center gap-1 text-gold hover:underline"
+                    className="flex items-center gap-1 text-[#2F5EA8] hover:underline"
                   >
                     Analyze
                     <ArrowRight className="h-3 w-3" />
@@ -298,22 +298,22 @@ export default async function AcquirePage() {
       </section>
 
       {/* Tools CTA */}
-      <section className="py-12 sm:py-16 border-t border-dark-50/50">
+      <section className="py-12 sm:py-16 border-t border-[var(--border-light)]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <Link
               href="/tools/portfolio"
-              className="group rounded-2xl border border-dark-50/80 bg-dark-400/30 p-8 transition-all hover:border-gold/30 hover:shadow-lg hover:shadow-gold/5"
+              className="group rounded-2xl border border-[var(--border-light)] bg-white p-8 transition-all hover:border-[#2F5EA8]/15 hover:shadow-lg hover:shadow-[#2F5EA8]/[0.04]"
             >
-              <Briefcase className="h-10 w-10 text-gold mb-4" />
-              <h3 className="text-xl font-bold mb-2 group-hover:text-gold transition-colors">
+              <Briefcase className="h-10 w-10 text-[#2F5EA8] mb-4" />
+              <h3 className="text-xl font-bold mb-2 group-hover:text-[#2F5EA8] transition-colors">
                 Portfolio Analysis Tool
               </h3>
               <p className="text-sm text-[var(--text-secondary)] mb-4">
                 Enter 2-20 NPIs to see combined acquisition scores, total upside
                 revenue, and a prioritized optimization roadmap.
               </p>
-              <span className="flex items-center gap-1 text-sm font-medium text-gold">
+              <span className="flex items-center gap-1 text-sm font-medium text-[#2F5EA8]">
                 Try it free
                 <ChevronRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
               </span>
@@ -321,17 +321,17 @@ export default async function AcquirePage() {
 
             <Link
               href="/"
-              className="group rounded-2xl border border-dark-50/80 bg-dark-400/30 p-8 transition-all hover:border-gold/30 hover:shadow-lg hover:shadow-gold/5"
+              className="group rounded-2xl border border-[var(--border-light)] bg-white p-8 transition-all hover:border-[#2F5EA8]/15 hover:shadow-lg hover:shadow-[#2F5EA8]/[0.04]"
             >
               <Target className="h-10 w-10 text-emerald-400 mb-4" />
-              <h3 className="text-xl font-bold mb-2 group-hover:text-gold transition-colors">
+              <h3 className="text-xl font-bold mb-2 group-hover:text-[#2F5EA8] transition-colors">
                 Individual Practice Scanner
               </h3>
               <p className="text-sm text-[var(--text-secondary)] mb-4">
                 Scan any NPI to see a full revenue analysis, Revenue Score,
                 care management gaps, and optimization recommendations.
               </p>
-              <span className="flex items-center gap-1 text-sm font-medium text-gold">
+              <span className="flex items-center gap-1 text-sm font-medium text-[#2F5EA8]">
                 Scan NPI free
                 <ChevronRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
               </span>
@@ -341,7 +341,7 @@ export default async function AcquirePage() {
       </section>
 
       {/* Early Access CTA */}
-      <section className="py-12 sm:py-16 border-t border-dark-50/50">
+      <section className="py-12 sm:py-16 border-t border-[var(--border-light)]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <EarlyAccessCTA />
         </div>

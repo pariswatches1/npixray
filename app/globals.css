@@ -3,12 +3,17 @@
 @tailwind utilities;
 
 :root {
-  --gold: #E8A824;
-  --dark-bg: #0c0b09;
-  --dark-surface: #15140e;
-  --dark-border: #2a2820;
-  --text-primary: #f5f5f0;
-  --text-secondary: #a09c8c;
+  --primary: #2F5EA8;
+  --primary-light: #4FA3D1;
+  --teal: #22C1A1;
+  --bg: #F4F7FB;
+  --surface: #FFFFFF;
+  --surface-alt: #E9EEF6;
+  --border: #D8E0ED;
+  --border-light: #E9EEF6;
+  --text-primary: #1A2B4A;
+  --text-secondary: #5E6E87;
+  --text-muted: #8B97AD;
 }
 
 * {
@@ -22,15 +27,15 @@ html {
 }
 
 body {
-  background-color: var(--dark-bg);
+  background-color: var(--bg);
   color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 ::selection {
-  background-color: rgba(232, 168, 36, 0.3);
-  color: #fff;
+  background-color: rgba(47, 94, 168, 0.15);
+  color: #1A2B4A;
 }
 
 /* Scrollbar */
@@ -38,19 +43,19 @@ body {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--dark-bg);
+  background: var(--bg);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--dark-border);
+  background: var(--border);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--gold);
+  background: var(--primary);
 }
 
 /* Focus styles */
 :focus-visible {
-  outline: 2px solid var(--gold);
+  outline: 2px solid var(--primary);
   outline-offset: 2px;
 }
 
@@ -58,10 +63,35 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+  .glow-primary {
+    box-shadow: 0 4px 24px rgba(47, 94, 168, 0.08), 0 1px 4px rgba(47, 94, 168, 0.04);
+  }
   .glow-gold {
-    box-shadow: 0 0 20px rgba(232, 168, 36, 0.15), 0 0 60px rgba(232, 168, 36, 0.05);
+    box-shadow: 0 4px 24px rgba(47, 94, 168, 0.08), 0 1px 4px rgba(47, 94, 168, 0.04);
   }
   .border-gold-subtle {
-    border-color: rgba(232, 168, 36, 0.2);
+    border-color: rgba(47, 94, 168, 0.15);
   }
+  .card-glass {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-light);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 16px rgba(47, 94, 168, 0.04);
+  }
+}
+
+/* Report card animations */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out both;
 }

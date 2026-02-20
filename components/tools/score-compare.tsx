@@ -60,7 +60,7 @@ export function ScoreCompare() {
   return (
     <div>
       {/* Input Section */}
-      <div className="rounded-xl border border-dark-50/80 bg-dark-400/30 p-6 mb-8">
+      <div className="rounded-xl border border-[var(--border-light)] bg-white p-6 mb-8">
         <div className="space-y-3 mb-4">
           {npis.map((npi, i) => (
             <div key={i} className="flex items-center gap-3">
@@ -71,7 +71,7 @@ export function ScoreCompare() {
                 placeholder="Enter 10-digit NPI"
                 value={npi}
                 onChange={(e) => updateNpi(i, e.target.value)}
-                className="flex-1 rounded-lg border border-dark-50/80 bg-dark-400/50 px-4 py-2.5 text-sm font-mono placeholder:text-dark-50 focus:border-gold/50 focus:outline-none focus:ring-1 focus:ring-gold/30"
+                className="flex-1 rounded-lg border border-[var(--border-light)] bg-white px-4 py-2.5 text-sm font-mono placeholder:text-[var(--text-secondary)] focus:border-[#2F5EA8]/20/50 focus:outline-none focus:ring-1 focus:ring-[#2F5EA8]/10"
               />
               {npis.length > 2 && (
                 <button
@@ -88,7 +88,7 @@ export function ScoreCompare() {
           {npis.length < 5 && (
             <button
               onClick={addField}
-              className="inline-flex items-center gap-1.5 text-xs text-[var(--text-secondary)] hover:text-gold transition-colors"
+              className="inline-flex items-center gap-1.5 text-xs text-[var(--text-secondary)] hover:text-[#2F5EA8] transition-colors"
             >
               <Plus className="h-3.5 w-3.5" />
               Add Provider
@@ -97,7 +97,7 @@ export function ScoreCompare() {
           <button
             onClick={compare}
             disabled={loading}
-            className="ml-auto inline-flex items-center gap-2 rounded-lg bg-gold px-6 py-2.5 text-sm font-semibold text-dark hover:bg-gold-300 transition-colors disabled:opacity-50"
+            className="ml-auto inline-flex items-center gap-2 rounded-lg bg-[#2F5EA8] px-6 py-2.5 text-sm font-semibold text-white hover:bg-[#264D8C] transition-colors disabled:opacity-50"
           >
             {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <BarChart3 className="h-4 w-4" />}
             Compare Scores
@@ -114,7 +114,7 @@ export function ScoreCompare() {
               return (
                 <div
                   key={i}
-                  className="rounded-xl border border-dark-50/50 bg-dark-400/20 p-6 text-center"
+                  className="rounded-xl border border-[var(--border-light)] bg-[var(--bg)]/20 p-6 text-center"
                 >
                   <p className="text-sm text-[var(--text-secondary)]">
                     NPI {npis[i]} not found
@@ -125,7 +125,7 @@ export function ScoreCompare() {
             return (
               <div
                 key={r.provider.npi}
-                className="rounded-xl border border-dark-50/80 bg-dark-400/30 p-6"
+                className="rounded-xl border border-[var(--border-light)] bg-white p-6"
               >
                 <div className="text-center mb-4">
                   <p className="font-semibold truncate">{r.provider.name}</p>

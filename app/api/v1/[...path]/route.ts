@@ -16,6 +16,7 @@ import {
   getSpecialtyByState,
   getNationalStats,
   getDistinctSpecialties,
+  getMultipleProviders,
   stateAbbrToName,
   specialtyToSlug,
   type ProviderRow,
@@ -23,6 +24,7 @@ import {
 } from "@/lib/db-queries";
 import { checkRateLimit, validateApiKey, type RateLimitResult } from "@/lib/api-keys";
 import { estimateMissedRevenue, calculateCaptureRate, calculateAdoptionRates, calculateEMDistribution } from "@/lib/report-utils";
+import { scanBatch, aggregateGroupResults } from "@/lib/group-scan";
 
 // ── Helpers ────────────────────────────────────────────────
 
@@ -522,6 +524,106 @@ export async function GET(
   }
 }
 
+// ── POST handler ──────────────────────────────────────────
+
+export async function POST(
+  request: NextRequest,
+  { params }: { params: Promise<{ path: string[] }> }
+) {
+  const { path } = await params;
+  const { tier, rateLimit } = authenticate(request);
+
+  if (!rateLimit.allowed) {
+    return errorResponse(
+      `Rate limit exceeded. Limit: ${rateLimit.limit}/day. Resets: ${rateLimit.resetAt}`,
+      429,
+      rateLimit
+    );
+  }
+
+  const isPro = tier === "pro";
+  const segment0 = path[0] || "";
+
+  try {
+    const body = await request.json().catch(() => ({}));
+
+    // ── POST /api/v1/providers/batch — Pro only ────────────
+    if (segment0 === "providers" && path[1] === "batch") {
+      if (!isPro) {
+        return errorResponse(
+          "Pro API key required for /providers/batch endpoint. Get one at npixray.com/developers",
+          403,
+          rateLimit
+        );
+      }
+
+      const npis = (body.npis as string[] || []).filter((n: string) => /^\d{10}$/.test(n));
+      if (npis.length === 0 || npis.length > 100) {
+        return errorResponse("Provide 1-100 valid NPIs in the 'npis' array", 400, rateLimit);
+      }
+
+      const unique = [...new Set(npis)];
+      const providers = await getMultipleProviders(unique);
+      const benchmarks = await getAllBenchmarks();
+      const benchmarkMap = new Map<string, BenchmarkRow>();
+      for (const b of benchmarks) benchmarkMap.set(b.specialty, b);
+
+      const results = unique.map((npi) => {
+        const p = (providers as ProviderRow[]).find((pr) => pr.npi === npi);
+        if (!p) return { npi, error: "Not found" };
+        return fullProviderResponse(p, benchmarkMap.get(p.specialty) ?? null);
+      });
+
+      return jsonResponse({
+        data: results,
+        total: results.length,
+        found: results.filter((r: any) => !r.error).length,
+      }, 200, rateLimit);
+    }
+
+    // ── POST /api/v1/group-scan — Pro only ─────────────────
+    if (segment0 === "group-scan") {
+      if (!isPro) {
+        return errorResponse(
+          "Pro API key required for /group-scan endpoint. Get one at npixray.com/developers",
+          403,
+          rateLimit
+        );
+      }
+
+      const npis = (body.npis as string[] || []).filter((n: string) => /^\d{10}$/.test(n));
+      const practiceName = (body.practice_name as string) || "Group Practice";
+
+      if (npis.length < 2 || npis.length > 50) {
+        return errorResponse("Provide 2-50 valid NPIs in the 'npis' array", 400, rateLimit);
+      }
+
+      const unique = [...new Set(npis)];
+      const scanMap = await scanBatch(unique);
+      const groupResult = aggregateGroupResults(scanMap, practiceName);
+
+      // Strip fullScan from provider summaries to reduce payload
+      const lightProviders = groupResult.providers.map(({ fullScan, ...rest }) => rest);
+
+      return jsonResponse({
+        data: {
+          ...groupResult,
+          providers: lightProviders,
+        },
+      }, 200, rateLimit);
+    }
+
+    return errorResponse(
+      `Unknown POST endpoint: /api/v1/${path.join("/")}. See docs at npixray.com/api-docs`,
+      404,
+      rateLimit
+    );
+  } catch (err) {
+    console.error("[api/v1 POST] Error:", err);
+    return errorResponse("Internal server error", 500, rateLimit);
+  }
+}
+
 // ── CORS preflight ──────────────────────────────────────────
 
 export async function OPTIONS() {
@@ -529,7 +631,7 @@ export async function OPTIONS() {
     status: 204,
     headers: {
       "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET, OPTIONS",
+      "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
       "Access-Control-Allow-Headers": "Authorization, X-API-Key, Content-Type",
       "Access-Control-Max-Age": "86400",
     },

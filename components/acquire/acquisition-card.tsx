@@ -27,7 +27,7 @@ export function AcquisitionCard({
   rank,
 }: AcquisitionCardProps) {
   return (
-    <div className="group rounded-2xl border border-dark-50/80 bg-dark-400/50 p-6 transition-all hover:border-gold/30 hover:shadow-lg hover:shadow-gold/5">
+    <div className="group rounded-2xl border border-[var(--border-light)] bg-white p-6 transition-all hover:border-[#2F5EA8]/15 hover:shadow-lg hover:shadow-[#2F5EA8]/[0.04]">
       <div className="flex items-start justify-between mb-4">
         <div className="flex-1 min-w-0">
           {rank && (
@@ -51,18 +51,18 @@ export function AcquisitionCard({
       </div>
 
       <div className="grid grid-cols-2 gap-3 mb-4">
-        <div className="rounded-lg bg-dark-400/80 p-3">
+        <div className="rounded-lg bg-[var(--bg)]/80 p-3">
           <div className="flex items-center gap-1 text-xs text-[var(--text-secondary)] mb-1">
             <Users className="h-3 w-3" />
             Patients
           </div>
           <p className="text-sm font-bold">{patients.toLocaleString()}</p>
         </div>
-        <div className="rounded-lg bg-dark-400/80 p-3">
+        <div className="rounded-lg bg-[var(--bg)]/80 p-3">
           <div className="text-xs text-[var(--text-secondary)] mb-1">Current Revenue</div>
           <p className="text-sm font-bold">{formatAcquisitionCurrency(currentRevenue)}</p>
         </div>
-        <div className="rounded-lg bg-dark-400/80 p-3">
+        <div className="rounded-lg bg-[var(--bg)]/80 p-3">
           <div className="flex items-center gap-1 text-xs text-emerald-400 mb-1">
             <TrendingUp className="h-3 w-3" />
             Upside
@@ -71,15 +71,15 @@ export function AcquisitionCard({
             +{formatAcquisitionCurrency(score.estimatedUpsideRevenue)}
           </p>
         </div>
-        <div className="rounded-lg bg-dark-400/80 p-3">
+        <div className="rounded-lg bg-[var(--bg)]/80 p-3">
           <div className="text-xs text-[var(--text-secondary)] mb-1">Growth Potential</div>
-          <p className="text-sm font-bold text-gold">+{score.revenueIncreasePct}%</p>
+          <p className="text-sm font-bold text-[#2F5EA8]">+{score.revenueIncreasePct}%</p>
         </div>
       </div>
 
       <Link
         href={`/provider/${npi}`}
-        className="flex items-center justify-center gap-2 w-full rounded-xl border border-dark-50/80 bg-dark-400/30 px-4 py-2.5 text-sm font-medium text-[var(--text-secondary)] transition-all hover:border-gold/30 hover:text-gold"
+        className="flex items-center justify-center gap-2 w-full rounded-xl border border-[var(--border-light)] bg-white px-4 py-2.5 text-sm font-medium text-[var(--text-secondary)] transition-all hover:border-[#2F5EA8]/15 hover:text-[#2F5EA8]"
       >
         View Full Analysis
         <ArrowRight className="h-3.5 w-3.5" />

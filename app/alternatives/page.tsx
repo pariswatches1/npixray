@@ -120,22 +120,22 @@ export default function AlternativesIndexPage() {
       />
 
       <section className="relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gold/[0.03] rounded-full blur-3xl" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#2F5EA8]/[0.03] rounded-full blur-3xl" />
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-20 pb-12 sm:pt-28 sm:pb-16">
           <Breadcrumbs items={[{ label: "Alternatives" }]} />
 
           <div className="text-center">
-            <div className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/5 px-4 py-1.5 mb-8">
-              <GitCompareArrows className="h-3.5 w-3.5 text-gold" />
-              <span className="text-xs font-medium text-gold">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] px-4 py-1.5 mb-8">
+              <GitCompareArrows className="h-3.5 w-3.5 text-[#2F5EA8]" />
+              <span className="text-xs font-medium text-[#2F5EA8]">
                 5 Comparisons
               </span>
             </div>
 
             <h1 className="text-4xl sm:text-5xl font-bold tracking-tight max-w-3xl mx-auto leading-[1.1]">
               NPIxray vs.{" "}
-              <span className="text-gold">The Alternatives</span>
+              <span className="text-[#2F5EA8]">The Alternatives</span>
             </h1>
 
             <p className="mt-6 text-lg text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed">
@@ -154,7 +154,7 @@ export default function AlternativesIndexPage() {
               <Link
                 key={alt.slug}
                 href={`/alternatives/${alt.slug}`}
-                className="group flex items-start gap-6 rounded-2xl border border-dark-50/80 bg-dark-400/50 p-6 transition-all hover:border-gold/30 hover:shadow-lg hover:shadow-gold/5"
+                className="group flex items-start gap-6 rounded-2xl border border-[var(--border-light)] bg-white p-6 transition-all hover:border-[#2F5EA8]/15 hover:shadow-lg hover:shadow-[#2F5EA8]/[0.04]"
               >
                 <div
                   className={`flex h-12 w-12 items-center justify-center rounded-xl border ${alt.borderColor} ${alt.bgColor} flex-shrink-0`}
@@ -163,13 +163,13 @@ export default function AlternativesIndexPage() {
                 </div>
 
                 <div className="flex-1 min-w-0">
-                  <h2 className="text-lg font-bold mb-1 group-hover:text-gold transition-colors">
+                  <h2 className="text-lg font-bold mb-1 group-hover:text-[#2F5EA8] transition-colors">
                     {alt.title}
                   </h2>
                   <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-3">
                     {alt.description}
                   </p>
-                  <div className="flex items-center gap-1 text-xs font-medium text-[var(--text-secondary)] group-hover:text-gold transition-colors">
+                  <div className="flex items-center gap-1 text-xs font-medium text-[var(--text-secondary)] group-hover:text-[#2F5EA8] transition-colors">
                     Compare {alt.count} Tools
                     <ArrowRight className="h-3 w-3 group-hover:translate-x-0.5 transition-transform" />
                   </div>
@@ -180,11 +180,11 @@ export default function AlternativesIndexPage() {
         </div>
       </section>
 
-      <section className="border-t border-dark-50/50">
+      <section className="border-t border-[var(--border-light)]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 sm:py-20 text-center">
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4">
             See NPIxray in{" "}
-            <span className="text-gold">Action</span>
+            <span className="text-[#2F5EA8]">Action</span>
           </h2>
           <p className="text-[var(--text-secondary)] max-w-xl mx-auto mb-8">
             The best way to evaluate NPIxray is to try it. Scan any NPI number
@@ -192,7 +192,7 @@ export default function AlternativesIndexPage() {
           </p>
           <Link
             href="/"
-            className="inline-flex items-center gap-2 rounded-xl bg-gold px-8 py-4 text-base font-semibold text-dark transition-all hover:bg-gold-300 hover:shadow-lg hover:shadow-gold/20"
+            className="inline-flex items-center gap-2 rounded-xl bg-[#2F5EA8] px-8 py-4 text-base font-semibold text-white transition-all hover:bg-[#264D8C] hover:shadow-lg hover:shadow-[#2F5EA8]/10"
           >
             <Zap className="h-5 w-5" />
             Try Free NPI Scan

@@ -30,30 +30,30 @@ export function EMDistributionChart({ data, entityLabel = "Actual" }: EMDistribu
   return (
     <ResponsiveContainer width="100%" height={300}>
       <BarChart data={chartData} barCategoryGap="20%">
-        <CartesianGrid strokeDasharray="3 3" stroke="#2a2820" />
+        <CartesianGrid strokeDasharray="3 3" stroke="#E9EEF6" />
         <XAxis
           dataKey="code"
-          tick={{ fill: "#a09c8c", fontSize: 12 }}
-          axisLine={{ stroke: "#2a2820" }}
+          tick={{ fill: "#6B7A99", fontSize: 12 }}
+          axisLine={{ stroke: "#E9EEF6" }}
         />
         <YAxis
-          tick={{ fill: "#a09c8c", fontSize: 12 }}
-          axisLine={{ stroke: "#2a2820" }}
+          tick={{ fill: "#6B7A99", fontSize: 12 }}
+          axisLine={{ stroke: "#E9EEF6" }}
           tickFormatter={(v) => `${v}%`}
         />
         <Tooltip
           contentStyle={{
-            backgroundColor: "#15140e",
-            border: "1px solid #2a2820",
+            backgroundColor: "#FFFFFF",
+            border: "1px solid #E9EEF6",
             borderRadius: "8px",
-            color: "#f5f5f0",
+            color: "#1A2B4A",
           }}
           formatter={(value: number) => [`${value}%`, undefined]}
         />
         <Legend
-          wrapperStyle={{ color: "#a09c8c", fontSize: 12 }}
+          wrapperStyle={{ color: "#6B7A99", fontSize: 12 }}
         />
-        <Bar dataKey={entityLabel} fill="#E8A824" radius={[4, 4, 0, 0]} />
+        <Bar dataKey={entityLabel} fill="#2F5EA8" radius={[4, 4, 0, 0]} />
         <Bar dataKey="Benchmark" fill="#4a4535" radius={[4, 4, 0, 0]} />
       </BarChart>
     </ResponsiveContainer>

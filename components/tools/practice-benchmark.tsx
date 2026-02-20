@@ -73,7 +73,7 @@ export function PracticeBenchmarkTool() {
 
   const getPercentileColor = (pct: number) => {
     if (pct >= 75) return "text-emerald-400";
-    if (pct >= 50) return "text-gold";
+    if (pct >= 50) return "text-[#2F5EA8]";
     if (pct >= 25) return "text-amber-400";
     return "text-red-400";
   };
@@ -89,7 +89,7 @@ export function PracticeBenchmarkTool() {
   return (
     <div>
       {/* Input */}
-      <div className="rounded-2xl border border-dark-50/80 bg-dark-400/50 p-6 sm:p-8">
+      <div className="rounded-2xl border border-[var(--border-light)] bg-white p-6 sm:p-8">
         <div className="flex items-center gap-3 mb-6">
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-500/10 border border-indigo-500/20">
             <BarChart3 className="h-5 w-5 text-indigo-400" />
@@ -105,7 +105,7 @@ export function PracticeBenchmarkTool() {
             <select
               value={specialty}
               onChange={(e) => setSpecialty(e.target.value)}
-              className="w-full rounded-lg border border-dark-50/50 bg-dark-200 px-4 py-3 text-white focus:border-gold focus:outline-none transition-colors appearance-none cursor-pointer"
+              className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-white focus:border-[#2F5EA8]/20 focus:outline-none transition-colors appearance-none cursor-pointer"
               aria-label="Select specialty"
             >
               <option value="">Select specialty</option>
@@ -121,7 +121,7 @@ export function PracticeBenchmarkTool() {
             <select
               value={state}
               onChange={(e) => setState(e.target.value)}
-              className="w-full rounded-lg border border-dark-50/50 bg-dark-200 px-4 py-3 text-white focus:border-gold focus:outline-none transition-colors appearance-none cursor-pointer"
+              className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-white focus:border-[#2F5EA8]/20 focus:outline-none transition-colors appearance-none cursor-pointer"
               aria-label="Select state"
             >
               <option value="">Select state</option>
@@ -142,7 +142,7 @@ export function PracticeBenchmarkTool() {
                 placeholder="e.g. 80000"
                 value={revenue}
                 onChange={(e) => setRevenue(e.target.value)}
-                className="w-full rounded-lg border border-dark-50/50 bg-dark-200 pl-8 pr-4 py-3 text-white placeholder:text-[var(--text-secondary)]/50 focus:border-gold focus:outline-none transition-colors"
+                className="w-full rounded-lg border border-[var(--border-light)] bg-white pl-8 pr-4 py-3 text-white placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20 focus:outline-none transition-colors"
                 aria-label="Annual Medicare revenue"
               />
             </div>
@@ -152,7 +152,7 @@ export function PracticeBenchmarkTool() {
         <button
           onClick={handleBenchmark}
           disabled={!specialty || !revenue}
-          className="mt-6 w-full sm:w-auto bg-gold text-dark font-semibold rounded-lg px-6 py-3 hover:bg-gold-300 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+          className="mt-6 w-full sm:w-auto bg-[#2F5EA8] text-white font-semibold rounded-lg px-6 py-3 hover:bg-[#264D8C] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
         >
           Benchmark My Practice
         </button>
@@ -162,7 +162,7 @@ export function PracticeBenchmarkTool() {
       {results && (
         <div className="mt-8 space-y-6">
           {/* Percentile Banner */}
-          <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-8 text-center">
+          <div className="rounded-xl border border-[var(--border-light)] bg-white p-8 text-center">
             <p className="text-sm text-[var(--text-secondary)] mb-3">
               Among {results.providerCount.toLocaleString()} {specialty} providers
             </p>
@@ -181,13 +181,13 @@ export function PracticeBenchmarkTool() {
 
             {/* Visual bar */}
             <div className="mt-6 max-w-md mx-auto">
-              <div className="relative h-8 rounded-full bg-dark-200 overflow-hidden">
+              <div className="relative h-8 rounded-full bg-white overflow-hidden">
                 <div
                   className={`absolute left-0 top-0 h-full rounded-full transition-all duration-700 ${
                     results.percentile >= 75
                       ? "bg-emerald-500"
                       : results.percentile >= 50
-                      ? "bg-gold"
+                      ? "bg-[#2F5EA8]"
                       : results.percentile >= 25
                       ? "bg-amber-500"
                       : "bg-red-500"
@@ -211,9 +211,9 @@ export function PracticeBenchmarkTool() {
           </div>
 
           {/* Revenue Benchmarks */}
-          <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6">
+          <div className="rounded-xl border border-[var(--border-light)] bg-white p-6">
             <div className="flex items-center gap-2 mb-4">
-              <DollarSign className="h-4 w-4 text-gold" />
+              <DollarSign className="h-4 w-4 text-[#2F5EA8]" />
               <h3 className="text-base font-semibold">Revenue Benchmarks</h3>
             </div>
             <div className="space-y-3">
@@ -221,7 +221,7 @@ export function PracticeBenchmarkTool() {
                 { label: "Your Revenue", amount: results.yourRevenue, color: "bg-blue-500", highlight: true },
                 { label: "Specialty Average", amount: results.avgRevenue, color: "bg-emerald-500/60", highlight: false },
                 { label: "Top 25% Threshold", amount: results.top25Revenue, color: "bg-amber-500/60", highlight: false },
-                { label: "Top 10% Threshold", amount: results.top10Revenue, color: "bg-gold/60", highlight: false },
+                { label: "Top 10% Threshold", amount: results.top10Revenue, color: "bg-[#2F5EA8]/60", highlight: false },
               ].map((item) => {
                 const max = Math.max(results.yourRevenue, results.top10Revenue) || 1;
                 return (
@@ -229,7 +229,7 @@ export function PracticeBenchmarkTool() {
                     <span className={`text-sm w-36 flex-shrink-0 ${item.highlight ? "font-medium text-[var(--text-primary)]" : "text-[var(--text-secondary)]"}`}>
                       {item.label}
                     </span>
-                    <div className="flex-1 h-6 rounded bg-dark-200 overflow-hidden">
+                    <div className="flex-1 h-6 rounded bg-white overflow-hidden">
                       <div
                         className={`h-full rounded ${item.color} transition-all duration-500`}
                         style={{ width: `${(item.amount / max) * 100}%` }}
@@ -249,9 +249,9 @@ export function PracticeBenchmarkTool() {
             {[
               { label: "Gap to Average", gap: results.gapToAvg, color: "text-emerald-400", icon: TrendingUp },
               { label: "Gap to Top 25%", gap: results.gapToTop25, color: "text-amber-400", icon: ArrowUp },
-              { label: "Gap to Top 10%", gap: results.gapToTop10, color: "text-gold", icon: ArrowUp },
+              { label: "Gap to Top 10%", gap: results.gapToTop10, color: "text-[#2F5EA8]", icon: ArrowUp },
             ].map((item) => (
-              <div key={item.label} className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5">
+              <div key={item.label} className="rounded-xl border border-[var(--border-light)] bg-white p-5">
                 <div className="flex items-center gap-2 text-sm text-[var(--text-secondary)] mb-2">
                   <item.icon className={`h-4 w-4 ${item.color}`} />
                   {item.label}
@@ -280,9 +280,9 @@ export function PracticeBenchmarkTool() {
           </div>
 
           {/* Context */}
-          <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6">
+          <div className="rounded-xl border border-[var(--border-light)] bg-white p-6">
             <div className="flex items-center gap-2 mb-4">
-              <Users className="h-4 w-4 text-gold" />
+              <Users className="h-4 w-4 text-[#2F5EA8]" />
               <h3 className="text-base font-semibold">Specialty Context</h3>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
@@ -306,8 +306,8 @@ export function PracticeBenchmarkTool() {
           </div>
 
           {/* Info */}
-          <div className="flex items-start gap-3 text-sm text-[var(--text-secondary)] bg-dark-300/50 rounded-lg p-4 border border-dark-50/50">
-            <Info className="h-4 w-4 flex-shrink-0 mt-0.5 text-gold" />
+          <div className="flex items-start gap-3 text-sm text-[var(--text-secondary)] bg-white/80 rounded-lg p-4 border border-[var(--border-light)]">
+            <Info className="h-4 w-4 flex-shrink-0 mt-0.5 text-[#2F5EA8]" />
             <div>
               <p className="font-medium text-[var(--text-primary)] mb-1">About This Benchmark</p>
               <p>

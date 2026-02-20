@@ -30,7 +30,7 @@ function stateGrade(stats: StateStats, allStates: StateStats[]): { letter: strin
   const score = Math.round(((stats.avgPayment - minAvg) / range) * 40 + 60);
   if (score >= 90) return { letter: "A", color: "#22c55e" };
   if (score >= 80) return { letter: "B", color: "#84cc16" };
-  if (score >= 70) return { letter: "C", color: "#E8A824" };
+  if (score >= 70) return { letter: "C", color: "#2F5EA8" };
   if (score >= 60) return { letter: "D", color: "#f97316" };
   return { letter: "F", color: "#ef4444" };
 }
@@ -42,7 +42,7 @@ function specialtyGrade(b: BenchmarkRow): { letter: string; color: string } {
   const score = Math.round(Math.min(emScore + adoptionScore + 30, 100));
   if (score >= 90) return { letter: "A", color: "#22c55e" };
   if (score >= 80) return { letter: "B", color: "#84cc16" };
-  if (score >= 70) return { letter: "C", color: "#E8A824" };
+  if (score >= 70) return { letter: "C", color: "#2F5EA8" };
   if (score >= 60) return { letter: "D", color: "#f97316" };
   return { letter: "F", color: "#ef4444" };
 }
@@ -111,7 +111,7 @@ function buildWidgetHtml(data: WidgetData): string {
   body {
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
     background: #0c0b09;
-    color: #f5f5f0;
+    color: #1A2B4A;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -121,8 +121,8 @@ function buildWidgetHtml(data: WidgetData): string {
     width: 100%;
     max-width: 380px;
     margin: 12px auto;
-    background: #15140e;
-    border: 1px solid #2a2820;
+    background: #FFFFFF;
+    border: 1px solid #E9EEF6;
     border-radius: 12px;
     padding: 20px;
   }
@@ -147,12 +147,12 @@ function buildWidgetHtml(data: WidgetData): string {
   .widget-title {
     font-size: 15px;
     font-weight: 600;
-    color: #f5f5f0;
+    color: #1A2B4A;
     line-height: 1.3;
   }
   .widget-sub {
     font-size: 11px;
-    color: #a09c8c;
+    color: #6B7A99;
     margin-top: 2px;
   }
   .stats-row {
@@ -163,7 +163,7 @@ function buildWidgetHtml(data: WidgetData): string {
   .stat {
     flex: 1;
     background: #0c0b09;
-    border: 1px solid #2a2820;
+    border: 1px solid #E9EEF6;
     border-radius: 8px;
     padding: 10px 12px;
     text-align: center;
@@ -171,12 +171,12 @@ function buildWidgetHtml(data: WidgetData): string {
   .stat-value {
     font-size: 18px;
     font-weight: 700;
-    color: #E8A824;
+    color: #2F5EA8;
     font-variant-numeric: tabular-nums;
   }
   .stat-label {
     font-size: 10px;
-    color: #a09c8c;
+    color: #6B7A99;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     margin-top: 2px;
@@ -186,19 +186,19 @@ function buildWidgetHtml(data: WidgetData): string {
     align-items: center;
     justify-content: space-between;
     padding-top: 12px;
-    border-top: 1px solid #2a2820;
+    border-top: 1px solid #E9EEF6;
   }
   .powered-by-text {
     font-size: 10px;
-    color: #a09c8c;
+    color: #6B7A99;
   }
   .powered-by-text strong {
-    color: #E8A824;
+    color: #2F5EA8;
     font-weight: 600;
   }
   .powered-by a {
     font-size: 11px;
-    color: #E8A824;
+    color: #2F5EA8;
     text-decoration: none;
     font-weight: 600;
     transition: opacity 0.2s;

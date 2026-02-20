@@ -28,7 +28,7 @@ export interface AcquisitionTier {
 }
 
 export const ACQUISITION_TIERS: AcquisitionTier[] = [
-  { min: 85, max: 100, label: "Prime Target",      color: "text-gold",        bgColor: "bg-gold/15",        borderColor: "border-gold/40",        hexColor: "#E8A824", description: "Exceptional acquisition opportunity with massive upside" },
+  { min: 85, max: 100, label: "Prime Target",      color: "text-[#2F5EA8]",        bgColor: "bg-[#2F5EA8]/10",        borderColor: "border-[#2F5EA8]/20",        hexColor: "#2F5EA8", description: "Exceptional acquisition opportunity with massive upside" },
   { min: 70, max: 84,  label: "Strong Opportunity", color: "text-emerald-400", bgColor: "bg-emerald-400/15", borderColor: "border-emerald-400/40", hexColor: "#34d399", description: "Strong fundamentals with significant optimization potential" },
   { min: 55, max: 69,  label: "Moderate Upside",    color: "text-yellow-400",  bgColor: "bg-yellow-400/15",  borderColor: "border-yellow-400/40",  hexColor: "#facc15", description: "Reasonable opportunity with moderate improvement potential" },
   { min: 35, max: 54,  label: "Limited Upside",     color: "text-orange-400",  bgColor: "bg-orange-400/15",  borderColor: "border-orange-400/40",  hexColor: "#fb923c", description: "Below-average returns — high revenue already captured" },

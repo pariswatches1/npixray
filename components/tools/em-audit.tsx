@@ -89,7 +89,7 @@ export function EmAuditTool() {
   return (
     <div>
       {/* Input */}
-      <div className="rounded-2xl border border-dark-50/80 bg-dark-400/50 p-6 sm:p-8">
+      <div className="rounded-2xl border border-[var(--border-light)] bg-white p-6 sm:p-8">
         <div className="flex items-center gap-3 mb-6">
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-orange-500/10 border border-orange-500/20">
             <ClipboardCheck className="h-5 w-5 text-orange-400" />
@@ -105,7 +105,7 @@ export function EmAuditTool() {
             <select
               value={specialty}
               onChange={(e) => setSpecialty(e.target.value)}
-              className="w-full rounded-lg border border-dark-50/50 bg-dark-200 px-4 py-3 text-white focus:border-gold focus:outline-none transition-colors appearance-none cursor-pointer"
+              className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-white focus:border-[#2F5EA8]/20 focus:outline-none transition-colors appearance-none cursor-pointer"
               aria-label="Select specialty"
             >
               <option value="">Select specialty</option>
@@ -124,7 +124,7 @@ export function EmAuditTool() {
               placeholder="e.g. 200"
               value={count99213}
               onChange={(e) => setCount99213(e.target.value)}
-              className="w-full rounded-lg border border-dark-50/50 bg-dark-200 px-4 py-3 text-white placeholder:text-[var(--text-secondary)]/50 focus:border-gold focus:outline-none transition-colors"
+              className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-white placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20 focus:outline-none transition-colors"
               aria-label="99213 visit count"
             />
           </div>
@@ -138,7 +138,7 @@ export function EmAuditTool() {
               placeholder="e.g. 500"
               value={count99214}
               onChange={(e) => setCount99214(e.target.value)}
-              className="w-full rounded-lg border border-dark-50/50 bg-dark-200 px-4 py-3 text-white placeholder:text-[var(--text-secondary)]/50 focus:border-gold focus:outline-none transition-colors"
+              className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-white placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20 focus:outline-none transition-colors"
               aria-label="99214 visit count"
             />
           </div>
@@ -152,7 +152,7 @@ export function EmAuditTool() {
               placeholder="e.g. 50"
               value={count99215}
               onChange={(e) => setCount99215(e.target.value)}
-              className="w-full rounded-lg border border-dark-50/50 bg-dark-200 px-4 py-3 text-white placeholder:text-[var(--text-secondary)]/50 focus:border-gold focus:outline-none transition-colors"
+              className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-white placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20 focus:outline-none transition-colors"
               aria-label="99215 visit count"
             />
           </div>
@@ -161,7 +161,7 @@ export function EmAuditTool() {
         <button
           onClick={handleAudit}
           disabled={!specialty || ((parseInt(count99213) || 0) + (parseInt(count99214) || 0) + (parseInt(count99215) || 0)) === 0}
-          className="mt-6 w-full sm:w-auto bg-gold text-dark font-semibold rounded-lg px-6 py-3 hover:bg-gold-300 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+          className="mt-6 w-full sm:w-auto bg-[#2F5EA8] text-white font-semibold rounded-lg px-6 py-3 hover:bg-[#264D8C] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
         >
           Run E&M Audit
         </button>
@@ -180,9 +180,9 @@ export function EmAuditTool() {
                 </p>
                 <p className="text-sm text-[var(--text-secondary)] mt-1">
                   Your E&M distribution suggests you may be leaving{" "}
-                  <span className="font-bold text-gold">{formatCurrency(results.revenueGap)}</span>{" "}
+                  <span className="font-bold text-[#2F5EA8]">{formatCurrency(results.revenueGap)}</span>{" "}
                   on the table compared to your specialty average. At optimal coding, the gap is{" "}
-                  <span className="font-bold text-gold">{formatCurrency(results.optimalGap)}</span>.
+                  <span className="font-bold text-[#2F5EA8]">{formatCurrency(results.optimalGap)}</span>.
                 </p>
               </div>
             </div>
@@ -204,7 +204,7 @@ export function EmAuditTool() {
           )}
 
           {/* Distribution Comparison */}
-          <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6">
+          <div className="rounded-xl border border-[var(--border-light)] bg-white p-6">
             <h3 className="text-base font-semibold mb-5">
               Your Distribution vs. {specialty} Benchmark
             </h3>
@@ -226,7 +226,7 @@ export function EmAuditTool() {
                   <div className="space-y-1.5">
                     <div className="flex items-center gap-3">
                       <span className="text-xs w-20 text-[var(--text-secondary)]">Yours</span>
-                      <div className="flex-1 h-5 rounded bg-dark-200 overflow-hidden">
+                      <div className="flex-1 h-5 rounded bg-white overflow-hidden">
                         <div
                           className={`h-full rounded ${item.color} transition-all duration-500`}
                           style={{ width: `${item.yours * 100}%` }}
@@ -238,7 +238,7 @@ export function EmAuditTool() {
                     </div>
                     <div className="flex items-center gap-3">
                       <span className="text-xs w-20 text-[var(--text-secondary)]">Benchmark</span>
-                      <div className="flex-1 h-5 rounded bg-dark-200 overflow-hidden">
+                      <div className="flex-1 h-5 rounded bg-white overflow-hidden">
                         <div
                           className={`h-full rounded ${item.benchColor} transition-all duration-500`}
                           style={{ width: `${item.bench * 100}%` }}
@@ -255,16 +255,16 @@ export function EmAuditTool() {
           </div>
 
           {/* Revenue Comparison */}
-          <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6">
+          <div className="rounded-xl border border-[var(--border-light)] bg-white p-6">
             <div className="flex items-center gap-2 mb-4">
-              <DollarSign className="h-4 w-4 text-gold" />
+              <DollarSign className="h-4 w-4 text-[#2F5EA8]" />
               <h3 className="text-base font-semibold">Revenue Comparison ({results.yourTotal} total visits)</h3>
             </div>
             <div className="space-y-3">
               {[
                 { label: "Your Current Revenue", amount: results.yourRevenue, color: "bg-blue-500" },
                 { label: `${specialty} Benchmark`, amount: results.benchRevenue, color: "bg-emerald-500" },
-                { label: "Optimal Coding", amount: results.optimalRevenue, color: "bg-gold" },
+                { label: "Optimal Coding", amount: results.optimalRevenue, color: "bg-[#2F5EA8]" },
               ].map((item) => {
                 const max = Math.max(results.yourRevenue, results.benchRevenue, results.optimalRevenue) || 1;
                 return (
@@ -272,7 +272,7 @@ export function EmAuditTool() {
                     <span className="text-sm w-40 text-[var(--text-secondary)] flex-shrink-0">
                       {item.label}
                     </span>
-                    <div className="flex-1 h-6 rounded bg-dark-200 overflow-hidden">
+                    <div className="flex-1 h-6 rounded bg-white overflow-hidden">
                       <div
                         className={`h-full rounded ${item.color} transition-all duration-500`}
                         style={{ width: `${(item.amount / max) * 100}%` }}
@@ -288,8 +288,8 @@ export function EmAuditTool() {
           </div>
 
           {/* Info */}
-          <div className="flex items-start gap-3 text-sm text-[var(--text-secondary)] bg-dark-300/50 rounded-lg p-4 border border-dark-50/50">
-            <Info className="h-4 w-4 flex-shrink-0 mt-0.5 text-gold" />
+          <div className="flex items-start gap-3 text-sm text-[var(--text-secondary)] bg-white/80 rounded-lg p-4 border border-[var(--border-light)]">
+            <Info className="h-4 w-4 flex-shrink-0 mt-0.5 text-[#2F5EA8]" />
             <div>
               <p className="font-medium text-[var(--text-primary)] mb-1">About E&M Coding</p>
               <p>

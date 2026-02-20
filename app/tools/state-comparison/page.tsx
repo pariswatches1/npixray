@@ -60,7 +60,7 @@ export default function StateComparisonPage() {
         <div className="max-w-4xl">
           <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
             State{" "}
-            <span className="text-gold">Comparison</span> Tool
+            <span className="text-[#2F5EA8]">Comparison</span> Tool
           </h1>
           <p className="text-lg text-[var(--text-secondary)] mb-10 max-w-2xl">
             Compare Medicare billing data between two states. See provider

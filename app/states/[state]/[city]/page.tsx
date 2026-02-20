@@ -45,6 +45,8 @@ export async function generateMetadata({
       title: `${cityName}, ${stateName} Medicare Providers | NPIxray`,
       description: `Explore Medicare billing data for ${stats.count} providers in ${cityName}, ${abbr}.`,
     },
+    // noindex thin city pages with fewer than 20 providers (crawl budget hygiene)
+    robots: stats.count < 20 ? { index: false, follow: true } : undefined,
   };
 }
 
@@ -72,7 +74,7 @@ export default async function CityPage({
   return (
     <>
       <section className="relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gold/[0.03] rounded-full blur-3xl" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#2F5EA8]/[0.03] rounded-full blur-3xl" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-8 pb-12 sm:pt-12 sm:pb-16">
           <Breadcrumbs
             items={[
@@ -83,13 +85,13 @@ export default async function CityPage({
           />
 
           <div className="flex items-center gap-3 mb-6">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-gold/20 bg-gold/10">
-              <Building2 className="h-6 w-6 text-gold" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.06]">
+              <Building2 className="h-6 w-6 text-[#2F5EA8]" />
             </div>
             <div>
               <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
                 {cityName}, {abbr}{" "}
-                <span className="text-gold">Medicare Providers</span>
+                <span className="text-[#2F5EA8]">Medicare Providers</span>
               </h1>
               <p className="text-sm text-[var(--text-secondary)]">
                 CMS Medicare Physician &amp; Other Practitioners data
@@ -121,16 +123,16 @@ export default async function CityPage({
 
       {/* Specialties Breakdown */}
       {specialties.length > 0 && (
-        <section className="border-t border-dark-50/50 py-12 sm:py-16">
+        <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl font-bold mb-8">
               Specialties in{" "}
-              <span className="text-gold">{cityName}, {abbr}</span>
+              <span className="text-[#2F5EA8]">{cityName}, {abbr}</span>
             </h2>
-            <div className="overflow-x-auto rounded-xl border border-dark-50/50">
+            <div className="overflow-x-auto rounded-xl border border-[var(--border-light)]">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-dark-50/50 bg-dark-300">
+                  <tr className="border-b border-[var(--border-light)] bg-white">
                     <th className="text-left px-4 py-3 font-medium text-[var(--text-secondary)]">Specialty</th>
                     <th className="text-right px-4 py-3 font-medium text-[var(--text-secondary)]">Providers</th>
                     <th className="text-right px-4 py-3 font-medium text-[var(--text-secondary)]">Avg Payment</th>
@@ -140,7 +142,7 @@ export default async function CityPage({
                   {specialties.map((s, i) => (
                     <tr
                       key={s.specialty}
-                      className={`border-b border-dark-50/30 hover:bg-dark-200/50 transition-colors ${i % 2 === 0 ? "bg-dark-400/30" : ""}`}
+                      className={`border-b border-[var(--border-light)] hover:bg-white transition-colors ${i % 2 === 0 ? "bg-white" : ""}`}
                     >
                       <td className="px-4 py-3">
                         <span className="font-medium">{s.specialty}</span>
@@ -148,7 +150,7 @@ export default async function CityPage({
                       <td className="px-4 py-3 text-right tabular-nums">
                         {s.count.toLocaleString()}
                       </td>
-                      <td className="px-4 py-3 text-right tabular-nums font-medium text-gold">
+                      <td className="px-4 py-3 text-right tabular-nums font-medium text-[#2F5EA8]">
                         {formatCurrency(s.avgPayment)}
                       </td>
                     </tr>
@@ -162,11 +164,11 @@ export default async function CityPage({
 
       {/* All Providers */}
       {providers.length > 0 && (
-        <section className="border-t border-dark-50/50 py-12 sm:py-16">
+        <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl font-bold mb-8">
               All Providers in{" "}
-              <span className="text-gold">{cityName}, {abbr}</span>
+              <span className="text-[#2F5EA8]">{cityName}, {abbr}</span>
             </h2>
             <ProviderTable providers={providers} showCity={false} showSpecialty={true} />
           </div>

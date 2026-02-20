@@ -25,11 +25,11 @@ export interface RevenueScoreTier {
 }
 
 export const SCORE_TIERS: RevenueScoreTier[] = [
-  { min: 90, max: 100, label: "Elite",         color: "text-gold",        bgColor: "bg-gold/15",        borderColor: "border-gold/40",        hexColor: "#E8A824" },
-  { min: 75, max: 89,  label: "Strong",        color: "text-emerald-400", bgColor: "bg-emerald-400/15", borderColor: "border-emerald-400/40", hexColor: "#34d399" },
-  { min: 60, max: 74,  label: "Average",       color: "text-yellow-400",  bgColor: "bg-yellow-400/15",  borderColor: "border-yellow-400/40",  hexColor: "#facc15" },
-  { min: 40, max: 59,  label: "Below Average", color: "text-orange-400",  bgColor: "bg-orange-400/15",  borderColor: "border-orange-400/40",  hexColor: "#fb923c" },
-  { min: 0,  max: 39,  label: "Critical",      color: "text-red-400",     bgColor: "bg-red-400/15",     borderColor: "border-red-400/40",     hexColor: "#f87171" },
+  { min: 90, max: 100, label: "Elite",         color: "text-[#2F5EA8]",    bgColor: "bg-[#2F5EA8]/10",    borderColor: "border-[#2F5EA8]/30",    hexColor: "#2F5EA8" },
+  { min: 75, max: 89,  label: "Strong",        color: "text-emerald-600",  bgColor: "bg-emerald-500/10",  borderColor: "border-emerald-500/30",  hexColor: "#22C1A1" },
+  { min: 60, max: 74,  label: "Average",       color: "text-amber-600",    bgColor: "bg-amber-500/10",    borderColor: "border-amber-500/30",    hexColor: "#f59e0b" },
+  { min: 40, max: 59,  label: "Below Average", color: "text-orange-600",   bgColor: "bg-orange-500/10",   borderColor: "border-orange-500/30",   hexColor: "#f97316" },
+  { min: 0,  max: 39,  label: "Critical",      color: "text-red-600",      bgColor: "bg-red-500/10",      borderColor: "border-red-500/30",      hexColor: "#ef4444" },
 ];
 
 export function getScoreTier(score: number): RevenueScoreTier {

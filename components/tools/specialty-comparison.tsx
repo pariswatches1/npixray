@@ -54,7 +54,7 @@ export function SpecialtyComparisonTool() {
         <div className="space-y-2">
           <div className="flex items-center gap-3">
             <span className="text-xs w-8 text-blue-400 font-medium flex-shrink-0">A</span>
-            <div className="flex-1 h-6 rounded bg-dark-200 overflow-hidden">
+            <div className="flex-1 h-6 rounded bg-white overflow-hidden">
               <div
                 className={`h-full rounded ${colorA} transition-all duration-500`}
                 style={{ width: `${(valA / max) * 100}%` }}
@@ -66,7 +66,7 @@ export function SpecialtyComparisonTool() {
           </div>
           <div className="flex items-center gap-3">
             <span className="text-xs w-8 text-emerald-400 font-medium flex-shrink-0">B</span>
-            <div className="flex-1 h-6 rounded bg-dark-200 overflow-hidden">
+            <div className="flex-1 h-6 rounded bg-white overflow-hidden">
               <div
                 className={`h-full rounded ${colorB} transition-all duration-500`}
                 style={{ width: `${(valB / max) * 100}%` }}
@@ -84,7 +84,7 @@ export function SpecialtyComparisonTool() {
   return (
     <div>
       {/* Inputs */}
-      <div className="rounded-2xl border border-dark-50/80 bg-dark-400/50 p-6 sm:p-8">
+      <div className="rounded-2xl border border-[var(--border-light)] bg-white p-6 sm:p-8">
         <div className="flex items-center gap-3 mb-6">
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-500/10 border border-amber-500/20">
             <GitCompareArrows className="h-5 w-5 text-amber-400" />
@@ -100,7 +100,7 @@ export function SpecialtyComparisonTool() {
             <select
               value={specialtyA}
               onChange={(e) => { setSpecialtyA(e.target.value); setCompared(false); }}
-              className="w-full rounded-lg border border-dark-50/50 bg-dark-200 px-4 py-3 text-white focus:border-gold focus:outline-none transition-colors appearance-none cursor-pointer"
+              className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-white focus:border-[#2F5EA8]/20 focus:outline-none transition-colors appearance-none cursor-pointer"
               aria-label="First specialty"
             >
               <option value="">Select specialty</option>
@@ -116,7 +116,7 @@ export function SpecialtyComparisonTool() {
             <select
               value={specialtyB}
               onChange={(e) => { setSpecialtyB(e.target.value); setCompared(false); }}
-              className="w-full rounded-lg border border-dark-50/50 bg-dark-200 px-4 py-3 text-white focus:border-gold focus:outline-none transition-colors appearance-none cursor-pointer"
+              className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-white focus:border-[#2F5EA8]/20 focus:outline-none transition-colors appearance-none cursor-pointer"
               aria-label="Second specialty"
             >
               <option value="">Select specialty</option>
@@ -130,7 +130,7 @@ export function SpecialtyComparisonTool() {
         <button
           onClick={handleCompare}
           disabled={!specialtyA || !specialtyB}
-          className="mt-6 w-full sm:w-auto bg-gold text-dark font-semibold rounded-lg px-6 py-3 hover:bg-gold-300 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+          className="mt-6 w-full sm:w-auto bg-[#2F5EA8] text-white font-semibold rounded-lg px-6 py-3 hover:bg-[#264D8C] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
         >
           Compare Specialties
         </button>
@@ -152,9 +152,9 @@ export function SpecialtyComparisonTool() {
           </div>
 
           {/* Core Metrics */}
-          <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6">
+          <div className="rounded-xl border border-[var(--border-light)] bg-white p-6">
             <div className="flex items-center gap-2 mb-5">
-              <BarChart3 className="h-4 w-4 text-gold" />
+              <BarChart3 className="h-4 w-4 text-[#2F5EA8]" />
               <h3 className="text-base font-semibold">Core Metrics</h3>
             </div>
             <ComparisonBar
@@ -184,9 +184,9 @@ export function SpecialtyComparisonTool() {
           </div>
 
           {/* E&M Distribution */}
-          <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6">
+          <div className="rounded-xl border border-[var(--border-light)] bg-white p-6">
             <div className="flex items-center gap-2 mb-5">
-              <DollarSign className="h-4 w-4 text-gold" />
+              <DollarSign className="h-4 w-4 text-[#2F5EA8]" />
               <h3 className="text-base font-semibold">E&M Distribution</h3>
             </div>
             <ComparisonBar
@@ -210,9 +210,9 @@ export function SpecialtyComparisonTool() {
           </div>
 
           {/* Program Adoption */}
-          <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6">
+          <div className="rounded-xl border border-[var(--border-light)] bg-white p-6">
             <div className="flex items-center gap-2 mb-5">
-              <Users className="h-4 w-4 text-gold" />
+              <Users className="h-4 w-4 text-[#2F5EA8]" />
               <h3 className="text-base font-semibold">Program Adoption Rates</h3>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">

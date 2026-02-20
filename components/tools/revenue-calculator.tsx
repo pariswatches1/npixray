@@ -72,7 +72,7 @@ export function RevenueCalculatorTool() {
   return (
     <div>
       {/* Inputs */}
-      <div className="rounded-2xl border border-dark-50/80 bg-dark-400/50 p-6 sm:p-8">
+      <div className="rounded-2xl border border-[var(--border-light)] bg-white p-6 sm:p-8">
         <div className="flex items-center gap-3 mb-6">
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-500/10 border border-emerald-500/20">
             <Calculator className="h-5 w-5 text-emerald-400" />
@@ -88,7 +88,7 @@ export function RevenueCalculatorTool() {
             <select
               value={specialty}
               onChange={(e) => setSpecialty(e.target.value)}
-              className="w-full rounded-lg border border-dark-50/50 bg-dark-200 px-4 py-3 text-white focus:border-gold focus:outline-none transition-colors appearance-none cursor-pointer"
+              className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-white focus:border-[#2F5EA8]/20 focus:outline-none transition-colors appearance-none cursor-pointer"
               aria-label="Select specialty"
             >
               <option value="">Select specialty</option>
@@ -107,7 +107,7 @@ export function RevenueCalculatorTool() {
             <select
               value={state}
               onChange={(e) => setState(e.target.value)}
-              className="w-full rounded-lg border border-dark-50/50 bg-dark-200 px-4 py-3 text-white focus:border-gold focus:outline-none transition-colors appearance-none cursor-pointer"
+              className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-white focus:border-[#2F5EA8]/20 focus:outline-none transition-colors appearance-none cursor-pointer"
               aria-label="Select state"
             >
               <option value="">Select state</option>
@@ -129,7 +129,7 @@ export function RevenueCalculatorTool() {
               placeholder="e.g. 200"
               value={patientCount}
               onChange={(e) => setPatientCount(e.target.value)}
-              className="w-full rounded-lg border border-dark-50/50 bg-dark-200 px-4 py-3 text-white placeholder:text-[var(--text-secondary)]/50 focus:border-gold focus:outline-none transition-colors"
+              className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-white placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20 focus:outline-none transition-colors"
               aria-label="Medicare patient count"
             />
           </div>
@@ -138,7 +138,7 @@ export function RevenueCalculatorTool() {
         <button
           onClick={handleCalculate}
           disabled={!specialty || !patientCount}
-          className="mt-6 w-full sm:w-auto bg-gold text-dark font-semibold rounded-lg px-6 py-3 hover:bg-gold-300 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+          className="mt-6 w-full sm:w-auto bg-[#2F5EA8] text-white font-semibold rounded-lg px-6 py-3 hover:bg-[#264D8C] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
         >
           Calculate Revenue
         </button>
@@ -149,16 +149,16 @@ export function RevenueCalculatorTool() {
         <div className="mt-8 space-y-6">
           {/* Top-level metrics */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5">
+            <div className="rounded-xl border border-[var(--border-light)] bg-white p-5">
               <div className="flex items-center gap-2 text-sm text-[var(--text-secondary)] mb-2">
-                <DollarSign className="h-4 w-4 text-gold" />
+                <DollarSign className="h-4 w-4 text-[#2F5EA8]" />
                 Estimated Annual Revenue
               </div>
-              <p className="text-2xl font-bold font-mono text-gold">
+              <p className="text-2xl font-bold font-mono text-[#2F5EA8]">
                 {formatCurrency(results.totalRevenue)}
               </p>
             </div>
-            <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5">
+            <div className="rounded-xl border border-[var(--border-light)] bg-white p-5">
               <div className="flex items-center gap-2 text-sm text-[var(--text-secondary)] mb-2">
                 <Users className="h-4 w-4 text-emerald-400" />
                 Revenue Per Patient
@@ -167,7 +167,7 @@ export function RevenueCalculatorTool() {
                 {formatCurrency(results.revenuePerPatient)}
               </p>
             </div>
-            <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5">
+            <div className="rounded-xl border border-[var(--border-light)] bg-white p-5">
               <div className="flex items-center gap-2 text-sm text-[var(--text-secondary)] mb-2">
                 <TrendingUp className="h-4 w-4 text-amber-400" />
                 Additional Program Revenue
@@ -183,7 +183,7 @@ export function RevenueCalculatorTool() {
           </div>
 
           {/* E&M Breakdown */}
-          <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6">
+          <div className="rounded-xl border border-[var(--border-light)] bg-white p-6">
             <h3 className="text-base font-semibold mb-4">E&M Revenue Breakdown</h3>
             <div className="space-y-4">
               {[
@@ -206,7 +206,7 @@ export function RevenueCalculatorTool() {
                         {formatCurrency(item.amount)}
                       </span>
                     </div>
-                    <div className="h-3 rounded-full bg-dark-200 overflow-hidden">
+                    <div className="h-3 rounded-full bg-white overflow-hidden">
                       <div
                         className={`h-full rounded-full ${item.color} transition-all duration-500`}
                         style={{ width: `${pct}%` }}
@@ -219,7 +219,7 @@ export function RevenueCalculatorTool() {
           </div>
 
           {/* Program Opportunities */}
-          <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6">
+          <div className="rounded-xl border border-[var(--border-light)] bg-white p-6">
             <h3 className="text-base font-semibold mb-4">
               Program Revenue Opportunities (Annual)
             </h3>

@@ -113,7 +113,7 @@ const EM_NATIONAL = [
 
 function CodeBlock({ children }: { children: string }) {
   return (
-    <pre className="rounded-lg border border-dark-50/50 bg-[#0a0908] p-4 overflow-x-auto text-xs font-mono leading-relaxed">
+    <pre className="rounded-lg border border-[var(--border-light)] bg-[#0a0908] p-4 overflow-x-auto text-xs font-mono leading-relaxed">
       <code className="text-[var(--text-secondary)]">{children}</code>
     </pre>
   );
@@ -131,17 +131,17 @@ export default function OpenDataPage() {
 
       {/* Hero */}
       <section className="relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gold/[0.03] rounded-full blur-3xl" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#2F5EA8]/[0.03] rounded-full blur-3xl" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-8 pb-12 sm:pt-12 sm:pb-16">
           <Breadcrumbs items={[{ label: "Open Data" }]} />
 
           <div className="flex items-center gap-3 mb-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-gold/20 bg-gold/10">
-              <Database className="h-6 w-6 text-gold" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.06]">
+              <Database className="h-6 w-6 text-[#2F5EA8]" />
             </div>
             <div>
               <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
-                NPIxray <span className="text-gold">Open Data</span>
+                NPIxray <span className="text-[#2F5EA8]">Open Data</span>
               </h1>
               <p className="text-sm text-[var(--text-secondary)] mt-1">
                 Aggregate Medicare statistics for researchers &amp; AI systems
@@ -159,14 +159,14 @@ export default function OpenDataPage() {
           <div className="mt-6 flex flex-wrap gap-3">
             <Link
               href="/api/stats"
-              className="inline-flex items-center gap-2 rounded-lg border border-gold/20 bg-gold/5 px-4 py-2 text-sm text-gold hover:bg-gold/10 transition-colors"
+              className="inline-flex items-center gap-2 rounded-lg border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] px-4 py-2 text-sm text-[#2F5EA8] hover:bg-[#264D8C]/10 transition-colors"
             >
               <Code2 className="h-4 w-4" />
               JSON API: /api/stats
             </Link>
             <Link
               href="/research"
-              className="inline-flex items-center gap-2 rounded-lg border border-dark-50 px-4 py-2 text-sm text-[var(--text-secondary)] hover:border-gold/30 hover:text-gold transition-colors"
+              className="inline-flex items-center gap-2 rounded-lg border border-[var(--border)] px-4 py-2 text-sm text-[var(--text-secondary)] hover:border-[#2F5EA8]/15 hover:text-[#2F5EA8] transition-colors"
             >
               <FileText className="h-4 w-4" />
               Full Research &amp; Methodology
@@ -176,10 +176,10 @@ export default function OpenDataPage() {
       </section>
 
       {/* National Totals */}
-      <section className="border-t border-dark-50/50 py-16 sm:py-24">
+      <section className="border-t border-[var(--border-light)] py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4">
-            National <span className="text-gold">Totals</span>
+            National <span className="text-[#2F5EA8]">Totals</span>
           </h2>
           <p className="text-[var(--text-secondary)] leading-relaxed mb-8 max-w-2xl">
             Aggregate statistics from the full NPIxray database, derived from
@@ -190,12 +190,12 @@ export default function OpenDataPage() {
             {Object.entries(NATIONAL_TOTALS).map(([key, value]) => (
               <div
                 key={key}
-                className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5"
+                className="rounded-xl border border-[var(--border-light)] bg-white p-5"
               >
                 <p className="text-xs text-[var(--text-secondary)] uppercase tracking-wider">
                   {key.replace(/([A-Z])/g, " $1").trim()}
                 </p>
-                <p className="text-xl font-bold font-mono text-gold mt-1">
+                <p className="text-xl font-bold font-mono text-[#2F5EA8] mt-1">
                   {value}
                 </p>
               </div>
@@ -217,21 +217,21 @@ export default function OpenDataPage() {
       </section>
 
       {/* Top States */}
-      <section className="border-t border-dark-50/50 py-16 sm:py-24">
+      <section className="border-t border-[var(--border-light)] py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4 flex items-center gap-2">
-            <Globe className="h-6 w-6 text-gold" />
+            <Globe className="h-6 w-6 text-[#2F5EA8]" />
             Top States by{" "}
-            <span className="text-gold">Provider Count</span>
+            <span className="text-[#2F5EA8]">Provider Count</span>
           </h2>
           <p className="text-[var(--text-secondary)] leading-relaxed mb-8 max-w-2xl">
             The 10 states with the most Medicare providers in the CMS dataset.
           </p>
 
-          <div className="overflow-x-auto rounded-xl border border-dark-50/50 max-w-2xl">
+          <div className="overflow-x-auto rounded-xl border border-[var(--border-light)] max-w-2xl">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-dark-50/50 bg-dark-300">
+                <tr className="border-b border-[var(--border-light)] bg-white">
                   <th className="text-left px-4 py-3 font-medium text-[var(--text-secondary)]">
                     Rank
                   </th>
@@ -250,15 +250,15 @@ export default function OpenDataPage() {
                 {TOP_STATES.map((row, i) => (
                   <tr
                     key={row.abbr}
-                    className={`border-b border-dark-50/30 ${i % 2 === 1 ? "bg-dark-400/30" : ""}`}
+                    className={`border-b border-[var(--border-light)] ${i % 2 === 1 ? "bg-white" : ""}`}
                   >
-                    <td className="px-4 py-2.5 font-mono text-gold">
+                    <td className="px-4 py-2.5 font-mono text-[#2F5EA8]">
                       {i + 1}
                     </td>
                     <td className="px-4 py-2.5 font-medium">
                       <Link
                         href={`/states/${row.state.toLowerCase().replace(/\s+/g, "-")}`}
-                        className="hover:text-gold transition-colors"
+                        className="hover:text-[#2F5EA8] transition-colors"
                       >
                         {row.state}
                       </Link>
@@ -278,22 +278,22 @@ export default function OpenDataPage() {
       </section>
 
       {/* Specialty Benchmarks */}
-      <section className="border-t border-dark-50/50 py-16 sm:py-24">
+      <section className="border-t border-[var(--border-light)] py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4 flex items-center gap-2">
-            <Stethoscope className="h-6 w-6 text-gold" />
+            <Stethoscope className="h-6 w-6 text-[#2F5EA8]" />
             Specialty{" "}
-            <span className="text-gold">Benchmarks</span>
+            <span className="text-[#2F5EA8]">Benchmarks</span>
           </h2>
           <p className="text-[var(--text-secondary)] leading-relaxed mb-8 max-w-2xl">
             Top 10 specialties by provider count with average Medicare payment
             per provider.
           </p>
 
-          <div className="overflow-x-auto rounded-xl border border-dark-50/50 max-w-3xl">
+          <div className="overflow-x-auto rounded-xl border border-[var(--border-light)] max-w-3xl">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-dark-50/50 bg-dark-300">
+                <tr className="border-b border-[var(--border-light)] bg-white">
                   <th className="text-left px-4 py-3 font-medium text-[var(--text-secondary)]">
                     Specialty
                   </th>
@@ -309,13 +309,13 @@ export default function OpenDataPage() {
                 {TOP_SPECIALTIES.map((row, i) => (
                   <tr
                     key={row.specialty}
-                    className={`border-b border-dark-50/30 ${i % 2 === 1 ? "bg-dark-400/30" : ""}`}
+                    className={`border-b border-[var(--border-light)] ${i % 2 === 1 ? "bg-white" : ""}`}
                   >
                     <td className="px-4 py-2.5 font-medium">{row.specialty}</td>
                     <td className="px-4 py-2.5 text-right text-[var(--text-secondary)]">
                       {row.providers}
                     </td>
-                    <td className="px-4 py-2.5 text-right font-mono text-gold">
+                    <td className="px-4 py-2.5 text-right font-mono text-[#2F5EA8]">
                       {row.avgPayment}
                     </td>
                   </tr>
@@ -345,12 +345,12 @@ export default function OpenDataPage() {
       </section>
 
       {/* Program Adoption Rates */}
-      <section className="border-t border-dark-50/50 py-16 sm:py-24">
+      <section className="border-t border-[var(--border-light)] py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4 flex items-center gap-2">
-            <Activity className="h-6 w-6 text-gold" />
+            <Activity className="h-6 w-6 text-[#2F5EA8]" />
             Program Adoption{" "}
-            <span className="text-gold">Rates</span>
+            <span className="text-[#2F5EA8]">Rates</span>
           </h2>
           <p className="text-[var(--text-secondary)] leading-relaxed mb-8 max-w-2xl">
             National average adoption rates for key Medicare care management
@@ -361,15 +361,15 @@ export default function OpenDataPage() {
             {PROGRAM_ADOPTION.map((prog) => (
               <div
                 key={prog.code}
-                className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5"
+                className="rounded-xl border border-[var(--border-light)] bg-white p-5"
               >
                 <div className="flex items-center justify-between mb-2">
                   <h3 className="font-semibold text-sm">{prog.program}</h3>
-                  <span className="text-xs font-mono font-bold text-gold px-2 py-0.5 rounded-full bg-gold/10">
+                  <span className="text-xs font-mono font-bold text-[#2F5EA8] px-2 py-0.5 rounded-full bg-[#2F5EA8]/[0.06]">
                     {prog.code}
                   </span>
                 </div>
-                <p className="text-2xl font-bold font-mono text-gold mb-1">
+                <p className="text-2xl font-bold font-mono text-[#2F5EA8] mb-1">
                   {prog.rate}
                 </p>
                 <p className="text-xs text-[var(--text-secondary)]">
@@ -394,22 +394,22 @@ export default function OpenDataPage() {
       </section>
 
       {/* E&M Distribution */}
-      <section className="border-t border-dark-50/50 py-16 sm:py-24">
+      <section className="border-t border-[var(--border-light)] py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4 flex items-center gap-2">
-            <BarChart3 className="h-6 w-6 text-gold" />
+            <BarChart3 className="h-6 w-6 text-[#2F5EA8]" />
             E&M Coding{" "}
-            <span className="text-gold">Distribution</span>
+            <span className="text-[#2F5EA8]">Distribution</span>
           </h2>
           <p className="text-[var(--text-secondary)] leading-relaxed mb-8 max-w-2xl">
             National average E&M code distribution for established patient
             visits (99211-99215) across all specialties.
           </p>
 
-          <div className="overflow-x-auto rounded-xl border border-dark-50/50 max-w-3xl">
+          <div className="overflow-x-auto rounded-xl border border-[var(--border-light)] max-w-3xl">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-dark-50/50 bg-dark-300">
+                <tr className="border-b border-[var(--border-light)] bg-white">
                   <th className="text-left px-4 py-3 font-medium text-[var(--text-secondary)]">
                     Code
                   </th>
@@ -428,9 +428,9 @@ export default function OpenDataPage() {
                 {EM_NATIONAL.map((row, i) => (
                   <tr
                     key={row.code}
-                    className={`border-b border-dark-50/30 ${i % 2 === 1 ? "bg-dark-400/30" : ""}`}
+                    className={`border-b border-[var(--border-light)] ${i % 2 === 1 ? "bg-white" : ""}`}
                   >
-                    <td className="px-4 py-2.5 font-mono text-gold">
+                    <td className="px-4 py-2.5 font-mono text-[#2F5EA8]">
                       {row.code}
                     </td>
                     <td className="px-4 py-2.5 font-medium">{row.level}</td>
@@ -462,23 +462,23 @@ export default function OpenDataPage() {
       </section>
 
       {/* API Endpoint */}
-      <section className="border-t border-dark-50/50 py-16 sm:py-24">
+      <section className="border-t border-[var(--border-light)] py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4">
-              Programmatic <span className="text-gold">Access</span>
+              Programmatic <span className="text-[#2F5EA8]">Access</span>
             </h2>
             <p className="text-[var(--text-secondary)] leading-relaxed mb-8">
               Access this data programmatically via our JSON API endpoint.
               No API key required.
             </p>
 
-            <div className="rounded-xl border border-gold/20 bg-gold/5 p-6">
+            <div className="rounded-xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-6">
               <div className="flex items-center gap-3 mb-4">
                 <span className="rounded-md bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 text-xs font-mono font-bold text-emerald-400">
                   GET
                 </span>
-                <code className="text-lg font-mono text-gold">
+                <code className="text-lg font-mono text-[#2F5EA8]">
                   /api/stats
                 </code>
               </div>
@@ -490,14 +490,14 @@ export default function OpenDataPage() {
               <div className="flex flex-wrap gap-3">
                 <Link
                   href="/api/stats"
-                  className="inline-flex items-center gap-2 rounded-lg bg-gold text-dark px-4 py-2 text-sm font-semibold hover:bg-gold-300 transition-colors"
+                  className="inline-flex items-center gap-2 rounded-lg bg-[#2F5EA8] text-white px-4 py-2 text-sm font-semibold hover:bg-[#264D8C] transition-colors"
                 >
                   <Code2 className="h-4 w-4" />
                   View Live Response
                 </Link>
                 <Link
                   href="/api-docs"
-                  className="inline-flex items-center gap-2 rounded-lg border border-dark-50 px-4 py-2 text-sm text-[var(--text-secondary)] hover:border-gold/30 hover:text-gold transition-colors"
+                  className="inline-flex items-center gap-2 rounded-lg border border-[var(--border)] px-4 py-2 text-sm text-[var(--text-secondary)] hover:border-[#2F5EA8]/15 hover:text-[#2F5EA8] transition-colors"
                 >
                   Full API Docs
                   <ArrowRight className="h-3.5 w-3.5" />
@@ -509,9 +509,9 @@ export default function OpenDataPage() {
       </section>
 
       {/* Data Source Attribution */}
-      <section className="border-t border-dark-50/50">
+      <section className="border-t border-[var(--border-light)]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
-          <div className="rounded-xl border border-dark-50/80 bg-dark-400/30 p-6 max-w-3xl mx-auto">
+          <div className="rounded-xl border border-[var(--border-light)] bg-white p-6 max-w-3xl mx-auto">
             <h3 className="text-sm font-semibold mb-3 flex items-center gap-2">
               <FileText className="h-4 w-4 text-[var(--text-secondary)]" />
               Data Source Attribution
@@ -526,7 +526,7 @@ export default function OpenDataPage() {
               </p>
               <p>
                 For full methodology, see our{" "}
-                <Link href="/research" className="text-gold hover:underline">
+                <Link href="/research" className="text-[#2F5EA8] hover:underline">
                   Research page
                 </Link>
                 . Revenue estimates are illustrative projections. No PHI is
@@ -538,7 +538,7 @@ export default function OpenDataPage() {
       </section>
 
       {/* CTA */}
-      <section className="border-t border-dark-50/50">
+      <section className="border-t border-[var(--border-light)]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
           <ScanCTA />
         </div>

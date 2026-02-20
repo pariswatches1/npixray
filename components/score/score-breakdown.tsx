@@ -36,11 +36,11 @@ export function ScoreBreakdown({ breakdown }: ScoreBreakdownProps) {
             <div className="flex-1 min-w-0">
               <div className="flex items-center justify-between mb-1">
                 <span className="text-xs text-[var(--text-secondary)] truncate">
-                  {label} <span className="text-dark-50">({weight})</span>
+                  {label} <span className="text-[var(--text-secondary)]">({weight})</span>
                 </span>
                 <span className="text-xs font-mono font-semibold ml-2">{value}</span>
               </div>
-              <div className="h-1.5 bg-dark-50/30 rounded-full overflow-hidden">
+              <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
                 <div
                   className={`h-full rounded-full transition-all duration-700 ease-out ${getBarColor(value)}`}
                   style={{ width: `${value}%` }}

@@ -32,7 +32,7 @@ export default function PortfolioToolPage() {
     <>
       {/* Hero */}
       <section className="relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gold/[0.03] rounded-full blur-3xl" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#2F5EA8]/[0.03] rounded-full blur-3xl" />
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-20 pb-12 sm:pt-28 sm:pb-16">
           <Breadcrumbs
@@ -43,16 +43,16 @@ export default function PortfolioToolPage() {
           />
 
           <div className="text-center">
-            <div className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/5 px-4 py-1.5 mb-8">
-              <Briefcase className="h-3.5 w-3.5 text-gold" />
-              <span className="text-xs font-medium text-gold">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] px-4 py-1.5 mb-8">
+              <Briefcase className="h-3.5 w-3.5 text-[#2F5EA8]" />
+              <span className="text-xs font-medium text-[#2F5EA8]">
                 Portfolio Analysis Tool
               </span>
             </div>
 
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight max-w-3xl mx-auto leading-[1.1]">
               Analyze Your Practice{" "}
-              <span className="text-gold">Portfolio</span>
+              <span className="text-[#2F5EA8]">Portfolio</span>
             </h1>
 
             <p className="mt-6 text-lg text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed">
@@ -71,10 +71,10 @@ export default function PortfolioToolPage() {
       </section>
 
       {/* How It Works */}
-      <section className="py-12 border-t border-dark-50/50">
+      <section className="py-12 border-t border-[var(--border-light)]">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-bold tracking-tight text-center mb-10">
-            How Portfolio Analysis <span className="text-gold">Works</span>
+            How Portfolio Analysis <span className="text-[#2F5EA8]">Works</span>
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -99,8 +99,8 @@ export default function PortfolioToolPage() {
               },
             ].map((item) => (
               <div key={item.step} className="text-center">
-                <div className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-gold/10 border border-gold/30 mb-4">
-                  <span className="text-sm font-bold text-gold">{item.step}</span>
+                <div className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#2F5EA8]/[0.06] border border-[#2F5EA8]/15 mb-4">
+                  <span className="text-sm font-bold text-[#2F5EA8]">{item.step}</span>
                 </div>
                 <h3 className="font-bold mb-2">{item.title}</h3>
                 <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
@@ -113,7 +113,7 @@ export default function PortfolioToolPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-12 border-t border-dark-50/50">
+      <section className="py-12 border-t border-[var(--border-light)]">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <EarlyAccessCTA
             title="Upgrade to Automated Portfolio Monitoring"

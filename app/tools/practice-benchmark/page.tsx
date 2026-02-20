@@ -61,7 +61,7 @@ export default function PracticeBenchmarkPage() {
         <div className="max-w-4xl">
           <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
             Practice{" "}
-            <span className="text-gold">Benchmark</span> Tool
+            <span className="text-[#2F5EA8]">Benchmark</span> Tool
           </h1>
           <p className="text-lg text-[var(--text-secondary)] mb-10 max-w-2xl">
             See where your practice ranks among 1.175M+ Medicare providers.

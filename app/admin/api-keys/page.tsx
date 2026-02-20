@@ -149,16 +149,16 @@ export default function ApiKeysAdmin() {
       <div className="min-h-[70vh] flex items-center justify-center px-4">
         <div className="w-full max-w-sm">
           <div className="text-center mb-8">
-            <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gold/10 border border-gold/20 mb-4">
-              <Lock className="h-7 w-7 text-gold" />
+            <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-[#2F5EA8]/[0.06] border border-[#2F5EA8]/10 mb-4">
+              <Lock className="h-7 w-7 text-[#2F5EA8]" />
             </div>
             <h1 className="text-2xl font-bold">API Key Manager</h1>
             <p className="text-sm text-[var(--text-secondary)] mt-1">Manage API keys and usage</p>
           </div>
           <form onSubmit={handleAuth}>
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Admin password" className="w-full rounded-xl border border-dark-50 bg-dark-500 py-3.5 px-4 text-sm placeholder:text-[var(--text-secondary)]/50 focus:border-gold/50 focus:ring-1 focus:ring-gold/30 outline-none transition-all mb-4" autoFocus />
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Admin password" className="w-full rounded-xl border border-[var(--border)] bg-[var(--bg)] py-3.5 px-4 text-sm placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20/50 focus:ring-1 focus:ring-[#2F5EA8]/10 outline-none transition-all mb-4" autoFocus />
             {authError && <p className="text-xs text-red-400 mb-3">{authError}</p>}
-            <button type="submit" disabled={authLoading} className="w-full flex items-center justify-center gap-2 rounded-xl bg-gold py-3.5 text-sm font-semibold text-dark transition-all hover:bg-gold-300 disabled:opacity-50">
+            <button type="submit" disabled={authLoading} className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#2F5EA8] py-3.5 text-sm font-semibold text-white transition-all hover:bg-[#264D8C] disabled:opacity-50">
               {authLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <LogIn className="h-4 w-4" />}
               Sign In
             </button>
@@ -172,15 +172,15 @@ export default function ApiKeysAdmin() {
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold">API <span className="text-gold">Keys</span></h1>
+          <h1 className="text-2xl sm:text-3xl font-bold">API <span className="text-[#2F5EA8]">Keys</span></h1>
           <p className="text-sm text-[var(--text-secondary)] mt-1">Generate and manage API keys</p>
         </div>
         <div className="flex items-center gap-3">
-          <button onClick={fetchKeys} disabled={loading} className="flex items-center gap-2 rounded-lg border border-dark-50 px-4 py-2 text-sm text-[var(--text-secondary)] hover:text-gold hover:border-gold/30 transition-all disabled:opacity-50">
+          <button onClick={fetchKeys} disabled={loading} className="flex items-center gap-2 rounded-lg border border-[var(--border)] px-4 py-2 text-sm text-[var(--text-secondary)] hover:text-[#2F5EA8] hover:border-[#2F5EA8]/15 transition-all disabled:opacity-50">
             <RefreshCw className={`h-4 w-4 ${loading ? "animate-spin" : ""}`} />
             Refresh
           </button>
-          <button onClick={() => setShowCreate(!showCreate)} className="flex items-center gap-2 rounded-lg bg-gold px-4 py-2 text-sm font-semibold text-dark hover:bg-gold-300 transition-all">
+          <button onClick={() => setShowCreate(!showCreate)} className="flex items-center gap-2 rounded-lg bg-[#2F5EA8] px-4 py-2 text-sm font-semibold text-white hover:bg-[#264D8C] transition-all">
             <Plus className="h-4 w-4" />
             New Key
           </button>
@@ -190,37 +190,37 @@ export default function ApiKeysAdmin() {
       {/* Stats */}
       {stats && (
         <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 mb-8">
-          <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5">
-            <div className="flex items-center gap-3 mb-2"><div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gold/10"><Key className="h-4 w-4 text-gold" /></div><p className="text-sm text-[var(--text-secondary)]">Total Keys</p></div>
-            <p className="text-3xl font-bold font-mono text-gold">{stats.total}</p>
+          <div className="rounded-xl border border-[var(--border-light)] bg-white p-5">
+            <div className="flex items-center gap-3 mb-2"><div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#2F5EA8]/[0.06]"><Key className="h-4 w-4 text-[#2F5EA8]" /></div><p className="text-sm text-[var(--text-secondary)]">Total Keys</p></div>
+            <p className="text-3xl font-bold font-mono text-[#2F5EA8]">{stats.total}</p>
           </div>
-          <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5">
+          <div className="rounded-xl border border-[var(--border-light)] bg-white p-5">
             <div className="flex items-center gap-3 mb-2"><div className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-500/10"><Users className="h-4 w-4 text-emerald-400" /></div><p className="text-sm text-[var(--text-secondary)]">Active</p></div>
             <p className="text-3xl font-bold font-mono text-emerald-400">{stats.active}</p>
           </div>
-          <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5">
-            <div className="flex items-center gap-3 mb-2"><div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gold/10"><Star className="h-4 w-4 text-gold" /></div><p className="text-sm text-[var(--text-secondary)]">Pro Keys</p></div>
-            <p className="text-3xl font-bold font-mono text-gold">{stats.pro}</p>
+          <div className="rounded-xl border border-[var(--border-light)] bg-white p-5">
+            <div className="flex items-center gap-3 mb-2"><div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#2F5EA8]/[0.06]"><Star className="h-4 w-4 text-[#2F5EA8]" /></div><p className="text-sm text-[var(--text-secondary)]">Pro Keys</p></div>
+            <p className="text-3xl font-bold font-mono text-[#2F5EA8]">{stats.pro}</p>
           </div>
-          <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5">
-            <div className="flex items-center gap-3 mb-2"><div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gold/10"><Activity className="h-4 w-4 text-gold" /></div><p className="text-sm text-[var(--text-secondary)]">Total Requests</p></div>
-            <p className="text-3xl font-bold font-mono text-gold">{stats.totalRequests.toLocaleString()}</p>
+          <div className="rounded-xl border border-[var(--border-light)] bg-white p-5">
+            <div className="flex items-center gap-3 mb-2"><div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#2F5EA8]/[0.06]"><Activity className="h-4 w-4 text-[#2F5EA8]" /></div><p className="text-sm text-[var(--text-secondary)]">Total Requests</p></div>
+            <p className="text-3xl font-bold font-mono text-[#2F5EA8]">{stats.totalRequests.toLocaleString()}</p>
           </div>
         </div>
       )}
 
       {/* Create form */}
       {showCreate && (
-        <div className="rounded-xl border border-gold/20 bg-gold/5 p-6 mb-8">
+        <div className="rounded-xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-6 mb-8">
           <h2 className="text-lg font-bold mb-4">Create New API Key</h2>
           <form onSubmit={handleCreate} className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-            <input type="text" value={newName} onChange={(e) => setNewName(e.target.value)} placeholder="App name" className="rounded-lg border border-dark-50 bg-dark-500 py-2.5 px-3 text-sm focus:border-gold/50 focus:ring-1 focus:ring-gold/30 outline-none" required />
-            <input type="email" value={newEmail} onChange={(e) => setNewEmail(e.target.value)} placeholder="developer@company.com" className="rounded-lg border border-dark-50 bg-dark-500 py-2.5 px-3 text-sm focus:border-gold/50 focus:ring-1 focus:ring-gold/30 outline-none" required />
-            <select value={newTier} onChange={(e) => setNewTier(e.target.value as "free" | "pro")} className="rounded-lg border border-dark-50 bg-dark-500 py-2.5 px-3 text-sm focus:border-gold/50 focus:ring-1 focus:ring-gold/30 outline-none">
+            <input type="text" value={newName} onChange={(e) => setNewName(e.target.value)} placeholder="App name" className="rounded-lg border border-[var(--border)] bg-[var(--bg)] py-2.5 px-3 text-sm focus:border-[#2F5EA8]/20/50 focus:ring-1 focus:ring-[#2F5EA8]/10 outline-none" required />
+            <input type="email" value={newEmail} onChange={(e) => setNewEmail(e.target.value)} placeholder="developer@company.com" className="rounded-lg border border-[var(--border)] bg-[var(--bg)] py-2.5 px-3 text-sm focus:border-[#2F5EA8]/20/50 focus:ring-1 focus:ring-[#2F5EA8]/10 outline-none" required />
+            <select value={newTier} onChange={(e) => setNewTier(e.target.value as "free" | "pro")} className="rounded-lg border border-[var(--border)] bg-[var(--bg)] py-2.5 px-3 text-sm focus:border-[#2F5EA8]/20/50 focus:ring-1 focus:ring-[#2F5EA8]/10 outline-none">
               <option value="free">Free (100/day)</option>
               <option value="pro">Pro (10K/day)</option>
             </select>
-            <button type="submit" disabled={creating} className="flex items-center justify-center gap-2 rounded-lg bg-gold py-2.5 text-sm font-semibold text-dark hover:bg-gold-300 transition-all disabled:opacity-50">
+            <button type="submit" disabled={creating} className="flex items-center justify-center gap-2 rounded-lg bg-[#2F5EA8] py-2.5 text-sm font-semibold text-white hover:bg-[#264D8C] transition-all disabled:opacity-50">
               {creating ? <Loader2 className="h-4 w-4 animate-spin" /> : <Key className="h-4 w-4" />}
               Generate
             </button>
@@ -229,8 +229,8 @@ export default function ApiKeysAdmin() {
             <div className="mt-4 rounded-lg border border-emerald-500/20 bg-emerald-500/5 p-4">
               <p className="text-sm font-semibold text-emerald-400 mb-2">API Key Created! Copy it now — it won&apos;t be shown again.</p>
               <div className="flex items-center gap-2">
-                <code className="flex-1 text-sm font-mono text-gold bg-dark-500 rounded-lg px-3 py-2">{createdKey}</code>
-                <button onClick={() => copyKey(createdKey)} className="flex items-center gap-1 rounded-lg border border-dark-50 px-3 py-2 text-sm text-[var(--text-secondary)] hover:text-gold hover:border-gold/30 transition-all">
+                <code className="flex-1 text-sm font-mono text-[#2F5EA8] bg-[var(--bg)] rounded-lg px-3 py-2">{createdKey}</code>
+                <button onClick={() => copyKey(createdKey)} className="flex items-center gap-1 rounded-lg border border-[var(--border)] px-3 py-2 text-sm text-[var(--text-secondary)] hover:text-[#2F5EA8] hover:border-[#2F5EA8]/15 transition-all">
                   {copied ? <Check className="h-4 w-4 text-emerald-400" /> : <Copy className="h-4 w-4" />}
                 </button>
               </div>
@@ -240,11 +240,11 @@ export default function ApiKeysAdmin() {
       )}
 
       {/* Keys table */}
-      <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 overflow-hidden">
+      <div className="rounded-xl border border-[var(--border-light)] bg-white overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-dark-50/50">
+              <tr className="border-b border-[var(--border-light)]">
                 <th className="text-left px-4 py-3 text-[10px] text-[var(--text-secondary)] uppercase tracking-wider font-semibold">Key</th>
                 <th className="text-left px-4 py-3 text-[10px] text-[var(--text-secondary)] uppercase tracking-wider font-semibold">Name</th>
                 <th className="text-left px-4 py-3 text-[10px] text-[var(--text-secondary)] uppercase tracking-wider font-semibold">Email</th>
@@ -263,12 +263,12 @@ export default function ApiKeysAdmin() {
                   </td>
                 </tr>
               ) : keys.map((k) => (
-                <tr key={k.key} className="border-b border-dark-50/30 hover:bg-dark-500/30 transition-colors">
-                  <td className="px-4 py-3 font-mono text-xs text-gold">{maskKey(k.key)}</td>
+                <tr key={k.key} className="border-b border-[var(--border-light)] hover:bg-[var(--bg)]/30 transition-colors">
+                  <td className="px-4 py-3 font-mono text-xs text-[#2F5EA8]">{maskKey(k.key)}</td>
                   <td className="px-4 py-3 font-medium">{k.name}</td>
                   <td className="px-4 py-3 text-[var(--text-secondary)]">{k.email}</td>
                   <td className="px-4 py-3 text-center">
-                    <span className={`text-xs font-bold uppercase ${k.tier === "pro" ? "text-gold" : "text-[var(--text-secondary)]"}`}>
+                    <span className={`text-xs font-bold uppercase ${k.tier === "pro" ? "text-[#2F5EA8]" : "text-[var(--text-secondary)]"}`}>
                       {k.tier}
                     </span>
                   </td>

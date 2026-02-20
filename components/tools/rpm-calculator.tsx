@@ -73,7 +73,7 @@ export function RpmCalculatorTool() {
   return (
     <div>
       {/* Input */}
-      <div className="rounded-2xl border border-dark-50/80 bg-dark-400/50 p-6 sm:p-8">
+      <div className="rounded-2xl border border-[var(--border-light)] bg-white p-6 sm:p-8">
         <div className="flex items-center gap-3 mb-6">
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-sky-500/10 border border-sky-500/20">
             <Activity className="h-5 w-5 text-sky-400" />
@@ -92,7 +92,7 @@ export function RpmCalculatorTool() {
               placeholder="e.g. 75"
               value={patients}
               onChange={(e) => setPatients(e.target.value)}
-              className="w-full rounded-lg border border-dark-50/50 bg-dark-200 px-4 py-3 text-white placeholder:text-[var(--text-secondary)]/50 focus:border-gold focus:outline-none transition-colors"
+              className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-white placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20 focus:outline-none transition-colors"
               aria-label="Number of eligible RPM patients"
             />
           </div>
@@ -109,7 +109,7 @@ export function RpmCalculatorTool() {
                 placeholder="50"
                 value={deviceCost}
                 onChange={(e) => setDeviceCost(e.target.value)}
-                className="w-full rounded-lg border border-dark-50/50 bg-dark-200 pl-8 pr-4 py-3 text-white placeholder:text-[var(--text-secondary)]/50 focus:border-gold focus:outline-none transition-colors"
+                className="w-full rounded-lg border border-[var(--border-light)] bg-white pl-8 pr-4 py-3 text-white placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20 focus:outline-none transition-colors"
                 aria-label="Monthly device cost per patient"
               />
             </div>
@@ -119,7 +119,7 @@ export function RpmCalculatorTool() {
         <button
           onClick={handleCalculate}
           disabled={!patients || parseInt(patients) < 1}
-          className="mt-6 w-full sm:w-auto bg-gold text-dark font-semibold rounded-lg px-6 py-3 hover:bg-gold-300 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+          className="mt-6 w-full sm:w-auto bg-[#2F5EA8] text-white font-semibold rounded-lg px-6 py-3 hover:bg-[#264D8C] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
         >
           Calculate RPM Revenue
         </button>
@@ -130,7 +130,7 @@ export function RpmCalculatorTool() {
         <div className="mt-8 space-y-6">
           {/* Net Revenue + ROI */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5">
+            <div className="rounded-xl border border-[var(--border-light)] bg-white p-5">
               <div className="flex items-center gap-2 text-sm text-[var(--text-secondary)] mb-2">
                 <DollarSign className="h-4 w-4 text-sky-400" />
                 Gross Annual Revenue
@@ -143,7 +143,7 @@ export function RpmCalculatorTool() {
               </p>
             </div>
 
-            <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5">
+            <div className="rounded-xl border border-[var(--border-light)] bg-white p-5">
               <div className="flex items-center gap-2 text-sm text-[var(--text-secondary)] mb-2">
                 <Minus className="h-4 w-4 text-red-400" />
                 Annual Device Cost
@@ -156,12 +156,12 @@ export function RpmCalculatorTool() {
               </p>
             </div>
 
-            <div className="rounded-xl border border-gold/20 bg-gold/5 p-5">
+            <div className="rounded-xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-5">
               <div className="flex items-center gap-2 text-sm text-[var(--text-secondary)] mb-2">
-                <TrendingUp className="h-4 w-4 text-gold" />
+                <TrendingUp className="h-4 w-4 text-[#2F5EA8]" />
                 Net Annual Revenue
               </div>
-              <p className="text-2xl font-bold font-mono text-gold">
+              <p className="text-2xl font-bold font-mono text-[#2F5EA8]">
                 {formatCurrency(results.netAnnual)}
               </p>
               <p className="text-xs text-[var(--text-secondary)] mt-1">
@@ -171,7 +171,7 @@ export function RpmCalculatorTool() {
           </div>
 
           {/* Code Breakdown */}
-          <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6">
+          <div className="rounded-xl border border-[var(--border-light)] bg-white p-6">
             <h3 className="text-base font-semibold mb-4">Revenue by CPT Code (Annual)</h3>
             <div className="space-y-4">
               {[
@@ -185,12 +185,12 @@ export function RpmCalculatorTool() {
                   <div key={item.code}>
                     <div className="flex items-center justify-between text-sm mb-1.5">
                       <span>
-                        <span className="font-medium font-mono text-gold">{item.code}</span>
+                        <span className="font-medium font-mono text-[#2F5EA8]">{item.code}</span>
                         <span className="text-[var(--text-secondary)] ml-2">{item.desc}</span>
                       </span>
                       <span className="font-mono font-semibold">{formatCurrency(item.amount)}</span>
                     </div>
-                    <div className="h-3 rounded-full bg-dark-200 overflow-hidden">
+                    <div className="h-3 rounded-full bg-white overflow-hidden">
                       <div
                         className={`h-full rounded-full ${item.color} transition-all duration-500`}
                         style={{ width: `${(item.amount / max) * 100}%` }}
@@ -203,8 +203,8 @@ export function RpmCalculatorTool() {
           </div>
 
           {/* Info */}
-          <div className="flex items-start gap-3 text-sm text-[var(--text-secondary)] bg-dark-300/50 rounded-lg p-4 border border-dark-50/50">
-            <Info className="h-4 w-4 flex-shrink-0 mt-0.5 text-gold" />
+          <div className="flex items-start gap-3 text-sm text-[var(--text-secondary)] bg-white/80 rounded-lg p-4 border border-[var(--border-light)]">
+            <Info className="h-4 w-4 flex-shrink-0 mt-0.5 text-[#2F5EA8]" />
             <div>
               <p className="font-medium text-[var(--text-primary)] mb-1">About RPM Billing</p>
               <p>

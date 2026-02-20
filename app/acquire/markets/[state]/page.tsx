@@ -124,7 +124,7 @@ export default async function StateMarketPage({
 
       {/* Hero */}
       <section className="relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gold/[0.03] rounded-full blur-3xl" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#2F5EA8]/[0.03] rounded-full blur-3xl" />
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-20 pb-12 sm:pt-28 sm:pb-16">
           <Breadcrumbs
@@ -135,16 +135,16 @@ export default async function StateMarketPage({
           />
 
           <div className="text-center">
-            <div className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/5 px-4 py-1.5 mb-8">
-              <MapPin className="h-3.5 w-3.5 text-gold" />
-              <span className="text-xs font-medium text-gold">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] px-4 py-1.5 mb-8">
+              <MapPin className="h-3.5 w-3.5 text-[#2F5EA8]" />
+              <span className="text-xs font-medium text-[#2F5EA8]">
                 {stateName} Market Report
               </span>
             </div>
 
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight max-w-4xl mx-auto leading-[1.1]">
               Medical Practice Acquisition{" "}
-              <span className="text-gold">Opportunities in {stateName}</span>
+              <span className="text-[#2F5EA8]">Opportunities in {stateName}</span>
             </h1>
 
             <p className="mt-6 text-lg text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed">
@@ -171,10 +171,10 @@ export default async function StateMarketPage({
       </section>
 
       {/* Specialty Breakdown */}
-      <section className="py-12 border-t border-dark-50/50">
+      <section className="py-12 border-t border-[var(--border-light)]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-bold tracking-tight mb-6">
-            Specialty <span className="text-gold">Hotspots</span>
+            Specialty <span className="text-[#2F5EA8]">Hotspots</span>
           </h2>
           <p className="text-[var(--text-secondary)] mb-8">
             Which specialties in {stateName} have the most acquisition upside
@@ -183,7 +183,7 @@ export default async function StateMarketPage({
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-dark-50/50">
+                <tr className="border-b border-[var(--border-light)]">
                   <th className="text-left py-3 px-4 font-medium text-[var(--text-secondary)]">Specialty</th>
                   <th className="text-right py-3 px-4 font-medium text-[var(--text-secondary)]">Providers</th>
                   <th className="text-right py-3 px-4 font-medium text-[var(--text-secondary)]">Avg Revenue</th>
@@ -195,7 +195,7 @@ export default async function StateMarketPage({
                 {specialtyBreakdown.slice(0, 15).map((spec: any, i: number) => (
                   <tr
                     key={spec.specialty}
-                    className="border-b border-dark-50/30 hover:bg-dark-400/30 transition-colors"
+                    className="border-b border-[var(--border-light)] hover:bg-white transition-colors"
                   >
                     <td className="py-3 px-4">
                       <div className="flex items-center gap-2">
@@ -212,7 +212,7 @@ export default async function StateMarketPage({
                     <td className="text-right py-3 px-4">
                       {Math.round(spec.avgPatients).toLocaleString()}
                     </td>
-                    <td className="text-right py-3 px-4 text-gold font-medium">
+                    <td className="text-right py-3 px-4 text-[#2F5EA8] font-medium">
                       {formatCurrency(spec.totalRevenue)}
                     </td>
                   </tr>
@@ -225,10 +225,10 @@ export default async function StateMarketPage({
 
       {/* Top Acquisition Targets */}
       {scoredTargets.length > 0 && (
-        <section className="py-12 border-t border-dark-50/50">
+        <section className="py-12 border-t border-[var(--border-light)]">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl font-bold tracking-tight mb-2">
-              Top Acquisition <span className="text-gold">Targets</span> in {stateName}
+              Top Acquisition <span className="text-[#2F5EA8]">Targets</span> in {stateName}
             </h2>
             <p className="text-[var(--text-secondary)] mb-8">
               Practices with the highest acquisition upside based on patient volume, revenue gaps, and optimization potential
@@ -255,15 +255,15 @@ export default async function StateMarketPage({
       )}
 
       {/* Tools */}
-      <section className="py-12 border-t border-dark-50/50">
+      <section className="py-12 border-t border-[var(--border-light)]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <Link
               href="/tools/portfolio"
-              className="group rounded-2xl border border-dark-50/80 bg-dark-400/30 p-6 transition-all hover:border-gold/30"
+              className="group rounded-2xl border border-[var(--border-light)] bg-white p-6 transition-all hover:border-[#2F5EA8]/15"
             >
-              <DollarSign className="h-8 w-8 text-gold mb-3" />
-              <h3 className="font-bold text-lg mb-2 group-hover:text-gold transition-colors">
+              <DollarSign className="h-8 w-8 text-[#2F5EA8] mb-3" />
+              <h3 className="font-bold text-lg mb-2 group-hover:text-[#2F5EA8] transition-colors">
                 Portfolio Analysis Tool
               </h3>
               <p className="text-sm text-[var(--text-secondary)]">
@@ -272,10 +272,10 @@ export default async function StateMarketPage({
             </Link>
             <Link
               href="/"
-              className="group rounded-2xl border border-dark-50/80 bg-dark-400/30 p-6 transition-all hover:border-gold/30"
+              className="group rounded-2xl border border-[var(--border-light)] bg-white p-6 transition-all hover:border-[#2F5EA8]/15"
             >
               <Target className="h-8 w-8 text-emerald-400 mb-3" />
-              <h3 className="font-bold text-lg mb-2 group-hover:text-gold transition-colors">
+              <h3 className="font-bold text-lg mb-2 group-hover:text-[#2F5EA8] transition-colors">
                 Scan Individual NPI
               </h3>
               <p className="text-sm text-[var(--text-secondary)]">
@@ -287,7 +287,7 @@ export default async function StateMarketPage({
       </section>
 
       {/* Other States */}
-      <section className="py-12 border-t border-dark-50/50">
+      <section className="py-12 border-t border-[var(--border-light)]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-xl font-bold mb-6">Other State Markets</h2>
           <div className="flex flex-wrap gap-2">
@@ -295,7 +295,7 @@ export default async function StateMarketPage({
               <Link
                 key={s.abbr}
                 href={`/acquire/markets/${stateToSlug(s.abbr)}`}
-                className="rounded-lg border border-dark-50/80 bg-dark-400/30 px-3 py-1.5 text-xs font-medium text-[var(--text-secondary)] hover:border-gold/30 hover:text-gold transition-all"
+                className="rounded-lg border border-[var(--border-light)] bg-white px-3 py-1.5 text-xs font-medium text-[var(--text-secondary)] hover:border-[#2F5EA8]/15 hover:text-[#2F5EA8] transition-all"
               >
                 {s.name}
               </Link>
@@ -305,7 +305,7 @@ export default async function StateMarketPage({
       </section>
 
       {/* Early Access CTA */}
-      <section className="py-12 border-t border-dark-50/50">
+      <section className="py-12 border-t border-[var(--border-light)]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <EarlyAccessCTA
             title={`Get Acquisition Intelligence for ${stateName}`}

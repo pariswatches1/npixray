@@ -55,6 +55,7 @@ interface ScanData {
 // ── Constants ────────────────────────────────────────────────
 
 const FREE_MESSAGE_LIMIT = 3;
+const EMAIL_MESSAGE_LIMIT = 8;
 const SESSION_KEY = "npixray-coach-session";
 const EMAIL_KEY = "npixray-coach-email";
 
@@ -147,7 +148,7 @@ function renderContent(text: string) {
       elements.push(
         <h4
           key={i}
-          className="text-sm font-bold text-gold mt-4 mb-1"
+          className="text-sm font-bold text-[#2F5EA8] mt-4 mb-1"
           dangerouslySetInnerHTML={{
             __html: processed.replace("### ", ""),
           }}
@@ -157,7 +158,7 @@ function renderContent(text: string) {
       elements.push(
         <h3
           key={i}
-          className="text-base font-bold text-gold mt-4 mb-2"
+          className="text-base font-bold text-[#2F5EA8] mt-4 mb-2"
           dangerouslySetInnerHTML={{
             __html: processed.replace("## ", ""),
           }}
@@ -259,8 +260,12 @@ export function CoachChat({ scanData }: { scanData?: ScanData | null }) {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  const isGated =
+  // Two-tier gating: email gate at 3, hard paywall at 8
+  const needsEmail =
     !emailSubmitted && userMessageCount >= FREE_MESSAGE_LIMIT;
+  const needsUpgrade =
+    emailSubmitted && userMessageCount >= EMAIL_MESSAGE_LIMIT;
+  const isGated = needsEmail || needsUpgrade;
 
   const sendMessage = useCallback(
     async (text: string) => {
@@ -468,16 +473,16 @@ export function CoachChat({ scanData }: { scanData?: ScanData | null }) {
               }`}
             >
               {msg.role === "assistant" && (
-                <div className="flex-shrink-0 h-8 w-8 rounded-lg bg-gold/10 border border-gold/20 flex items-center justify-center mt-0.5">
-                  <Bot className="h-4 w-4 text-gold" />
+                <div className="flex-shrink-0 h-8 w-8 rounded-lg bg-[#2F5EA8]/[0.06] border border-[#2F5EA8]/10 flex items-center justify-center mt-0.5">
+                  <Bot className="h-4 w-4 text-[#2F5EA8]" />
                 </div>
               )}
 
               <div
                 className={`max-w-[85%] sm:max-w-[75%] rounded-2xl px-4 py-3 ${
                   msg.role === "user"
-                    ? "bg-gold/10 border border-gold/20"
-                    : "bg-dark-300/50 border border-dark-50/50"
+                    ? "bg-[#2F5EA8]/[0.06] border border-[#2F5EA8]/10"
+                    : "bg-white/80 border border-[var(--border-light)]"
                 }`}
               >
                 {msg.role === "user" ? (
@@ -486,14 +491,14 @@ export function CoachChat({ scanData }: { scanData?: ScanData | null }) {
                   renderContent(msg.content)
                 ) : (
                   <div className="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
-                    <Loader2 className="h-4 w-4 animate-spin text-gold" />
+                    <Loader2 className="h-4 w-4 animate-spin text-[#2F5EA8]" />
                     Thinking...
                   </div>
                 )}
               </div>
 
               {msg.role === "user" && (
-                <div className="flex-shrink-0 h-8 w-8 rounded-lg bg-dark-300 border border-dark-50/50 flex items-center justify-center mt-0.5">
+                <div className="flex-shrink-0 h-8 w-8 rounded-lg bg-white border border-[var(--border-light)] flex items-center justify-center mt-0.5">
                   <User className="h-4 w-4 text-[var(--text-secondary)]" />
                 </div>
               )}
@@ -503,19 +508,19 @@ export function CoachChat({ scanData }: { scanData?: ScanData | null }) {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Email Gate */}
-      {isGated && (
-        <div className="mx-4 sm:mx-6 mb-4 rounded-2xl border border-gold/30 bg-gold/5 p-6 animate-in fade-in slide-in-from-bottom duration-300">
+      {/* Email Gate (3 free messages) */}
+      {needsEmail && (
+        <div className="mx-4 sm:mx-6 mb-4 rounded-2xl border border-[#2F5EA8]/15 bg-[#2F5EA8]/[0.04] p-6 animate-in fade-in slide-in-from-bottom duration-300">
           <div className="flex items-start gap-3 mb-4">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gold/10 border border-gold/20 flex-shrink-0">
-              <Lock className="h-5 w-5 text-gold" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#2F5EA8]/[0.06] border border-[#2F5EA8]/10 flex-shrink-0">
+              <Lock className="h-5 w-5 text-[#2F5EA8]" />
             </div>
             <div>
               <h3 className="text-base font-bold text-white">
                 Continue Your Coaching Session
               </h3>
               <p className="text-sm text-[var(--text-secondary)] mt-1">
-                Enter your email to unlock unlimited AI coaching.
+                Enter your email to unlock {EMAIL_MESSAGE_LIMIT - FREE_MESSAGE_LIMIT} more coaching messages.
                 We&apos;ll save your chat history for next time.
               </p>
             </div>
@@ -530,13 +535,13 @@ export function CoachChat({ scanData }: { scanData?: ScanData | null }) {
                 placeholder="you@practice.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full rounded-xl border border-dark-50 bg-dark-500 py-3 pl-10 pr-4 text-sm placeholder:text-[var(--text-secondary)]/50 focus:border-gold/50 focus:ring-1 focus:ring-gold/30 outline-none transition-all"
+                className="w-full rounded-xl border border-[var(--border)] bg-[var(--bg)] py-3 pl-10 pr-4 text-sm placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20/50 focus:ring-1 focus:ring-[#2F5EA8]/10 outline-none transition-all"
               />
             </div>
             <button
               type="submit"
               disabled={emailStatus === "loading"}
-              className="flex items-center gap-2 rounded-xl bg-gold px-5 py-3 text-sm font-semibold text-dark hover:bg-gold-300 transition-all disabled:opacity-50 whitespace-nowrap"
+              className="flex items-center gap-2 rounded-xl bg-[#2F5EA8] px-5 py-3 text-sm font-semibold text-white hover:bg-[#264D8C] transition-all disabled:opacity-50 whitespace-nowrap"
             >
               {emailStatus === "loading" ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -559,22 +564,66 @@ export function CoachChat({ scanData }: { scanData?: ScanData | null }) {
         </div>
       )}
 
+      {/* Hard Paywall (after 8 total messages) */}
+      {needsUpgrade && (
+        <div className="mx-4 sm:mx-6 mb-4 rounded-2xl border border-[#2F5EA8]/15 bg-[#2F5EA8]/[0.04] p-6 animate-in fade-in slide-in-from-bottom duration-300">
+          <div className="flex items-start gap-3 mb-4">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#2F5EA8]/[0.06] border border-[#2F5EA8]/10 flex-shrink-0">
+              <Lock className="h-5 w-5 text-[#2F5EA8]" />
+            </div>
+            <div>
+              <h3 className="text-base font-bold text-white">
+                You&apos;ve Used All Free Coaching Sessions
+              </h3>
+              <p className="text-sm text-[var(--text-secondary)] mt-1">
+                Upgrade to Intelligence for unlimited AI coaching, personalized
+                action plans, and patient eligibility lists.
+              </p>
+            </div>
+          </div>
+
+          <div className="space-y-2 mb-5">
+            {[
+              "Unlimited AI Revenue Coach sessions",
+              "Personalized 90-day action plan",
+              "Patient eligibility lists (CCM, RPM, AWV)",
+              "Monthly benchmark tracking & alerts",
+            ].map((f) => (
+              <div key={f} className="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
+                <Sparkles className="h-3.5 w-3.5 text-[#2F5EA8] flex-shrink-0" />
+                {f}
+              </div>
+            ))}
+          </div>
+
+          <Link
+            href="/pricing"
+            className="flex items-center justify-center gap-2 rounded-xl bg-[#2F5EA8] py-3.5 text-sm font-semibold text-white hover:bg-[#264D8C] transition-all w-full"
+          >
+            <Zap className="h-4 w-4" />
+            Upgrade to Intelligence — $99/mo
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+      )}
+
       {/* Input Area */}
-      <div className="border-t border-dark-50/50 px-4 sm:px-6 py-4 bg-dark/80 backdrop-blur-sm">
+      <div className="border-t border-[var(--border-light)] px-4 sm:px-6 py-4 bg-white/80 backdrop-blur-sm">
         <div className="flex items-center gap-2 mb-2">
           {messages.length > 0 && (
             <button
               onClick={handleNewChat}
-              className="flex items-center gap-1.5 text-xs text-[var(--text-secondary)] hover:text-gold transition-colors"
+              className="flex items-center gap-1.5 text-xs text-[var(--text-secondary)] hover:text-[#2F5EA8] transition-colors"
             >
               <RefreshCw className="h-3 w-3" />
               New chat
             </button>
           )}
-          {!emailSubmitted && userMessageCount > 0 && (
+          {userMessageCount > 0 && !needsUpgrade && (
             <span className="text-xs text-[var(--text-secondary)] ml-auto">
-              {Math.max(0, FREE_MESSAGE_LIMIT - userMessageCount)} free messages
-              left
+              {emailSubmitted
+                ? `${Math.max(0, EMAIL_MESSAGE_LIMIT - userMessageCount)} messages left`
+                : `${Math.max(0, FREE_MESSAGE_LIMIT - userMessageCount)} free messages left`}
             </span>
           )}
           {scanData && (
@@ -600,13 +649,13 @@ export function CoachChat({ scanData }: { scanData?: ScanData | null }) {
             }
             disabled={isStreaming || isGated}
             rows={1}
-            className="w-full resize-none rounded-2xl border border-dark-50 bg-dark-400/50 py-3.5 pl-4 pr-14 text-sm placeholder:text-[var(--text-secondary)]/50 focus:border-gold/50 focus:ring-1 focus:ring-gold/30 outline-none transition-all disabled:opacity-50 max-h-32"
+            className="w-full resize-none rounded-2xl border border-[var(--border)] bg-white py-3.5 pl-4 pr-14 text-sm placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20/50 focus:ring-1 focus:ring-[#2F5EA8]/10 outline-none transition-all disabled:opacity-50 max-h-32"
             style={{ minHeight: "48px" }}
           />
           <button
             type="submit"
             disabled={!input.trim() || isStreaming || isGated}
-            className="absolute right-2 top-1/2 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-xl bg-gold text-dark hover:bg-gold-300 transition-all disabled:opacity-30 disabled:hover:bg-gold"
+            className="absolute right-2 top-1/2 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-xl bg-[#2F5EA8] text-white hover:bg-[#264D8C] transition-all disabled:opacity-30 disabled:hover:bg-[#264D8C]"
           >
             {isStreaming ? (
               <Loader2 className="h-4 w-4 animate-spin" />
@@ -636,18 +685,18 @@ function EmptyState({
 }) {
   return (
     <div className="flex flex-col items-center justify-center min-h-[400px] text-center px-4">
-      <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gold/10 border border-gold/20 mb-6">
-        <Sparkles className="h-8 w-8 text-gold" />
+      <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-[#2F5EA8]/[0.06] border border-[#2F5EA8]/10 mb-6">
+        <Sparkles className="h-8 w-8 text-[#2F5EA8]" />
       </div>
 
       <h2 className="text-2xl font-bold tracking-tight mb-2">
-        AI Revenue <span className="text-gold">Coach</span>
+        AI Revenue <span className="text-[#2F5EA8]">Coach</span>
       </h2>
       <p className="text-sm text-[var(--text-secondary)] max-w-md mb-8 leading-relaxed">
         {scanData ? (
           <>
             I have{" "}
-            <span className="text-gold font-medium">
+            <span className="text-[#2F5EA8] font-medium">
               {scanData.provider.fullName}&apos;s
             </span>{" "}
             actual CMS billing data loaded. Ask me anything about your
@@ -659,7 +708,7 @@ function EmptyState({
             Ask me anything about Medicare billing, revenue optimization,
             or care management programs. For personalized advice based on
             your actual data,{" "}
-            <Link href="/" className="text-gold hover:underline font-medium">
+            <Link href="/" className="text-[#2F5EA8] hover:underline font-medium">
               scan your NPI first
             </Link>
             .
@@ -674,9 +723,9 @@ function EmptyState({
           <button
             key={starter.text}
             onClick={() => onSelect(starter.text)}
-            className="group flex items-center gap-3 rounded-xl border border-dark-50/80 bg-dark-400/50 px-4 py-3 text-left transition-all hover:border-gold/30 hover:bg-gold/5"
+            className="group flex items-center gap-3 rounded-xl border border-[var(--border-light)] bg-white px-4 py-3 text-left transition-all hover:border-[#2F5EA8]/15 hover:bg-[#2F5EA8]/[0.04]"
           >
-            <starter.icon className="h-4 w-4 text-[var(--text-secondary)] group-hover:text-gold flex-shrink-0 transition-colors" />
+            <starter.icon className="h-4 w-4 text-[var(--text-secondary)] group-hover:text-[#2F5EA8] flex-shrink-0 transition-colors" />
             <span className="text-sm text-[var(--text-secondary)] group-hover:text-white transition-colors">
               {starter.text}
             </span>

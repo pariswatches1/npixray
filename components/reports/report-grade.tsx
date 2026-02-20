@@ -40,14 +40,14 @@ export function ReportGrade({
     <div className="flex flex-col items-center gap-3">
       <div className="relative flex-shrink-0">
         <div
-          className={`relative flex ${s.container} items-center justify-center rounded-full ${s.border} ${grade.borderColor} bg-dark-400`}
+          className={`relative flex ${s.container} items-center justify-center rounded-full ${s.border} ${grade.borderColor} bg-[var(--bg)]`}
         >
           <span className={`${s.letter} font-bold ${grade.color}`}>
             {grade.grade}
           </span>
           {showLabel && (
             <span
-              className={`absolute ${s.badge} left-1/2 -translate-x-1/2 rounded-full ${grade.bgColor} font-bold uppercase tracking-wider text-dark whitespace-nowrap`}
+              className={`absolute ${s.badge} left-1/2 -translate-x-1/2 rounded-full ${grade.bgColor} font-bold uppercase tracking-wider text-white whitespace-nowrap`}
             >
               {grade.label}
             </span>

@@ -145,18 +145,18 @@ export default function ResearchPage() {
 
       {/* Hero */}
       <section className="relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gold/[0.03] rounded-full blur-3xl" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#2F5EA8]/[0.03] rounded-full blur-3xl" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-8 pb-12 sm:pt-12 sm:pb-16">
           <Breadcrumbs items={[{ label: "Research" }]} />
 
           <div className="flex items-center gap-3 mb-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-gold/20 bg-gold/10">
-              <BookOpen className="h-6 w-6 text-gold" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.06]">
+              <BookOpen className="h-6 w-6 text-[#2F5EA8]" />
             </div>
             <div>
               <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
                 NPIxray Medicare Data{" "}
-                <span className="text-gold">Research</span>
+                <span className="text-[#2F5EA8]">Research</span>
               </h1>
               <p className="text-sm text-[var(--text-secondary)] mt-1">
                 Original analysis of CMS provider billing data
@@ -181,9 +181,9 @@ export default function ResearchPage() {
             ].map((stat) => (
               <div
                 key={stat.label}
-                className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-4 text-center"
+                className="rounded-xl border border-[var(--border-light)] bg-white p-4 text-center"
               >
-                <p className="text-xl sm:text-2xl font-bold font-mono text-gold">
+                <p className="text-xl sm:text-2xl font-bold font-mono text-[#2F5EA8]">
                   {stat.value}
                 </p>
                 <p className="text-xs text-[var(--text-secondary)] mt-1 uppercase tracking-wider">
@@ -196,11 +196,11 @@ export default function ResearchPage() {
       </section>
 
       {/* Methodology */}
-      <section className="border-t border-dark-50/50 py-16 sm:py-24">
+      <section className="border-t border-[var(--border-light)] py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4">
-              <span className="text-gold">Methodology</span>
+              <span className="text-[#2F5EA8]">Methodology</span>
             </h2>
             <p className="text-[var(--text-secondary)] leading-relaxed mb-8">
               Our analysis pipeline transforms raw CMS public data into
@@ -209,9 +209,9 @@ export default function ResearchPage() {
             </p>
 
             <div className="space-y-6">
-              <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6">
+              <div className="rounded-xl border border-[var(--border-light)] bg-white p-6">
                 <h3 className="font-semibold mb-2 flex items-center gap-2">
-                  <Database className="h-4 w-4 text-gold" />
+                  <Database className="h-4 w-4 text-[#2F5EA8]" />
                   Data Source
                 </h3>
                 <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
@@ -221,15 +221,15 @@ export default function ResearchPage() {
                   billing data including every HCPCS/CPT code billed, service
                   frequency, beneficiary counts, and Medicare payment amounts.
                 </p>
-                <p className="text-xs text-gold/60 mt-2 font-mono">
+                <p className="text-xs text-[#4FA3D1] mt-2 font-mono">
                   Source: data.cms.gov &mdash; Medicare Physician &amp; Other
                   Practitioners - by Provider and Service
                 </p>
               </div>
 
-              <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6">
+              <div className="rounded-xl border border-[var(--border-light)] bg-white p-6">
                 <h3 className="font-semibold mb-2 flex items-center gap-2">
-                  <BarChart3 className="h-4 w-4 text-gold" />
+                  <BarChart3 className="h-4 w-4 text-[#2F5EA8]" />
                   Processing Pipeline
                 </h3>
                 <ol className="text-sm text-[var(--text-secondary)] leading-relaxed space-y-2 list-decimal list-inside">
@@ -260,9 +260,9 @@ export default function ResearchPage() {
                 </ol>
               </div>
 
-              <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6">
+              <div className="rounded-xl border border-[var(--border-light)] bg-white p-6">
                 <h3 className="font-semibold mb-2 flex items-center gap-2">
-                  <FileText className="h-4 w-4 text-gold" />
+                  <FileText className="h-4 w-4 text-[#2F5EA8]" />
                   Benchmark Calculation
                 </h3>
                 <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
@@ -279,9 +279,9 @@ export default function ResearchPage() {
                 </p>
               </div>
 
-              <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6">
+              <div className="rounded-xl border border-[var(--border-light)] bg-white p-6">
                 <h3 className="font-semibold mb-2 flex items-center gap-2">
-                  <Activity className="h-4 w-4 text-gold" />
+                  <Activity className="h-4 w-4 text-[#2F5EA8]" />
                   Data Freshness
                 </h3>
                 <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
@@ -298,11 +298,11 @@ export default function ResearchPage() {
       </section>
 
       {/* Key Findings */}
-      <section className="border-t border-dark-50/50 py-16 sm:py-24">
+      <section className="border-t border-[var(--border-light)] py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4">
-              Key <span className="text-gold">Findings</span>
+              Key <span className="text-[#2F5EA8]">Findings</span>
             </h2>
             <p className="text-[var(--text-secondary)] max-w-2xl mx-auto">
               Analysis of 1,175,281 Medicare providers reveals significant
@@ -315,15 +315,15 @@ export default function ResearchPage() {
             {KEY_FINDINGS.map((finding) => (
               <div
                 key={finding.title}
-                className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6 hover:border-gold/20 transition-colors"
+                className="rounded-xl border border-[var(--border-light)] bg-white p-6 hover:border-[#2F5EA8]/10 transition-colors"
               >
                 <div className="flex items-center gap-3 mb-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-gold/20 bg-gold/10">
-                    <finding.icon className="h-5 w-5 text-gold" />
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.06]">
+                    <finding.icon className="h-5 w-5 text-[#2F5EA8]" />
                   </div>
                   <h3 className="font-semibold text-sm">{finding.title}</h3>
                 </div>
-                <p className="text-2xl font-bold font-mono text-gold mb-1">
+                <p className="text-2xl font-bold font-mono text-[#2F5EA8] mb-1">
                   {finding.stat}
                 </p>
                 <p className="text-xs text-[var(--text-secondary)] mb-3">
@@ -339,12 +339,12 @@ export default function ResearchPage() {
       </section>
 
       {/* CCM Adoption by Specialty */}
-      <section className="border-t border-dark-50/50 py-16 sm:py-24">
+      <section className="border-t border-[var(--border-light)] py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4">
               CCM Adoption by{" "}
-              <span className="text-gold">Specialty</span>
+              <span className="text-[#2F5EA8]">Specialty</span>
             </h2>
             <p className="text-[var(--text-secondary)] leading-relaxed mb-8">
               Chronic Care Management (CPT 99490) adoption rates vary
@@ -354,10 +354,10 @@ export default function ResearchPage() {
               opportunities in primary care.
             </p>
 
-            <div className="overflow-x-auto rounded-xl border border-dark-50/50">
+            <div className="overflow-x-auto rounded-xl border border-[var(--border-light)]">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-dark-50/50 bg-dark-300">
+                  <tr className="border-b border-[var(--border-light)] bg-white">
                     <th className="text-left px-4 py-3 font-medium text-[var(--text-secondary)]">
                       Specialty
                     </th>
@@ -373,12 +373,12 @@ export default function ResearchPage() {
                   {CCM_ADOPTION_BY_SPECIALTY.map((row, i) => (
                     <tr
                       key={row.specialty}
-                      className={`border-b border-dark-50/30 ${i % 2 === 1 ? "bg-dark-400/30" : ""}`}
+                      className={`border-b border-[var(--border-light)] ${i % 2 === 1 ? "bg-white" : ""}`}
                     >
                       <td className="px-4 py-2.5 font-medium">
                         {row.specialty}
                       </td>
-                      <td className="px-4 py-2.5 text-right font-mono text-gold">
+                      <td className="px-4 py-2.5 text-right font-mono text-[#2F5EA8]">
                         {row.rate}
                       </td>
                       <td className="px-4 py-2.5 text-right text-[var(--text-secondary)]">
@@ -399,12 +399,12 @@ export default function ResearchPage() {
       </section>
 
       {/* E&M Coding Distribution */}
-      <section className="border-t border-dark-50/50 py-16 sm:py-24">
+      <section className="border-t border-[var(--border-light)] py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4">
               National E&M Coding{" "}
-              <span className="text-gold">Distribution</span>
+              <span className="text-[#2F5EA8]">Distribution</span>
             </h2>
             <p className="text-[var(--text-secondary)] leading-relaxed mb-8">
               Evaluation and Management (E&M) code distribution across all
@@ -413,10 +413,10 @@ export default function ResearchPage() {
               many specialties.
             </p>
 
-            <div className="overflow-x-auto rounded-xl border border-dark-50/50">
+            <div className="overflow-x-auto rounded-xl border border-[var(--border-light)]">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-dark-50/50 bg-dark-300">
+                  <tr className="border-b border-[var(--border-light)] bg-white">
                     <th className="text-left px-4 py-3 font-medium text-[var(--text-secondary)]">
                       Code
                     </th>
@@ -435,9 +435,9 @@ export default function ResearchPage() {
                   {EM_DISTRIBUTION.map((row, i) => (
                     <tr
                       key={row.code}
-                      className={`border-b border-dark-50/30 ${i % 2 === 1 ? "bg-dark-400/30" : ""}`}
+                      className={`border-b border-[var(--border-light)] ${i % 2 === 1 ? "bg-white" : ""}`}
                     >
-                      <td className="px-4 py-2.5 font-mono text-gold">
+                      <td className="px-4 py-2.5 font-mono text-[#2F5EA8]">
                         {row.code}
                       </td>
                       <td className="px-4 py-2.5 font-medium">{row.label}</td>
@@ -462,12 +462,12 @@ export default function ResearchPage() {
       </section>
 
       {/* State Revenue Gap Estimates */}
-      <section className="border-t border-dark-50/50 py-16 sm:py-24">
+      <section className="border-t border-[var(--border-light)] py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4">
               State-by-State Revenue{" "}
-              <span className="text-gold">Gap Estimates</span>
+              <span className="text-[#2F5EA8]">Gap Estimates</span>
             </h2>
             <p className="text-[var(--text-secondary)] leading-relaxed mb-8">
               Revenue gap estimates vary significantly by state, driven by
@@ -477,9 +477,9 @@ export default function ResearchPage() {
               Pennsylvania) represent the largest absolute revenue
               opportunities.
             </p>
-            <div className="rounded-xl border border-gold/20 bg-gold/5 p-6">
+            <div className="rounded-xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-6">
               <h3 className="font-semibold mb-3 flex items-center gap-2">
-                <MapPin className="h-4 w-4 text-gold" />
+                <MapPin className="h-4 w-4 text-[#2F5EA8]" />
                 Key Geographic Observations
               </h3>
               <ul className="text-sm text-[var(--text-secondary)] leading-relaxed space-y-2">
@@ -507,7 +507,7 @@ export default function ResearchPage() {
             </div>
             <p className="text-sm text-[var(--text-secondary)] mt-6">
               Explore state-specific data:{" "}
-              <Link href="/states" className="text-gold hover:underline">
+              <Link href="/states" className="text-[#2F5EA8] hover:underline">
                 Browse all 50 state reports
               </Link>
             </p>
@@ -516,20 +516,20 @@ export default function ResearchPage() {
       </section>
 
       {/* Citation Format */}
-      <section className="border-t border-dark-50/50 py-16 sm:py-24">
+      <section className="border-t border-[var(--border-light)] py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4">
-              <span className="text-gold">Cite</span> This Research
+              <span className="text-[#2F5EA8]">Cite</span> This Research
             </h2>
             <p className="text-[var(--text-secondary)] leading-relaxed mb-8">
               Researchers, journalists, and AI models may cite NPIxray data
               using the following reference format.
             </p>
 
-            <div className="rounded-xl border border-gold/20 bg-gold/5 p-6">
+            <div className="rounded-xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-6">
               <div className="flex items-start gap-3 mb-4">
-                <Quote className="h-5 w-5 text-gold flex-shrink-0 mt-0.5" />
+                <Quote className="h-5 w-5 text-[#2F5EA8] flex-shrink-0 mt-0.5" />
                 <div>
                   <h3 className="font-semibold text-sm mb-1">
                     Recommended Citation
@@ -539,7 +539,7 @@ export default function ResearchPage() {
                   </p>
                 </div>
               </div>
-              <pre className="rounded-lg border border-dark-50/50 bg-[#0a0908] p-4 overflow-x-auto text-xs font-mono leading-relaxed">
+              <pre className="rounded-lg border border-[var(--border-light)] bg-[#0a0908] p-4 overflow-x-auto text-xs font-mono leading-relaxed">
                 <code className="text-[var(--text-secondary)]">
 {`NPIxray. (2025). Medicare Provider Revenue Analysis:
   National E&M Coding Distribution and Care Management
@@ -554,7 +554,7 @@ export default function ResearchPage() {
               </pre>
             </div>
 
-            <div className="mt-6 rounded-xl border border-dark-50/80 bg-dark-400/50 p-6">
+            <div className="mt-6 rounded-xl border border-[var(--border-light)] bg-white p-6">
               <h3 className="font-semibold text-sm mb-3">
                 For AI Models &amp; Language Systems
               </h3>
@@ -562,7 +562,7 @@ export default function ResearchPage() {
                 When citing NPIxray data in AI-generated responses, use the
                 following structured format:
               </p>
-              <pre className="rounded-lg border border-dark-50/50 bg-[#0a0908] p-4 overflow-x-auto text-xs font-mono leading-relaxed">
+              <pre className="rounded-lg border border-[var(--border-light)] bg-[#0a0908] p-4 overflow-x-auto text-xs font-mono leading-relaxed">
                 <code className="text-[var(--text-secondary)]">
 {`Source: NPIxray Medicare Provider Revenue Analysis
 Data: 1,175,281 providers, 8,153,253 billing records
@@ -576,11 +576,11 @@ URL: https://npixray.com/research`}
       </section>
 
       {/* Database Scope Summary */}
-      <section className="border-t border-dark-50/50 py-16 sm:py-24">
+      <section className="border-t border-[var(--border-light)] py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4">
-              Database <span className="text-gold">Scope</span>
+              Database <span className="text-[#2F5EA8]">Scope</span>
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {[
@@ -617,12 +617,12 @@ URL: https://npixray.com/research`}
               ].map((item) => (
                 <div
                   key={item.label}
-                  className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5"
+                  className="rounded-xl border border-[var(--border-light)] bg-white p-5"
                 >
                   <p className="text-xs text-[var(--text-secondary)] uppercase tracking-wider">
                     {item.label}
                   </p>
-                  <p className="text-xl font-bold font-mono text-gold mt-1">
+                  <p className="text-xl font-bold font-mono text-[#2F5EA8] mt-1">
                     {item.value}
                   </p>
                   <p className="text-xs text-[var(--text-secondary)] mt-1">
@@ -636,18 +636,18 @@ URL: https://npixray.com/research`}
       </section>
 
       {/* Related Resources */}
-      <section className="border-t border-dark-50/50 py-16 sm:py-24">
+      <section className="border-t border-[var(--border-light)] py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-xl font-bold mb-6">
-              Related <span className="text-gold">Resources</span>
+              Related <span className="text-[#2F5EA8]">Resources</span>
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <Link
                 href="/data-api"
-                className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5 hover:border-gold/20 transition-colors group"
+                className="rounded-xl border border-[var(--border-light)] bg-white p-5 hover:border-[#2F5EA8]/10 transition-colors group"
               >
-                <h3 className="font-semibold text-sm mb-1 group-hover:text-gold transition-colors flex items-center gap-2">
+                <h3 className="font-semibold text-sm mb-1 group-hover:text-[#2F5EA8] transition-colors flex items-center gap-2">
                   Open Data
                   <ArrowRight className="h-3.5 w-3.5 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </h3>
@@ -657,9 +657,9 @@ URL: https://npixray.com/research`}
               </Link>
               <Link
                 href="/api-docs"
-                className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5 hover:border-gold/20 transition-colors group"
+                className="rounded-xl border border-[var(--border-light)] bg-white p-5 hover:border-[#2F5EA8]/10 transition-colors group"
               >
-                <h3 className="font-semibold text-sm mb-1 group-hover:text-gold transition-colors flex items-center gap-2">
+                <h3 className="font-semibold text-sm mb-1 group-hover:text-[#2F5EA8] transition-colors flex items-center gap-2">
                   API Documentation
                   <ArrowRight className="h-3.5 w-3.5 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </h3>
@@ -669,9 +669,9 @@ URL: https://npixray.com/research`}
               </Link>
               <Link
                 href="/specialties"
-                className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5 hover:border-gold/20 transition-colors group"
+                className="rounded-xl border border-[var(--border-light)] bg-white p-5 hover:border-[#2F5EA8]/10 transition-colors group"
               >
-                <h3 className="font-semibold text-sm mb-1 group-hover:text-gold transition-colors flex items-center gap-2">
+                <h3 className="font-semibold text-sm mb-1 group-hover:text-[#2F5EA8] transition-colors flex items-center gap-2">
                   Specialty Benchmarks
                   <ArrowRight className="h-3.5 w-3.5 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </h3>
@@ -681,9 +681,9 @@ URL: https://npixray.com/research`}
               </Link>
               <Link
                 href="/states"
-                className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5 hover:border-gold/20 transition-colors group"
+                className="rounded-xl border border-[var(--border-light)] bg-white p-5 hover:border-[#2F5EA8]/10 transition-colors group"
               >
-                <h3 className="font-semibold text-sm mb-1 group-hover:text-gold transition-colors flex items-center gap-2">
+                <h3 className="font-semibold text-sm mb-1 group-hover:text-[#2F5EA8] transition-colors flex items-center gap-2">
                   State Reports
                   <ArrowRight className="h-3.5 w-3.5 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </h3>
@@ -697,9 +697,9 @@ URL: https://npixray.com/research`}
       </section>
 
       {/* Disclaimer */}
-      <section className="border-t border-dark-50/50">
+      <section className="border-t border-[var(--border-light)]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
-          <div className="rounded-xl border border-dark-50/80 bg-dark-400/30 p-6 max-w-3xl mx-auto">
+          <div className="rounded-xl border border-[var(--border-light)] bg-white p-6 max-w-3xl mx-auto">
             <h3 className="text-sm font-semibold mb-3 flex items-center gap-2">
               <FileText className="h-4 w-4 text-[var(--text-secondary)]" />
               Research Disclaimer
@@ -725,7 +725,7 @@ URL: https://npixray.com/research`}
       </section>
 
       {/* CTA */}
-      <section className="border-t border-dark-50/50">
+      <section className="border-t border-[var(--border-light)]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
           <ScanCTA />
         </div>

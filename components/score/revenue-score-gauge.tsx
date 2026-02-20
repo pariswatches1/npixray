@@ -78,7 +78,7 @@ export function RevenueScoreGauge({
             strokeWidth={dim.stroke}
             strokeDasharray={`${arcLength} ${circumference - arcLength}`}
             strokeLinecap="round"
-            className="text-dark-50/30"
+            className="text-[var(--text-secondary)]/30"
             transform={`rotate(${rotation} ${dim.box / 2} ${dim.box / 2})`}
           />
           {/* Filled arc */}

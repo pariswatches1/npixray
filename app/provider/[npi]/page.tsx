@@ -35,6 +35,7 @@ import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { ScanCTA } from "@/components/seo/scan-cta";
 import { ClaimProfile } from "@/components/provider/claim-profile";
 import { ShareButtons } from "@/components/reports/share-buttons";
+import { UpgradeInlineCTA } from "@/components/paywall/upgrade-gate";
 
 export const dynamic = 'force-dynamic';
 
@@ -66,6 +67,8 @@ export async function generateMetadata({
     twitter: {
       card: "summary_large_image",
     },
+    // noindex low-volume providers to preserve crawl budget
+    robots: provider.total_medicare_payment < 10000 ? { index: false, follow: true } : undefined,
   };
 }
 
@@ -111,7 +114,7 @@ export default async function ProviderProfilePage({
     { code: "99211", count: provider.em_99211, color: "bg-zinc-500" },
     { code: "99212", count: provider.em_99212, color: "bg-amber-700" },
     { code: "99213", count: provider.em_99213, color: "bg-amber-500" },
-    { code: "99214", count: provider.em_99214, color: "bg-gold" },
+    { code: "99214", count: provider.em_99214, color: "bg-[#2F5EA8]" },
     { code: "99215", count: provider.em_99215, color: "bg-emerald-500" },
   ];
 
@@ -221,20 +224,20 @@ export default async function ProviderProfilePage({
           <div className="flex flex-wrap items-center gap-4 mt-3 text-sm text-[var(--text-secondary)]">
             <Link
               href={`/specialties/${specSlug}`}
-              className="flex items-center gap-1.5 hover:text-gold transition-colors"
+              className="flex items-center gap-1.5 hover:text-[#2F5EA8] transition-colors"
             >
-              <Stethoscope className="h-3.5 w-3.5 text-gold/60" />
+              <Stethoscope className="h-3.5 w-3.5 text-[#4FA3D1]" />
               {provider.specialty}
             </Link>
             <Link
               href={`/states/${stateSlug}/${citySlug}`}
-              className="flex items-center gap-1.5 hover:text-gold transition-colors"
+              className="flex items-center gap-1.5 hover:text-[#2F5EA8] transition-colors"
             >
-              <MapPin className="h-3.5 w-3.5 text-gold/60" />
+              <MapPin className="h-3.5 w-3.5 text-[#4FA3D1]" />
               {provider.city}, {provider.state}
             </Link>
             <span className="flex items-center gap-1.5">
-              <Hash className="h-3.5 w-3.5 text-gold/60" />
+              <Hash className="h-3.5 w-3.5 text-[#4FA3D1]" />
               NPI {npi}
             </span>
           </div>
@@ -242,7 +245,7 @@ export default async function ProviderProfilePage({
 
         {/* ── Revenue Score ──────────────────────────────── */}
         {scoreResult && (
-          <div className="mb-10 rounded-2xl border border-dark-50/80 bg-dark-400/30 p-6">
+          <div className="mb-10 rounded-2xl border border-[var(--border-light)] bg-white p-6">
             <div className="flex flex-col sm:flex-row items-center gap-6">
               {/* Score gauge */}
               <div className="flex flex-col items-center gap-2">
@@ -258,7 +261,7 @@ export default async function ProviderProfilePage({
                       const rotation = 135;
                       return (
                         <>
-                          <circle cx={80} cy={80} r={radius} fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeDasharray={`${arcLength} ${circumference - arcLength}`} strokeLinecap="round" className="text-dark-50/30" transform={`rotate(${rotation} 80 80)`} />
+                          <circle cx={80} cy={80} r={radius} fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeDasharray={`${arcLength} ${circumference - arcLength}`} strokeLinecap="round" className="text-[var(--text-secondary)]/30" transform={`rotate(${rotation} 80 80)`} />
                           <circle cx={80} cy={80} r={radius} fill="none" stroke={scoreResult.hexColor} strokeWidth={strokeWidth} strokeDasharray={`${filledLength} ${circumference - filledLength}`} strokeLinecap="round" transform={`rotate(${rotation} 80 80)`} />
                         </>
                       );
@@ -292,10 +295,10 @@ export default async function ProviderProfilePage({
                   <div key={label} className="flex items-center gap-3">
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-xs text-[var(--text-secondary)] truncate">{label} <span className="text-dark-50">({weight})</span></span>
+                        <span className="text-xs text-[var(--text-secondary)] truncate">{label} <span className="text-[var(--text-secondary)]">({weight})</span></span>
                         <span className="text-xs font-mono font-semibold ml-2">{value}</span>
                       </div>
-                      <div className="h-1.5 bg-dark-50/30 rounded-full overflow-hidden">
+                      <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
                         <div className={`h-full rounded-full ${value >= 80 ? "bg-emerald-400" : value >= 60 ? "bg-yellow-400" : value >= 40 ? "bg-orange-400" : "bg-red-400"}`} style={{ width: `${value}%` }} />
                       </div>
                     </div>
@@ -304,7 +307,7 @@ export default async function ProviderProfilePage({
               </div>
             </div>
             {/* Badge embed */}
-            <div className="mt-6 pt-4 border-t border-dark-50/30">
+            <div className="mt-6 pt-4 border-t border-[var(--border-light)]">
               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                 <div className="flex items-center gap-2">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -313,7 +316,7 @@ export default async function ProviderProfilePage({
                 <div className="flex-1">
                   <p className="text-xs text-[var(--text-secondary)]">
                     Embed this badge on your website:{" "}
-                    <code className="text-[10px] bg-dark-400/50 px-1.5 py-0.5 rounded">
+                    <code className="text-[10px] bg-white px-1.5 py-0.5 rounded">
                       {`<a href="https://npixray.com/provider/${npi}"><img src="https://npixray.com/api/badge/${npi}" /></a>`}
                     </code>
                   </p>
@@ -338,58 +341,58 @@ export default async function ProviderProfilePage({
 
         {/* ── Stats Grid ─────────────────────────────────── */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
-          <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5">
+          <div className="rounded-xl border border-[var(--border-light)] bg-white p-5">
             <div className="flex items-center gap-2 mb-3">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gold/10">
-                <Users className="h-4 w-4 text-gold" />
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#2F5EA8]/[0.06]">
+                <Users className="h-4 w-4 text-[#2F5EA8]" />
               </div>
               <p className="text-[11px] text-[var(--text-secondary)] uppercase tracking-wider">
                 Medicare Patients
               </p>
             </div>
-            <p className="text-2xl font-bold font-mono text-gold">
+            <p className="text-2xl font-bold font-mono text-[#2F5EA8]">
               {formatNumber(provider.total_beneficiaries)}
             </p>
           </div>
 
-          <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5">
+          <div className="rounded-xl border border-[var(--border-light)] bg-white p-5">
             <div className="flex items-center gap-2 mb-3">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gold/10">
-                <FileText className="h-4 w-4 text-gold" />
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#2F5EA8]/[0.06]">
+                <FileText className="h-4 w-4 text-[#2F5EA8]" />
               </div>
               <p className="text-[11px] text-[var(--text-secondary)] uppercase tracking-wider">
                 Total Services
               </p>
             </div>
-            <p className="text-2xl font-bold font-mono text-gold">
+            <p className="text-2xl font-bold font-mono text-[#2F5EA8]">
               {formatNumber(provider.total_services)}
             </p>
           </div>
 
-          <div className="rounded-xl border border-gold/20 bg-gold/5 p-5">
+          <div className="rounded-xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-5">
             <div className="flex items-center gap-2 mb-3">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gold/10">
-                <DollarSign className="h-4 w-4 text-gold" />
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#2F5EA8]/[0.06]">
+                <DollarSign className="h-4 w-4 text-[#2F5EA8]" />
               </div>
               <p className="text-[11px] text-[var(--text-secondary)] uppercase tracking-wider">
                 Medicare Payment
               </p>
             </div>
-            <p className="text-2xl font-bold font-mono text-gold">
+            <p className="text-2xl font-bold font-mono text-[#2F5EA8]">
               {formatCurrency(provider.total_medicare_payment)}
             </p>
           </div>
 
-          <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5">
+          <div className="rounded-xl border border-[var(--border-light)] bg-white p-5">
             <div className="flex items-center gap-2 mb-3">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gold/10">
-                <Stethoscope className="h-4 w-4 text-gold" />
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#2F5EA8]/[0.06]">
+                <Stethoscope className="h-4 w-4 text-[#2F5EA8]" />
               </div>
               <p className="text-[11px] text-[var(--text-secondary)] uppercase tracking-wider">
                 E&M Visits
               </p>
             </div>
-            <p className="text-2xl font-bold font-mono text-gold">
+            <p className="text-2xl font-bold font-mono text-[#2F5EA8]">
               {formatNumber(emVisits)}
             </p>
           </div>
@@ -399,12 +402,12 @@ export default async function ProviderProfilePage({
         {codes.length > 0 && (
           <section className="mb-10">
             <h2 className="text-xl font-bold mb-4">
-              Top Billing <span className="text-gold">Codes</span>
+              Top Billing <span className="text-[#2F5EA8]">Codes</span>
             </h2>
-            <div className="overflow-x-auto rounded-xl border border-dark-50/50">
+            <div className="overflow-x-auto rounded-xl border border-[var(--border-light)]">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-dark-50/50 bg-dark-300/50">
+                  <tr className="border-b border-[var(--border-light)] bg-white/80">
                     <th className="text-left px-4 py-3 text-[11px] text-[var(--text-secondary)] uppercase tracking-wider font-semibold">
                       Code
                     </th>
@@ -423,11 +426,11 @@ export default async function ProviderProfilePage({
                   {codes.map((code, i) => (
                     <tr
                       key={code.hcpcs_code}
-                      className={`border-b border-dark-50/30 ${
-                        i % 2 === 0 ? "bg-dark-400/20" : "bg-dark-400/40"
-                      } hover:bg-dark-400/60 transition-colors`}
+                      className={`border-b border-[var(--border-light)] ${
+                        i % 2 === 0 ? "bg-[var(--bg)]/20" : "bg-[var(--bg)]/40"
+                      } hover:bg-[var(--bg)]/60 transition-colors`}
                     >
-                      <td className="px-4 py-3 font-mono font-semibold text-gold">
+                      <td className="px-4 py-3 font-mono font-semibold text-[#2F5EA8]">
                         {code.hcpcs_code}
                       </td>
                       <td className="text-right px-4 py-3 font-mono">
@@ -451,7 +454,7 @@ export default async function ProviderProfilePage({
         {emTotal > 1 && (
           <section className="mb-10">
             <h2 className="text-xl font-bold mb-4">
-              E&M Code <span className="text-gold">Distribution</span>
+              E&M Code <span className="text-[#2F5EA8]">Distribution</span>
             </h2>
             <p className="text-sm text-[var(--text-secondary)] mb-6 max-w-2xl">
               Evaluation &amp; Management visit level distribution based on CMS
@@ -466,7 +469,7 @@ export default async function ProviderProfilePage({
                     <span className="text-sm font-mono font-semibold w-14 flex-shrink-0">
                       {em.code}
                     </span>
-                    <div className="flex-1 bg-dark-300/50 rounded-full h-6 relative overflow-hidden">
+                    <div className="flex-1 bg-white/80 rounded-full h-6 relative overflow-hidden">
                       <div
                         className={`${em.color} h-6 rounded-full transition-all`}
                         style={{ width: `${Math.max(pct, 1)}%` }}
@@ -488,7 +491,7 @@ export default async function ProviderProfilePage({
         {/* ── Program Billing Section ────────────────────── */}
         <section className="mb-10">
           <h2 className="text-xl font-bold mb-4">
-            Care Management <span className="text-gold">Programs</span>
+            Care Management <span className="text-[#2F5EA8]">Programs</span>
           </h2>
           <p className="text-sm text-[var(--text-secondary)] mb-6 max-w-2xl">
             Medicare care management program participation based on CMS billing
@@ -504,7 +507,7 @@ export default async function ProviderProfilePage({
                   className={`rounded-xl border p-5 ${
                     isActive
                       ? `${program.borderColor} ${program.bgColor}`
-                      : "border-dark-50/50 bg-dark-400/30"
+                      : "border-[var(--border-light)] bg-white"
                   }`}
                 >
                   <div className="flex items-center justify-between mb-3">
@@ -546,7 +549,7 @@ export default async function ProviderProfilePage({
                       <p className="text-xs text-[var(--text-secondary)]">
                         Payment
                       </p>
-                      <p className="text-lg font-bold font-mono text-gold">
+                      <p className="text-lg font-bold font-mono text-[#2F5EA8]">
                         {formatCurrency(program.payment)}
                       </p>
                     </div>
@@ -557,20 +560,26 @@ export default async function ProviderProfilePage({
           </div>
         </section>
 
+        {/* ── Upgrade CTA ──────────────────────────────────── */}
+        <UpgradeInlineCTA
+          feature="Patient Eligibility Lists"
+          teaser={`We identified potential CCM, RPM, and AWV candidates from ${fullName}'s Medicare patient panel. Upgrade to see the full eligibility breakdown and personalized action plan.`}
+        />
+
         {/* ── Related Providers ───────────────────────────── */}
         <section className="mb-10">
           <h2 className="text-xl font-bold mb-4">
             Other{" "}
             <Link
               href={`/specialties/${specSlug}`}
-              className="text-gold hover:underline"
+              className="text-[#2F5EA8] hover:underline"
             >
               {provider.specialty}
             </Link>{" "}
             Providers in{" "}
             <Link
               href={`/states/${stateSlug}/${citySlug}`}
-              className="text-gold hover:underline"
+              className="text-[#2F5EA8] hover:underline"
             >
               {provider.city}
             </Link>
@@ -582,14 +591,14 @@ export default async function ProviderProfilePage({
                 <Link
                   key={rp.npi}
                   href={`/provider/${rp.npi}`}
-                  className="group flex items-center justify-between rounded-xl border border-dark-50/50 bg-dark-400/30 p-4 hover:border-gold/20 hover:bg-dark-400/50 transition-all"
+                  className="group flex items-center justify-between rounded-xl border border-[var(--border-light)] bg-white p-4 hover:border-[#2F5EA8]/10 hover:bg-white transition-all"
                 >
                   <div className="flex items-center gap-4 min-w-0">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gold/10 flex-shrink-0">
-                      <Shield className="h-5 w-5 text-gold/60" />
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#2F5EA8]/[0.06] flex-shrink-0">
+                      <Shield className="h-5 w-5 text-[#4FA3D1]" />
                     </div>
                     <div className="min-w-0">
-                      <p className="font-semibold group-hover:text-gold transition-colors truncate">
+                      <p className="font-semibold group-hover:text-[#2F5EA8] transition-colors truncate">
                         Dr. {rp.first_name} {rp.last_name}
                         {rp.credential && (
                           <span className="text-[var(--text-secondary)] font-normal ml-1.5 text-sm">
@@ -604,10 +613,10 @@ export default async function ProviderProfilePage({
                     </div>
                   </div>
                   <div className="flex items-center gap-3 flex-shrink-0 ml-4">
-                    <span className="text-sm font-mono font-semibold text-gold hidden sm:block">
+                    <span className="text-sm font-mono font-semibold text-[#2F5EA8] hidden sm:block">
                       {formatCurrency(rp.total_medicare_payment)}
                     </span>
-                    <ArrowRight className="h-4 w-4 text-[var(--text-secondary)] group-hover:text-gold transition-colors" />
+                    <ArrowRight className="h-4 w-4 text-[var(--text-secondary)] group-hover:text-[#2F5EA8] transition-colors" />
                   </div>
                 </Link>
               ))}
@@ -622,7 +631,7 @@ export default async function ProviderProfilePage({
           {relatedProviders.length < 3 && (
             <Link
               href={`/states/${stateSlug}/${citySlug}`}
-              className="mt-4 inline-flex items-center gap-1.5 text-sm text-[var(--text-secondary)] hover:text-gold transition-colors"
+              className="mt-4 inline-flex items-center gap-1.5 text-sm text-[var(--text-secondary)] hover:text-[#2F5EA8] transition-colors"
             >
               View all providers in {provider.city}, {provider.state}
               <ArrowRight className="h-3.5 w-3.5" />
@@ -631,26 +640,26 @@ export default async function ProviderProfilePage({
         </section>
 
         {/* ── Internal Links ─────────────────────────────── */}
-        <section className="mb-10 border-t border-dark-50/50 pt-8">
+        <section className="mb-10 border-t border-[var(--border-light)] pt-8">
           <h3 className="text-sm font-semibold text-[var(--text-secondary)] uppercase tracking-wider mb-4">
             Explore More
           </h3>
           <div className="flex flex-wrap gap-3">
             <Link
               href={`/specialties/${specSlug}`}
-              className="rounded-lg border border-dark-50/80 bg-dark-400/30 px-4 py-2 text-xs font-medium text-[var(--text-secondary)] hover:text-gold hover:border-gold/20 transition-colors"
+              className="rounded-lg border border-[var(--border-light)] bg-white px-4 py-2 text-xs font-medium text-[var(--text-secondary)] hover:text-[#2F5EA8] hover:border-[#2F5EA8]/10 transition-colors"
             >
               {provider.specialty} Benchmarks →
             </Link>
             <Link
               href={`/states/${stateSlug}/${citySlug}`}
-              className="rounded-lg border border-dark-50/80 bg-dark-400/30 px-4 py-2 text-xs font-medium text-[var(--text-secondary)] hover:text-gold hover:border-gold/20 transition-colors"
+              className="rounded-lg border border-[var(--border-light)] bg-white px-4 py-2 text-xs font-medium text-[var(--text-secondary)] hover:text-[#2F5EA8] hover:border-[#2F5EA8]/10 transition-colors"
             >
               Providers in {provider.city} →
             </Link>
             <Link
               href={`/states/${stateSlug}`}
-              className="rounded-lg border border-dark-50/80 bg-dark-400/30 px-4 py-2 text-xs font-medium text-[var(--text-secondary)] hover:text-gold hover:border-gold/20 transition-colors"
+              className="rounded-lg border border-[var(--border-light)] bg-white px-4 py-2 text-xs font-medium text-[var(--text-secondary)] hover:text-[#2F5EA8] hover:border-[#2F5EA8]/10 transition-colors"
             >
               {stateName} Overview →
             </Link>
@@ -661,7 +670,7 @@ export default async function ProviderProfilePage({
         <ScanCTA providerName={fullName} />
 
         {/* ── Footer Note ────────────────────────────────── */}
-        <div className="mt-8 mb-4 rounded-lg border border-dark-50/50 bg-dark-300/30 p-4 text-center">
+        <div className="mt-8 mb-4 rounded-lg border border-[var(--border-light)] bg-[var(--bg)] p-4 text-center">
           <p className="text-xs text-[var(--text-secondary)]">
             Data sourced from CMS Medicare Physician &amp; Other Practitioners
             public dataset. All information shown is publicly available

@@ -175,7 +175,7 @@ export default function MailerGenerator() {
   <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;">
     <div>
       <div style="font-size:20px;font-weight:bold;color:#111;">
-        NPI<span style="color:#E8A824;">xray</span>
+        NPI<span style="color:#2F5EA8;">xray</span>
       </div>
       <div style="font-size:9px;color:#888;margin-top:2px;">AI Revenue Intelligence</div>
     </div>
@@ -189,7 +189,7 @@ export default function MailerGenerator() {
   <p style="font-size:13px;color:#333;margin:0 0 12px;line-height:1.6;">
     According to CMS data, <strong>${inv.specialty}</strong> practices in
     <strong>${inv.city}</strong> leave an average of
-    <strong style="color:#E8A824;">${gap}</strong> on the table annually
+    <strong style="color:#2F5EA8;">${gap}</strong> on the table annually
     through under-utilized billing codes and care management programs.
   </p>
   <p style="font-size:13px;color:#333;margin:0 0 16px;line-height:1.6;">
@@ -199,7 +199,7 @@ export default function MailerGenerator() {
 
   <!-- CTA -->
   <div style="background:#111;border-radius:8px;padding:12px 16px;text-align:center;">
-    <div style="font-size:14px;font-weight:600;color:#E8A824;letter-spacing:0.5px;">
+    <div style="font-size:14px;font-weight:600;color:#2F5EA8;letter-spacing:0.5px;">
       ${inviteUrl}
     </div>
   </div>
@@ -272,8 +272,8 @@ ${mailerHtml}
       <div className="min-h-[70vh] flex items-center justify-center px-4">
         <div className="w-full max-w-sm">
           <div className="text-center mb-8">
-            <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gold/10 border border-gold/20 mb-4">
-              <Lock className="h-7 w-7 text-gold" />
+            <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-[#2F5EA8]/[0.06] border border-[#2F5EA8]/10 mb-4">
+              <Lock className="h-7 w-7 text-[#2F5EA8]" />
             </div>
             <h1 className="text-2xl font-bold">Mailer Generator</h1>
             <p className="text-sm text-[var(--text-secondary)] mt-1">
@@ -286,14 +286,14 @@ ${mailerHtml}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Admin password"
-              className="w-full rounded-xl border border-dark-50 bg-dark-500 py-3.5 px-4 text-sm placeholder:text-[var(--text-secondary)]/50 focus:border-gold/50 focus:ring-1 focus:ring-gold/30 outline-none transition-all mb-4"
+              className="w-full rounded-xl border border-[var(--border)] bg-[var(--bg)] py-3.5 px-4 text-sm placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20/50 focus:ring-1 focus:ring-[#2F5EA8]/10 outline-none transition-all mb-4"
               autoFocus
             />
             {authError && <p className="text-xs text-red-400 mb-3">{authError}</p>}
             <button
               type="submit"
               disabled={authLoading}
-              className="w-full flex items-center justify-center gap-2 rounded-xl bg-gold py-3.5 text-sm font-semibold text-dark transition-all hover:bg-gold-300 disabled:opacity-50"
+              className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#2F5EA8] py-3.5 text-sm font-semibold text-white transition-all hover:bg-[#264D8C] disabled:opacity-50"
             >
               {authLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <LogIn className="h-4 w-4" />}
               Sign In
@@ -310,7 +310,7 @@ ${mailerHtml}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold">
-            Mailer <span className="text-gold">Generator</span>
+            Mailer <span className="text-[#2F5EA8]">Generator</span>
           </h1>
           <p className="text-sm text-[var(--text-secondary)] mt-1">
             Generate personalized postcards with QR codes linking to invite pages
@@ -320,7 +320,7 @@ ${mailerHtml}
           <button
             onClick={handleExportCSV}
             disabled={filteredInvites.length === 0}
-            className="flex items-center gap-2 rounded-lg border border-dark-50 px-4 py-2 text-sm text-[var(--text-secondary)] hover:text-gold hover:border-gold/30 transition-all disabled:opacity-50"
+            className="flex items-center gap-2 rounded-lg border border-[var(--border)] px-4 py-2 text-sm text-[var(--text-secondary)] hover:text-[#2F5EA8] hover:border-[#2F5EA8]/15 transition-all disabled:opacity-50"
           >
             <Download className="h-4 w-4" />
             Export CSV
@@ -328,7 +328,7 @@ ${mailerHtml}
           <button
             onClick={handlePrintMailers}
             disabled={filteredInvites.length === 0}
-            className="flex items-center gap-2 rounded-lg bg-gold px-4 py-2 text-sm font-semibold text-dark hover:bg-gold-300 transition-all disabled:opacity-50"
+            className="flex items-center gap-2 rounded-lg bg-[#2F5EA8] px-4 py-2 text-sm font-semibold text-white hover:bg-[#264D8C] transition-all disabled:opacity-50"
           >
             <Printer className="h-4 w-4" />
             Print Mailers ({selectedCodes.size > 0 ? selectedCodes.size : filteredInvites.length})
@@ -339,25 +339,25 @@ ${mailerHtml}
       {/* Stats */}
       {stats && (
         <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 mb-8">
-          <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5">
+          <div className="rounded-xl border border-[var(--border-light)] bg-white p-5">
             <div className="flex items-center gap-3 mb-2">
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gold/10">
-                <Mail className="h-4 w-4 text-gold" />
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#2F5EA8]/[0.06]">
+                <Mail className="h-4 w-4 text-[#2F5EA8]" />
               </div>
               <p className="text-sm text-[var(--text-secondary)]">Total Invites</p>
             </div>
-            <p className="text-3xl font-bold font-mono text-gold">{stats.total}</p>
+            <p className="text-3xl font-bold font-mono text-[#2F5EA8]">{stats.total}</p>
           </div>
-          <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5">
+          <div className="rounded-xl border border-[var(--border-light)] bg-white p-5">
             <div className="flex items-center gap-3 mb-2">
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gold/10">
-                <Eye className="h-4 w-4 text-gold" />
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#2F5EA8]/[0.06]">
+                <Eye className="h-4 w-4 text-[#2F5EA8]" />
               </div>
               <p className="text-sm text-[var(--text-secondary)]">Total Views</p>
             </div>
-            <p className="text-3xl font-bold font-mono text-gold">{stats.views}</p>
+            <p className="text-3xl font-bold font-mono text-[#2F5EA8]">{stats.views}</p>
           </div>
-          <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5">
+          <div className="rounded-xl border border-[var(--border-light)] bg-white p-5">
             <div className="flex items-center gap-3 mb-2">
               <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-500/10">
                 <Users className="h-4 w-4 text-emerald-400" />
@@ -366,14 +366,14 @@ ${mailerHtml}
             </div>
             <p className="text-3xl font-bold font-mono text-emerald-400">{stats.emailsCaptured}</p>
           </div>
-          <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5">
+          <div className="rounded-xl border border-[var(--border-light)] bg-white p-5">
             <div className="flex items-center gap-3 mb-2">
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gold/10">
-                <QrCode className="h-4 w-4 text-gold" />
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#2F5EA8]/[0.06]">
+                <QrCode className="h-4 w-4 text-[#2F5EA8]" />
               </div>
               <p className="text-sm text-[var(--text-secondary)]">Conversion Rate</p>
             </div>
-            <p className="text-3xl font-bold font-mono text-gold">{stats.conversionRate}</p>
+            <p className="text-3xl font-bold font-mono text-[#2F5EA8]">{stats.conversionRate}</p>
           </div>
         </div>
       )}
@@ -387,13 +387,13 @@ ${mailerHtml}
             value={filterText}
             onChange={(e) => setFilterText(e.target.value)}
             placeholder="Filter by name, specialty, city, state, or NPI..."
-            className="w-full rounded-lg border border-dark-50 bg-dark-500 py-2.5 pl-10 pr-4 text-sm placeholder:text-[var(--text-secondary)]/50 focus:border-gold/50 focus:ring-1 focus:ring-gold/30 outline-none transition-all"
+            className="w-full rounded-lg border border-[var(--border)] bg-[var(--bg)] py-2.5 pl-10 pr-4 text-sm placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20/50 focus:ring-1 focus:ring-[#2F5EA8]/10 outline-none transition-all"
           />
         </div>
         <button
           onClick={fetchInvites}
           disabled={loading}
-          className="flex items-center gap-2 rounded-lg border border-dark-50 px-4 py-2.5 text-sm text-[var(--text-secondary)] hover:text-gold hover:border-gold/30 transition-all disabled:opacity-50"
+          className="flex items-center gap-2 rounded-lg border border-[var(--border)] px-4 py-2.5 text-sm text-[var(--text-secondary)] hover:text-[#2F5EA8] hover:border-[#2F5EA8]/15 transition-all disabled:opacity-50"
         >
           <RefreshCw className={`h-4 w-4 ${loading ? "animate-spin" : ""}`} />
           Refresh
@@ -402,7 +402,7 @@ ${mailerHtml}
 
       {/* Invite Table */}
       {filteredInvites.length === 0 ? (
-        <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-12 text-center">
+        <div className="rounded-xl border border-[var(--border-light)] bg-white p-12 text-center">
           <FileText className="h-12 w-12 text-[var(--text-secondary)]/30 mx-auto mb-4" />
           <p className="text-[var(--text-secondary)]">No invite links yet.</p>
           <p className="text-sm text-[var(--text-secondary)]/60 mt-1">
@@ -410,17 +410,17 @@ ${mailerHtml}
           </p>
         </div>
       ) : (
-        <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 overflow-hidden">
+        <div className="rounded-xl border border-[var(--border-light)] bg-white overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-dark-50/50">
+                <tr className="border-b border-[var(--border-light)]">
                   <th className="text-left px-3 py-3 w-10">
                     <input
                       type="checkbox"
                       checked={selectedCodes.size === filteredInvites.length && filteredInvites.length > 0}
                       onChange={toggleSelectAll}
-                      className="accent-gold"
+                      className="accent-[#2F5EA8]"
                     />
                   </th>
                   <th className="text-left px-3 py-3 text-[10px] text-[var(--text-secondary)] uppercase tracking-wider font-semibold">Provider</th>
@@ -437,8 +437,8 @@ ${mailerHtml}
                 {filteredInvites.map((inv) => (
                   <tr
                     key={inv.code}
-                    className={`border-b border-dark-50/30 hover:bg-dark-500/30 transition-colors ${
-                      selectedCodes.has(inv.code) ? "bg-gold/5" : ""
+                    className={`border-b border-[var(--border-light)] hover:bg-[var(--bg)]/30 transition-colors ${
+                      selectedCodes.has(inv.code) ? "bg-[#2F5EA8]/[0.04]" : ""
                     }`}
                   >
                     <td className="px-3 py-3">
@@ -446,7 +446,7 @@ ${mailerHtml}
                         type="checkbox"
                         checked={selectedCodes.has(inv.code)}
                         onChange={() => toggleSelect(inv.code)}
-                        className="accent-gold"
+                        className="accent-[#2F5EA8]"
                       />
                     </td>
                     <td className="px-3 py-3">
@@ -455,13 +455,13 @@ ${mailerHtml}
                     </td>
                     <td className="px-3 py-3 text-[var(--text-secondary)]">{inv.specialty}</td>
                     <td className="px-3 py-3 text-[var(--text-secondary)]">{inv.city}, {inv.state}</td>
-                    <td className="px-3 py-3 text-right font-mono text-gold">{formatCurrency(inv.totalGap)}</td>
+                    <td className="px-3 py-3 text-right font-mono text-[#2F5EA8]">{formatCurrency(inv.totalGap)}</td>
                     <td className="px-3 py-3">
                       <a
                         href={`/invite/${inv.code}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-xs text-gold hover:underline font-mono"
+                        className="text-xs text-[#2F5EA8] hover:underline font-mono"
                       >
                         /invite/{inv.code}
                       </a>
@@ -487,32 +487,32 @@ ${mailerHtml}
       )}
 
       {/* How it works */}
-      <div className="mt-12 rounded-xl border border-dark-50/80 bg-dark-400/50 p-6">
+      <div className="mt-12 rounded-xl border border-[var(--border-light)] bg-white p-6">
         <h2 className="text-lg font-bold mb-4">How Mailers Work</h2>
         <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 text-sm">
-          <div className="p-4 rounded-lg border border-dark-50/50 bg-dark-500/30">
-            <div className="text-gold font-bold text-lg mb-1">1</div>
+          <div className="p-4 rounded-lg border border-[var(--border-light)] bg-[var(--bg)]/30">
+            <div className="text-[#2F5EA8] font-bold text-lg mb-1">1</div>
             <p className="font-medium mb-1">Generate Invites</p>
             <p className="text-xs text-[var(--text-secondary)]">
               Filter providers in the Outreach Dashboard and click &quot;Generate Invite Links&quot;
             </p>
           </div>
-          <div className="p-4 rounded-lg border border-dark-50/50 bg-dark-500/30">
-            <div className="text-gold font-bold text-lg mb-1">2</div>
+          <div className="p-4 rounded-lg border border-[var(--border-light)] bg-[var(--bg)]/30">
+            <div className="text-[#2F5EA8] font-bold text-lg mb-1">2</div>
             <p className="font-medium mb-1">Print Mailers</p>
             <p className="text-xs text-[var(--text-secondary)]">
               Select invites here and click Print. Each postcard has a unique QR code and personalized message.
             </p>
           </div>
-          <div className="p-4 rounded-lg border border-dark-50/50 bg-dark-500/30">
-            <div className="text-gold font-bold text-lg mb-1">3</div>
+          <div className="p-4 rounded-lg border border-[var(--border-light)] bg-[var(--bg)]/30">
+            <div className="text-[#2F5EA8] font-bold text-lg mb-1">3</div>
             <p className="font-medium mb-1">Mail Postcards</p>
             <p className="text-xs text-[var(--text-secondary)]">
               Print on 6x4.25&quot; postcard stock and mail to provider addresses from the CSV export.
             </p>
           </div>
-          <div className="p-4 rounded-lg border border-dark-50/50 bg-dark-500/30">
-            <div className="text-gold font-bold text-lg mb-1">4</div>
+          <div className="p-4 rounded-lg border border-[var(--border-light)] bg-[var(--bg)]/30">
+            <div className="text-[#2F5EA8] font-bold text-lg mb-1">4</div>
             <p className="font-medium mb-1">Track Results</p>
             <p className="text-xs text-[var(--text-secondary)]">
               Monitor views and email captures here. Leads auto-enroll in the email drip sequence.

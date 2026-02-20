@@ -43,7 +43,7 @@ export function ScoreLeaderboard({ entries, title = "Top Scoring Providers" }: S
             return (
               <tr
                 key={entry.npi}
-                className="border-t border-dark-50/30 hover:bg-dark-400/20"
+                className="border-t border-[var(--border-light)] hover:bg-[var(--bg)]/20"
               >
                 <td className="p-2 text-[var(--text-secondary)]">{i + 1}</td>
                 <td className="p-2 font-mono text-xs">{entry.npi}</td>

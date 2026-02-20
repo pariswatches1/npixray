@@ -45,12 +45,12 @@ export default async function ScoresIndexPage() {
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
       {/* Hero */}
       <div className="text-center mb-12">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold/10 text-gold text-sm font-semibold mb-4">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#2F5EA8]/[0.06] text-[#2F5EA8] text-sm font-semibold mb-4">
           <TrendingUp className="h-4 w-4" />
           Revenue Scores
         </div>
         <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">
-          Medicare Revenue <span className="text-gold">Scores</span>
+          Medicare Revenue <span className="text-[#2F5EA8]">Scores</span>
         </h1>
         <p className="text-lg text-[var(--text-secondary)] max-w-2xl mx-auto">
           Every Medicare provider graded 0-100 on revenue health. Based on E&M coding,
@@ -60,9 +60,9 @@ export default async function ScoresIndexPage() {
 
       {/* National Distribution */}
       {distribution.length > 0 ? (
-        <section className="mb-12 rounded-2xl border border-dark-50/80 bg-dark-400/30 p-6">
+        <section className="mb-12 rounded-2xl border border-[var(--border-light)] bg-white p-6">
           <h2 className="text-xl font-bold mb-1 flex items-center gap-2">
-            <BarChart3 className="h-5 w-5 text-gold" />
+            <BarChart3 className="h-5 w-5 text-[#2F5EA8]" />
             National Score Distribution
           </h2>
           <p className="text-sm text-[var(--text-secondary)] mb-6">
@@ -71,7 +71,7 @@ export default async function ScoresIndexPage() {
           <ScoreHistogram data={distribution} avgScore={avgScore} />
         </section>
       ) : (
-        <section className="mb-12 rounded-2xl border border-dark-50/80 bg-dark-400/30 p-6 text-center">
+        <section className="mb-12 rounded-2xl border border-[var(--border-light)] bg-white p-6 text-center">
           <p className="text-[var(--text-secondary)]">
             Revenue Scores are being calculated. Check back soon!
           </p>
@@ -111,7 +111,7 @@ export default async function ScoresIndexPage() {
       {stateRankings.length > 0 && (
         <section className="mb-12">
           <div className="flex items-center gap-3 mb-6">
-            <MapPin className="h-6 w-6 text-gold" />
+            <MapPin className="h-6 w-6 text-[#2F5EA8]" />
             <h2 className="text-2xl font-bold">Scores by State</h2>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
@@ -148,7 +148,7 @@ export default async function ScoresIndexPage() {
       {specialtyRankings.length > 0 && (
         <section className="mb-12">
           <div className="flex items-center gap-3 mb-6">
-            <Stethoscope className="h-6 w-6 text-gold" />
+            <Stethoscope className="h-6 w-6 text-[#2F5EA8]" />
             <h2 className="text-2xl font-bold">Scores by Specialty</h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -158,7 +158,7 @@ export default async function ScoresIndexPage() {
                 <Link
                   key={s.specialty}
                   href={`/scores/specialties/${specialtyToSlug(s.specialty)}`}
-                  className="rounded-xl border border-dark-50/80 bg-dark-400/30 p-4 flex items-center justify-between hover:border-gold/20 transition-colors"
+                  className="rounded-xl border border-[var(--border-light)] bg-white p-4 flex items-center justify-between hover:border-[#2F5EA8]/10 transition-colors"
                 >
                   <div>
                     <p className="font-medium">{s.specialty}</p>
@@ -183,7 +183,7 @@ export default async function ScoresIndexPage() {
       <div className="mb-8 text-center">
         <Link
           href="/tools/score-compare"
-          className="inline-flex items-center gap-2 rounded-lg border border-gold/30 bg-gold/5 px-6 py-3 text-sm font-semibold text-gold hover:bg-gold/10 transition-colors"
+          className="inline-flex items-center gap-2 rounded-lg border border-[#2F5EA8]/15 bg-[#2F5EA8]/[0.04] px-6 py-3 text-sm font-semibold text-[#2F5EA8] hover:bg-[#264D8C]/10 transition-colors"
         >
           <BarChart3 className="h-4 w-4" />
           Compare Provider Scores

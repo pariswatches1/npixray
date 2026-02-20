@@ -74,34 +74,34 @@ export async function GET(request: NextRequest) {
   <title>12-Month Revenue Forecast — ${providerName} | NPIxray</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0d0c08; color: #f5f5f0; padding: 40px; max-width: 900px; margin: 0 auto; }
-    .header { text-align: center; margin-bottom: 40px; border-bottom: 2px solid #E8A824; padding-bottom: 24px; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #FFFFFF; color: #1A2B4A; padding: 40px; max-width: 900px; margin: 0 auto; }
+    .header { text-align: center; margin-bottom: 40px; border-bottom: 2px solid #2F5EA8; padding-bottom: 24px; }
     .header h1 { font-size: 28px; margin-bottom: 8px; }
-    .header .gold { color: #E8A824; }
-    .header .meta { color: #a09c8c; font-size: 14px; }
+    .header .gold { color: #2F5EA8; }
+    .header .meta { color: #6B7A99; font-size: 14px; }
     .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px; }
-    .stat { background: #15140e; border: 1px solid #2a2820; border-radius: 12px; padding: 16px; text-align: center; }
-    .stat .label { font-size: 11px; color: #a09c8c; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
-    .stat .value { font-size: 24px; font-weight: 700; color: #E8A824; }
+    .stat { background: #FFFFFF; border: 1px solid #E9EEF6; border-radius: 12px; padding: 16px; text-align: center; }
+    .stat .label { font-size: 11px; color: #6B7A99; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+    .stat .value { font-size: 24px; font-weight: 700; color: #2F5EA8; }
     .stat .value.green { color: #34d399; }
     .stat .value.blue { color: #38bdf8; }
     .section { margin-bottom: 32px; }
-    .section h2 { font-size: 20px; margin-bottom: 16px; color: #f5f5f0; }
-    table { width: 100%; border-collapse: collapse; background: #15140e; border-radius: 8px; overflow: hidden; }
-    th { background: #1a1910; text-align: left; padding: 10px 16px; font-size: 12px; color: #a09c8c; text-transform: uppercase; letter-spacing: 0.5px; }
-    td { padding: 10px 16px; font-size: 13px; border-top: 1px solid #2a2820; }
+    .section h2 { font-size: 20px; margin-bottom: 16px; color: #1A2B4A; }
+    table { width: 100%; border-collapse: collapse; background: #FFFFFF; border-radius: 8px; overflow: hidden; }
+    th { background: #E9EEF6; text-align: left; padding: 10px 16px; font-size: 12px; color: #6B7A99; text-transform: uppercase; letter-spacing: 0.5px; }
+    td { padding: 10px 16px; font-size: 13px; border-top: 1px solid #E9EEF6; }
     .right { text-align: right; }
-    .gold-text { color: #E8A824; font-weight: 700; }
+    .gold-text { color: #2F5EA8; font-weight: 700; }
     .green-text { color: #34d399; font-weight: 700; }
     .programs { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 32px; }
-    .program-card { background: #15140e; border: 1px solid #2a2820; border-radius: 12px; padding: 20px; }
+    .program-card { background: #FFFFFF; border: 1px solid #E9EEF6; border-radius: 12px; padding: 20px; }
     .program-card h3 { font-size: 14px; margin-bottom: 12px; }
-    .program-card .milestones { display: flex; justify-content: space-between; margin-top: 12px; padding-top: 12px; border-top: 1px solid #2a2820; }
+    .program-card .milestones { display: flex; justify-content: space-between; margin-top: 12px; padding-top: 12px; border-top: 1px solid #E9EEF6; }
     .program-card .milestone { text-align: center; }
-    .program-card .milestone .m-label { font-size: 10px; color: #a09c8c; }
+    .program-card .milestone .m-label { font-size: 10px; color: #6B7A99; }
     .program-card .milestone .m-value { font-size: 12px; font-weight: 700; }
-    .footer { text-align: center; padding-top: 24px; border-top: 1px solid #2a2820; color: #a09c8c; font-size: 11px; }
-    .print-btn { position: fixed; top: 20px; right: 20px; background: #E8A824; color: #0d0c08; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 13px; z-index: 100; }
+    .footer { text-align: center; padding-top: 24px; border-top: 1px solid #E9EEF6; color: #6B7A99; font-size: 11px; }
+    .print-btn { position: fixed; top: 20px; right: 20px; background: #2F5EA8; color: #FFFFFF; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 13px; z-index: 100; }
     .print-btn:hover { background: #D49A1F; }
     @media print { .print-btn { display: none !important; } body { padding: 20px; } @page { margin: 0.75in; } }
   </style>
@@ -130,7 +130,7 @@ export async function GET(request: NextRequest) {
     </div>
     <div class="stat">
       <div class="label">Current Revenue</div>
-      <div class="value" style="color: #a09c8c;">$${Math.round(scanData.billing?.totalMedicarePayment || 0).toLocaleString()}</div>
+      <div class="value" style="color: #6B7A99;">$${Math.round(scanData.billing?.totalMedicarePayment || 0).toLocaleString()}</div>
     </div>
   </div>
 
@@ -161,7 +161,7 @@ export async function GET(request: NextRequest) {
       ${programs.map((prog) => `
       <div class="program-card">
         <h3>${prog.name}</h3>
-        <div style="font-size: 12px; color: #a09c8c; margin-bottom: 8px;">
+        <div style="font-size: 12px; color: #6B7A99; margin-bottom: 8px;">
           Target: ${Math.round(prog.eligible * prog.ramp)} patients &middot;
           Year 1: <span class="gold-text">$${prog.months.reduce((s, v) => s + v, 0).toLocaleString()}</span>
         </div>
@@ -181,7 +181,7 @@ export async function GET(request: NextRequest) {
     <h2>E&M Coding Optimization</h2>
     <div class="program-card">
       <h3>99213 → 99214/99215 Shift</h3>
-      <div style="font-size: 12px; color: #a09c8c;">
+      <div style="font-size: 12px; color: #6B7A99;">
         Annual coding gap: <span class="gold-text">$${(scanData.codingGap?.annualGap || 0).toLocaleString()}</span>
         &middot; Ramps to full effect by Month 6
       </div>
@@ -191,7 +191,7 @@ export async function GET(request: NextRequest) {
   <div class="footer">
     <p>This forecast uses industry-average ramp-up curves and Medicare reimbursement rates.</p>
     <p>Actual results depend on patient enrollment, payer mix, and implementation timeline.</p>
-    <p style="margin-top: 8px; color: #E8A824;">NPIxray.com &mdash; AI Revenue Intelligence for Healthcare</p>
+    <p style="margin-top: 8px; color: #2F5EA8;">NPIxray.com &mdash; AI Revenue Intelligence for Healthcare</p>
   </div>
 </body>
 </html>`;

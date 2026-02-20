@@ -68,7 +68,7 @@ export function SearchResults() {
     <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-12">
       <Link
         href="/"
-        className="inline-flex items-center gap-1.5 text-sm text-[var(--text-secondary)] hover:text-gold transition-colors mb-6"
+        className="inline-flex items-center gap-1.5 text-sm text-[var(--text-secondary)] hover:text-[#2F5EA8] transition-colors mb-6"
       >
         <ArrowLeft className="h-3.5 w-3.5" />
         Back to Scanner
@@ -84,7 +84,7 @@ export function SearchResults() {
       {/* Loading State */}
       {loading && (
         <div className="flex flex-col items-center justify-center py-16 gap-3">
-          <Loader2 className="h-8 w-8 text-gold animate-spin" />
+          <Loader2 className="h-8 w-8 text-[#2F5EA8] animate-spin" />
           <p className="text-sm text-[var(--text-secondary)]">
             Searching NPPES Registry...
           </p>
@@ -106,14 +106,14 @@ export function SearchResults() {
           <div className="flex gap-3">
             <button
               onClick={search}
-              className="inline-flex items-center gap-2 rounded-lg bg-gold px-5 py-2.5 text-sm font-semibold text-dark hover:bg-gold-300 transition-colors"
+              className="inline-flex items-center gap-2 rounded-lg bg-[#2F5EA8] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#264D8C] transition-colors"
             >
               <RefreshCw className="h-4 w-4" />
               Retry Search
             </button>
             <Link
               href="/"
-              className="inline-flex items-center gap-2 rounded-lg border border-dark-50 px-5 py-2.5 text-sm font-medium text-[var(--text-secondary)] hover:border-gold/30 hover:text-gold transition-all"
+              className="inline-flex items-center gap-2 rounded-lg border border-[var(--border)] px-5 py-2.5 text-sm font-medium text-[var(--text-secondary)] hover:border-[#2F5EA8]/15 hover:text-[#2F5EA8] transition-all"
             >
               New Search
             </Link>
@@ -124,7 +124,7 @@ export function SearchResults() {
       {/* No Results State */}
       {!loading && !error && results.length === 0 && (
         <div className="flex flex-col items-center justify-center py-16 gap-4">
-          <div className="h-14 w-14 rounded-2xl border border-dark-50/50 bg-dark-400/50 flex items-center justify-center">
+          <div className="h-14 w-14 rounded-2xl border border-[var(--border-light)] bg-white flex items-center justify-center">
             <SearchX className="h-7 w-7 text-[var(--text-secondary)]" />
           </div>
           <div className="text-center max-w-md">
@@ -133,32 +133,32 @@ export function SearchResults() {
               We couldn&apos;t find any providers matching your search.
             </p>
           </div>
-          <div className="mt-2 rounded-xl border border-dark-50/80 bg-dark-400/50 p-4 max-w-sm w-full">
+          <div className="mt-2 rounded-xl border border-[var(--border-light)] bg-white p-4 max-w-sm w-full">
             <p className="text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider mb-3">
               Try these tips:
             </p>
             <ul className="space-y-2 text-sm text-[var(--text-secondary)]">
               <li className="flex items-start gap-2">
-                <span className="text-gold mt-0.5">&#x2022;</span>
+                <span className="text-[#2F5EA8] mt-0.5">&#x2022;</span>
                 Double-check the spelling of the name
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-gold mt-0.5">&#x2022;</span>
+                <span className="text-[#2F5EA8] mt-0.5">&#x2022;</span>
                 Try searching by last name only
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-gold mt-0.5">&#x2022;</span>
+                <span className="text-[#2F5EA8] mt-0.5">&#x2022;</span>
                 Remove the state filter to search nationally
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-gold mt-0.5">&#x2022;</span>
+                <span className="text-[#2F5EA8] mt-0.5">&#x2022;</span>
                 If you know the NPI, search by number instead
               </li>
             </ul>
           </div>
           <Link
             href="/"
-            className="mt-2 inline-flex items-center gap-2 rounded-lg bg-gold px-5 py-2.5 text-sm font-semibold text-dark hover:bg-gold-300 transition-colors"
+            className="mt-2 inline-flex items-center gap-2 rounded-lg bg-[#2F5EA8] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#264D8C] transition-colors"
           >
             <ArrowLeft className="h-4 w-4" />
             New Search
@@ -177,8 +177,8 @@ export function SearchResults() {
             </p>
 
             {results.length >= 20 && (
-              <div className="flex items-start gap-2 rounded-lg border border-gold/20 bg-gold/5 p-3">
-                <Info className="h-4 w-4 text-gold flex-shrink-0 mt-0.5" />
+              <div className="flex items-start gap-2 rounded-lg border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-3">
+                <Info className="h-4 w-4 text-[#2F5EA8] flex-shrink-0 mt-0.5" />
                 <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
                   Showing the first 20 matches. For more specific results, try
                   adding a <strong className="text-white">state filter</strong> or include
@@ -192,10 +192,10 @@ export function SearchResults() {
             <Link
               key={provider.npi}
               href={`/scan/${provider.npi}`}
-              className="flex items-center justify-between p-4 rounded-xl border border-dark-50/80 bg-dark-400/50 hover:border-gold/20 hover:bg-dark-300/80 transition-all group"
+              className="flex items-center justify-between p-4 rounded-xl border border-[var(--border-light)] bg-white hover:border-[#2F5EA8]/10 hover:bg-[var(--bg)] transition-all group"
             >
               <div>
-                <p className="font-semibold group-hover:text-gold transition-colors">
+                <p className="font-semibold group-hover:text-[#2F5EA8] transition-colors">
                   {provider.fullName}
                   {provider.credential && (
                     <span className="text-[var(--text-secondary)] font-normal ml-1.5 text-sm">
@@ -205,12 +205,12 @@ export function SearchResults() {
                 </p>
                 <div className="flex flex-wrap items-center gap-3 mt-1.5 text-xs text-[var(--text-secondary)]">
                   <span className="flex items-center gap-1">
-                    <Stethoscope className="h-3 w-3 text-gold/50" />
+                    <Stethoscope className="h-3 w-3 text-[#4FA3D1]" />
                     {provider.specialty}
                   </span>
                   {provider.address.city && (
                     <span className="flex items-center gap-1">
-                      <MapPin className="h-3 w-3 text-gold/50" />
+                      <MapPin className="h-3 w-3 text-[#4FA3D1]" />
                       {provider.address.city}, {provider.address.state}
                     </span>
                   )}
@@ -219,7 +219,7 @@ export function SearchResults() {
                   </span>
                 </div>
               </div>
-              <ChevronRight className="h-5 w-5 text-[var(--text-secondary)] group-hover:text-gold transition-colors flex-shrink-0" />
+              <ChevronRight className="h-5 w-5 text-[var(--text-secondary)] group-hover:text-[#2F5EA8] transition-colors flex-shrink-0" />
             </Link>
           ))}
         </div>

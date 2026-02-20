@@ -158,10 +158,10 @@ type TopProviders = Awaited<ReturnType<typeof getTopProvidersByPayment>>;
 
 // ── Helper: CSS bar ──────────────────────────────────────
 
-function Bar({ value, max, color = "bg-gold" }: { value: number; max: number; color?: string }) {
+function Bar({ value, max, color = "bg-[#2F5EA8]" }: { value: number; max: number; color?: string }) {
   const pct = max > 0 ? Math.min((value / max) * 100, 100) : 0;
   return (
-    <div className="w-full bg-dark-500 rounded-full h-3">
+    <div className="w-full bg-[var(--bg)] rounded-full h-3">
       <div
         className={`${color} h-3 rounded-full transition-all`}
         style={{ width: `${pct}%` }}
@@ -174,7 +174,7 @@ function Bar({ value, max, color = "bg-gold" }: { value: number; max: number; co
 
 function RelatedLinks({ links }: { links: { href: string; label: string }[] }) {
   return (
-    <section className="border-t border-dark-50/50 py-12">
+    <section className="border-t border-[var(--border-light)] py-12">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <h2 className="text-lg font-semibold mb-4">Related Pages</h2>
         <div className="flex flex-wrap gap-3">
@@ -182,7 +182,7 @@ function RelatedLinks({ links }: { links: { href: string; label: string }[] }) {
             <Link
               key={link.href}
               href={link.href}
-              className="rounded-lg border border-dark-50/80 bg-dark-400/30 px-4 py-2 text-xs font-medium text-[var(--text-secondary)] hover:text-gold hover:border-gold/20 transition-colors"
+              className="rounded-lg border border-[var(--border-light)] bg-white px-4 py-2 text-xs font-medium text-[var(--text-secondary)] hover:text-[#2F5EA8] hover:border-[#2F5EA8]/10 transition-colors"
             >
               {link.label}
             </Link>
@@ -205,10 +205,10 @@ function MedicareBillingOverview({ stats, benchmarks, codes }: { stats: National
         <StatCard label="Specialties Tracked" value={String(benchmarks.length)} icon={Stethoscope} />
       </div>
       <h3 className="text-lg font-semibold mb-4">Top 10 Billing Codes by Volume</h3>
-      <div className="overflow-x-auto rounded-xl border border-dark-50/50">
+      <div className="overflow-x-auto rounded-xl border border-[var(--border-light)]">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-dark-50/50 bg-dark-300">
+            <tr className="border-b border-[var(--border-light)] bg-white">
               <th className="text-left px-4 py-3 font-medium text-[var(--text-secondary)]">Code</th>
               <th className="text-right px-4 py-3 font-medium text-[var(--text-secondary)]">Services</th>
               <th className="text-right px-4 py-3 font-medium text-[var(--text-secondary)]">Avg Payment</th>
@@ -216,10 +216,10 @@ function MedicareBillingOverview({ stats, benchmarks, codes }: { stats: National
           </thead>
           <tbody>
             {codes.map((c, i) => (
-              <tr key={c.hcpcs_code} className={`border-b border-dark-50/30 ${i % 2 === 0 ? "bg-dark-400/30" : ""}`}>
-                <td className="px-4 py-3"><Link href={`/codes/${c.hcpcs_code}`} className="text-gold hover:text-gold-300 font-mono">{c.hcpcs_code}</Link></td>
+              <tr key={c.hcpcs_code} className={`border-b border-[var(--border-light)] ${i % 2 === 0 ? "bg-white" : ""}`}>
+                <td className="px-4 py-3"><Link href={`/codes/${c.hcpcs_code}`} className="text-[#2F5EA8] hover:text-[#264D8C] font-mono">{c.hcpcs_code}</Link></td>
                 <td className="px-4 py-3 text-right tabular-nums">{formatNumber(c.totalServices)}</td>
-                <td className="px-4 py-3 text-right tabular-nums text-gold">{formatCurrency(c.avgPayment)}</td>
+                <td className="px-4 py-3 text-right tabular-nums text-[#2F5EA8]">{formatCurrency(c.avgPayment)}</td>
               </tr>
             ))}
           </tbody>
@@ -248,13 +248,13 @@ function HighestPayingSpecialties({ benchmarks }: { benchmarks: Benchmarks }) {
       <h3 className="text-lg font-semibold mb-4">Specialties Ranked by Average Medicare Payment</h3>
       <div className="space-y-3 max-w-3xl">
         {sorted.map((b, i) => (
-          <div key={b.specialty} className="rounded-xl border border-dark-50/50 bg-dark-400/30 p-4">
+          <div key={b.specialty} className="rounded-xl border border-[var(--border-light)] bg-white p-4">
             <div className="flex items-center justify-between mb-2">
-              <Link href={`/specialties/${specialtyToSlug(b.specialty)}`} className="text-sm font-semibold hover:text-gold transition-colors">
-                <span className="text-gold/40 font-mono mr-2">#{i + 1}</span>
+              <Link href={`/specialties/${specialtyToSlug(b.specialty)}`} className="text-sm font-semibold hover:text-[#2F5EA8] transition-colors">
+                <span className="text-[#2F5EA8]/40 font-mono mr-2">#{i + 1}</span>
                 {b.specialty}
               </Link>
-              <span className="text-sm font-bold font-mono text-gold">{formatCurrency(b.avg_total_payment)}</span>
+              <span className="text-sm font-bold font-mono text-[#2F5EA8]">{formatCurrency(b.avg_total_payment)}</span>
             </div>
             <Bar value={b.avg_total_payment} max={maxPayment} />
             <p className="text-xs text-[var(--text-secondary)] mt-2">{formatNumber(b.provider_count)} providers</p>
@@ -283,13 +283,13 @@ function MostCommonBillingCodes({ codes }: { codes: Codes }) {
       <h3 className="text-lg font-semibold mb-4">Top 25 Codes by Service Volume</h3>
       <div className="space-y-3 max-w-3xl">
         {codes.map((c, i) => (
-          <div key={c.hcpcs_code} className="rounded-xl border border-dark-50/50 bg-dark-400/30 p-4">
+          <div key={c.hcpcs_code} className="rounded-xl border border-[var(--border-light)] bg-white p-4">
             <div className="flex items-center justify-between mb-2">
-              <Link href={`/codes/${c.hcpcs_code}`} className="font-mono text-sm font-semibold hover:text-gold transition-colors">
-                <span className="text-gold/40 mr-2">#{i + 1}</span>
+              <Link href={`/codes/${c.hcpcs_code}`} className="font-mono text-sm font-semibold hover:text-[#2F5EA8] transition-colors">
+                <span className="text-[#2F5EA8]/40 mr-2">#{i + 1}</span>
                 {c.hcpcs_code}
               </Link>
-              <span className="text-sm font-bold font-mono text-gold">{formatNumber(c.totalServices)} svc</span>
+              <span className="text-sm font-bold font-mono text-[#2F5EA8]">{formatNumber(c.totalServices)} svc</span>
             </div>
             <Bar value={c.totalServices} max={maxServices} />
             <p className="text-xs text-[var(--text-secondary)] mt-2">{formatNumber(c.totalProviders)} providers | {formatCurrency(c.avgPayment)} avg/svc</p>
@@ -318,10 +318,10 @@ function CcmAdoptionRates({ benchmarks }: { benchmarks: Benchmarks }) {
       <h3 className="text-lg font-semibold mb-4">CCM Adoption by Specialty</h3>
       <div className="space-y-3 max-w-3xl">
         {sorted.map((b) => (
-          <div key={b.specialty} className="rounded-xl border border-dark-50/50 bg-dark-400/30 p-4">
+          <div key={b.specialty} className="rounded-xl border border-[var(--border-light)] bg-white p-4">
             <div className="flex items-center justify-between mb-2">
-              <Link href={`/specialties/${specialtyToSlug(b.specialty)}`} className="text-sm font-semibold hover:text-gold transition-colors">{b.specialty}</Link>
-              <span className="text-sm font-bold font-mono text-gold">{(b.ccm_adoption_rate * 100).toFixed(1)}%</span>
+              <Link href={`/specialties/${specialtyToSlug(b.specialty)}`} className="text-sm font-semibold hover:text-[#2F5EA8] transition-colors">{b.specialty}</Link>
+              <span className="text-sm font-bold font-mono text-[#2F5EA8]">{(b.ccm_adoption_rate * 100).toFixed(1)}%</span>
             </div>
             <Bar value={b.ccm_adoption_rate} max={0.15} color="bg-rose-400" />
             <p className="text-xs text-[var(--text-secondary)] mt-2">{formatNumber(b.provider_count)} providers | Target: 15%</p>
@@ -352,10 +352,10 @@ function RpmAdoptionRates({ benchmarks }: { benchmarks: Benchmarks }) {
       <h3 className="text-lg font-semibold mb-4">RPM Adoption by Specialty</h3>
       <div className="space-y-3 max-w-3xl">
         {sorted.map((b) => (
-          <div key={b.specialty} className="rounded-xl border border-dark-50/50 bg-dark-400/30 p-4">
+          <div key={b.specialty} className="rounded-xl border border-[var(--border-light)] bg-white p-4">
             <div className="flex items-center justify-between mb-2">
-              <Link href={`/specialties/${specialtyToSlug(b.specialty)}`} className="text-sm font-semibold hover:text-gold transition-colors">{b.specialty}</Link>
-              <span className="text-sm font-bold font-mono text-gold">{(b.rpm_adoption_rate * 100).toFixed(1)}%</span>
+              <Link href={`/specialties/${specialtyToSlug(b.specialty)}`} className="text-sm font-semibold hover:text-[#2F5EA8] transition-colors">{b.specialty}</Link>
+              <span className="text-sm font-bold font-mono text-[#2F5EA8]">{(b.rpm_adoption_rate * 100).toFixed(1)}%</span>
             </div>
             <Bar value={b.rpm_adoption_rate} max={0.10} color="bg-blue-400" />
             <p className="text-xs text-[var(--text-secondary)] mt-2">{formatNumber(b.provider_count)} providers | Target: 10%</p>
@@ -385,10 +385,10 @@ function AwvCompletionRates({ benchmarks }: { benchmarks: Benchmarks }) {
       <h3 className="text-lg font-semibold mb-4">AWV Completion by Specialty</h3>
       <div className="space-y-3 max-w-3xl">
         {sorted.map((b) => (
-          <div key={b.specialty} className="rounded-xl border border-dark-50/50 bg-dark-400/30 p-4">
+          <div key={b.specialty} className="rounded-xl border border-[var(--border-light)] bg-white p-4">
             <div className="flex items-center justify-between mb-2">
-              <Link href={`/specialties/${specialtyToSlug(b.specialty)}`} className="text-sm font-semibold hover:text-gold transition-colors">{b.specialty}</Link>
-              <span className="text-sm font-bold font-mono text-gold">{(b.awv_adoption_rate * 100).toFixed(1)}%</span>
+              <Link href={`/specialties/${specialtyToSlug(b.specialty)}`} className="text-sm font-semibold hover:text-[#2F5EA8] transition-colors">{b.specialty}</Link>
+              <span className="text-sm font-bold font-mono text-[#2F5EA8]">{(b.awv_adoption_rate * 100).toFixed(1)}%</span>
             </div>
             <Bar value={b.awv_adoption_rate} max={0.70} color="bg-emerald-400" />
             <p className="text-xs text-[var(--text-secondary)] mt-2">{formatNumber(b.provider_count)} providers | Target: 70%</p>
@@ -418,10 +418,10 @@ function BhiScreeningRates({ benchmarks }: { benchmarks: Benchmarks }) {
       <h3 className="text-lg font-semibold mb-4">BHI Screening by Specialty</h3>
       <div className="space-y-3 max-w-3xl">
         {sorted.map((b) => (
-          <div key={b.specialty} className="rounded-xl border border-dark-50/50 bg-dark-400/30 p-4">
+          <div key={b.specialty} className="rounded-xl border border-[var(--border-light)] bg-white p-4">
             <div className="flex items-center justify-between mb-2">
-              <Link href={`/specialties/${specialtyToSlug(b.specialty)}`} className="text-sm font-semibold hover:text-gold transition-colors">{b.specialty}</Link>
-              <span className="text-sm font-bold font-mono text-gold">{(b.bhi_adoption_rate * 100).toFixed(1)}%</span>
+              <Link href={`/specialties/${specialtyToSlug(b.specialty)}`} className="text-sm font-semibold hover:text-[#2F5EA8] transition-colors">{b.specialty}</Link>
+              <span className="text-sm font-bold font-mono text-[#2F5EA8]">{(b.bhi_adoption_rate * 100).toFixed(1)}%</span>
             </div>
             <Bar value={b.bhi_adoption_rate} max={0.10} color="bg-purple-400" />
             <p className="text-xs text-[var(--text-secondary)] mt-2">{formatNumber(b.provider_count)} providers | Target: 10%</p>
@@ -455,17 +455,17 @@ function EmCodingPatterns({ benchmarks }: { benchmarks: Benchmarks }) {
           const p14 = total > 0 ? (b.pct_99214 / total) * 100 : 0;
           const p15 = total > 0 ? (b.pct_99215 / total) * 100 : 0;
           return (
-            <div key={b.specialty} className="rounded-xl border border-dark-50/50 bg-dark-400/30 p-4">
-              <Link href={`/specialties/${specialtyToSlug(b.specialty)}`} className="text-sm font-semibold hover:text-gold transition-colors block mb-3">{b.specialty}</Link>
+            <div key={b.specialty} className="rounded-xl border border-[var(--border-light)] bg-white p-4">
+              <Link href={`/specialties/${specialtyToSlug(b.specialty)}`} className="text-sm font-semibold hover:text-[#2F5EA8] transition-colors block mb-3">{b.specialty}</Link>
               {/* Stacked bar */}
-              <div className="w-full h-6 rounded-full overflow-hidden flex bg-dark-500">
+              <div className="w-full h-6 rounded-full overflow-hidden flex bg-[var(--bg)]">
                 <div className="bg-amber-500 h-full" style={{ width: `${p13}%` }} title={`99213: ${p13.toFixed(0)}%`} />
-                <div className="bg-gold h-full" style={{ width: `${p14}%` }} title={`99214: ${p14.toFixed(0)}%`} />
+                <div className="bg-[#2F5EA8] h-full" style={{ width: `${p14}%` }} title={`99214: ${p14.toFixed(0)}%`} />
                 <div className="bg-emerald-500 h-full" style={{ width: `${p15}%` }} title={`99215: ${p15.toFixed(0)}%`} />
               </div>
               <div className="flex gap-4 mt-2 text-xs text-[var(--text-secondary)]">
                 <span><span className="inline-block w-2 h-2 rounded-full bg-amber-500 mr-1" />99213: {p13.toFixed(0)}%</span>
-                <span><span className="inline-block w-2 h-2 rounded-full bg-gold mr-1" />99214: {p14.toFixed(0)}%</span>
+                <span><span className="inline-block w-2 h-2 rounded-full bg-[#2F5EA8] mr-1" />99214: {p14.toFixed(0)}%</span>
                 <span><span className="inline-block w-2 h-2 rounded-full bg-emerald-500 mr-1" />99215: {p15.toFixed(0)}%</span>
               </div>
             </div>
@@ -495,13 +495,13 @@ function MedicareRevenueByState({ states }: { states: States }) {
       <h3 className="text-lg font-semibold mb-4">States Ranked by Total Medicare Payment</h3>
       <div className="space-y-3 max-w-3xl">
         {sorted.slice(0, 25).map((st, i) => (
-          <div key={st.state} className="rounded-xl border border-dark-50/50 bg-dark-400/30 p-4">
+          <div key={st.state} className="rounded-xl border border-[var(--border-light)] bg-white p-4">
             <div className="flex items-center justify-between mb-2">
-              <Link href={`/states/${stateToSlug(st.state)}`} className="text-sm font-semibold hover:text-gold transition-colors">
-                <span className="text-gold/40 font-mono mr-2">#{i + 1}</span>
+              <Link href={`/states/${stateToSlug(st.state)}`} className="text-sm font-semibold hover:text-[#2F5EA8] transition-colors">
+                <span className="text-[#2F5EA8]/40 font-mono mr-2">#{i + 1}</span>
                 {st.state}
               </Link>
-              <span className="text-sm font-bold font-mono text-gold">{formatCurrency(st.totalPayment)}</span>
+              <span className="text-sm font-bold font-mono text-[#2F5EA8]">{formatCurrency(st.totalPayment)}</span>
             </div>
             <Bar value={st.totalPayment} max={maxPayment} />
             <p className="text-xs text-[var(--text-secondary)] mt-2">{formatNumber(st.totalProviders)} providers | {formatCurrency(st.avgPayment)} avg/provider</p>
@@ -542,13 +542,13 @@ function RevenueGapBySpecialty({ benchmarks }: { benchmarks: Benchmarks }) {
       <h3 className="text-lg font-semibold mb-4">Estimated Revenue Gap by Specialty</h3>
       <div className="space-y-3 max-w-3xl">
         {withGap.map((b, i) => (
-          <div key={b.specialty} className="rounded-xl border border-dark-50/50 bg-dark-400/30 p-4">
+          <div key={b.specialty} className="rounded-xl border border-[var(--border-light)] bg-white p-4">
             <div className="flex items-center justify-between mb-2">
-              <Link href={`/specialties/${specialtyToSlug(b.specialty)}`} className="text-sm font-semibold hover:text-gold transition-colors">
-                <span className="text-gold/40 font-mono mr-2">#{i + 1}</span>
+              <Link href={`/specialties/${specialtyToSlug(b.specialty)}`} className="text-sm font-semibold hover:text-[#2F5EA8] transition-colors">
+                <span className="text-[#2F5EA8]/40 font-mono mr-2">#{i + 1}</span>
                 {b.specialty}
               </Link>
-              <span className="text-sm font-bold font-mono text-gold">{formatCurrency(b.estimatedGap)}/yr</span>
+              <span className="text-sm font-bold font-mono text-[#2F5EA8]">{formatCurrency(b.estimatedGap)}/yr</span>
             </div>
             <Bar value={b.estimatedGap} max={maxGap} />
           </div>
@@ -602,24 +602,24 @@ function RuralVsUrbanBilling({ states }: { states: States }) {
       </div>
       <h3 className="text-lg font-semibold mb-4">Comparison: Lower vs Higher Provider Density States</h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mb-8">
-        <div className="rounded-xl border border-dark-50/50 bg-dark-400/30 p-5">
+        <div className="rounded-xl border border-[var(--border-light)] bg-white p-5">
           <h4 className="font-semibold mb-3">Lower Density States</h4>
-          <p className="text-2xl font-bold font-mono text-gold mb-1">{formatCurrency(ruralAvg)}</p>
+          <p className="text-2xl font-bold font-mono text-[#2F5EA8] mb-1">{formatCurrency(ruralAvg)}</p>
           <p className="text-xs text-[var(--text-secondary)]">avg payment/provider</p>
           <p className="text-xs text-[var(--text-secondary)] mt-2">{formatNumber(ruralProviders)} total providers</p>
         </div>
-        <div className="rounded-xl border border-dark-50/50 bg-dark-400/30 p-5">
+        <div className="rounded-xl border border-[var(--border-light)] bg-white p-5">
           <h4 className="font-semibold mb-3">Higher Density States</h4>
-          <p className="text-2xl font-bold font-mono text-gold mb-1">{formatCurrency(urbanAvg)}</p>
+          <p className="text-2xl font-bold font-mono text-[#2F5EA8] mb-1">{formatCurrency(urbanAvg)}</p>
           <p className="text-xs text-[var(--text-secondary)]">avg payment/provider</p>
           <p className="text-xs text-[var(--text-secondary)] mt-2">{formatNumber(urbanProviders)} total providers</p>
         </div>
       </div>
       <h3 className="text-lg font-semibold mb-4">All States by Provider Count</h3>
-      <div className="overflow-x-auto rounded-xl border border-dark-50/50">
+      <div className="overflow-x-auto rounded-xl border border-[var(--border-light)]">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-dark-50/50 bg-dark-300">
+            <tr className="border-b border-[var(--border-light)] bg-white">
               <th className="text-left px-4 py-3 font-medium text-[var(--text-secondary)]">State</th>
               <th className="text-right px-4 py-3 font-medium text-[var(--text-secondary)]">Providers</th>
               <th className="text-right px-4 py-3 font-medium text-[var(--text-secondary)]">Avg Payment</th>
@@ -627,10 +627,10 @@ function RuralVsUrbanBilling({ states }: { states: States }) {
           </thead>
           <tbody>
             {sorted.map((st, i) => (
-              <tr key={st.state} className={`border-b border-dark-50/30 ${i % 2 === 0 ? "bg-dark-400/30" : ""}`}>
-                <td className="px-4 py-3"><Link href={`/states/${stateToSlug(st.state)}`} className="text-gold hover:text-gold-300">{st.state}</Link></td>
+              <tr key={st.state} className={`border-b border-[var(--border-light)] ${i % 2 === 0 ? "bg-white" : ""}`}>
+                <td className="px-4 py-3"><Link href={`/states/${stateToSlug(st.state)}`} className="text-[#2F5EA8] hover:text-[#264D8C]">{st.state}</Link></td>
                 <td className="px-4 py-3 text-right tabular-nums">{formatNumber(st.totalProviders)}</td>
-                <td className="px-4 py-3 text-right tabular-nums text-gold">{formatCurrency(st.avgPayment)}</td>
+                <td className="px-4 py-3 text-right tabular-nums text-[#2F5EA8]">{formatCurrency(st.avgPayment)}</td>
               </tr>
             ))}
           </tbody>
@@ -666,10 +666,10 @@ function NewPatientVsEstablished({ codes }: { codes: Codes }) {
       <h3 className="text-lg font-semibold mb-4">New Patient Codes</h3>
       <div className="space-y-3 max-w-3xl mb-8">
         {newPatient.map((c) => (
-          <div key={c.hcpcs_code} className="rounded-xl border border-dark-50/50 bg-dark-400/30 p-4">
+          <div key={c.hcpcs_code} className="rounded-xl border border-[var(--border-light)] bg-white p-4">
             <div className="flex items-center justify-between mb-2">
-              <Link href={`/codes/${c.hcpcs_code}`} className="font-mono text-sm font-semibold hover:text-gold transition-colors">{c.hcpcs_code}</Link>
-              <span className="text-sm font-bold font-mono text-gold">{formatNumber(c.totalServices)}</span>
+              <Link href={`/codes/${c.hcpcs_code}`} className="font-mono text-sm font-semibold hover:text-[#2F5EA8] transition-colors">{c.hcpcs_code}</Link>
+              <span className="text-sm font-bold font-mono text-[#2F5EA8]">{formatNumber(c.totalServices)}</span>
             </div>
             <Bar value={c.totalServices} max={estTotal > 0 ? established[0]?.totalServices ?? 1 : 1} color="bg-emerald-400" />
             <p className="text-xs text-[var(--text-secondary)] mt-2">{formatCurrency(c.avgPayment)} avg/svc | {formatNumber(c.totalProviders)} providers</p>
@@ -679,10 +679,10 @@ function NewPatientVsEstablished({ codes }: { codes: Codes }) {
       <h3 className="text-lg font-semibold mb-4">Established Patient Codes</h3>
       <div className="space-y-3 max-w-3xl">
         {established.map((c) => (
-          <div key={c.hcpcs_code} className="rounded-xl border border-dark-50/50 bg-dark-400/30 p-4">
+          <div key={c.hcpcs_code} className="rounded-xl border border-[var(--border-light)] bg-white p-4">
             <div className="flex items-center justify-between mb-2">
-              <Link href={`/codes/${c.hcpcs_code}`} className="font-mono text-sm font-semibold hover:text-gold transition-colors">{c.hcpcs_code}</Link>
-              <span className="text-sm font-bold font-mono text-gold">{formatNumber(c.totalServices)}</span>
+              <Link href={`/codes/${c.hcpcs_code}`} className="font-mono text-sm font-semibold hover:text-[#2F5EA8] transition-colors">{c.hcpcs_code}</Link>
+              <span className="text-sm font-bold font-mono text-[#2F5EA8]">{formatNumber(c.totalServices)}</span>
             </div>
             <Bar value={c.totalServices} max={established[0]?.totalServices ?? 1} />
             <p className="text-xs text-[var(--text-secondary)] mt-2">{formatCurrency(c.avgPayment)} avg/svc | {formatNumber(c.totalProviders)} providers</p>
@@ -721,10 +721,10 @@ function ProcedureVsEvaluation({ benchmarks }: { benchmarks: Benchmarks }) {
           const emPct = b.pct_99213 + b.pct_99214 + b.pct_99215;
           const emDisplay = (emPct * 100).toFixed(0);
           return (
-            <div key={b.specialty} className="rounded-xl border border-dark-50/50 bg-dark-400/30 p-4">
+            <div key={b.specialty} className="rounded-xl border border-[var(--border-light)] bg-white p-4">
               <div className="flex items-center justify-between mb-2">
-                <Link href={`/specialties/${specialtyToSlug(b.specialty)}`} className="text-sm font-semibold hover:text-gold transition-colors">{b.specialty}</Link>
-                <span className="text-sm font-bold font-mono text-gold">{emDisplay}% E&M</span>
+                <Link href={`/specialties/${specialtyToSlug(b.specialty)}`} className="text-sm font-semibold hover:text-[#2F5EA8] transition-colors">{b.specialty}</Link>
+                <span className="text-sm font-bold font-mono text-[#2F5EA8]">{emDisplay}% E&M</span>
               </div>
               <Bar value={emPct} max={1} />
               <p className="text-xs text-[var(--text-secondary)] mt-2">{formatNumber(b.provider_count)} providers | {formatCurrency(b.avg_total_payment)} avg payment</p>
@@ -764,10 +764,10 @@ function MedicarePaymentTrends({ codes, benchmarks }: { codes: Codes; benchmarks
           <h3 className="text-lg font-semibold mb-4">High-Value Codes (&gt; $200/service)</h3>
           <div className="space-y-3 max-w-3xl mb-8">
             {highValueCodes.map((c) => (
-              <div key={c.hcpcs_code} className="rounded-xl border border-dark-50/50 bg-dark-400/30 p-4">
+              <div key={c.hcpcs_code} className="rounded-xl border border-[var(--border-light)] bg-white p-4">
                 <div className="flex items-center justify-between mb-2">
-                  <Link href={`/codes/${c.hcpcs_code}`} className="font-mono text-sm font-semibold hover:text-gold transition-colors">{c.hcpcs_code}</Link>
-                  <span className="text-sm font-bold font-mono text-gold">{formatCurrency(c.avgPayment)}/svc</span>
+                  <Link href={`/codes/${c.hcpcs_code}`} className="font-mono text-sm font-semibold hover:text-[#2F5EA8] transition-colors">{c.hcpcs_code}</Link>
+                  <span className="text-sm font-bold font-mono text-[#2F5EA8]">{formatCurrency(c.avgPayment)}/svc</span>
                 </div>
                 <p className="text-xs text-[var(--text-secondary)]">{formatNumber(c.totalServices)} services | {formatNumber(c.totalProviders)} providers</p>
               </div>
@@ -778,13 +778,13 @@ function MedicarePaymentTrends({ codes, benchmarks }: { codes: Codes; benchmarks
       <h3 className="text-lg font-semibold mb-4">Payment by Specialty (Avg per Provider)</h3>
       <div className="space-y-3 max-w-3xl">
         {sortedBenchmarks.slice(0, 10).map((b, i) => (
-          <div key={b.specialty} className="rounded-xl border border-dark-50/50 bg-dark-400/30 p-4">
+          <div key={b.specialty} className="rounded-xl border border-[var(--border-light)] bg-white p-4">
             <div className="flex items-center justify-between mb-2">
-              <Link href={`/specialties/${specialtyToSlug(b.specialty)}`} className="text-sm font-semibold hover:text-gold transition-colors">
-                <span className="text-gold/40 font-mono mr-2">#{i + 1}</span>
+              <Link href={`/specialties/${specialtyToSlug(b.specialty)}`} className="text-sm font-semibold hover:text-[#2F5EA8] transition-colors">
+                <span className="text-[#2F5EA8]/40 font-mono mr-2">#{i + 1}</span>
                 {b.specialty}
               </Link>
-              <span className="text-sm font-bold font-mono text-gold">{formatCurrency(b.avg_total_payment)}</span>
+              <span className="text-sm font-bold font-mono text-[#2F5EA8]">{formatCurrency(b.avg_total_payment)}</span>
             </div>
             <Bar value={b.avg_total_payment} max={sortedBenchmarks[0]?.avg_total_payment ?? 1} />
           </div>
@@ -888,7 +888,7 @@ export default async function InsightPage({
   return (
     <>
       <section className="relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gold/[0.03] rounded-full blur-3xl" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#2F5EA8]/[0.03] rounded-full blur-3xl" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-8 pb-12 sm:pt-12 sm:pb-16">
           <Breadcrumbs
             items={[
@@ -898,8 +898,8 @@ export default async function InsightPage({
           />
 
           <div className="flex items-center gap-3 mb-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-gold/20 bg-gold/10">
-              <Icon className="h-6 w-6 text-gold" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.06]">
+              <Icon className="h-6 w-6 text-[#2F5EA8]" />
             </div>
             <div>
               <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
@@ -917,7 +917,7 @@ export default async function InsightPage({
         </div>
       </section>
 
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <InsightContent
             slug={slug}

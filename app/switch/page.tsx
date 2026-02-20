@@ -74,19 +74,19 @@ export default function SwitchIndexPage() {
     <>
       {/* Hero */}
       <section className="relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gold/[0.03] rounded-full blur-3xl" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#2F5EA8]/[0.03] rounded-full blur-3xl" />
         <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 pt-8 pb-12 sm:pt-12 sm:pb-16">
           <Breadcrumbs items={[{ label: "Switch to NPIxray" }]} />
           <div className="text-center">
-            <div className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/5 px-4 py-1.5 mb-8">
-              <RefreshCw className="h-3.5 w-3.5 text-gold" />
-              <span className="text-xs font-medium text-gold">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] px-4 py-1.5 mb-8">
+              <RefreshCw className="h-3.5 w-3.5 text-[#2F5EA8]" />
+              <span className="text-xs font-medium text-[#2F5EA8]">
                 Migration Guides
               </span>
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold tracking-tight max-w-3xl mx-auto leading-[1.1]">
               Switch to{" "}
-              <span className="text-gold">NPIxray</span>
+              <span className="text-[#2F5EA8]">NPIxray</span>
             </h1>
             <p className="mt-6 text-lg text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed">
               No matter what you are using today — a competitor platform,
@@ -107,17 +107,17 @@ export default function SwitchIndexPage() {
                 <Link
                   key={page.slug}
                   href={`/switch/${page.slug}`}
-                  className="group rounded-xl border border-dark-50/80 bg-dark-400/50 p-6 hover:border-gold/30 hover:shadow-lg hover:shadow-gold/5 transition-all flex flex-col"
+                  className="group rounded-xl border border-[var(--border-light)] bg-white p-6 hover:border-[#2F5EA8]/15 hover:shadow-lg hover:shadow-[#2F5EA8]/[0.04] transition-all flex flex-col"
                 >
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gold/10 border border-gold/20">
-                      <Icon className="h-5 w-5 text-gold" />
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#2F5EA8]/[0.06] border border-[#2F5EA8]/10">
+                      <Icon className="h-5 w-5 text-[#2F5EA8]" />
                     </div>
                     <div>
-                      <h2 className="font-semibold group-hover:text-gold transition-colors">
+                      <h2 className="font-semibold group-hover:text-[#2F5EA8] transition-colors">
                         From {page.source}
                       </h2>
-                      <p className="text-[10px] text-gold font-medium uppercase tracking-wider">
+                      <p className="text-[10px] text-[#2F5EA8] font-medium uppercase tracking-wider">
                         {page.tagline}
                       </p>
                     </div>
@@ -125,7 +125,7 @@ export default function SwitchIndexPage() {
                   <p className="text-sm text-[var(--text-secondary)] leading-relaxed flex-1 mb-4">
                     {page.description}
                   </p>
-                  <div className="flex items-center gap-1 text-xs font-medium text-[var(--text-secondary)] group-hover:text-gold transition-colors">
+                  <div className="flex items-center gap-1 text-xs font-medium text-[var(--text-secondary)] group-hover:text-[#2F5EA8] transition-colors">
                     Read migration guide
                     <ArrowRight className="h-3 w-3 group-hover:translate-x-0.5 transition-transform" />
                   </div>
@@ -137,11 +137,11 @@ export default function SwitchIndexPage() {
       </section>
 
       {/* Why NPIxray section */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
             <h2 className="text-2xl font-bold mb-3">
-              Why Practices <span className="text-gold">Choose NPIxray</span>
+              Why Practices <span className="text-[#2F5EA8]">Choose NPIxray</span>
             </h2>
             <p className="text-[var(--text-secondary)] max-w-2xl mx-auto">
               Real CMS Medicare data, AI-powered analysis, and a free entry
@@ -150,7 +150,7 @@ export default function SwitchIndexPage() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             <div className="text-center">
-              <p className="text-3xl font-bold font-mono text-gold mb-1">
+              <p className="text-3xl font-bold font-mono text-[#2F5EA8] mb-1">
                 1.2M+
               </p>
               <p className="text-sm font-semibold mb-1">Providers Benchmarked</p>
@@ -159,7 +159,7 @@ export default function SwitchIndexPage() {
               </p>
             </div>
             <div className="text-center">
-              <p className="text-3xl font-bold font-mono text-gold mb-1">
+              <p className="text-3xl font-bold font-mono text-[#2F5EA8] mb-1">
                 30 sec
               </p>
               <p className="text-sm font-semibold mb-1">Time to First Insight</p>
@@ -168,7 +168,7 @@ export default function SwitchIndexPage() {
               </p>
             </div>
             <div className="text-center">
-              <p className="text-3xl font-bold font-mono text-gold mb-1">
+              <p className="text-3xl font-bold font-mono text-[#2F5EA8] mb-1">
                 5+
               </p>
               <p className="text-sm font-semibold mb-1">Programs Analyzed</p>

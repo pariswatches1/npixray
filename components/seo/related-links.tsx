@@ -50,10 +50,10 @@ export function RelatedLinks({ pageType, currentSlug, context }: RelatedLinksPro
   if (groups.length === 0) return null;
 
   return (
-    <section className="border-t border-dark-50/50 py-12">
+    <section className="border-t border-[var(--border-light)] py-12">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <h2 className="text-lg font-bold tracking-tight mb-6">
-          Explore <span className="text-gold">More</span>
+          Explore <span className="text-[#2F5EA8]">More</span>
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -62,10 +62,10 @@ export function RelatedLinks({ pageType, currentSlug, context }: RelatedLinksPro
             return (
               <div
                 key={group.category}
-                className="rounded-xl border border-dark-50/50 bg-dark-400/30 p-5"
+                className="rounded-xl border border-[var(--border-light)] bg-white p-5"
               >
                 <div className="flex items-center gap-2 mb-4">
-                  <Icon className="h-4 w-4 text-gold" />
+                  <Icon className="h-4 w-4 text-[#2F5EA8]" />
                   <h3 className="text-sm font-semibold text-[var(--text-secondary)] uppercase tracking-wider">
                     {group.category}
                   </h3>
@@ -75,7 +75,7 @@ export function RelatedLinks({ pageType, currentSlug, context }: RelatedLinksPro
                     <li key={link.href}>
                       <Link
                         href={link.href}
-                        className="text-sm text-white/80 hover:text-gold transition-colors"
+                        className="text-sm text-white/80 hover:text-[#2F5EA8] transition-colors"
                       >
                         {link.label}
                       </Link>

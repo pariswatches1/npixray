@@ -86,21 +86,21 @@ export default async function CityReportPage({
     <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
       {/* Breadcrumb */}
       <nav className="flex items-center gap-1.5 text-sm text-[var(--text-secondary)] mb-6 flex-wrap">
-        <Link href="/" className="hover:text-gold transition-colors">
+        <Link href="/" className="hover:text-[#2F5EA8] transition-colors">
           <Home className="h-3.5 w-3.5" />
         </Link>
-        <ChevronRight className="h-3.5 w-3.5 text-dark-50" />
-        <Link href="/reports" className="hover:text-gold transition-colors">
+        <ChevronRight className="h-3.5 w-3.5 text-[var(--text-secondary)]" />
+        <Link href="/reports" className="hover:text-[#2F5EA8] transition-colors">
           Reports
         </Link>
-        <ChevronRight className="h-3.5 w-3.5 text-dark-50" />
+        <ChevronRight className="h-3.5 w-3.5 text-[var(--text-secondary)]" />
         <Link
           href={`/reports/states/${stateSlug}`}
-          className="hover:text-gold transition-colors"
+          className="hover:text-[#2F5EA8] transition-colors"
         >
           {stateName}
         </Link>
-        <ChevronRight className="h-3.5 w-3.5 text-dark-50" />
+        <ChevronRight className="h-3.5 w-3.5 text-[var(--text-secondary)]" />
         <span className="text-[var(--text-primary)]">{cityName}</span>
       </nav>
 
@@ -109,8 +109,8 @@ export default async function CityReportPage({
         <ReportGrade grade={gradeInfo} size="md" />
         <div className="text-center sm:text-left">
           <div className="flex items-center gap-2 mb-1">
-            <MapPin className="h-5 w-5 text-gold" />
-            <span className="text-sm font-semibold text-gold uppercase tracking-wider">
+            <MapPin className="h-5 w-5 text-[#2F5EA8]" />
+            <span className="text-sm font-semibold text-[#2F5EA8] uppercase tracking-wider">
               City Report Card
             </span>
           </div>
@@ -122,23 +122,23 @@ export default async function CityReportPage({
 
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
-        <div className="rounded-xl border border-dark-50/80 bg-dark-400/30 p-4">
+        <div className="rounded-xl border border-[var(--border-light)] bg-white p-4">
           <Users className="h-5 w-5 text-[var(--text-secondary)] mb-2" />
           <p className="text-xs text-[var(--text-secondary)] mb-1">Providers</p>
           <p className="text-xl font-bold">{formatNumber(cityStats.count)}</p>
         </div>
-        <div className="rounded-xl border border-dark-50/80 bg-dark-400/30 p-4">
+        <div className="rounded-xl border border-[var(--border-light)] bg-white p-4">
           <DollarSign className="h-5 w-5 text-[var(--text-secondary)] mb-2" />
           <p className="text-xs text-[var(--text-secondary)] mb-1">Avg Payment</p>
           <p className="text-xl font-bold">{formatCurrency(cityStats.avgPayment)}</p>
         </div>
-        <div className="rounded-xl border border-dark-50/80 bg-dark-400/30 p-4">
+        <div className="rounded-xl border border-[var(--border-light)] bg-white p-4">
           <DollarSign className="h-5 w-5 text-[var(--text-secondary)] mb-2" />
           <p className="text-xs text-[var(--text-secondary)] mb-1">Total Payment</p>
           <p className="text-xl font-bold">{formatCurrency(cityStats.totalPayment)}</p>
         </div>
-        <div className="rounded-xl border border-gold/30 bg-gold/5 p-4">
-          <TrendingUp className="h-5 w-5 text-gold mb-2" />
+        <div className="rounded-xl border border-[#2F5EA8]/15 bg-[#2F5EA8]/[0.04] p-4">
+          <TrendingUp className="h-5 w-5 text-[#2F5EA8] mb-2" />
           <p className="text-xs text-[var(--text-secondary)] mb-1">vs State Avg</p>
           <p className={`text-xl font-bold ${ratio >= 1 ? "text-emerald-400" : "text-orange-400"}`}>
             {ratio >= 1 ? "+" : ""}
@@ -151,7 +151,7 @@ export default async function CityReportPage({
       {citySpecialties && citySpecialties.length > 0 && (
         <section className="mb-10">
           <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
-            <Stethoscope className="h-5 w-5 text-gold" />
+            <Stethoscope className="h-5 w-5 text-[#2F5EA8]" />
             Top Specialties
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -159,7 +159,7 @@ export default async function CityReportPage({
               <Link
                 key={i}
                 href={`/reports/specialties/${specialtyToSlug(s.specialty)}`}
-                className="rounded-xl border border-dark-50/80 bg-dark-400/30 p-4 hover:border-gold/20 transition-colors flex justify-between items-center"
+                className="rounded-xl border border-[var(--border-light)] bg-white p-4 hover:border-[#2F5EA8]/10 transition-colors flex justify-between items-center"
               >
                 <span className="font-medium">{s.specialty}</span>
                 <span className="text-sm text-[var(--text-secondary)]">
@@ -174,7 +174,7 @@ export default async function CityReportPage({
       {/* Share */}
       <section className="mb-10">
         <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
-          <Share2 className="h-5 w-5 text-gold" />
+          <Share2 className="h-5 w-5 text-[#2F5EA8]" />
           Share
         </h2>
         <ShareButtons

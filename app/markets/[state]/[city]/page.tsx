@@ -129,19 +129,19 @@ export default async function CityMarketPage({
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
       <nav className="flex items-center gap-1.5 text-sm text-[var(--text-secondary)] mb-6 flex-wrap">
-        <Link href="/" className="hover:text-gold transition-colors"><Home className="h-3.5 w-3.5" /></Link>
-        <ChevronRight className="h-3.5 w-3.5 text-dark-50" />
-        <Link href="/markets" className="hover:text-gold transition-colors">Markets</Link>
-        <ChevronRight className="h-3.5 w-3.5 text-dark-50" />
-        <Link href={`/markets/${stateSlug}`} className="hover:text-gold transition-colors">{stateName}</Link>
-        <ChevronRight className="h-3.5 w-3.5 text-dark-50" />
+        <Link href="/" className="hover:text-[#2F5EA8] transition-colors"><Home className="h-3.5 w-3.5" /></Link>
+        <ChevronRight className="h-3.5 w-3.5 text-[var(--text-secondary)]" />
+        <Link href="/markets" className="hover:text-[#2F5EA8] transition-colors">Markets</Link>
+        <ChevronRight className="h-3.5 w-3.5 text-[var(--text-secondary)]" />
+        <Link href={`/markets/${stateSlug}`} className="hover:text-[#2F5EA8] transition-colors">{stateName}</Link>
+        <ChevronRight className="h-3.5 w-3.5 text-[var(--text-secondary)]" />
         <span className="text-white font-medium">{cityName}</span>
       </nav>
 
       <div className="mb-8">
         <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
           {cityName}, {stateName} Medicare{" "}
-          <span className="text-gold">Market Opportunity</span>
+          <span className="text-[#2F5EA8]">Market Opportunity</span>
         </h1>
         <p className="text-[var(--text-secondary)] max-w-3xl">
           {totalProviders.toLocaleString()} providers across {specialties.length} specialties.
@@ -151,20 +151,20 @@ export default async function CityMarketPage({
 
       {/* Summary Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-        <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-4">
+        <div className="rounded-xl border border-[var(--border-light)] bg-white p-4">
           <p className="text-xs text-[var(--text-secondary)]">Total Providers</p>
           <p className="text-2xl font-bold mt-1">{totalProviders.toLocaleString()}</p>
         </div>
-        <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-4">
+        <div className="rounded-xl border border-[var(--border-light)] bg-white p-4">
           <p className="text-xs text-[var(--text-secondary)]">Specialties</p>
           <p className="text-2xl font-bold mt-1">{specialties.length}</p>
         </div>
-        <div className="rounded-xl border border-gold/20 bg-gold/5 p-4">
-          <p className="text-xs text-gold">Total Opportunity</p>
-          <p className="text-2xl font-bold text-gold mt-1">{fmt$(totalOpp)}</p>
+        <div className="rounded-xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-4">
+          <p className="text-xs text-[#2F5EA8]">Total Opportunity</p>
+          <p className="text-2xl font-bold text-[#2F5EA8] mt-1">{fmt$(totalOpp)}</p>
           <p className="text-[10px] text-[var(--text-secondary)]">estimated annual</p>
         </div>
-        <div className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-4">
+        <div className="rounded-xl border border-[var(--border-light)] bg-white p-4">
           <p className="text-xs text-[var(--text-secondary)]">Top Opportunity</p>
           <p className="text-lg font-bold mt-1 text-emerald-400">
             {topByOpp[0]?.specialty || "N/A"}
@@ -174,7 +174,7 @@ export default async function CityMarketPage({
 
       {/* Specialty Breakdown */}
       <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
-        <Stethoscope className="h-5 w-5 text-gold" />
+        <Stethoscope className="h-5 w-5 text-[#2F5EA8]" />
         Specialty Breakdown
       </h2>
 
@@ -187,7 +187,7 @@ export default async function CityMarketPage({
           return (
             <div
               key={s.specialty}
-              className="rounded-xl border border-dark-50/80 bg-dark-400/30 p-5"
+              className="rounded-xl border border-[var(--border-light)] bg-white p-5"
             >
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
                 <div>
@@ -197,13 +197,13 @@ export default async function CityMarketPage({
                   </p>
                 </div>
                 <div className="text-right">
-                  <p className="text-lg font-bold text-gold">{fmt$(s.totalOpp)}</p>
+                  <p className="text-lg font-bold text-[#2F5EA8]">{fmt$(s.totalOpp)}</p>
                   <p className="text-[10px] text-[var(--text-secondary)]">annual opportunity</p>
                 </div>
               </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                <div className="rounded-lg bg-dark-300/50 p-3 border border-dark-50/30">
+                <div className="rounded-lg bg-white/80 p-3 border border-[var(--border-light)]">
                   <div className="flex items-center gap-1.5 mb-1">
                     <HeartPulse className="h-3 w-3 text-rose-400" />
                     <span className="text-[10px] font-medium">CCM</span>
@@ -215,10 +215,10 @@ export default async function CityMarketPage({
                     {ccmPct.toFixed(0)}% adoption
                   </p>
                   {s.ccmOpp > 0 && (
-                    <p className="text-[10px] text-gold mt-1">{fmt$(s.ccmOpp)} gap</p>
+                    <p className="text-[10px] text-[#2F5EA8] mt-1">{fmt$(s.ccmOpp)} gap</p>
                   )}
                 </div>
-                <div className="rounded-lg bg-dark-300/50 p-3 border border-dark-50/30">
+                <div className="rounded-lg bg-white/80 p-3 border border-[var(--border-light)]">
                   <div className="flex items-center gap-1.5 mb-1">
                     <Activity className="h-3 w-3 text-sky-400" />
                     <span className="text-[10px] font-medium">RPM</span>
@@ -230,10 +230,10 @@ export default async function CityMarketPage({
                     {rpmPct.toFixed(0)}% adoption
                   </p>
                   {s.rpmOpp > 0 && (
-                    <p className="text-[10px] text-gold mt-1">{fmt$(s.rpmOpp)} gap</p>
+                    <p className="text-[10px] text-[#2F5EA8] mt-1">{fmt$(s.rpmOpp)} gap</p>
                   )}
                 </div>
-                <div className="rounded-lg bg-dark-300/50 p-3 border border-dark-50/30">
+                <div className="rounded-lg bg-white/80 p-3 border border-[var(--border-light)]">
                   <div className="flex items-center gap-1.5 mb-1">
                     <Brain className="h-3 w-3 text-purple-400" />
                     <span className="text-[10px] font-medium">BHI</span>
@@ -245,7 +245,7 @@ export default async function CityMarketPage({
                     {(s.providerCount > 0 ? (s.bhiBilling / s.providerCount * 100) : 0).toFixed(0)}% adoption
                   </p>
                 </div>
-                <div className="rounded-lg bg-dark-300/50 p-3 border border-dark-50/30">
+                <div className="rounded-lg bg-white/80 p-3 border border-[var(--border-light)]">
                   <div className="flex items-center gap-1.5 mb-1">
                     <CalendarCheck className="h-3 w-3 text-teal-400" />
                     <span className="text-[10px] font-medium">AWV</span>
@@ -257,7 +257,7 @@ export default async function CityMarketPage({
                     {awvPct.toFixed(0)}% adoption
                   </p>
                   {s.awvOpp > 0 && (
-                    <p className="text-[10px] text-gold mt-1">{fmt$(s.awvOpp)} gap</p>
+                    <p className="text-[10px] text-[#2F5EA8] mt-1">{fmt$(s.awvOpp)} gap</p>
                   )}
                 </div>
               </div>

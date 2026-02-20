@@ -120,3 +120,91 @@ export interface ActionItem {
   difficulty: "easy" | "medium" | "hard";
   category: "coding" | "ccm" | "rpm" | "bhi" | "awv";
 }
+
+// === Group Practice Scan ===
+
+export interface ProviderScanSummary {
+  npi: string;
+  fullName: string;
+  credential: string;
+  specialty: string;
+  city: string;
+  state: string;
+  revenueScore: number;
+  scoreTier: string;
+  scoreColor: string;
+  currentRevenue: number;
+  missedRevenue: number;
+  potentialRevenue: number;
+  codingGap: number;
+  ccmGap: number;
+  rpmGap: number;
+  bhiGap: number;
+  awvGap: number;
+  dataSource: "cms" | "estimated";
+  status: "success" | "failed";
+  fullScan: ScanResult | null;
+}
+
+export interface PracticeActionItem {
+  priority: number;
+  title: string;
+  description: string;
+  affectedProviders: number;
+  totalEstimatedRevenue: number;
+  difficulty: "easy" | "medium" | "hard";
+  category: "coding" | "ccm" | "rpm" | "bhi" | "awv";
+}
+
+export interface GroupScanResult {
+  practiceName: string;
+  scannedAt: string;
+
+  // Individual results
+  providers: ProviderScanSummary[];
+
+  // Counts
+  totalProviders: number;
+  successfulScans: number;
+  failedScans: number;
+
+  // Revenue aggregates
+  totalCurrentRevenue: number;
+  totalMissedRevenue: number;
+  totalPotentialRevenue: number;
+  revenueIncreasePct: number;
+
+  // Score aggregates
+  averageRevenueScore: number;
+  scoreDistribution: { tier: string; count: number; color: string }[];
+
+  // Gap aggregates
+  totalCodingGap: number;
+  totalCcmGap: number;
+  totalRpmGap: number;
+  totalBhiGap: number;
+  totalAwvGap: number;
+
+  // Program adoption across practice
+  programAdoption: {
+    ccm: { enrolled: number; eligible: number; rate: number };
+    rpm: { enrolled: number; eligible: number; rate: number };
+    bhi: { enrolled: number; eligible: number; rate: number };
+    awv: { enrolled: number; eligible: number; rate: number };
+  };
+
+  // Specialty mix
+  specialtyBreakdown: { specialty: string; count: number; totalRevenue: number }[];
+
+  // Rankings
+  topPerformer: ProviderScanSummary | null;
+  bottomPerformer: ProviderScanSummary | null;
+  biggestOpportunity: ProviderScanSummary | null;
+
+  // Practice-level action plan
+  practiceActionPlan: PracticeActionItem[];
+
+  // Data source summary
+  cmsDataCount: number;
+  estimatedDataCount: number;
+}

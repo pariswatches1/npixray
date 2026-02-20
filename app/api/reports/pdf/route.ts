@@ -26,7 +26,7 @@ function escapeHtml(str: string): string {
 function computeGrade(score: number): { letter: string; color: string } {
   if (score >= 90) return { letter: "A", color: "#22c55e" };
   if (score >= 80) return { letter: "B", color: "#84cc16" };
-  if (score >= 70) return { letter: "C", color: "#E8A824" };
+  if (score >= 70) return { letter: "C", color: "#2F5EA8" };
   if (score >= 60) return { letter: "D", color: "#f97316" };
   return { letter: "F", color: "#ef4444" };
 }
@@ -65,12 +65,12 @@ const BASE_CSS = `
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 3px solid #E8A824;
+    border-bottom: 3px solid #2F5EA8;
     padding-bottom: 16px;
     margin-bottom: 32px;
   }
   .logo { font-size: 28px; font-weight: 700; color: #0c0b09; letter-spacing: -0.5px; }
-  .logo span { color: #E8A824; }
+  .logo span { color: #2F5EA8; }
   .report-date { font-size: 12px; color: #666; }
   .title-section { margin-bottom: 32px; }
   .title-section h1 { font-size: 24px; font-weight: 700; color: #1a1a1a; margin-bottom: 4px; }
@@ -101,7 +101,7 @@ const BASE_CSS = `
     padding: 16px;
   }
   .stat-card .label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
-  .stat-card .value { font-size: 22px; font-weight: 700; color: #E8A824; font-variant-numeric: tabular-nums; }
+  .stat-card .value { font-size: 22px; font-weight: 700; color: #2F5EA8; font-variant-numeric: tabular-nums; }
   .section { margin-bottom: 32px; }
   .section h2 { font-size: 18px; font-weight: 600; color: #1a1a1a; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid #e5e5e0; }
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
@@ -109,25 +109,25 @@ const BASE_CSS = `
   tbody td { padding: 10px 12px; border-bottom: 1px solid #f0f0ec; }
   tbody tr:nth-child(even) { background: #fafaf8; }
   .text-right { text-align: right; }
-  .text-gold { color: #E8A824; font-weight: 600; }
+  .text-[#2F5EA8] { color: #2F5EA8; font-weight: 600; }
   .bar-container { background: #e5e5e0; border-radius: 4px; height: 8px; width: 100%; }
-  .bar-fill { background: #E8A824; border-radius: 4px; height: 8px; }
+  .bar-fill { background: #2F5EA8; border-radius: 4px; height: 8px; }
   .footer {
     margin-top: 48px;
     padding-top: 16px;
-    border-top: 2px solid #E8A824;
+    border-top: 2px solid #2F5EA8;
     font-size: 11px;
     color: #888;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
   }
-  .footer a { color: #E8A824; text-decoration: none; font-weight: 600; }
+  .footer a { color: #2F5EA8; text-decoration: none; font-weight: 600; }
   .print-btn {
     position: fixed;
     top: 20px;
     right: 20px;
-    background: #E8A824;
+    background: #2F5EA8;
     color: #0c0b09;
     border: none;
     padding: 12px 24px;
@@ -261,7 +261,7 @@ async function buildStateReport(stateAbbr: string): Promise<string | null> {
                   <td>#${i + 1}</td>
                   <td>${escapeHtml(stateAbbrToName(s.state))} (${escapeHtml(s.state)})</td>
                   <td class="text-right">${formatNumber(s.totalProviders)}</td>
-                  <td class="text-right text-gold">${formatCurrency(s.avgPayment)}</td>
+                  <td class="text-right text-[#2F5EA8]">${formatCurrency(s.avgPayment)}</td>
                   <td class="text-right">${formatCurrency(s.totalPayment)}</td>
                 </tr>`
                 )
@@ -277,10 +277,10 @@ async function buildStateReport(stateAbbr: string): Promise<string | null> {
               <strong>${escapeHtml(stateName)}</strong> ranks <strong>#${rank}</strong> nationally by average Medicare payment per provider.
             </li>
             <li style="padding:8px 0;border-bottom:1px solid #f0f0ec;">
-              Total Medicare spending in ${escapeHtml(stateName)}: <strong class="text-gold">${formatCurrency(stats.totalPayment)}</strong> across ${formatNumber(stats.totalProviders)} providers.
+              Total Medicare spending in ${escapeHtml(stateName)}: <strong class="text-[#2F5EA8]">${formatCurrency(stats.totalPayment)}</strong> across ${formatNumber(stats.totalProviders)} providers.
             </li>
             <li style="padding:8px 0;">
-              Average payment per provider: <strong class="text-gold">${formatCurrency(stats.avgPayment)}</strong>.
+              Average payment per provider: <strong class="text-[#2F5EA8]">${formatCurrency(stats.avgPayment)}</strong>.
             </li>
           </ul>
         </div>
@@ -385,7 +385,7 @@ async function buildSpecialtyReport(specialtySlug: string): Promise<string | nul
               <tr>
                 <td><strong>99214</strong></td>
                 <td>Level 4 (Moderate Complexity)</td>
-                <td class="text-right text-gold">${em214Pct}%</td>
+                <td class="text-right text-[#2F5EA8]">${em214Pct}%</td>
                 <td><div class="bar-container"><div class="bar-fill" style="width:${em214Pct}%;"></div></div></td>
               </tr>
               <tr>
@@ -438,10 +438,10 @@ async function buildSpecialtyReport(specialtySlug: string): Promise<string | nul
           <h2>Revenue Opportunity Summary</h2>
           <ul style="list-style:none;padding:0;">
             <li style="padding:8px 0;border-bottom:1px solid #f0f0ec;">
-              <strong>${escapeHtml(benchmark.specialty)}</strong> averages <strong class="text-gold">${formatCurrency(benchmark.avg_total_payment)}</strong> per provider in Medicare payments.
+              <strong>${escapeHtml(benchmark.specialty)}</strong> averages <strong class="text-[#2F5EA8]">${formatCurrency(benchmark.avg_total_payment)}</strong> per provider in Medicare payments.
             </li>
             <li style="padding:8px 0;border-bottom:1px solid #f0f0ec;">
-              At <strong class="text-gold">${formatCurrency(benchmark.avg_revenue_per_patient)}</strong> per patient, there are ${formatNumber(benchmark.avg_medicare_patients)} Medicare patients on average.
+              At <strong class="text-[#2F5EA8]">${formatCurrency(benchmark.avg_revenue_per_patient)}</strong> per patient, there are ${formatNumber(benchmark.avg_medicare_patients)} Medicare patients on average.
             </li>
             <li style="padding:8px 0;">
               Biggest program adoption gap: <strong>${escapeHtml(biggestGap.name)}</strong> at ${biggestGap.gapPct}% below target.
@@ -484,7 +484,7 @@ async function buildNationalReport(): Promise<string | null> {
 
         <div class="title-section">
           <h1>
-            <span class="grade-badge" style="background:#E8A824">US</span>
+            <span class="grade-badge" style="background:#2F5EA8">US</span>
             National Medicare Revenue Report
           </h1>
           <p>Comprehensive analysis of ${formatNumber(national.totalProviders)} Medicare providers across all states and specialties</p>
@@ -529,7 +529,7 @@ async function buildNationalReport(): Promise<string | null> {
                   <td>#${i + 1}</td>
                   <td>${escapeHtml(stateAbbrToName(s.state))} (${escapeHtml(s.state)})</td>
                   <td class="text-right">${formatNumber(s.totalProviders)}</td>
-                  <td class="text-right text-gold">${formatCurrency(s.avgPayment)}</td>
+                  <td class="text-right text-[#2F5EA8]">${formatCurrency(s.avgPayment)}</td>
                   <td class="text-right">${formatCurrency(s.totalPayment)}</td>
                 </tr>`
                 )
@@ -557,7 +557,7 @@ async function buildNationalReport(): Promise<string | null> {
                 <tr>
                   <td><strong>${escapeHtml(b.specialty)}</strong></td>
                   <td class="text-right">${formatNumber(b.provider_count)}</td>
-                  <td class="text-right text-gold">${formatCurrency(b.avg_total_payment)}</td>
+                  <td class="text-right text-[#2F5EA8]">${formatCurrency(b.avg_total_payment)}</td>
                   <td class="text-right">${(b.ccm_adoption_rate * 100).toFixed(1)}%</td>
                   <td class="text-right">${(b.awv_adoption_rate * 100).toFixed(1)}%</td>
                 </tr>`
@@ -571,10 +571,10 @@ async function buildNationalReport(): Promise<string | null> {
           <h2>Key National Insights</h2>
           <ul style="list-style:none;padding:0;">
             <li style="padding:8px 0;border-bottom:1px solid #f0f0ec;">
-              <strong>${formatNumber(national.totalProviders)}</strong> Medicare providers generated <strong class="text-gold">${formatCurrency(national.totalPayment)}</strong> in total Medicare payments.
+              <strong>${formatNumber(national.totalProviders)}</strong> Medicare providers generated <strong class="text-[#2F5EA8]">${formatCurrency(national.totalPayment)}</strong> in total Medicare payments.
             </li>
             <li style="padding:8px 0;border-bottom:1px solid #f0f0ec;">
-              Average Medicare payment per provider: <strong class="text-gold">${formatCurrency(avgPayment)}</strong>.
+              Average Medicare payment per provider: <strong class="text-[#2F5EA8]">${formatCurrency(avgPayment)}</strong>.
             </li>
             <li style="padding:8px 0;border-bottom:1px solid #f0f0ec;">
               <strong>${allStates.length}</strong> states and territories analyzed with ${formatNumber(national.totalServices)} total services rendered.

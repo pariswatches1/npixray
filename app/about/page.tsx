@@ -154,21 +154,21 @@ export default function AboutPage() {
       />
       {/* Hero */}
       <section className="relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gold/[0.03] rounded-full blur-3xl" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#2F5EA8]/[0.03] rounded-full blur-3xl" />
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-20 pb-12 sm:pt-28 sm:pb-16">
           <Breadcrumbs items={[{ label: "About" }]} />
           <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/5 px-4 py-1.5 mb-8">
-              <Zap className="h-3.5 w-3.5 text-gold" />
-              <span className="text-xs font-medium text-gold">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] px-4 py-1.5 mb-8">
+              <Zap className="h-3.5 w-3.5 text-[#2F5EA8]" />
+              <span className="text-xs font-medium text-[#2F5EA8]">
                 Built on Free Public Data
               </span>
             </div>
 
             <h1 className="text-4xl sm:text-5xl font-bold tracking-tight leading-[1.1] mb-6">
               Making Revenue Intelligence{" "}
-              <span className="text-gold">Accessible</span> to Every Practice
+              <span className="text-[#2F5EA8]">Accessible</span> to Every Practice
             </h1>
 
             <p className="text-lg text-[var(--text-secondary)] leading-relaxed max-w-2xl">
@@ -191,7 +191,7 @@ export default function AboutPage() {
               </h2>
               <div className="space-y-4 text-[var(--text-secondary)] leading-relaxed">
                 <p>
-                  The average medical practice leaves <span className="text-gold font-semibold">$50,000–$200,000 per year</span> in
+                  The average medical practice leaves <span className="text-[#2F5EA8] font-semibold">$50,000–$200,000 per year</span> in
                   uncaptured revenue — from undercoded E&M visits, unenrolled
                   care management programs, and missed preventive services.
                 </p>
@@ -210,9 +210,9 @@ export default function AboutPage() {
               </div>
             </div>
 
-            <div className="rounded-2xl border border-gold/20 bg-gold/5 p-8">
+            <div className="rounded-2xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-8">
               <h3 className="text-lg font-bold mb-6 flex items-center gap-2">
-                <FileText className="h-5 w-5 text-gold" />
+                <FileText className="h-5 w-5 text-[#2F5EA8]" />
                 Why This Data Exists
               </h3>
               <div className="space-y-4 text-sm text-[var(--text-secondary)] leading-relaxed">
@@ -227,7 +227,7 @@ export default function AboutPage() {
                 </p>
                 <p>
                   This data is freely available to anyone at{" "}
-                  <span className="text-gold">data.cms.gov</span>. We simply
+                  <span className="text-[#2F5EA8]">data.cms.gov</span>. We simply
                   built the intelligence layer on top — comparing individual
                   providers against specialty benchmarks to identify gaps.
                 </p>
@@ -243,13 +243,13 @@ export default function AboutPage() {
       </section>
 
       {/* E-E-A-T: Experience, Expertise, Authoritativeness */}
-      <section className="border-t border-dark-50/50 py-16 sm:py-24">
+      <section className="border-t border-[var(--border-light)] py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             <div>
               <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-6">
                 Built by People Who Understand{" "}
-                <span className="text-gold">Healthcare Revenue</span>
+                <span className="text-[#2F5EA8]">Healthcare Revenue</span>
               </h2>
               <div className="space-y-4 text-[var(--text-secondary)] leading-relaxed">
                 <p>
@@ -300,9 +300,9 @@ export default function AboutPage() {
               ].map((item) => (
                 <div
                   key={item.label}
-                  className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-5 flex items-start gap-4"
+                  className="rounded-xl border border-[var(--border-light)] bg-white p-5 flex items-start gap-4"
                 >
-                  <span className="text-xl font-bold font-mono text-gold flex-shrink-0 w-24 text-right">
+                  <span className="text-xl font-bold font-mono text-[#2F5EA8] flex-shrink-0 w-24 text-right">
                     {item.metric}
                   </span>
                   <div>
@@ -317,11 +317,11 @@ export default function AboutPage() {
       </section>
 
       {/* How It Works */}
-      <section className="border-t border-dark-50/50 py-16 sm:py-24">
+      <section className="border-t border-[var(--border-light)] py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4">
-              Our <span className="text-gold">Methodology</span>
+              Our <span className="text-[#2F5EA8]">Methodology</span>
             </h2>
             <p className="text-[var(--text-secondary)] max-w-2xl mx-auto">
               Every NPIxray scan follows a five-step analysis pipeline that
@@ -333,16 +333,16 @@ export default function AboutPage() {
             {METHODOLOGY_STEPS.map((step, i) => (
               <div
                 key={i}
-                className="flex gap-5 rounded-xl border border-dark-50/80 bg-dark-400/50 p-6 hover:border-gold/20 transition-colors"
+                className="flex gap-5 rounded-xl border border-[var(--border-light)] bg-white p-6 hover:border-[#2F5EA8]/10 transition-colors"
               >
                 <div className="flex-shrink-0">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-gold/20 bg-gold/10">
-                    <step.icon className="h-5 w-5 text-gold" />
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.06]">
+                    <step.icon className="h-5 w-5 text-[#2F5EA8]" />
                   </div>
                 </div>
                 <div>
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="text-xs font-mono text-gold/50">
+                    <span className="text-xs font-mono text-[#4FA3D1]">
                       Step {step.step}
                     </span>
                   </div>
@@ -358,11 +358,11 @@ export default function AboutPage() {
       </section>
 
       {/* Data Sources */}
-      <section className="border-t border-dark-50/50 py-16 sm:py-24">
+      <section className="border-t border-[var(--border-light)] py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4">
-              Data <span className="text-gold">Sources</span>
+              Data <span className="text-[#2F5EA8]">Sources</span>
             </h2>
             <p className="text-[var(--text-secondary)] max-w-2xl mx-auto">
               Every number in an NPIxray report is derived from authoritative
@@ -374,11 +374,11 @@ export default function AboutPage() {
             {DATA_SOURCES.map((source) => (
               <div
                 key={source.name}
-                className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6"
+                className="rounded-xl border border-[var(--border-light)] bg-white p-6"
               >
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="font-semibold">{source.name}</h3>
-                  <span className="text-[10px] font-mono font-semibold text-gold px-2 py-0.5 rounded-full bg-gold/10">
+                  <span className="text-[10px] font-mono font-semibold text-[#2F5EA8] px-2 py-0.5 rounded-full bg-[#2F5EA8]/[0.06]">
                     {source.records}
                   </span>
                 </div>
@@ -386,7 +386,7 @@ export default function AboutPage() {
                   {source.description}
                 </p>
                 {source.url && (
-                  <p className="mt-2 text-xs text-gold/60">{source.url}</p>
+                  <p className="mt-2 text-xs text-[#4FA3D1]">{source.url}</p>
                 )}
               </div>
             ))}
@@ -395,11 +395,11 @@ export default function AboutPage() {
       </section>
 
       {/* Trust & Privacy */}
-      <section className="border-t border-dark-50/50 py-16 sm:py-24">
+      <section className="border-t border-[var(--border-light)] py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4">
-              Trust & <span className="text-gold">Privacy</span>
+              Trust & <span className="text-[#2F5EA8]">Privacy</span>
             </h2>
             <p className="text-[var(--text-secondary)] max-w-2xl mx-auto">
               We take data privacy seriously. NPIxray is designed from the
@@ -411,11 +411,11 @@ export default function AboutPage() {
             {TRUST_ITEMS.map((item) => (
               <div
                 key={item.title}
-                className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6"
+                className="rounded-xl border border-[var(--border-light)] bg-white p-6"
               >
                 <div className="flex items-center gap-3 mb-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-gold/20 bg-gold/10">
-                    <item.icon className="h-5 w-5 text-gold" />
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.06]">
+                    <item.icon className="h-5 w-5 text-[#2F5EA8]" />
                   </div>
                   <h3 className="font-semibold">{item.title}</h3>
                 </div>
@@ -429,7 +429,7 @@ export default function AboutPage() {
       </section>
 
       {/* Stats Bar */}
-      <section className="border-t border-dark-50/50">
+      <section className="border-t border-[var(--border-light)]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {[
@@ -439,7 +439,7 @@ export default function AboutPage() {
               { value: "$0", label: "Cost to Scan" },
             ].map((stat) => (
               <div key={stat.label}>
-                <p className="text-2xl sm:text-3xl font-bold font-mono text-gold">
+                <p className="text-2xl sm:text-3xl font-bold font-mono text-[#2F5EA8]">
                   {stat.value}
                 </p>
                 <p className="text-xs text-[var(--text-secondary)] mt-1 uppercase tracking-wider">
@@ -452,11 +452,11 @@ export default function AboutPage() {
       </section>
 
       {/* FAQ — for Google AI Overviews */}
-      <section className="border-t border-dark-50/50 py-16 sm:py-24">
+      <section className="border-t border-[var(--border-light)] py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4">
-              Frequently Asked <span className="text-gold">Questions</span>
+              Frequently Asked <span className="text-[#2F5EA8]">Questions</span>
             </h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
@@ -488,7 +488,7 @@ export default function AboutPage() {
             ].map((faq) => (
               <div
                 key={faq.q}
-                className="rounded-xl border border-dark-50/80 bg-dark-400/50 p-6"
+                className="rounded-xl border border-[var(--border-light)] bg-white p-6"
               >
                 <h4 className="font-semibold mb-2">{faq.q}</h4>
                 <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
@@ -501,9 +501,9 @@ export default function AboutPage() {
       </section>
 
       {/* Disclaimer */}
-      <section className="border-t border-dark-50/50">
+      <section className="border-t border-[var(--border-light)]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
-          <div className="rounded-xl border border-dark-50/80 bg-dark-400/30 p-6 max-w-3xl mx-auto">
+          <div className="rounded-xl border border-[var(--border-light)] bg-white p-6 max-w-3xl mx-auto">
             <h3 className="text-sm font-semibold mb-3 flex items-center gap-2">
               <Shield className="h-4 w-4 text-[var(--text-secondary)]" />
               Important Disclaimer
@@ -528,11 +528,11 @@ export default function AboutPage() {
       </section>
 
       {/* Bottom CTA */}
-      <section className="border-t border-dark-50/50">
+      <section className="border-t border-[var(--border-light)]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 sm:py-20 text-center">
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4">
             Ready to See Your{" "}
-            <span className="text-gold">Revenue Gaps</span>?
+            <span className="text-[#2F5EA8]">Revenue Gaps</span>?
           </h2>
           <p className="text-[var(--text-secondary)] max-w-xl mx-auto mb-8">
             Enter any NPI number to get an instant, free revenue analysis.
@@ -541,14 +541,14 @@ export default function AboutPage() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/"
-              className="inline-flex items-center gap-2 rounded-xl bg-gold px-8 py-4 text-base font-semibold text-dark transition-all hover:bg-gold-300 hover:shadow-lg hover:shadow-gold/20"
+              className="inline-flex items-center gap-2 rounded-xl bg-[#2F5EA8] px-8 py-4 text-base font-semibold text-white transition-all hover:bg-[#264D8C] hover:shadow-lg hover:shadow-[#2F5EA8]/10"
             >
               <Zap className="h-5 w-5" />
               Scan Your NPI — Free
             </Link>
             <Link
               href="/guides"
-              className="inline-flex items-center gap-2 rounded-xl border border-dark-50 px-8 py-4 text-base font-semibold text-[var(--text-secondary)] transition-all hover:border-gold/30 hover:text-gold"
+              className="inline-flex items-center gap-2 rounded-xl border border-[var(--border)] px-8 py-4 text-base font-semibold text-[var(--text-secondary)] transition-all hover:border-[#2F5EA8]/15 hover:text-[#2F5EA8]"
             >
               Browse Billing Guides
               <ArrowRight className="h-4 w-4" />

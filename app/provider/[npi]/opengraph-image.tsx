@@ -23,7 +23,7 @@ export default async function OGImage({
   let location = "";
   let score: number | null = null;
   let tierLabel = "";
-  let tierColor = "#E8A824";
+  let tierColor = "#2F5EA8";
   let breakdown: { label: string; value: number }[] = [];
 
   try {
@@ -73,7 +73,7 @@ export default async function OGImage({
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          background: "linear-gradient(135deg, #0a0a0f 0%, #111118 50%, #0a0a0f 100%)",
+          background: "linear-gradient(135deg, #E9EEF6 0%, #F5F7FA 50%, #E9EEF6 100%)",
           fontFamily: "system-ui, sans-serif",
           padding: "48px 60px",
         }}
@@ -86,7 +86,7 @@ export default async function OGImage({
             left: 0,
             right: 0,
             height: "4px",
-            background: "linear-gradient(90deg, transparent, #E8A824, transparent)",
+            background: "linear-gradient(90deg, transparent, #2F5EA8, transparent)",
           }}
         />
 
@@ -110,14 +110,14 @@ export default async function OGImage({
               alignItems: "center",
               justifyContent: "center",
               fontSize: "18px",
-              color: "#E8A824",
+              color: "#2F5EA8",
             }}
           >
             {"🔍"}
           </div>
           <span style={{ fontSize: "22px", fontWeight: 700, color: "#fff" }}>
             NPI
-            <span style={{ color: "#E8A824" }}>xray</span>
+            <span style={{ color: "#2F5EA8" }}>xray</span>
           </span>
         </div>
 

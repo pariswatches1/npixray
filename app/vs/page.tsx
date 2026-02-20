@@ -122,20 +122,20 @@ export default function VsIndexPage() {
     <>
       {/* Hero */}
       <section className="relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gold/[0.03] rounded-full blur-3xl" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#2F5EA8]/[0.03] rounded-full blur-3xl" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-8 pb-12 sm:pt-12 sm:pb-16">
           <Breadcrumbs items={[{ label: "Compare" }]} />
 
           <div className="text-center">
-            <div className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/5 px-4 py-1.5 mb-8">
-              <Swords className="h-3.5 w-3.5 text-gold" />
-              <span className="text-xs font-medium text-gold">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] px-4 py-1.5 mb-8">
+              <Swords className="h-3.5 w-3.5 text-[#2F5EA8]" />
+              <span className="text-xs font-medium text-[#2F5EA8]">
                 Competitor Comparisons
               </span>
             </div>
             <h1 className="text-4xl sm:text-5xl font-bold tracking-tight max-w-3xl mx-auto leading-[1.1]">
               NPIxray vs{" "}
-              <span className="text-gold">The Competition</span>
+              <span className="text-[#2F5EA8]">The Competition</span>
             </h1>
             <p className="mt-6 text-lg text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed">
               See how NPIxray compares to other healthcare analytics, care
@@ -157,7 +157,7 @@ export default function VsIndexPage() {
             return (
               <div key={category} className="mb-12 last:mb-0">
                 <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                  <span className="text-gold">{category}</span>
+                  <span className="text-[#2F5EA8]">{category}</span>
                   <span className="text-xs text-[var(--text-secondary)] font-normal">
                     ({items.length}{" "}
                     {items.length === 1 ? "comparison" : "comparisons"})
@@ -172,19 +172,19 @@ export default function VsIndexPage() {
                     <Link
                       key={comp.slug}
                       href={`/vs/${comp.slug}`}
-                      className="group rounded-xl border border-dark-50/80 bg-dark-400/50 p-5 hover:border-gold/30 hover:shadow-lg hover:shadow-gold/5 transition-all"
+                      className="group rounded-xl border border-[var(--border-light)] bg-white p-5 hover:border-[#2F5EA8]/15 hover:shadow-lg hover:shadow-[#2F5EA8]/[0.04] transition-all"
                     >
                       <div className="flex items-center gap-3 mb-3">
-                        <div className="rounded-lg bg-gold/10 p-1.5">
-                          <Zap className="h-4 w-4 text-gold" />
+                        <div className="rounded-lg bg-[#2F5EA8]/[0.06] p-1.5">
+                          <Zap className="h-4 w-4 text-[#2F5EA8]" />
                         </div>
-                        <span className="text-xs font-medium text-gold">
+                        <span className="text-xs font-medium text-[#2F5EA8]">
                           NPIxray
                         </span>
                         <span className="text-[10px] text-[var(--text-secondary)] uppercase tracking-wider">
                           vs
                         </span>
-                        <span className="text-xs font-medium text-[var(--text-primary)] group-hover:text-gold transition-colors">
+                        <span className="text-xs font-medium text-[var(--text-primary)] group-hover:text-[#2F5EA8] transition-colors">
                           {comp.name}
                         </span>
                       </div>
@@ -192,10 +192,10 @@ export default function VsIndexPage() {
                         {comp.tagline}
                       </p>
                       <div className="flex items-center justify-between">
-                        <span className="text-[10px] uppercase tracking-wider text-[var(--text-secondary)] bg-dark-300 rounded-full px-2.5 py-1">
+                        <span className="text-[10px] uppercase tracking-wider text-[var(--text-secondary)] bg-white rounded-full px-2.5 py-1">
                           {comp.focus}
                         </span>
-                        <span className="text-xs text-[var(--text-secondary)] group-hover:text-gold transition-colors flex items-center gap-1">
+                        <span className="text-xs text-[var(--text-secondary)] group-hover:text-[#2F5EA8] transition-colors flex items-center gap-1">
                           Compare
                           <ArrowRight className="h-3 w-3 group-hover:translate-x-0.5 transition-transform" />
                         </span>
@@ -210,10 +210,10 @@ export default function VsIndexPage() {
       </section>
 
       {/* Bottom CTA */}
-      <section className="border-t border-dark-50/50 py-12 sm:py-16">
+      <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="rounded-2xl border border-gold/20 bg-gold/5 p-8 sm:p-12 text-center">
-            <Zap className="h-10 w-10 text-gold mx-auto mb-4" />
+          <div className="rounded-2xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-8 sm:p-12 text-center">
+            <Zap className="h-10 w-10 text-[#2F5EA8] mx-auto mb-4" />
             <h2 className="text-2xl sm:text-3xl font-bold mb-3">
               See NPIxray in Action
             </h2>
@@ -224,7 +224,7 @@ export default function VsIndexPage() {
             </p>
             <Link
               href="/"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-gold text-dark font-semibold hover:bg-gold-300 transition-colors text-lg"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-lg bg-[#2F5EA8] text-white font-semibold hover:bg-[#264D8C] transition-colors text-lg"
             >
               <Zap className="h-5 w-5" />
               Run Free NPI Scan

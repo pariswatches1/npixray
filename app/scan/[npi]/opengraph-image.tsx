@@ -18,7 +18,7 @@ export default async function OGImage({
   let missedRevenue = "$0";
 
   try {
-    const result = await performScan(npi);
+    const { result } = await performScan(npi);
     providerName = result.provider.fullName;
     specialty = result.provider.specialty;
     location = `${result.provider.address.city}, ${result.provider.address.state}`;
@@ -39,7 +39,7 @@ export default async function OGImage({
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          background: "linear-gradient(135deg, #0a0a0f 0%, #111118 50%, #0a0a0f 100%)",
+          background: "linear-gradient(135deg, #E9EEF6 0%, #F5F7FA 50%, #E9EEF6 100%)",
           fontFamily: "system-ui, sans-serif",
           padding: "60px",
         }}
@@ -52,7 +52,7 @@ export default async function OGImage({
             left: 0,
             right: 0,
             height: "4px",
-            background: "linear-gradient(90deg, transparent, #E8A824, transparent)",
+            background: "linear-gradient(90deg, transparent, #2F5EA8, transparent)",
           }}
         />
 
@@ -76,14 +76,14 @@ export default async function OGImage({
               alignItems: "center",
               justifyContent: "center",
               fontSize: "24px",
-              color: "#E8A824",
+              color: "#2F5EA8",
             }}
           >
             {"???"}
           </div>
           <span style={{ fontSize: "28px", fontWeight: 700, color: "#fff" }}>
             NPI
-            <span style={{ color: "#E8A824" }}>xray</span>
+            <span style={{ color: "#2F5EA8" }}>xray</span>
           </span>
         </div>
 
@@ -142,7 +142,7 @@ export default async function OGImage({
             style={{
               fontSize: "64px",
               fontWeight: 800,
-              color: "#E8A824",
+              color: "#2F5EA8",
               lineHeight: 1,
             }}
           >

@@ -60,13 +60,13 @@ export function EmailGate({ onUnlock }: EmailGateProps) {
   }
 
   return (
-    <div className="relative rounded-2xl border border-gold/20 bg-dark-300 p-8 sm:p-12 overflow-hidden">
+    <div className="relative rounded-2xl border border-[#2F5EA8]/10 bg-white p-8 sm:p-12 overflow-hidden">
       {/* Blurred preview overlay */}
-      <div className="absolute inset-0 bg-dark/80 backdrop-blur-sm" />
+      <div className="absolute inset-0 bg-white/80 backdrop-blur-sm" />
 
       <div className="relative z-10 text-center max-w-lg mx-auto">
-        <div className="flex h-14 w-14 items-center justify-center rounded-full border border-gold/20 bg-gold/10 mx-auto mb-6">
-          <Lock className="h-7 w-7 text-gold" />
+        <div className="flex h-14 w-14 items-center justify-center rounded-full border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.06] mx-auto mb-6">
+          <Lock className="h-7 w-7 text-[#2F5EA8]" />
         </div>
 
         <h3 className="text-2xl sm:text-3xl font-bold mb-3">
@@ -86,14 +86,14 @@ export function EmailGate({ onUnlock }: EmailGateProps) {
               placeholder="you@practice.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-lg border border-dark-50/80 bg-dark-400 pl-10 pr-4 py-3 text-sm placeholder:text-dark-50 focus:border-gold focus:ring-1 focus:ring-gold outline-none transition-colors"
+              className="w-full rounded-lg border border-[var(--border-light)] bg-[var(--bg)] pl-10 pr-4 py-3 text-sm placeholder:text-[var(--text-secondary)] focus:border-[#2F5EA8]/20 focus:ring-1 focus:ring-[#2F5EA8]/10 outline-none transition-colors"
               required
             />
           </div>
           <button
             type="submit"
             disabled={loading}
-            className="inline-flex items-center justify-center gap-2 rounded-lg bg-gold px-6 py-3 text-sm font-semibold text-dark hover:bg-gold-300 transition-colors disabled:opacity-50"
+            className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#2F5EA8] px-6 py-3 text-sm font-semibold text-white hover:bg-[#264D8C] transition-colors disabled:opacity-50"
           >
             {loading ? (
               "Unlocking..."

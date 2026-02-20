@@ -99,20 +99,20 @@ export default function AnswersIndexPage() {
     <>
       {/* Hero */}
       <section className="relative overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gold/[0.03] rounded-full blur-3xl" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#2F5EA8]/[0.03] rounded-full blur-3xl" />
 
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-20 pb-12 sm:pt-28 sm:pb-16">
           <div className="text-center">
-            <div className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/5 px-4 py-1.5 mb-8">
-              <MessageSquare className="h-3.5 w-3.5 text-gold" />
-              <span className="text-xs font-medium text-gold">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] px-4 py-1.5 mb-8">
+              <MessageSquare className="h-3.5 w-3.5 text-[#2F5EA8]" />
+              <span className="text-xs font-medium text-[#2F5EA8]">
                 50+ Expert Answers
               </span>
             </div>
 
             <h1 className="text-4xl sm:text-5xl font-bold tracking-tight max-w-3xl mx-auto leading-[1.1]">
               Medicare Billing{" "}
-              <span className="text-gold">Answers</span>
+              <span className="text-[#2F5EA8]">Answers</span>
             </h1>
 
             <p className="mt-6 text-lg text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed">
@@ -138,10 +138,10 @@ export default function AnswersIndexPage() {
                   {/* Category header */}
                   <div className="flex items-center gap-3 mb-2">
                     <div
-                      className={`flex h-9 w-9 items-center justify-center rounded-lg ${meta?.bgColor ?? "bg-gold/10"}`}
+                      className={`flex h-9 w-9 items-center justify-center rounded-lg ${meta?.bgColor ?? "bg-[#2F5EA8]/[0.06]"}`}
                     >
                       <Icon
-                        className={`h-4.5 w-4.5 ${meta?.color ?? "text-gold"}`}
+                        className={`h-4.5 w-4.5 ${meta?.color ?? "text-[#2F5EA8]"}`}
                       />
                     </div>
                     <h2 className="text-xl font-bold">{cat.label}</h2>
@@ -160,18 +160,18 @@ export default function AnswersIndexPage() {
                         <Link
                           key={s}
                           href={`/answers/${s}`}
-                          className="group flex items-start gap-3 rounded-xl border border-dark-50/80 bg-dark-400/30 p-4 hover:border-gold/20 hover:bg-dark-400/50 transition-all"
+                          className="group flex items-start gap-3 rounded-xl border border-[var(--border-light)] bg-white p-4 hover:border-[#2F5EA8]/10 hover:bg-white transition-all"
                         >
-                          <MessageSquare className="h-4 w-4 text-gold/40 group-hover:text-gold transition-colors flex-shrink-0 mt-0.5" />
+                          <MessageSquare className="h-4 w-4 text-[#2F5EA8]/40 group-hover:text-[#2F5EA8] transition-colors flex-shrink-0 mt-0.5" />
                           <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium group-hover:text-gold transition-colors leading-snug">
+                            <p className="text-sm font-medium group-hover:text-[#2F5EA8] transition-colors leading-snug">
                               {answer.question}
                             </p>
                             <p className="text-xs text-[var(--text-secondary)] mt-1 line-clamp-2">
                               {answer.metaDescription}
                             </p>
                           </div>
-                          <ArrowRight className="h-3.5 w-3.5 text-[var(--text-secondary)] group-hover:text-gold group-hover:translate-x-0.5 transition-all flex-shrink-0 mt-1" />
+                          <ArrowRight className="h-3.5 w-3.5 text-[var(--text-secondary)] group-hover:text-[#2F5EA8] group-hover:translate-x-0.5 transition-all flex-shrink-0 mt-1" />
                         </Link>
                       );
                     })}
@@ -184,11 +184,11 @@ export default function AnswersIndexPage() {
       </section>
 
       {/* Bottom CTA */}
-      <section className="border-t border-dark-50/50">
+      <section className="border-t border-[var(--border-light)]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 sm:py-20 text-center">
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4">
             Get Your Practice&apos;s{" "}
-            <span className="text-gold">Specific Answers</span>
+            <span className="text-[#2F5EA8]">Specific Answers</span>
           </h2>
           <p className="text-[var(--text-secondary)] max-w-xl mx-auto mb-8">
             These answers use national averages. Scan your NPI for a
@@ -197,7 +197,7 @@ export default function AnswersIndexPage() {
           </p>
           <Link
             href="/"
-            className="inline-flex items-center gap-2 rounded-xl bg-gold px-8 py-4 text-base font-semibold text-dark transition-all hover:bg-gold-300 hover:shadow-lg hover:shadow-gold/20"
+            className="inline-flex items-center gap-2 rounded-xl bg-[#2F5EA8] px-8 py-4 text-base font-semibold text-white transition-all hover:bg-[#264D8C] hover:shadow-lg hover:shadow-[#2F5EA8]/10"
           >
             <Zap className="h-5 w-5" />
             Scan Your NPI — Free
