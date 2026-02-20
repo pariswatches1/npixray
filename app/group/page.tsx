@@ -36,7 +36,7 @@ export default function GroupScanPage() {
             <Users className="h-3.5 w-3.5" />
             GROUP PRACTICE SCAN
           </div>
-          <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3">
+          <h1 className="text-3xl sm:text-4xl font-bold text-[var(--text-primary)] mb-3">
             X-Ray Your Entire Practice
           </h1>
           <p className="text-[var(--text-secondary)] text-lg max-w-xl mx-auto">
