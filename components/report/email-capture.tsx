@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { X, Mail, Send, CheckCircle2 } from "lucide-react";
+import { X, Mail, Send, CheckCircle2, Check } from "lucide-react";
 import { ScanResult } from "@/lib/types";
 import { trackEvent } from "@/lib/analytics";
 
@@ -24,6 +24,8 @@ async function submitLead(
         npi: data.provider.npi,
         providerName: data.provider.fullName,
         specialty: data.provider.specialty,
+        state: data.provider.address?.state || "",
+        city: data.provider.address?.city || "",
         totalMissedRevenue: data.totalMissedRevenue,
       }),
     });
@@ -35,7 +37,7 @@ async function submitLead(
   }
 }
 
-// ─── Modal overlay (appears after 5 seconds) ───
+// ─── Modal overlay (appears after 8 seconds) ───
 export function EmailCaptureModal({ data }: { data: ScanResult }) {
   const [show, setShow] = useState(false);
   const [email, setEmail] = useState("");
@@ -48,7 +50,7 @@ export function EmailCaptureModal({ data }: { data: ScanResult }) {
     const saved = sessionStorage.getItem(`npixray-lead-${data.provider.npi}`);
     if (saved) return;
 
-    const timer = setTimeout(() => setShow(true), 5000);
+    const timer = setTimeout(() => setShow(true), 8000);
     return () => clearTimeout(timer);
   }, [data.provider.npi]);
 
@@ -110,7 +112,7 @@ export function EmailCaptureModal({ data }: { data: ScanResult }) {
                 <Mail className="h-6 w-6 text-[#2F5EA8]" />
               </div>
               <h3 className="text-xl font-bold mb-2">
-                Get Your Full Report
+                Save Your Revenue Report
               </h3>
               <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
                 We&apos;ll email you the complete revenue analysis for{" "}
@@ -121,6 +123,20 @@ export function EmailCaptureModal({ data }: { data: ScanResult }) {
                 </span>{" "}
                 in missed revenue opportunities.
               </p>
+              <ul className="mt-3 space-y-1.5 text-left text-sm text-[var(--text-secondary)]">
+                <li className="flex items-center gap-2">
+                  <Check className="h-3.5 w-3.5 text-gold flex-shrink-0" />
+                  Your complete revenue gap analysis
+                </li>
+                <li className="flex items-center gap-2">
+                  <Check className="h-3.5 w-3.5 text-gold flex-shrink-0" />
+                  3 quick wins to start capturing revenue
+                </li>
+                <li className="flex items-center gap-2">
+                  <Check className="h-3.5 w-3.5 text-gold flex-shrink-0" />
+                  Competitive benchmarks for your specialty
+                </li>
+              </ul>
             </div>
 
             <form onSubmit={handleSubmit}>
@@ -162,7 +178,10 @@ export function EmailCaptureModal({ data }: { data: ScanResult }) {
               </button>
             </form>
 
-            <p className="mt-4 text-center text-[10px] text-[var(--text-secondary)]">
+            <p className="mt-4 text-center text-[var(--text-secondary)] text-[10px]">
+              Join 2,400+ providers who&apos;ve scanned their NPI
+            </p>
+            <p className="mt-1 text-center text-[10px] text-[var(--text-secondary)]">
               No spam. One report per NPI. Unsubscribe anytime.
             </p>
           </>

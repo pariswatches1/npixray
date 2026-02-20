@@ -10,9 +10,12 @@ interface Lead {
   npi: string;
   providerName: string;
   specialty: string;
+  state: string;
+  city: string;
   totalMissedRevenue: number;
   timestamp: string;
   emailSent?: boolean;
+  sequenceEnrolled?: boolean;
 }
 
 async function readLeads(): Promise<Lead[]> {
@@ -32,7 +35,7 @@ async function writeLeads(leads: Lead[]): Promise<void> {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { email, npi, providerName, specialty, totalMissedRevenue } = body;
+    const { email, npi, providerName, specialty, state, city, totalMissedRevenue } = body;
 
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return NextResponse.json(
@@ -53,9 +56,12 @@ export async function POST(request: NextRequest) {
       npi,
       providerName: providerName || "",
       specialty: specialty || "",
+      state: state || "",
+      city: city || "",
       totalMissedRevenue: totalMissedRevenue || 0,
       timestamp: new Date().toISOString(),
       emailSent: false,
+      sequenceEnrolled: false,
     };
 
     const leads = await readLeads();
@@ -99,10 +105,48 @@ export async function POST(request: NextRequest) {
       // Lead is still saved — email failure is non-critical
     }
 
+    // Enroll lead in the 5-email drip sequence (non-blocking)
+    let sequenceEnrolled = false;
+    if (lead.state && lead.city) {
+      try {
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://npixray.com";
+        const seqRes = await fetch(`${baseUrl}/api/email/sequences`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: lead.email,
+            npi: lead.npi,
+            providerName: lead.providerName,
+            specialty: lead.specialty,
+            state: lead.state,
+            city: lead.city,
+            totalMissedRevenue: lead.totalMissedRevenue,
+          }),
+        });
+        const seqJson = await seqRes.json();
+        sequenceEnrolled = seqJson.success === true;
+
+        if (sequenceEnrolled) {
+          const updatedLeads = await readLeads();
+          const idx = updatedLeads.findIndex(
+            (l) => l.email === lead.email && l.npi === lead.npi
+          );
+          if (idx >= 0) {
+            updatedLeads[idx].sequenceEnrolled = true;
+            await writeLeads(updatedLeads);
+          }
+        }
+      } catch (seqErr) {
+        console.error("[leads] Sequence enrollment failed:", seqErr);
+        // Non-critical — lead is already saved
+      }
+    }
+
     return NextResponse.json({
       success: true,
       message: "Lead saved.",
       emailSent,
+      sequenceEnrolled,
     });
   } catch (err) {
     console.error("Leads API error:", err);
