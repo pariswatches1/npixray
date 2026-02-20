@@ -84,7 +84,10 @@ async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {
 }
 
 async function handleInvoicePaymentFailed(invoice: Stripe.Invoice) {
-  const subscriptionId = invoice.subscription as string;
+  // Stripe v20+ changed Invoice type — subscription may be string, object, or nested
+  const sub = (invoice as any).subscription;
+  const subscriptionId: string | null =
+    typeof sub === "string" ? sub : sub?.id ?? null;
   if (!subscriptionId || !process.env.DATABASE_URL) return;
 
   const sql = await getNeon();
