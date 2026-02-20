@@ -250,7 +250,7 @@ export default function AdminSocialPage() {
               {tab.label}
               <span className={`text-xs px-1.5 py-0.5 rounded ${
                 activeTab === tab.key
-                  ? "bg-gray-100 text-white"
+                  ? "bg-gray-100 text-[var(--text-primary)]"
                   : "bg-[var(--bg)] text-[var(--text-secondary)]"
               }`}>
                 {tab.count}

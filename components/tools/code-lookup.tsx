@@ -53,7 +53,7 @@ export function CodeLookupTool() {
               value={code}
               onChange={(e) => setCode(e.target.value.toUpperCase())}
               maxLength={10}
-              className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-white font-mono tracking-wider placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20 focus:outline-none transition-colors"
+              className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-[var(--text-primary)] font-mono tracking-wider placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20 focus:outline-none transition-colors"
               aria-label="CPT or HCPCS code"
             />
           </div>

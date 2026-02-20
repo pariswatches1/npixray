@@ -135,7 +135,7 @@ export default async function CityMarketPage({
         <ChevronRight className="h-3.5 w-3.5 text-[var(--text-secondary)]" />
         <Link href={`/markets/${stateSlug}`} className="hover:text-[#2F5EA8] transition-colors">{stateName}</Link>
         <ChevronRight className="h-3.5 w-3.5 text-[var(--text-secondary)]" />
-        <span className="text-white font-medium">{cityName}</span>
+        <span className="text-[var(--text-primary)] font-medium">{cityName}</span>
       </nav>
 
       <div className="mb-8">

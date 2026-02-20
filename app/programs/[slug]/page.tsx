@@ -171,7 +171,7 @@ export default async function ProgramHubPage({
                     <td className="py-3 pr-4 text-[var(--text-secondary)]">
                       {code.description}
                     </td>
-                    <td className="py-3 text-right font-semibold text-white">
+                    <td className="py-3 text-right font-semibold text-[var(--text-primary)]">
                       {code.rate}
                     </td>
                   </tr>
@@ -215,7 +215,7 @@ export default async function ProgramHubPage({
                           {stateAbbrToName(row.state)}
                         </Link>
                       </td>
-                      <td className="py-3 pr-4 text-right font-semibold text-white">
+                      <td className="py-3 pr-4 text-right font-semibold text-[var(--text-primary)]">
                         {(row.adoptionRate * 100).toFixed(1)}%
                       </td>
                       <td className="py-3 pr-4 text-right text-[var(--text-secondary)]">
@@ -266,7 +266,7 @@ export default async function ProgramHubPage({
                           {row.specialty}
                         </Link>
                       </td>
-                      <td className="py-3 pr-4 text-right font-semibold text-white">
+                      <td className="py-3 pr-4 text-right font-semibold text-[var(--text-primary)]">
                         {(row.adoptionRate * 100).toFixed(1)}%
                       </td>
                       <td className="py-3 pr-4 text-right text-[var(--text-secondary)]">

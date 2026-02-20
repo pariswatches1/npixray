@@ -226,7 +226,7 @@ export default function InviteLandingPage() {
                 <p className="text-[10px] text-[var(--text-secondary)] uppercase tracking-wider font-semibold mb-2">
                   Specialty
                 </p>
-                <p className="text-2xl font-bold text-white">{invite.specialty}</p>
+                <p className="text-2xl font-bold text-[var(--text-primary)]">{invite.specialty}</p>
                 <p className="text-sm text-[var(--text-secondary)] mt-1">
                   {invite.city}, {invite.state}
                 </p>

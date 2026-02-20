@@ -127,7 +127,7 @@ function GroupResultsPage() {
       <div className="min-h-screen bg-[var(--bg)] flex items-center justify-center">
         <div className="text-center px-4">
           <AlertCircle className="h-12 w-12 text-red-400 mx-auto mb-4" />
-          <h2 className="text-xl font-semibold text-white mb-2">Scan Error</h2>
+          <h2 className="text-xl font-semibold text-[var(--text-primary)] mb-2">Scan Error</h2>
           <p className="text-[var(--text-secondary)] mb-6">{error || "Something went wrong"}</p>
           <Link
             href="/group"
@@ -157,7 +157,7 @@ function GroupResultsPage() {
           <div>
             <div className="flex items-center gap-3 mb-2">
               <Building2 className="h-6 w-6 text-[#2F5EA8]" />
-              <h1 className="text-2xl sm:text-3xl font-bold text-white">
+              <h1 className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)]">
                 {data.practiceName}
               </h1>
             </div>
@@ -213,7 +213,7 @@ function GroupResultsPage() {
                   className={`flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
                     isActive
                       ? "border-[#2F5EA8]/20 text-[#2F5EA8]"
-                      : "border-transparent text-[var(--text-secondary)] hover:text-white hover:border-[var(--border)]/50"
+                      : "border-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--border)]/50"
                   }`}
                 >
                   <Icon className="h-4 w-4" />

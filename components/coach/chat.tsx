@@ -140,7 +140,7 @@ function renderContent(text: string) {
     // Bold
     processed = processed.replace(
       /\*\*(.+?)\*\*/g,
-      '<strong class="text-white font-semibold">$1</strong>'
+      '<strong class="text-[var(--text-primary)] font-semibold">$1</strong>'
     );
 
     // Headers
@@ -486,7 +486,7 @@ export function CoachChat({ scanData }: { scanData?: ScanData | null }) {
                 }`}
               >
                 {msg.role === "user" ? (
-                  <p className="text-sm text-white">{msg.content}</p>
+                  <p className="text-sm text-[var(--text-primary)]">{msg.content}</p>
                 ) : msg.content ? (
                   renderContent(msg.content)
                 ) : (
@@ -516,7 +516,7 @@ export function CoachChat({ scanData }: { scanData?: ScanData | null }) {
               <Lock className="h-5 w-5 text-[#2F5EA8]" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-white">
+              <h3 className="text-base font-bold text-[var(--text-primary)]">
                 Continue Your Coaching Session
               </h3>
               <p className="text-sm text-[var(--text-secondary)] mt-1">
@@ -572,7 +572,7 @@ export function CoachChat({ scanData }: { scanData?: ScanData | null }) {
               <Lock className="h-5 w-5 text-[#2F5EA8]" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-white">
+              <h3 className="text-base font-bold text-[var(--text-primary)]">
                 You&apos;ve Used All Free Coaching Sessions
               </h3>
               <p className="text-sm text-[var(--text-secondary)] mt-1">
@@ -726,7 +726,7 @@ function EmptyState({
             className="group flex items-center gap-3 rounded-xl border border-[var(--border-light)] bg-white px-4 py-3 text-left transition-all hover:border-[#2F5EA8]/15 hover:bg-[#2F5EA8]/[0.04]"
           >
             <starter.icon className="h-4 w-4 text-[var(--text-secondary)] group-hover:text-[#2F5EA8] flex-shrink-0 transition-colors" />
-            <span className="text-sm text-[var(--text-secondary)] group-hover:text-white transition-colors">
+            <span className="text-sm text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] transition-colors">
               {starter.text}
             </span>
           </button>

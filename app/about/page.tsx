@@ -219,7 +219,7 @@ export default function AboutPage() {
                 <p>
                   CMS publishes detailed provider-level billing data as part of
                   its transparency initiative. The{" "}
-                  <span className="text-white font-medium">
+                  <span className="text-[var(--text-primary)] font-medium">
                     Medicare Physician & Other Practitioners
                   </span>{" "}
                   dataset includes every CPT code each provider bills, how

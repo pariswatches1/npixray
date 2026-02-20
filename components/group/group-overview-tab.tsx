@@ -57,7 +57,7 @@ export function GroupOverviewTab({ data }: Props) {
 
       {/* Gap Breakdown */}
       <div className="rounded-2xl bg-white border border-[var(--border-light)] p-6">
-        <h3 className="text-lg font-semibold text-white mb-4">Revenue Gap Breakdown</h3>
+        <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-4">Revenue Gap Breakdown</h3>
         <div className="space-y-4">
           {gapBreakdown.map((gap) => (
             <div key={gap.label} className="flex items-center gap-4">
@@ -72,7 +72,7 @@ export function GroupOverviewTab({ data }: Props) {
                   }}
                 />
               </div>
-              <span className="w-20 text-right text-sm font-mono text-white">
+              <span className="w-20 text-right text-sm font-mono text-[var(--text-primary)]">
                 {formatCurrency(gap.amount)}
               </span>
             </div>
@@ -89,7 +89,7 @@ export function GroupOverviewTab({ data }: Props) {
       {/* Specialty Mix */}
       {data.specialtyBreakdown.length > 1 && (
         <div className="rounded-2xl bg-white border border-[var(--border-light)] p-6">
-          <h3 className="text-lg font-semibold text-white mb-4">Specialty Mix</h3>
+          <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-4">Specialty Mix</h3>
           <div className="grid gap-3 sm:grid-cols-2">
             {data.specialtyBreakdown.map((s) => (
               <div
@@ -97,7 +97,7 @@ export function GroupOverviewTab({ data }: Props) {
                 className="flex items-center justify-between rounded-xl bg-[var(--bg)] px-4 py-3"
               >
                 <div>
-                  <p className="text-sm font-medium text-white">{s.specialty}</p>
+                  <p className="text-sm font-medium text-[var(--text-primary)]">{s.specialty}</p>
                   <p className="text-xs text-[var(--text-secondary)]">
                     {s.count} provider{s.count > 1 ? "s" : ""}
                   </p>
@@ -157,7 +157,7 @@ function StatCard({
       </div>
       <p
         className={`text-2xl font-bold font-mono ${
-          highlight ? "text-[#2F5EA8]" : "text-white"
+          highlight ? "text-[#2F5EA8]" : "text-[var(--text-primary)]"
         }`}
       >
         {value}

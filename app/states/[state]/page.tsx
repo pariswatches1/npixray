@@ -108,9 +108,9 @@ export default async function StatePage({
           {/* State Overview — Unique data-driven intro for Google ranking */}
           <div className="mt-6 max-w-3xl text-[var(--text-secondary)] leading-relaxed space-y-3">
             <p>
-              {stateName} has <span className="text-white font-medium">{formatNumber(stats.totalProviders)} Medicare providers</span> who
+              {stateName} has <span className="text-[var(--text-primary)] font-medium">{formatNumber(stats.totalProviders)} Medicare providers</span> who
               collectively received <span className="text-[#2F5EA8] font-medium">{formatCurrency(stats.totalPayment)}</span> in
-              Medicare payments, averaging <span className="text-white font-medium">{formatCurrency(stats.avgPayment)} per provider</span>.
+              Medicare payments, averaging <span className="text-[var(--text-primary)] font-medium">{formatCurrency(stats.avgPayment)} per provider</span>.
               {stats.avgPayment > 100000
                 ? ` This places ${stateName} above the national average in per-provider Medicare revenue, suggesting a competitive healthcare market with strong reimbursement patterns.`
                 : stats.avgPayment > 60000
@@ -120,7 +120,7 @@ export default async function StatePage({
             {specialties.length > 0 && (
               <p>
                 The most common specialty is{" "}
-                <span className="text-white font-medium">{specialties[0].specialty}</span>{" "}
+                <span className="text-[var(--text-primary)] font-medium">{specialties[0].specialty}</span>{" "}
                 with {specialties[0].count.toLocaleString()} providers
                 {specialties.length > 1 && (
                   <>, followed by {specialties[1].specialty} ({specialties[1].count.toLocaleString()}) and {specialties.length > 2 ? `${specialties[2].specialty} (${specialties[2].count.toLocaleString()})` : ""}</>
@@ -133,7 +133,7 @@ export default async function StatePage({
             {cities.length > 0 && (
               <p>
                 The largest Medicare provider concentration is in{" "}
-                <span className="text-white font-medium">{cities[0].city}</span>{" "}
+                <span className="text-[var(--text-primary)] font-medium">{cities[0].city}</span>{" "}
                 ({cities[0].count.toLocaleString()} providers)
                 {cities.length > 1 && (
                   <>, with {cities[1].city} and {cities.length > 2 ? cities[2].city : ""} also serving as major healthcare hubs</>

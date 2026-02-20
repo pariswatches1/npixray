@@ -117,7 +117,7 @@ function ComparisonBar({
               style={{ width: `${Math.max(yourWidth, 2)}%` }}
             />
           </div>
-          <span className="text-xs text-white font-medium w-16 text-right">
+          <span className="text-xs text-[var(--text-primary)] font-medium w-16 text-right">
             {fmtVal(you)}
           </span>
         </div>

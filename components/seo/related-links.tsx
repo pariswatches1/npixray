@@ -75,7 +75,7 @@ export function RelatedLinks({ pageType, currentSlug, context }: RelatedLinksPro
                     <li key={link.href}>
                       <Link
                         href={link.href}
-                        className="text-sm text-white/80 hover:text-[#2F5EA8] transition-colors"
+                        className="text-sm text-[var(--text-secondary)] hover:text-[#2F5EA8] transition-colors"
                       >
                         {link.label}
                       </Link>

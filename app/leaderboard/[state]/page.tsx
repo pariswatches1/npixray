@@ -62,7 +62,7 @@ export default async function StateLeaderboardPage({
         <ChevronRight className="h-3.5 w-3.5 text-[var(--text-secondary)]" />
         <Link href="/leaderboard" className="hover:text-[#2F5EA8] transition-colors">Leaderboard</Link>
         <ChevronRight className="h-3.5 w-3.5 text-[var(--text-secondary)]" />
-        <span className="text-white font-medium">{name}</span>
+        <span className="text-[var(--text-primary)] font-medium">{name}</span>
       </nav>
 
       <div className="mb-8">

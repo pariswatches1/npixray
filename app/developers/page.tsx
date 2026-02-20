@@ -160,7 +160,7 @@ export default function DevelopersPage() {
           <pre className="p-6 text-sm font-mono leading-relaxed overflow-x-auto">
             <code className="text-[var(--text-secondary)]">
               <span className="text-emerald-400">$</span>{" "}
-              <span className="text-white">curl https://npixray.com/api/v1/provider/1306849450</span>
+              <span className="text-[var(--text-primary)]">curl https://npixray.com/api/v1/provider/1306849450</span>
               {"\n\n"}
               <span className="text-[var(--text-secondary)]/60">{`{`}</span>
               {"\n  "}

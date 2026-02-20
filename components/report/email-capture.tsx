@@ -91,7 +91,7 @@ export function EmailCaptureModal({ data }: { data: ScanResult }) {
         {/* Close button */}
         <button
           onClick={() => setDismissed(true)}
-          className="absolute top-4 right-4 text-[var(--text-secondary)] hover:text-white transition-colors"
+          className="absolute top-4 right-4 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
           aria-label="Dismiss"
         >
           <X className="h-5 w-5" />
@@ -116,7 +116,7 @@ export function EmailCaptureModal({ data }: { data: ScanResult }) {
               </h3>
               <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
                 We&apos;ll email you the complete revenue analysis for{" "}
-                <span className="text-white font-medium">{data.provider.fullName}</span>{" "}
+                <span className="text-[var(--text-primary)] font-medium">{data.provider.fullName}</span>{" "}
                 including{" "}
                 <span className="text-[#2F5EA8] font-semibold">
                   {formatCurrency(data.totalMissedRevenue)}/yr

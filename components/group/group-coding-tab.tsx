@@ -64,7 +64,7 @@ export function GroupCodingTab({ data }: Props) {
     <div className="space-y-8">
       {/* Aggregate E&M Distribution */}
       <div className="rounded-2xl bg-white border border-[var(--border-light)] p-6">
-        <h3 className="text-lg font-semibold text-white mb-2">
+        <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-2">
           Practice E&M Distribution vs. Benchmark
         </h3>
         <p className="text-sm text-[var(--text-secondary)] mb-6">
@@ -78,7 +78,7 @@ export function GroupCodingTab({ data }: Props) {
             return (
               <div key={row.code} className="space-y-2">
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-white font-medium">
+                  <span className="text-[var(--text-primary)] font-medium">
                     {row.code} <span className="text-[var(--text-secondary)]/60">({row.label})</span>
                   </span>
                   <div className="flex items-center gap-3">
@@ -131,7 +131,7 @@ export function GroupCodingTab({ data }: Props) {
 
       {/* Per-Provider E&M Bars */}
       <div className="rounded-2xl bg-white border border-[var(--border-light)] p-6">
-        <h3 className="text-lg font-semibold text-white mb-4">
+        <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-4">
           Provider E&M Mix Comparison
         </h3>
         <p className="text-sm text-[var(--text-secondary)] mb-6">

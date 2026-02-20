@@ -141,7 +141,7 @@ export default function PartnerScanPage() {
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-20 pb-24 sm:pt-28 sm:pb-32">
         {/* Partner co-branding header */}
         <div className="flex items-center justify-center gap-3 mb-8">
-          <span className="text-xl font-bold text-white tracking-tight">
+          <span className="text-xl font-bold text-[var(--text-primary)] tracking-tight">
             NPI<span className="text-[#2F5EA8]">xray</span>
           </span>
           <span className="text-[var(--text-secondary)] text-lg">&times;</span>
@@ -152,7 +152,7 @@ export default function PartnerScanPage() {
               className="h-8 object-contain"
             />
           ) : (
-            <span className="text-xl font-bold text-white tracking-tight">
+            <span className="text-xl font-bold text-[var(--text-primary)] tracking-tight">
               {partner.name}
             </span>
           )}

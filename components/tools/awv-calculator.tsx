@@ -85,7 +85,7 @@ export function AwvCalculatorTool() {
               placeholder="e.g. 500"
               value={totalPatients}
               onChange={(e) => setTotalPatients(e.target.value)}
-              className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-white placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20 focus:outline-none transition-colors"
+              className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-[var(--text-primary)] placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20 focus:outline-none transition-colors"
               aria-label="Total Medicare patients"
             />
           </div>
@@ -101,7 +101,7 @@ export function AwvCalculatorTool() {
                 placeholder="30"
                 value={completionRate}
                 onChange={(e) => setCompletionRate(e.target.value)}
-                className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 pr-8 text-white placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20 focus:outline-none transition-colors"
+                className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 pr-8 text-[var(--text-primary)] placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20 focus:outline-none transition-colors"
                 aria-label="AWV completion rate percentage"
               />
               <span className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--text-secondary)]">%</span>
