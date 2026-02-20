@@ -14,6 +14,8 @@ import {
 import { STATE_LIST } from "@/lib/benchmark-data";
 import { getScoreTier } from "@/lib/revenue-score";
 import { ScanCTA } from "@/components/seo/scan-cta";
+import { InlineScanner } from "@/components/seo/inline-scanner";
+import { DataCoverage } from "@/components/seo/data-coverage";
 
 export function generateStaticParams() {
   return STATE_LIST.map((s) => ({ state: stateToSlug(s.abbr) }));
@@ -157,6 +159,14 @@ export default async function StateLeaderboardPage({
             <ArrowRight className="h-3 w-3 text-[var(--text-secondary)] group-hover:text-[#2F5EA8]" />
           </Link>
         ))}
+      </div>
+
+      <div className="mb-8">
+        <InlineScanner state={name} />
+      </div>
+
+      <div className="mb-8">
+        <DataCoverage providerCount={topProviders.length} />
       </div>
 
       <ScanCTA />

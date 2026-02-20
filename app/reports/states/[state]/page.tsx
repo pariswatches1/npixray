@@ -18,15 +18,22 @@ import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { ScanCTA } from "@/components/seo/scan-cta";
 import { ProviderTable } from "@/components/seo/provider-table";
 import { StatCard } from "@/components/seo/stat-card";
+import { ConfidenceBadge } from "@/components/seo/confidence-badge";
+import { DataCoverage } from "@/components/seo/data-coverage";
+import { InlineScanner } from "@/components/seo/inline-scanner";
+import { AIInsight } from "@/components/seo/ai-insight";
+import { TrendSignals, computeStateTrends } from "@/components/seo/trend-signals";
 import { ReportCardHeader } from "@/components/reports/report-card-header";
 import { AdoptionChart } from "@/components/reports/adoption-chart";
 import { EMDistributionChart } from "@/components/reports/em-distribution-chart";
+import { generateInsight } from "@/lib/ai-insights";
 import {
   getStateStats,
   getStateSpecialties,
   getStateCities,
   getStateTopProviders,
   getAllBenchmarks,
+  getNationalStats,
   slugToStateAbbr,
   stateAbbrToName,
   stateToSlug,
@@ -101,11 +108,12 @@ export default async function StateReportPage({
   if (!stats || !stats.totalProviders) notFound();
 
   const stateName = stateAbbrToName(abbr);
-  const [specialties, cities, providers, allBenchmarks] = await Promise.all([
+  const [specialties, cities, providers, allBenchmarks, nationalStats] = await Promise.all([
     getStateSpecialties(abbr, 20),
     getStateCities(abbr, 20),
     getStateTopProviders(abbr, 200),
     getAllBenchmarks(),
+    getNationalStats(),
   ]);
 
   // Calculate grade
@@ -173,6 +181,41 @@ export default async function StateReportPage({
     { code: "99215", actual: emDist.pct99215, benchmark: nationalEM.pct99215 },
   ];
 
+  // National average payment per provider
+  const nationalAvg = nationalStats.totalProviders > 0
+    ? nationalStats.totalPayment / nationalStats.totalProviders
+    : 0;
+
+  // AI insight
+  const insight = await generateInsight({
+    type: "state",
+    stateName,
+    stateAbbr: abbr,
+    providerCount: stats.totalProviders,
+    avgPayment: stats.avgPayment,
+    totalPayment: stats.totalPayment,
+    nationalAvgPayment: nationalAvg,
+    ccmAdoption: adoption.ccm,
+    rpmAdoption: adoption.rpm,
+    bhiAdoption: adoption.bhi,
+    awvAdoption: adoption.awv,
+  });
+
+  // Trend signals
+  const trendSignals = computeStateTrends({
+    stateName,
+    avgPayment: stats.avgPayment,
+    totalProviders: stats.totalProviders,
+    nationalAvg,
+    nationalProviders: nationalStats?.totalProviders || 0,
+    ccmAdoption: adoption.ccm,
+    rpmAdoption: adoption.rpm,
+    awvAdoption: adoption.awv,
+    nationalCcm: nationalAdoption.ccm,
+    nationalRpm: nationalAdoption.rpm,
+    nationalAwv: nationalAdoption.awv,
+  });
+
   // Top 20 providers for display
   const displayProviders = providers.slice(0, 20);
 
@@ -226,6 +269,8 @@ export default async function StateReportPage({
               sub="across all providers"
             />
           </div>
+
+          <ConfidenceBadge providerCount={stats.totalProviders} className="mt-6" />
         </div>
       </section>
 
@@ -292,6 +337,24 @@ export default async function StateReportPage({
           </div>
         </div>
       </section>
+
+      {/* AI Insight */}
+      {insight && (
+        <section className="border-t border-[var(--border-light)] py-10">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <AIInsight insight={insight} label={`${stateName} Revenue Analysis`} />
+          </div>
+        </section>
+      )}
+
+      {/* Trend Signals */}
+      {trendSignals.length > 0 && (
+        <section className="border-t border-[var(--border-light)] py-10">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <TrendSignals signals={trendSignals} title={`${stateName} Trend Signals`} />
+          </div>
+        </section>
+      )}
 
       {/* E&M Distribution */}
       <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
@@ -425,6 +488,20 @@ export default async function StateReportPage({
           </div>
         </section>
       )}
+
+      {/* Inline Scanner */}
+      <section className="border-t border-[var(--border-light)] py-10">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <InlineScanner state={abbr} />
+        </div>
+      </section>
+
+      {/* Data Coverage */}
+      <section className="border-t border-[var(--border-light)] py-10">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <DataCoverage providerCount={stats.totalProviders} />
+        </div>
+      </section>
 
       {/* CTA */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-16">

@@ -35,6 +35,8 @@ import { StatCard } from "@/components/seo/stat-card";
 import { ProviderTable } from "@/components/seo/provider-table";
 import { ScanCTA } from "@/components/seo/scan-cta";
 import { RelatedLinks as SiteRelatedLinks } from "@/components/seo/related-links";
+import { InlineScanner } from "@/components/seo/inline-scanner";
+import { DataCoverage } from "@/components/seo/data-coverage";
 
 export const dynamic = 'force-dynamic';
 
@@ -935,6 +937,16 @@ export default async function InsightPage({
 
       {/* Site-Wide Related Links */}
       <SiteRelatedLinks pageType="insight" currentSlug={slug} />
+
+      <section className="border-t border-[var(--border-light)] py-10">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <InlineScanner />
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4">
+        <DataCoverage providerCount={nationalStats?.totalProviders ?? 0} />
+      </section>
 
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-16">
         <ScanCTA />

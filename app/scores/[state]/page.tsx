@@ -14,6 +14,8 @@ import { STATE_LIST } from "@/lib/benchmark-data";
 import { ScoreHistogram } from "@/components/score/score-histogram";
 import { ScoreLeaderboard } from "@/components/score/score-leaderboard";
 import { ScanCTA } from "@/components/seo/scan-cta";
+import { InlineScanner } from "@/components/seo/inline-scanner";
+import { DataCoverage } from "@/components/seo/data-coverage";
 
 export function generateStaticParams() {
   return STATE_LIST.map((s) => ({ state: stateToSlug(s.abbr) }));
@@ -97,6 +99,8 @@ export default async function StateScorePage({
         </section>
       )}
 
+      <div className="mb-8"><InlineScanner state={name} /></div>
+      <div className="mb-8"><DataCoverage providerCount={topProviders.length} /></div>
       <ScanCTA />
     </div>
   );

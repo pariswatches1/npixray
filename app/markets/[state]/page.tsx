@@ -11,6 +11,8 @@ import {
 } from "@/lib/db-queries";
 import { STATE_LIST } from "@/lib/benchmark-data";
 import { ScanCTA } from "@/components/seo/scan-cta";
+import { InlineScanner } from "@/components/seo/inline-scanner";
+import { DataCoverage } from "@/components/seo/data-coverage";
 
 export function generateStaticParams() {
   return STATE_LIST.map((s) => ({ state: stateToSlug(s.abbr) }));
@@ -108,6 +110,8 @@ export default async function StateMarketPage({
         </div>
       )}
 
+      <div className="mt-8"><InlineScanner state={name} /></div>
+      <div className="mt-4"><DataCoverage providerCount={cities.reduce((s, c) => s + Number(c.count), 0)} /></div>
       <div className="mt-12">
         <ScanCTA />
       </div>

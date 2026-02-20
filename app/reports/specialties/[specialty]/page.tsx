@@ -17,9 +17,15 @@ import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { ScanCTA } from "@/components/seo/scan-cta";
 import { ProviderTable } from "@/components/seo/provider-table";
 import { StatCard } from "@/components/seo/stat-card";
+import { ConfidenceBadge } from "@/components/seo/confidence-badge";
+import { DataCoverage } from "@/components/seo/data-coverage";
+import { InlineScanner } from "@/components/seo/inline-scanner";
+import { AIInsight } from "@/components/seo/ai-insight";
+import { TrendSignals } from "@/components/seo/trend-signals";
 import { ReportCardHeader } from "@/components/reports/report-card-header";
 import { AdoptionChart } from "@/components/reports/adoption-chart";
 import { EMDistributionChart } from "@/components/reports/em-distribution-chart";
+import { generateInsight } from "@/lib/ai-insights";
 import {
   getAllBenchmarks,
   getBenchmarkBySpecialty,
@@ -189,6 +195,55 @@ export default async function SpecialtyReportPage({
     { name: "AWV", full: "Annual Wellness Visits", code: "G0438/G0439", rate: adoption.awv, benchmarkRate: benchmark.awv_adoption_rate, icon: Clipboard, color: "text-emerald-400", target: 0.70, revenue: "$175/visit" },
   ];
 
+  // National average payment
+  const nationalAvgPayment = allBenchmarks.length > 0
+    ? allBenchmarks.reduce((s, b) => s + (b.avg_total_payment || 0), 0) / allBenchmarks.length
+    : 0;
+
+  // AI insight
+  const insight = await generateInsight({
+    type: "specialty",
+    specialty: benchmark.specialty,
+    providerCount: benchmark.provider_count,
+    avgPayment: benchmark.avg_total_payment,
+    totalPayment: benchmark.avg_total_payment * benchmark.provider_count,
+    nationalAvgPayment,
+    ccmAdoption: adoption.ccm,
+    rpmAdoption: adoption.rpm,
+    bhiAdoption: adoption.bhi,
+    awvAdoption: adoption.awv,
+  });
+
+  // Trend signals using the proper TrendSignal type (needs value + delta)
+  const trendSignals: { label: string; value: string; delta: number; context?: string }[] = [];
+  if (nationalAvgPayment > 0) {
+    const delta = ((benchmark.avg_total_payment - nationalAvgPayment) / nationalAvgPayment) * 100;
+    trendSignals.push({
+      label: `${benchmark.specialty} Revenue`,
+      value: formatCurrency(benchmark.avg_total_payment),
+      delta,
+      context: `national avg ${formatCurrency(nationalAvgPayment)}`,
+    });
+  }
+  if (nationalAdoption.ccm > 0) {
+    const delta = ((adoption.ccm - nationalAdoption.ccm) / nationalAdoption.ccm) * 100;
+    trendSignals.push({
+      label: "CCM Adoption",
+      value: `${(adoption.ccm * 100).toFixed(1)}%`,
+      delta,
+      context: `national ${(nationalAdoption.ccm * 100).toFixed(1)}%`,
+    });
+  }
+  if (nationalAdoption.rpm > 0) {
+    const delta = ((adoption.rpm - nationalAdoption.rpm) / nationalAdoption.rpm) * 100;
+    trendSignals.push({
+      label: "RPM Adoption",
+      value: `${(adoption.rpm * 100).toFixed(1)}%`,
+      delta,
+      context: `national ${(nationalAdoption.rpm * 100).toFixed(1)}%`,
+    });
+  }
+
   // Top 20 providers for display
   const displayProviders = providers.slice(0, 20);
 
@@ -241,6 +296,8 @@ export default async function SpecialtyReportPage({
               sub="across all providers"
             />
           </div>
+
+          <ConfidenceBadge providerCount={benchmark.provider_count} className="mt-6" />
         </div>
       </section>
 
@@ -296,6 +353,24 @@ export default async function SpecialtyReportPage({
           </div>
         </div>
       </section>
+
+      {/* AI Insight */}
+      {insight && (
+        <section className="border-t border-[var(--border-light)] py-10">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <AIInsight insight={insight} label={`${benchmark.specialty} Revenue Analysis`} />
+          </div>
+        </section>
+      )}
+
+      {/* Trend Signals */}
+      {trendSignals.length > 0 && (
+        <section className="border-t border-[var(--border-light)] py-10">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <TrendSignals signals={trendSignals} title={`${benchmark.specialty} Trend Signals`} />
+          </div>
+        </section>
+      )}
 
       {/* E&M Distribution */}
       <section className="border-t border-[var(--border-light)] py-12 sm:py-16">
@@ -430,6 +505,20 @@ export default async function SpecialtyReportPage({
           </div>
         </section>
       )}
+
+      {/* Inline Scanner */}
+      <section className="border-t border-[var(--border-light)] py-10">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <InlineScanner specialty={benchmark.specialty} />
+        </div>
+      </section>
+
+      {/* Data Coverage */}
+      <section className="border-t border-[var(--border-light)] py-10">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <DataCoverage providerCount={benchmark.provider_count} />
+        </div>
+      </section>
 
       {/* CTA */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-16">

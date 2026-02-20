@@ -12,6 +12,8 @@ import { SPECIALTY_LIST } from "@/lib/benchmark-data";
 import { neon } from "@neondatabase/serverless";
 import { getScoreTier } from "@/lib/revenue-score";
 import { ScanCTA } from "@/components/seo/scan-cta";
+import { InlineScanner } from "@/components/seo/inline-scanner";
+import { DataCoverage } from "@/components/seo/data-coverage";
 
 function slugToSpecialty(slug: string): string | null {
   return SPECIALTY_LIST.find((s) => specialtyToSlug(s) === slug) ?? null;
@@ -176,6 +178,14 @@ export default async function StateSpecialtyLeaderboardPage({
           <Trophy className="h-4 w-4" />
           Find My Ranking
         </Link>
+      </div>
+
+      <div className="mb-8">
+        <InlineScanner state={stateName} specialty={specName} />
+      </div>
+
+      <div className="mb-8">
+        <DataCoverage providerCount={totalProviders} />
       </div>
 
       <ScanCTA />
