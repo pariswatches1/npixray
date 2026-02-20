@@ -261,6 +261,21 @@ export default function HomePage() {
               CMS public data only
             </div>
           </div>
+
+          {/* Scan Your Entire Practice CTA */}
+          <div className="mt-8 max-w-xl mx-auto">
+            <a
+              href="/tools/practice-benchmark"
+              className="flex items-center gap-4 rounded-xl border border-dark-50/80 bg-dark-400/50 px-6 py-4 hover:border-gold/20 hover:bg-dark-300/80 transition-all group"
+            >
+              <Users className="h-6 w-6 text-gold/70 flex-shrink-0" />
+              <div className="flex-1">
+                <div className="font-semibold text-white">Scan Your Entire Practice</div>
+                <div className="text-sm text-[var(--text-secondary)]">Enter multiple NPIs for practice-wide revenue analysis</div>
+              </div>
+              <ChevronRight className="h-5 w-5 text-[var(--text-secondary)] flex-shrink-0 group-hover:text-gold transition-colors" />
+            </a>
+          </div>
         </div>
       </section>
 
