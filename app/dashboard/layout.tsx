@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { LayoutDashboard, CreditCard, User, Zap } from "lucide-react";
+import { LayoutDashboard, CreditCard, User, Zap, Briefcase, Key } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -9,6 +9,8 @@ export const metadata: Metadata = {
 
 const NAV_ITEMS = [
   { href: "/dashboard", label: "Overview", icon: LayoutDashboard },
+  { href: "/dashboard/portfolio", label: "Portfolio", icon: Briefcase },
+  { href: "/dashboard/api-keys", label: "API Keys", icon: Key },
   { href: "/dashboard/billing", label: "Billing", icon: CreditCard },
   { href: "/dashboard/account", label: "Account", icon: User },
 ];

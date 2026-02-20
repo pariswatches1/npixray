@@ -83,6 +83,28 @@ async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {
   `;
 }
 
+async function handleInvoicePaymentFailed(invoice: Stripe.Invoice) {
+  const subscriptionId = invoice.subscription as string;
+  if (!subscriptionId || !process.env.DATABASE_URL) return;
+
+  const sql = await getNeon();
+
+  // Mark user as past_due so we can show a warning in the UI
+  await sql`
+    UPDATE users SET
+      subscription_status = 'past_due',
+      updated_at = NOW()
+    WHERE stripe_subscription_id = ${subscriptionId}
+  `;
+
+  await sql`
+    UPDATE subscriptions SET status = 'past_due'
+    WHERE stripe_subscription_id = ${subscriptionId}
+  `;
+
+  console.warn(`[stripe/webhook] Payment failed for subscription ${subscriptionId}`);
+}
+
 export async function POST(request: NextRequest) {
   if (!STRIPE_ENABLED) {
     return NextResponse.json({ error: "Stripe not configured" }, { status: 503 });
@@ -109,6 +131,9 @@ export async function POST(request: NextRequest) {
         break;
       case "customer.subscription.deleted":
         await handleSubscriptionDeleted(event.data.object as Stripe.Subscription);
+        break;
+      case "invoice.payment_failed":
+        await handleInvoicePaymentFailed(event.data.object as Stripe.Invoice);
         break;
     }
 

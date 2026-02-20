@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
     }
 
     const { planId } = await request.json();
-    if (!planId || !["intelligence", "care"].includes(planId)) {
+    if (!planId || !["intelligence", "api", "care"].includes(planId)) {
       return NextResponse.json({ error: "Invalid plan." }, { status: 400 });
     }
 
