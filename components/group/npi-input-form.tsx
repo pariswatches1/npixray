@@ -132,7 +132,7 @@ export function NpiInputForm({ onSubmit, loading = false }: NpiInputFormProps) {
             value={practiceName}
             onChange={(e) => setPracticeName(e.target.value)}
             placeholder="e.g., Valley Medical Associates"
-            className="w-full rounded-xl bg-[var(--bg)] border border-[var(--border-light)] pl-10 pr-4 py-3 text-white placeholder:text-[var(--text-secondary)]/40 focus:outline-none focus:ring-2 focus:ring-[#2F5EA8]/10 focus:border-[#2F5EA8]/20/50"
+            className="w-full rounded-xl bg-[var(--bg)] border border-[var(--border-light)] pl-10 pr-4 py-3 text-[var(--text-primary)] placeholder:text-[var(--text-secondary)]/40 focus:outline-none focus:ring-2 focus:ring-[#2F5EA8]/10 focus:border-[#2F5EA8]/20/50"
           />
         </div>
       </div>
@@ -173,7 +173,7 @@ export function NpiInputForm({ onSubmit, loading = false }: NpiInputFormProps) {
             onChange={(e) => setPasteText(e.target.value)}
             rows={6}
             placeholder="Paste NPIs here — separated by commas, spaces, tabs, or newlines.&#10;&#10;Example:&#10;1234567890, 2345678901&#10;3456789012"
-            className="w-full rounded-xl bg-[var(--bg)] border border-[var(--border-light)] p-4 text-white placeholder:text-[var(--text-secondary)]/40 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-[#2F5EA8]/10 focus:border-[#2F5EA8]/20/50 resize-none"
+            className="w-full rounded-xl bg-[var(--bg)] border border-[var(--border-light)] p-4 text-[var(--text-primary)] placeholder:text-[var(--text-secondary)]/40 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-[#2F5EA8]/10 focus:border-[#2F5EA8]/20/50 resize-none"
           />
           <button
             type="button"
@@ -200,7 +200,7 @@ export function NpiInputForm({ onSubmit, loading = false }: NpiInputFormProps) {
                     value={field.value}
                     onChange={(e) => updateField(i, e.target.value)}
                     placeholder="10-digit NPI"
-                    className="w-full rounded-lg bg-[var(--bg)] border border-[var(--border-light)] px-4 py-2.5 text-white font-mono text-sm placeholder:text-[var(--text-secondary)]/40 focus:outline-none focus:ring-2 focus:ring-[#2F5EA8]/10 focus:border-[#2F5EA8]/20/50"
+                    className="w-full rounded-lg bg-[var(--bg)] border border-[var(--border-light)] px-4 py-2.5 text-[var(--text-primary)] font-mono text-sm placeholder:text-[var(--text-secondary)]/40 focus:outline-none focus:ring-2 focus:ring-[#2F5EA8]/10 focus:border-[#2F5EA8]/20/50"
                   />
                   {/* Status indicator */}
                   <div className="absolute right-3 top-1/2 -translate-y-1/2">
@@ -214,7 +214,7 @@ export function NpiInputForm({ onSubmit, loading = false }: NpiInputFormProps) {
                 <div className="hidden sm:block w-48 truncate">
                   {field.name ? (
                     <div className="text-xs">
-                      <span className="text-white">{field.name}</span>
+                      <span className="text-[var(--text-primary)]">{field.name}</span>
                       {field.specialty && (
                         <span className="text-[var(--text-secondary)] ml-1">· {field.specialty}</span>
                       )}
