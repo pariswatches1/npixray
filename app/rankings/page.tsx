@@ -18,6 +18,8 @@ import {
   formatCurrency,
 } from "@/lib/db-queries";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
+import { InlineScanner } from "@/components/seo/inline-scanner";
+import { DataCoverage } from "@/components/seo/data-coverage";
 
 export const dynamic = 'force-dynamic';
 
@@ -235,6 +237,20 @@ export default async function RankingsHubPage() {
               </div>
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* Inline Scanner */}
+      <section className="border-t border-[var(--border-light)] py-10">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <InlineScanner />
+        </div>
+      </section>
+
+      {/* Data Coverage */}
+      <section className="border-t border-[var(--border-light)] py-10">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <DataCoverage providerCount={states.reduce((sum, s) => sum + s.totalProviders, 0)} />
         </div>
       </section>
     </>

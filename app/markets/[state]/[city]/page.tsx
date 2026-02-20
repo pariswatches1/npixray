@@ -14,6 +14,9 @@ import {
   cityToSlug,
 } from "@/lib/db-queries";
 import { ScanCTA } from "@/components/seo/scan-cta";
+import { ConfidenceBadge } from "@/components/seo/confidence-badge";
+import { InlineScanner } from "@/components/seo/inline-scanner";
+import { DataCoverage } from "@/components/seo/data-coverage";
 
 function fmt$(n: number) {
   if (n >= 1_000_000) return `$${(n / 1_000_000).toFixed(1)}M`;
@@ -171,6 +174,7 @@ export default async function CityMarketPage({
           </p>
         </div>
       </div>
+      <ConfidenceBadge providerCount={totalProviders} className="mt-4 mb-4" />
 
       {/* Specialty Breakdown */}
       <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
@@ -272,6 +276,8 @@ export default async function CityMarketPage({
         </p>
       )}
 
+      <div className="mt-8"><InlineScanner state={stateName} city={cityName} /></div>
+      <div className="mt-4"><DataCoverage providerCount={totalProviders} /></div>
       <div className="mt-12">
         <ScanCTA />
       </div>

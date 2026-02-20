@@ -6,6 +6,9 @@ import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { ScanCTA } from "@/components/seo/scan-cta";
 import { ProviderTable } from "@/components/seo/provider-table";
 import { StatCard } from "@/components/seo/stat-card";
+import { ConfidenceBadge } from "@/components/seo/confidence-badge";
+import { DataCoverage } from "@/components/seo/data-coverage";
+import { InlineScanner } from "@/components/seo/inline-scanner";
 import {
   getStateTopProviders,
   slugToStateAbbr,
@@ -115,6 +118,7 @@ export default async function TopProvidersByStatePage({
               sub="per provider"
             />
           </div>
+          <ConfidenceBadge providerCount={providers.length} className="mt-6" />
         </div>
       </section>
 
@@ -158,6 +162,16 @@ export default async function TopProvidersByStatePage({
             </Link>
           </div>
         </div>
+      </section>
+
+      <section className="border-t border-[var(--border-light)] py-10">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <InlineScanner state={stateName} />
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4">
+        <DataCoverage providerCount={providers.length} />
       </section>
 
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-16">

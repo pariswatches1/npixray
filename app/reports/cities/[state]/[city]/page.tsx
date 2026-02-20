@@ -15,6 +15,7 @@ import {
   getCityStats,
   getCitySpecialties,
   getStateStats,
+  getNationalStats,
   slugToStateAbbr,
   stateAbbrToName,
   stateToSlug,
@@ -26,6 +27,12 @@ import { calculateGrade } from "@/lib/report-utils";
 import { ReportGrade } from "@/components/reports/report-grade";
 import { ShareButtons } from "@/components/reports/share-buttons";
 import { ScanCTA } from "@/components/seo/scan-cta";
+import { ConfidenceBadge } from "@/components/seo/confidence-badge";
+import { DataCoverage } from "@/components/seo/data-coverage";
+import { InlineScanner } from "@/components/seo/inline-scanner";
+import { AIInsight } from "@/components/seo/ai-insight";
+import { TrendSignals, computeStateTrends } from "@/components/seo/trend-signals";
+import { generateInsight } from "@/lib/ai-insights";
 
 export async function generateMetadata({
   params,
@@ -69,10 +76,11 @@ export default async function CityReportPage({
     .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
     .join(" ");
 
-  const [cityStats, citySpecialties, stateStats] = await Promise.all([
+  const [cityStats, citySpecialties, stateStats, nationalStats] = await Promise.all([
     getCityStats(abbr, cityName),
     getCitySpecialties(abbr, cityName),
     getStateStats(abbr),
+    getNationalStats(),
   ]);
 
   if (!cityStats || !stateStats) notFound();
@@ -81,6 +89,32 @@ export default async function CityReportPage({
   const ratio = cityStats.avgPayment / (stateStats.avgPayment || 1);
   const rate = Math.min(Math.round(ratio * 60 + 15), 95);
   const gradeInfo = calculateGrade(rate);
+
+  // National average payment per provider
+  const nationalAvg = nationalStats.totalProviders > 0
+    ? nationalStats.totalPayment / nationalStats.totalProviders
+    : 0;
+
+  // AI insight
+  const insight = await generateInsight({
+    type: "city",
+    city: cityName,
+    stateName,
+    stateAbbr: abbr,
+    providerCount: cityStats.count,
+    avgPayment: cityStats.avgPayment,
+    totalPayment: cityStats.totalPayment,
+    nationalAvgPayment: nationalAvg,
+  });
+
+  // Trend signals
+  const trendSignals = computeStateTrends({
+    stateName: `${cityName}, ${abbr}`,
+    avgPayment: cityStats.avgPayment,
+    totalProviders: cityStats.count,
+    nationalAvg,
+    nationalProviders: nationalStats?.totalProviders || 0,
+  });
 
   return (
     <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
@@ -147,6 +181,8 @@ export default async function CityReportPage({
         </div>
       </div>
 
+      <ConfidenceBadge providerCount={cityStats.count} className="mt-6" />
+
       {/* Specialties */}
       {citySpecialties && citySpecialties.length > 0 && (
         <section className="mb-10">
@@ -171,6 +207,20 @@ export default async function CityReportPage({
         </section>
       )}
 
+      {/* AI Insight */}
+      {insight && (
+        <section className="border-t border-[var(--border-light)] py-10 mb-10">
+          <AIInsight insight={insight} label={`${cityName}, ${stateName} Revenue Analysis`} />
+        </section>
+      )}
+
+      {/* Trend Signals */}
+      {trendSignals.length > 0 && (
+        <section className="border-t border-[var(--border-light)] py-10 mb-10">
+          <TrendSignals signals={trendSignals} title={`${cityName} Trend Signals`} />
+        </section>
+      )}
+
       {/* Share */}
       <section className="mb-10">
         <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
@@ -183,6 +233,16 @@ export default async function CityReportPage({
           linkedinText={`Medicare data for ${cityName}, ${stateName}:\n- ${formatNumber(cityStats.count)} providers\n- ${formatCurrency(cityStats.avgPayment)} avg payment\n- ${((ratio - 1) * 100).toFixed(0)}% vs state average\n\nFull report: https://npixray.com/reports/cities/${stateSlug}/${citySlug}`}
           url={`https://npixray.com/reports/cities/${stateSlug}/${citySlug}`}
         />
+      </section>
+
+      {/* Inline Scanner */}
+      <section className="border-t border-[var(--border-light)] py-10">
+        <InlineScanner state={abbr} city={cityName} />
+      </section>
+
+      {/* Data Coverage */}
+      <section className="border-t border-[var(--border-light)] py-10">
+        <DataCoverage providerCount={cityStats.count} />
       </section>
 
       <ScanCTA />

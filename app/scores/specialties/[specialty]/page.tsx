@@ -12,6 +12,8 @@ import { SPECIALTY_LIST } from "@/lib/benchmark-data";
 import { ScoreHistogram } from "@/components/score/score-histogram";
 import { ScoreLeaderboard } from "@/components/score/score-leaderboard";
 import { ScanCTA } from "@/components/seo/scan-cta";
+import { InlineScanner } from "@/components/seo/inline-scanner";
+import { DataCoverage } from "@/components/seo/data-coverage";
 
 function slugToSpecialty(slug: string): string | null {
   return (
@@ -101,6 +103,8 @@ export default async function SpecialtyScorePage({
         </section>
       )}
 
+      <div className="mb-8"><InlineScanner specialty={name} /></div>
+      <div className="mb-8"><DataCoverage providerCount={topProviders.length} /></div>
       <ScanCTA />
     </div>
   );
