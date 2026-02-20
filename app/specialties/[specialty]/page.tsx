@@ -17,6 +17,10 @@ import { RelatedLinks } from "@/components/seo/related-links";
 import { EvidenceBlocks } from "@/components/seo/evidence-blocks";
 import { ConfidenceBadge } from "@/components/seo/confidence-badge";
 import { DataCoverage } from "@/components/seo/data-coverage";
+import { AIInsight } from "@/components/seo/ai-insight";
+import { TrendSignals } from "@/components/seo/trend-signals";
+import { InlineScanner } from "@/components/seo/inline-scanner";
+import { generateInsight } from "@/lib/ai-insights";
 
 export const revalidate = 86400; // ISR: revalidate every 24 hours
 
@@ -57,6 +61,70 @@ export default async function SpecialtyPage({
   if (!benchmark) notFound();
 
   const providers = await getSpecialtyProviders(benchmark.specialty, 50);
+
+  // Layer 1: AI-generated unique insight for this specialty
+  const insight = await generateInsight({
+    type: "specialty",
+    specialty: benchmark.specialty,
+    providerCount: benchmark.provider_count,
+    avgPayment: benchmark.avg_total_payment,
+    totalPayment: benchmark.avg_total_payment * benchmark.provider_count,
+    ccmAdoption: benchmark.ccm_adoption_rate,
+    rpmAdoption: benchmark.rpm_adoption_rate,
+    awvAdoption: benchmark.awv_adoption_rate,
+    bhiAdoption: benchmark.bhi_adoption_rate,
+  });
+
+  // Layer 3: Trend signals for this specialty (vs benchmark targets)
+  const trendSignals: { label: string; value: string; delta: number; context?: string }[] = [];
+
+  // CCM adoption vs 15% target
+  if (benchmark.ccm_adoption_rate !== undefined) {
+    const target = 0.15;
+    const delta = target > 0 ? ((benchmark.ccm_adoption_rate - target) / target) * 100 : 0;
+    trendSignals.push({
+      label: "CCM Adoption",
+      value: `${(benchmark.ccm_adoption_rate * 100).toFixed(1)}%`,
+      delta,
+      context: `target ${(target * 100).toFixed(0)}%`,
+    });
+  }
+
+  // RPM adoption vs 10% target
+  if (benchmark.rpm_adoption_rate !== undefined) {
+    const target = 0.10;
+    const delta = target > 0 ? ((benchmark.rpm_adoption_rate - target) / target) * 100 : 0;
+    trendSignals.push({
+      label: "RPM Adoption",
+      value: `${(benchmark.rpm_adoption_rate * 100).toFixed(1)}%`,
+      delta,
+      context: `target ${(target * 100).toFixed(0)}%`,
+    });
+  }
+
+  // AWV adoption vs 70% target
+  if (benchmark.awv_adoption_rate !== undefined) {
+    const target = 0.70;
+    const delta = target > 0 ? ((benchmark.awv_adoption_rate - target) / target) * 100 : 0;
+    trendSignals.push({
+      label: "AWV Completion",
+      value: `${(benchmark.awv_adoption_rate * 100).toFixed(1)}%`,
+      delta,
+      context: `target ${(target * 100).toFixed(0)}%`,
+    });
+  }
+
+  // Revenue per patient signal
+  if (benchmark.avg_revenue_per_patient > 0) {
+    const medianRPP = 300; // rough national median
+    const delta = ((benchmark.avg_revenue_per_patient - medianRPP) / medianRPP) * 100;
+    trendSignals.push({
+      label: "Revenue / Patient",
+      value: `$${Math.round(benchmark.avg_revenue_per_patient).toLocaleString()}`,
+      delta,
+      context: `median ~$${medianRPP}`,
+    });
+  }
 
   // E&M distribution data
   const emTotal = benchmark.pct_99213 + benchmark.pct_99214 + benchmark.pct_99215;
@@ -142,6 +210,24 @@ export default async function SpecialtyPage({
           />
         </div>
       </section>
+
+      {/* ── Layer 1: AI-Generated Unique Insight ──────────── */}
+      {insight && (
+        <section className="border-t border-[var(--border-light)] py-10">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <AIInsight insight={insight} label={`${benchmark.specialty} Medicare Analysis`} />
+          </div>
+        </section>
+      )}
+
+      {/* ── Layer 3: Trend Signals ─────────────────────────── */}
+      {trendSignals.length > 0 && (
+        <section className="border-t border-[var(--border-light)] py-10">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <TrendSignals signals={trendSignals} title={`${benchmark.specialty} — Performance Signals`} />
+          </div>
+        </section>
+      )}
 
       {/* Data-Driven Specialty Intro */}
       <section className="border-t border-[var(--border-light)] py-10 sm:py-14">
@@ -335,6 +421,13 @@ export default async function SpecialtyPage({
           </div>
         </section>
       )}
+
+      {/* ── Layer 5: Interactive Scanner Widget ──────────── */}
+      <section className="border-t border-[var(--border-light)] py-10">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <InlineScanner specialty={benchmark.specialty} />
+        </div>
+      </section>
 
       {/* Related Links */}
       <RelatedLinks pageType="specialty" currentSlug={slug} context={{ specialty: slug }} />

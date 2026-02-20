@@ -24,6 +24,11 @@ import {
 } from "@/lib/db-queries";
 import { getStateSpecialtyComparisons } from "@/lib/comparisons";
 import { getStateSpecialtyOpportunities } from "@/lib/opportunity-engine";
+import { AIInsight } from "@/components/seo/ai-insight";
+import { TrendSignals, computeSpecialtyTrends } from "@/components/seo/trend-signals";
+import { InlineScanner } from "@/components/seo/inline-scanner";
+import { generateInsight } from "@/lib/ai-insights";
+import { SPECIALTY_BENCHMARKS } from "@/lib/benchmarks";
 
 export const revalidate = 86400; // ISR: revalidate daily
 
@@ -85,6 +90,53 @@ export default async function StateSpecialtyPage({
     (b: any) => specialtyToSlug(b.specialty) === specSlug
   );
   const nationalAvg = nationalBenchmark?.avg_total_payment ?? null;
+
+  // National benchmark adoption rates for this specialty
+  const specBenchmark = SPECIALTY_BENCHMARKS[specialtyName] || null;
+  const nationalCcm = specBenchmark?.ccmAdoptionRate ?? 0;
+  const nationalRpm = specBenchmark?.rpmAdoptionRate ?? 0;
+  const nationalAwv = specBenchmark?.awvAdoptionRate ?? 0;
+
+  // Compute specialty adoption rates from comparison data
+  const ccmAdoption = specBenchmark?.ccmAdoptionRate ?? 0;
+  const rpmAdoption = specBenchmark?.rpmAdoptionRate ?? 0;
+  const awvAdoption = specBenchmark?.awvAdoptionRate ?? 0;
+
+  // Layer 1: AI-generated unique insight
+  const insight = await generateInsight({
+    type: "state-specialty",
+    stateName,
+    stateAbbr: abbr,
+    specialty: specialtyName,
+    providerCount: stats.count,
+    avgPayment: stats.avgPayment,
+    totalPayment: stats.totalPayment,
+    nationalAvgPayment: nationalAvg ?? undefined,
+    nationalRank: comparison?.nationalSpecialtyRank,
+    totalStates: comparison?.totalStatesWithSpecialty,
+    ccmAdoption,
+    rpmAdoption,
+    awvAdoption,
+    nationalCcm,
+    nationalRpm,
+    nationalAwv,
+    neighbors: comparison?.neighborComparisons?.map((n: any) => ({ name: n.stateName, avgPayment: n.avgPayment })),
+    opportunities: opportunities?.map((o: any) => ({ title: o.title, estimatedRevenue: o.estimatedRevenue })),
+  });
+
+  // Layer 3: Trend signals for this specialty in this state
+  const trendSignals = computeSpecialtyTrends({
+    specialty: specialtyName,
+    stateName,
+    avgPayment: stats.avgPayment,
+    providerCount: stats.count,
+    nationalAvg: nationalAvg ?? 0,
+    percentile: comparison?.percentilePosition,
+    ccmAdoption,
+    rpmAdoption,
+    nationalCcm,
+    nationalRpm,
+  });
 
   let comparisonText = "";
   if (nationalAvg && nationalAvg > 0) {
@@ -192,6 +244,24 @@ export default async function StateSpecialtyPage({
         </div>
       </section>
 
+      {/* ── Layer 1: AI-Generated Unique Insight ──────────── */}
+      {insight && (
+        <section className="border-t border-[var(--border-light)] py-10">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <AIInsight insight={insight} label={`${specialtyName} in ${stateName} Analysis`} />
+          </div>
+        </section>
+      )}
+
+      {/* ── Layer 3: Trend Signals ─────────────────────────── */}
+      {trendSignals.length > 0 && (
+        <section className="border-t border-[var(--border-light)] py-10">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <TrendSignals signals={trendSignals} title={`${specialtyName} in ${stateName} — Performance Signals`} />
+          </div>
+        </section>
+      )}
+
       {/* Benchmark Comparison — state vs neighbors for this specialty */}
       {comparison && comparison.neighborComparisons.length > 0 && (
         <section className="border-t border-[var(--border-light)] py-10">
@@ -239,6 +309,13 @@ export default async function StateSpecialtyPage({
       {/* Data attribution */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4">
         <DataCoverage providerCount={stats.count} />
+      </section>
+
+      {/* ── Layer 5: Interactive Scanner Widget ──────────── */}
+      <section className="border-t border-[var(--border-light)] py-10">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <InlineScanner state={stateName} specialty={specialtyName} />
+        </div>
       </section>
 
       {/* CTA — pre-filtered */}

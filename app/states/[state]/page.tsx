@@ -12,12 +12,18 @@ import { ConfidenceBadge } from "@/components/seo/confidence-badge";
 import { StateBenchmarkComparison } from "@/components/seo/benchmark-comparison";
 import { RevenueOpportunities } from "@/components/seo/revenue-opportunities";
 import { SpecialtyOpportunitiesGrid } from "@/components/seo/specialty-opportunities-grid";
+import { AIInsight } from "@/components/seo/ai-insight";
+import { TrendSignals, computeStateTrends } from "@/components/seo/trend-signals";
+import { InlineScanner } from "@/components/seo/inline-scanner";
+import { generateInsight } from "@/lib/ai-insights";
 import {
   getStateStats,
   getStateSpecialties,
   getStateCities,
   getStateTopProviders,
   getStateSpecialtyProgramGaps,
+  getStateProgramCounts,
+  getNationalStats,
   slugToStateAbbr,
   stateAbbrToName,
   specialtyToSlug,
@@ -27,6 +33,7 @@ import {
 } from "@/lib/db-queries";
 import { getStateComparisons } from "@/lib/comparisons";
 import { getStateOpportunities } from "@/lib/opportunity-engine";
+import { SPECIALTY_BENCHMARKS } from "@/lib/benchmarks";
 import { DataCoverage } from "@/components/seo/data-coverage";
 
 export const revalidate = 86400; // ISR: revalidate every 24 hours
@@ -70,14 +77,64 @@ export default async function StatePage({
   if (!stats || !stats.totalProviders) notFound();
 
   const stateName = stateAbbrToName(abbr);
-  const [specialties, cities, providers, comparison, opportunities, specialtyGaps] = await Promise.all([
+  const [specialties, cities, providers, comparison, opportunities, specialtyGaps, programs, nationalStats] = await Promise.all([
     getStateSpecialties(abbr, 20),
     getStateCities(abbr, 30),
     getStateTopProviders(abbr, 50),
     getStateComparisons(abbr),
     getStateOpportunities(abbr),
     getStateSpecialtyProgramGaps(abbr, 10),
+    getStateProgramCounts(abbr),
+    getNationalStats(),
   ]);
+
+  // Compute national benchmark averages for trend signals
+  const allBenchmarks = Object.values(SPECIALTY_BENCHMARKS);
+  const nationalCcm = allBenchmarks.length > 0 ? allBenchmarks.reduce((s, b: any) => s + (b.ccmAdoptionRate || 0), 0) / allBenchmarks.length : 0;
+  const nationalRpm = allBenchmarks.length > 0 ? allBenchmarks.reduce((s, b: any) => s + (b.rpmAdoptionRate || 0), 0) / allBenchmarks.length : 0;
+  const nationalAwv = allBenchmarks.length > 0 ? allBenchmarks.reduce((s, b: any) => s + (b.awvAdoptionRate || 0), 0) / allBenchmarks.length : 0;
+
+  const ccmAdoption = programs?.totalProviders > 0 ? programs.ccmBillers / programs.totalProviders : 0;
+  const rpmAdoption = programs?.totalProviders > 0 ? programs.rpmBillers / programs.totalProviders : 0;
+  const awvAdoption = programs?.totalProviders > 0 ? programs.awvBillers / programs.totalProviders : 0;
+
+  // Layer 1: AI-generated unique insight
+  const insight = await generateInsight({
+    type: "state",
+    stateName,
+    stateAbbr: abbr,
+    providerCount: stats.totalProviders,
+    avgPayment: stats.avgPayment,
+    totalPayment: stats.totalPayment,
+    nationalAvgPayment: nationalStats?.totalPayment && nationalStats?.totalProviders ? nationalStats.totalPayment / nationalStats.totalProviders : undefined,
+    nationalRank: comparison?.nationalRank,
+    totalStates: comparison?.totalStates,
+    ccmAdoption,
+    rpmAdoption,
+    awvAdoption,
+    nationalCcm,
+    nationalRpm,
+    nationalAwv,
+    topSpecialty: specialties.length > 0 ? specialties[0].specialty : undefined,
+    topCity: cities.length > 0 ? cities[0].city : undefined,
+    neighbors: comparison?.neighborComparisons?.map((n: any) => ({ name: n.stateName, avgPayment: n.avgPayment })),
+    opportunities: opportunities?.map((o: any) => ({ title: o.title, estimatedRevenue: o.estimatedRevenue })),
+  });
+
+  // Layer 3: Trend signals
+  const trendSignals = computeStateTrends({
+    stateName,
+    avgPayment: stats.avgPayment,
+    totalProviders: stats.totalProviders,
+    nationalAvg: nationalStats?.totalPayment && nationalStats?.totalProviders ? nationalStats.totalPayment / nationalStats.totalProviders : 0,
+    nationalProviders: nationalStats?.totalProviders || 0,
+    ccmAdoption,
+    rpmAdoption,
+    awvAdoption,
+    nationalCcm,
+    nationalRpm,
+    nationalAwv,
+  });
 
   return (
     <>
@@ -171,6 +228,24 @@ export default async function StatePage({
           </div>
         </div>
       </section>
+
+      {/* ── Layer 1: AI-Generated Unique Insight ──────────── */}
+      {insight && (
+        <section className="border-t border-[var(--border-light)] py-10">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <AIInsight insight={insight} label={`${stateName} Medicare Analysis`} />
+          </div>
+        </section>
+      )}
+
+      {/* ── Layer 3: Trend Signals ─────────────────────────── */}
+      {trendSignals.length > 0 && (
+        <section className="border-t border-[var(--border-light)] py-10">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <TrendSignals signals={trendSignals} title={`${stateName} Performance Signals`} />
+          </div>
+        </section>
+      )}
 
       {/* ── Differentiation Layers ─────────────────────────── */}
       <section className="border-t border-[var(--border-light)] py-10 sm:py-14">
@@ -304,6 +379,13 @@ export default async function StatePage({
           </div>
         </section>
       )}
+
+      {/* ── Layer 5: Interactive Scanner Widget ──────────── */}
+      <section className="border-t border-[var(--border-light)] py-10">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <InlineScanner state={stateName} />
+        </div>
+      </section>
 
       {/* Related Links */}
       <RelatedLinks pageType="state" currentSlug={slug} context={{ state: slug }} />

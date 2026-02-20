@@ -5,11 +5,17 @@ import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { ScanCTA } from "@/components/seo/scan-cta";
 import { ProviderTable } from "@/components/seo/provider-table";
 import { StatCard } from "@/components/seo/stat-card";
+import { AIInsight } from "@/components/seo/ai-insight";
+import { TrendSignals, computeStateTrends } from "@/components/seo/trend-signals";
+import { InlineScanner } from "@/components/seo/inline-scanner";
+import { generateInsight } from "@/lib/ai-insights";
 import {
   getCityStats,
   getCityProviders,
   getCitySpecialties,
   getCityNameFromDb,
+  getStateStats,
+  getNationalStats,
   slugToStateAbbr,
   stateAbbrToName,
   stateToSlug,
@@ -66,10 +72,38 @@ export default async function CityPage({
   if (!stats || !stats.count) notFound();
 
   const stateName = stateAbbrToName(abbr);
-  const [specialties, providers] = await Promise.all([
+  const [specialties, providers, stateStats, nationalStats] = await Promise.all([
     getCitySpecialties(abbr, cityName),
     getCityProviders(abbr, cityName, 100),
+    getStateStats(abbr),
+    getNationalStats(),
   ]);
+
+  const nationalAvg = nationalStats?.totalPayment && nationalStats?.totalProviders
+    ? nationalStats.totalPayment / nationalStats.totalProviders
+    : 0;
+
+  // Layer 1: AI-generated unique insight for this city
+  const insight = await generateInsight({
+    type: "city",
+    stateName,
+    stateAbbr: abbr,
+    city: cityName,
+    providerCount: stats.count,
+    avgPayment: stats.avgPayment,
+    totalPayment: stats.totalPayment,
+    nationalAvgPayment: nationalAvg || undefined,
+    topSpecialty: specialties.length > 0 ? specialties[0].specialty : undefined,
+  });
+
+  // Layer 3: Trend signals (city vs state/national)
+  const trendSignals = computeStateTrends({
+    stateName: `${cityName}, ${abbr}`,
+    avgPayment: stats.avgPayment,
+    totalProviders: stats.count,
+    nationalAvg,
+    nationalProviders: nationalStats?.totalProviders || 0,
+  });
 
   return (
     <>
@@ -120,6 +154,24 @@ export default async function CityPage({
           </div>
         </div>
       </section>
+
+      {/* ── Layer 1: AI-Generated Unique Insight ──────────── */}
+      {insight && (
+        <section className="border-t border-[var(--border-light)] py-10">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <AIInsight insight={insight} label={`${cityName}, ${abbr} Medicare Analysis`} />
+          </div>
+        </section>
+      )}
+
+      {/* ── Layer 3: Trend Signals ─────────────────────────── */}
+      {trendSignals.length > 0 && (
+        <section className="border-t border-[var(--border-light)] py-10">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <TrendSignals signals={trendSignals} title={`${cityName}, ${abbr} — Performance Signals`} />
+          </div>
+        </section>
+      )}
 
       {/* Specialties Breakdown */}
       {specialties.length > 0 && (
@@ -174,6 +226,13 @@ export default async function CityPage({
           </div>
         </section>
       )}
+
+      {/* ── Layer 5: Interactive Scanner Widget ──────────── */}
+      <section className="border-t border-[var(--border-light)] py-10">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <InlineScanner state={stateName} city={cityName} />
+        </div>
+      </section>
 
       {/* CTA */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-16">
