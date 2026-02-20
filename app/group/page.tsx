@@ -86,7 +86,7 @@ function ValueProp({
     <div className="flex items-start gap-3 rounded-xl bg-white border border-[var(--border-light)] p-4">
       <div className="shrink-0 mt-0.5">{icon}</div>
       <div>
-        <h3 className="text-sm font-semibold text-white">{title}</h3>
+        <h3 className="text-sm font-semibold text-[var(--text-primary)]">{title}</h3>
         <p className="text-xs text-[var(--text-secondary)] mt-0.5">{desc}</p>
       </div>
     </div>

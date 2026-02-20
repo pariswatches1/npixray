@@ -337,7 +337,7 @@ export default function ScanResultPage() {
           <Sparkles className="h-6 w-6 text-[#2F5EA8]" />
         </div>
         <div className="flex-1 min-w-0">
-          <h3 className="text-sm font-bold text-white group-hover:text-[#2F5EA8] transition-colors">
+          <h3 className="text-sm font-bold text-[var(--text-primary)] group-hover:text-[#2F5EA8] transition-colors">
             Ask AI Revenue Coach About Your Results
           </h3>
           <p className="text-xs text-[var(--text-secondary)] mt-0.5">
@@ -387,7 +387,7 @@ export default function ScanResultPage() {
               className={`flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === tab.id
                   ? "border-[#2F5EA8]/20 text-[#2F5EA8]"
-                  : "border-transparent text-[var(--text-secondary)] hover:text-white hover:border-[var(--border)]"
+                  : "border-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--border)]"
               }`}
               aria-selected={activeTab === tab.id}
               role="tab"

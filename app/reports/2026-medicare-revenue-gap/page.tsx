@@ -358,7 +358,7 @@ export default async function MedicareRevenueGapReport() {
                     <td className="py-2.5 pr-3 text-right text-[var(--text-secondary)]">
                       {formatCurrency(s.avgPayment)}
                     </td>
-                    <td className="py-2.5 pr-3 text-right font-semibold text-white">
+                    <td className="py-2.5 pr-3 text-right font-semibold text-[var(--text-primary)]">
                       {formatCurrency(s.totalMissed)}
                     </td>
                   </tr>

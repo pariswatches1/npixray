@@ -181,8 +181,8 @@ export function SearchResults() {
                 <Info className="h-4 w-4 text-[#2F5EA8] flex-shrink-0 mt-0.5" />
                 <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
                   Showing the first 20 matches. For more specific results, try
-                  adding a <strong className="text-white">state filter</strong> or include
-                  a <strong className="text-white">first name</strong>.
+                  adding a <strong className="text-[var(--text-primary)]">state filter</strong> or include
+                  a <strong className="text-[var(--text-primary)]">first name</strong>.
                 </p>
               </div>
             )}

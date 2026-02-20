@@ -71,7 +71,7 @@ export function CcmCalculatorTool() {
             placeholder="e.g. 100"
             value={patients}
             onChange={(e) => setPatients(e.target.value)}
-            className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-white placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20 focus:outline-none transition-colors"
+            className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-[var(--text-primary)] placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20 focus:outline-none transition-colors"
             aria-label="Number of patients with 2+ chronic conditions"
           />
           <p className="mt-2 text-xs text-[var(--text-secondary)]">

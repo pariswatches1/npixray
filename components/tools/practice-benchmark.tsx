@@ -105,7 +105,7 @@ export function PracticeBenchmarkTool() {
             <select
               value={specialty}
               onChange={(e) => setSpecialty(e.target.value)}
-              className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-white focus:border-[#2F5EA8]/20 focus:outline-none transition-colors appearance-none cursor-pointer"
+              className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-[var(--text-primary)] focus:border-[#2F5EA8]/20 focus:outline-none transition-colors appearance-none cursor-pointer"
               aria-label="Select specialty"
             >
               <option value="">Select specialty</option>
@@ -121,7 +121,7 @@ export function PracticeBenchmarkTool() {
             <select
               value={state}
               onChange={(e) => setState(e.target.value)}
-              className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-white focus:border-[#2F5EA8]/20 focus:outline-none transition-colors appearance-none cursor-pointer"
+              className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-[var(--text-primary)] focus:border-[#2F5EA8]/20 focus:outline-none transition-colors appearance-none cursor-pointer"
               aria-label="Select state"
             >
               <option value="">Select state</option>
@@ -142,7 +142,7 @@ export function PracticeBenchmarkTool() {
                 placeholder="e.g. 80000"
                 value={revenue}
                 onChange={(e) => setRevenue(e.target.value)}
-                className="w-full rounded-lg border border-[var(--border-light)] bg-white pl-8 pr-4 py-3 text-white placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20 focus:outline-none transition-colors"
+                className="w-full rounded-lg border border-[var(--border-light)] bg-white pl-8 pr-4 py-3 text-[var(--text-primary)] placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20 focus:outline-none transition-colors"
                 aria-label="Annual Medicare revenue"
               />
             </div>

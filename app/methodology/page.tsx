@@ -57,7 +57,7 @@ export default function MethodologyPage() {
 
           <div className="space-y-6 text-[var(--text-secondary)] leading-relaxed">
             <div className="rounded-xl border border-[var(--border-light)] bg-white p-6">
-              <h3 className="text-white font-semibold mb-2">
+              <h3 className="text-[var(--text-primary)] font-semibold mb-2">
                 CMS Medicare Physician &amp; Other Practitioners Dataset
               </h3>
               <p className="text-sm mb-3">
@@ -75,7 +75,7 @@ export default function MethodologyPage() {
             </div>
 
             <div className="rounded-xl border border-[var(--border-light)] bg-white p-6">
-              <h3 className="text-white font-semibold mb-2">
+              <h3 className="text-[var(--text-primary)] font-semibold mb-2">
                 NPPES NPI Registry
               </h3>
               <p className="text-sm">
@@ -86,7 +86,7 @@ export default function MethodologyPage() {
             </div>
 
             <div className="rounded-xl border border-[var(--border-light)] bg-white p-6">
-              <h3 className="text-white font-semibold mb-2">
+              <h3 className="text-[var(--text-primary)] font-semibold mb-2">
                 Medicare Fee Schedule
               </h3>
               <p className="text-sm">
@@ -116,7 +116,7 @@ export default function MethodologyPage() {
 
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="rounded-lg border border-[var(--border-light)] p-4">
-                <h4 className="text-white font-semibold text-sm mb-1">E&M Coding Efficiency (25%)</h4>
+                <h4 className="text-[var(--text-primary)] font-semibold text-sm mb-1">E&M Coding Efficiency (25%)</h4>
                 <p className="text-xs">
                   Compares the provider&apos;s E&M code distribution (99213/99214/99215) against
                   their specialty benchmark. Providers whose coding mix aligns with or exceeds
@@ -124,7 +124,7 @@ export default function MethodologyPage() {
                 </p>
               </div>
               <div className="rounded-lg border border-[var(--border-light)] p-4">
-                <h4 className="text-white font-semibold text-sm mb-1">CCM/RPM Adoption (25%)</h4>
+                <h4 className="text-[var(--text-primary)] font-semibold text-sm mb-1">CCM/RPM Adoption (25%)</h4>
                 <p className="text-xs">
                   Measures whether the provider bills Chronic Care Management (99490) and
                   Remote Patient Monitoring (99454). Billing either program earns partial credit;
@@ -132,14 +132,14 @@ export default function MethodologyPage() {
                 </p>
               </div>
               <div className="rounded-lg border border-[var(--border-light)] p-4">
-                <h4 className="text-white font-semibold text-sm mb-1">BHI Adoption (25%)</h4>
+                <h4 className="text-[var(--text-primary)] font-semibold text-sm mb-1">BHI Adoption (25%)</h4>
                 <p className="text-xs">
                   Checks for Behavioral Health Integration (99484) billing. Given the low national
                   adoption rate, any BHI billing represents significant revenue capture.
                 </p>
               </div>
               <div className="rounded-lg border border-[var(--border-light)] p-4">
-                <h4 className="text-white font-semibold text-sm mb-1">AWV Completion (25%)</h4>
+                <h4 className="text-[var(--text-primary)] font-semibold text-sm mb-1">AWV Completion (25%)</h4>
                 <p className="text-xs">
                   Evaluates Annual Wellness Visit (G0438/G0439) volume relative to the provider&apos;s
                   total Medicare patient panel. The target benchmark varies by specialty.
@@ -304,28 +304,28 @@ export default function MethodologyPage() {
             <div className="rounded-xl border border-orange-400/20 bg-orange-400/5 p-6">
               <ul className="space-y-3">
                 <li>
-                  <strong className="text-white">Medicare Only:</strong> All data reflects Medicare
+                  <strong className="text-[var(--text-primary)]">Medicare Only:</strong> All data reflects Medicare
                   Fee-for-Service claims only. Commercial payer, Medicaid, and Medicare Advantage
                   data are not included.
                 </li>
                 <li>
-                  <strong className="text-white">Publicly Available Data:</strong> CMS redacts data
+                  <strong className="text-[var(--text-primary)]">Publicly Available Data:</strong> CMS redacts data
                   for providers with fewer than 11 beneficiaries for any single service to protect
                   patient privacy. This means some low-volume codes may be underrepresented.
                 </li>
                 <li>
-                  <strong className="text-white">Revenue Estimates:</strong> All dollar amounts
+                  <strong className="text-[var(--text-primary)]">Revenue Estimates:</strong> All dollar amounts
                   labeled as &quot;estimated&quot; or &quot;potential&quot; are projections based on benchmark gaps
                   and published fee schedule rates. Actual revenue will vary based on patient
                   mix, payer contracts, and practice operations.
                 </li>
                 <li>
-                  <strong className="text-white">Annual Refresh:</strong> Data is updated annually
+                  <strong className="text-[var(--text-primary)]">Annual Refresh:</strong> Data is updated annually
                   when CMS publishes new datasets, typically with a 12-18 month lag from the
                   service dates.
                 </li>
                 <li>
-                  <strong className="text-white">Not Medical Advice:</strong> NPIxray provides
+                  <strong className="text-[var(--text-primary)]">Not Medical Advice:</strong> NPIxray provides
                   data analysis for revenue optimization purposes only. It does not constitute
                   medical, legal, or compliance advice.
                 </li>

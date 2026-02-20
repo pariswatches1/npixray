@@ -70,7 +70,7 @@ export function GroupProgramsTab({ data }: Props) {
                   <span style={{ color: prog.color }}>{prog.icon}</span>
                 </div>
                 <div>
-                  <h3 className="text-sm font-semibold text-white">{prog.name}</h3>
+                  <h3 className="text-sm font-semibold text-[var(--text-primary)]">{prog.name}</h3>
                   <p className="text-xs text-[var(--text-secondary)]/60 font-mono">{prog.code}</p>
                 </div>
               </div>
@@ -79,11 +79,11 @@ export function GroupProgramsTab({ data }: Props) {
               <div className="grid grid-cols-3 gap-3 mb-4">
                 <div>
                   <p className="text-xs text-[var(--text-secondary)]/60">Enrolled</p>
-                  <p className="text-lg font-bold font-mono text-white">{adoption.enrolled}</p>
+                  <p className="text-lg font-bold font-mono text-[var(--text-primary)]">{adoption.enrolled}</p>
                 </div>
                 <div>
                   <p className="text-xs text-[var(--text-secondary)]/60">Eligible</p>
-                  <p className="text-lg font-bold font-mono text-white">{adoption.eligible}</p>
+                  <p className="text-lg font-bold font-mono text-[var(--text-primary)]">{adoption.eligible}</p>
                 </div>
                 <div>
                   <p className="text-xs text-[var(--text-secondary)]/60">Rate</p>
@@ -124,7 +124,7 @@ export function GroupProgramsTab({ data }: Props) {
 
       {/* Provider Adoption Matrix */}
       <div className="rounded-2xl bg-white border border-[var(--border-light)] p-6">
-        <h3 className="text-lg font-semibold text-white mb-4">Provider Adoption Matrix</h3>
+        <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-4">Provider Adoption Matrix</h3>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
@@ -147,7 +147,7 @@ export function GroupProgramsTab({ data }: Props) {
                 return (
                   <tr key={provider.npi} className="hover:bg-[var(--bg)]">
                     <td className="py-2.5 pr-4">
-                      <p className="text-white font-medium truncate max-w-[200px]">
+                      <p className="text-[var(--text-primary)] font-medium truncate max-w-[200px]">
                         {provider.fullName}
                       </p>
                       <p className="text-xs text-[var(--text-secondary)]/60">{provider.specialty}</p>

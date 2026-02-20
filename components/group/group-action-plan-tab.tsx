@@ -34,7 +34,7 @@ export function GroupActionPlanTab({ data }: Props) {
     return (
       <div className="rounded-2xl bg-white border border-[var(--border-light)] p-12 text-center">
         <Zap className="h-12 w-12 text-[#2F5EA8] mx-auto mb-4" />
-        <h3 className="text-lg font-semibold text-white mb-2">Practice is Performing Well</h3>
+        <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-2">Practice is Performing Well</h3>
         <p className="text-[var(--text-secondary)] text-sm max-w-md mx-auto">
           No significant revenue gaps were found across your providers.
           Keep up the great work with your billing optimization!
@@ -50,7 +50,7 @@ export function GroupActionPlanTab({ data }: Props) {
       {/* Summary */}
       <div className="rounded-2xl bg-[#2F5EA8]/[0.04] border border-[#2F5EA8]/10 p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h3 className="text-lg font-semibold text-white">Practice Revenue Roadmap</h3>
+          <h3 className="text-lg font-semibold text-[var(--text-primary)]">Practice Revenue Roadmap</h3>
           <p className="text-sm text-[var(--text-secondary)] mt-1">
             {actions.length} action{actions.length > 1 ? "s" : ""} identified across {data.successfulScans} providers
           </p>
@@ -93,7 +93,7 @@ export function GroupActionPlanTab({ data }: Props) {
 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3 flex-wrap mb-2">
-                    <h4 className="text-base font-semibold text-white">{action.title}</h4>
+                    <h4 className="text-base font-semibold text-[var(--text-primary)]">{action.title}</h4>
                     <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${diff.bg} ${diff.color} border ${diff.border}`}>
                       {diff.label}
                     </span>

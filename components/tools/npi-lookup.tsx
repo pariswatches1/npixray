@@ -138,7 +138,7 @@ export function NpiLookupTool() {
             className={`flex-1 px-4 py-2 text-sm font-medium rounded-md transition-all ${
               searchMode === "npi"
                 ? "bg-[#2F5EA8] text-white shadow-sm"
-                : "text-[var(--text-secondary)] hover:text-white"
+                : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
             }`}
           >
             NPI Number
@@ -148,7 +148,7 @@ export function NpiLookupTool() {
             className={`flex-1 px-4 py-2 text-sm font-medium rounded-md transition-all ${
               searchMode === "name"
                 ? "bg-[#2F5EA8] text-white shadow-sm"
-                : "text-[var(--text-secondary)] hover:text-white"
+                : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
             }`}
           >
             Search by Name
@@ -171,7 +171,7 @@ export function NpiLookupTool() {
                   const val = e.target.value.replace(/\D/g, "");
                   if (val.length <= 10) setNpi(val);
                 }}
-                className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-white font-mono tracking-wider placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20 focus:outline-none transition-colors"
+                className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-[var(--text-primary)] font-mono tracking-wider placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20 focus:outline-none transition-colors"
                 aria-label="NPI number"
               />
             </div>
@@ -186,7 +186,7 @@ export function NpiLookupTool() {
                   placeholder="First name"
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
-                  className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-white placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20 focus:outline-none transition-colors"
+                  className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-[var(--text-primary)] placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20 focus:outline-none transition-colors"
                   aria-label="First name"
                 />
               </div>
@@ -200,7 +200,7 @@ export function NpiLookupTool() {
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
                   required
-                  className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-white placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20 focus:outline-none transition-colors"
+                  className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-[var(--text-primary)] placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20 focus:outline-none transition-colors"
                   aria-label="Last name"
                 />
               </div>
@@ -211,7 +211,7 @@ export function NpiLookupTool() {
                 <select
                   value={state}
                   onChange={(e) => setState(e.target.value)}
-                  className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-white focus:border-[#2F5EA8]/20 focus:outline-none transition-colors appearance-none cursor-pointer"
+                  className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-[var(--text-primary)] focus:border-[#2F5EA8]/20 focus:outline-none transition-colors appearance-none cursor-pointer"
                   aria-label="State"
                 >
                   <option value="">All states</option>
@@ -229,7 +229,7 @@ export function NpiLookupTool() {
                   placeholder="e.g. Cardiology"
                   value={specialty}
                   onChange={(e) => setSpecialty(e.target.value)}
-                  className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-white placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20 focus:outline-none transition-colors"
+                  className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-[var(--text-primary)] placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20 focus:outline-none transition-colors"
                   aria-label="Specialty"
                 />
               </div>

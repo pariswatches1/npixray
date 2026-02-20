@@ -100,7 +100,7 @@ export function SpecialtyComparisonTool() {
             <select
               value={specialtyA}
               onChange={(e) => { setSpecialtyA(e.target.value); setCompared(false); }}
-              className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-white focus:border-[#2F5EA8]/20 focus:outline-none transition-colors appearance-none cursor-pointer"
+              className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-[var(--text-primary)] focus:border-[#2F5EA8]/20 focus:outline-none transition-colors appearance-none cursor-pointer"
               aria-label="First specialty"
             >
               <option value="">Select specialty</option>
@@ -116,7 +116,7 @@ export function SpecialtyComparisonTool() {
             <select
               value={specialtyB}
               onChange={(e) => { setSpecialtyB(e.target.value); setCompared(false); }}
-              className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-white focus:border-[#2F5EA8]/20 focus:outline-none transition-colors appearance-none cursor-pointer"
+              className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-[var(--text-primary)] focus:border-[#2F5EA8]/20 focus:outline-none transition-colors appearance-none cursor-pointer"
               aria-label="Second specialty"
             >
               <option value="">Select specialty</option>

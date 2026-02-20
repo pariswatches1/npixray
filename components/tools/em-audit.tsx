@@ -105,7 +105,7 @@ export function EmAuditTool() {
             <select
               value={specialty}
               onChange={(e) => setSpecialty(e.target.value)}
-              className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-white focus:border-[#2F5EA8]/20 focus:outline-none transition-colors appearance-none cursor-pointer"
+              className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-[var(--text-primary)] focus:border-[#2F5EA8]/20 focus:outline-none transition-colors appearance-none cursor-pointer"
               aria-label="Select specialty"
             >
               <option value="">Select specialty</option>
@@ -124,7 +124,7 @@ export function EmAuditTool() {
               placeholder="e.g. 200"
               value={count99213}
               onChange={(e) => setCount99213(e.target.value)}
-              className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-white placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20 focus:outline-none transition-colors"
+              className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-[var(--text-primary)] placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20 focus:outline-none transition-colors"
               aria-label="99213 visit count"
             />
           </div>
@@ -138,7 +138,7 @@ export function EmAuditTool() {
               placeholder="e.g. 500"
               value={count99214}
               onChange={(e) => setCount99214(e.target.value)}
-              className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-white placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20 focus:outline-none transition-colors"
+              className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-[var(--text-primary)] placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20 focus:outline-none transition-colors"
               aria-label="99214 visit count"
             />
           </div>
@@ -152,7 +152,7 @@ export function EmAuditTool() {
               placeholder="e.g. 50"
               value={count99215}
               onChange={(e) => setCount99215(e.target.value)}
-              className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-white placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20 focus:outline-none transition-colors"
+              className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-[var(--text-primary)] placeholder:text-[var(--text-secondary)]/50 focus:border-[#2F5EA8]/20 focus:outline-none transition-colors"
               aria-label="99215 visit count"
             />
           </div>

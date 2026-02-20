@@ -112,7 +112,7 @@ export function StateComparisonTool() {
             <select
               value={stateA}
               onChange={(e) => { setStateA(e.target.value); setCompared(false); }}
-              className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-white focus:border-[#2F5EA8]/20 focus:outline-none transition-colors appearance-none cursor-pointer"
+              className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-[var(--text-primary)] focus:border-[#2F5EA8]/20 focus:outline-none transition-colors appearance-none cursor-pointer"
               aria-label="First state"
             >
               <option value="">Select state</option>
@@ -128,7 +128,7 @@ export function StateComparisonTool() {
             <select
               value={stateB}
               onChange={(e) => { setStateB(e.target.value); setCompared(false); }}
-              className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-white focus:border-[#2F5EA8]/20 focus:outline-none transition-colors appearance-none cursor-pointer"
+              className="w-full rounded-lg border border-[var(--border-light)] bg-white px-4 py-3 text-[var(--text-primary)] focus:border-[#2F5EA8]/20 focus:outline-none transition-colors appearance-none cursor-pointer"
               aria-label="Second state"
             >
               <option value="">Select state</option>

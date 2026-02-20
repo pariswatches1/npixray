@@ -61,7 +61,7 @@ export function CiteBlock({ title, year, url }: CiteBlockProps) {
             className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
               format === f
                 ? "bg-[#2F5EA8]/10 text-[#2F5EA8] border border-[#2F5EA8]/15"
-                : "border border-[var(--border-light)] text-[var(--text-secondary)] hover:text-white"
+                : "border border-[var(--border-light)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
             }`}
           >
             {f === "apa" ? "APA" : f === "bibtex" ? "BibTeX" : "Plain Text"}

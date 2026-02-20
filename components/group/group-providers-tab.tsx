@@ -141,7 +141,7 @@ function ProviderRow({
     <div className="grid grid-cols-2 lg:grid-cols-12 gap-4 px-6 py-4 items-center hover:bg-[var(--bg)] transition-colors">
       {/* Provider Name */}
       <div className="col-span-2 lg:col-span-3">
-        <p className="text-sm font-medium text-white truncate">{provider.fullName}</p>
+        <p className="text-sm font-medium text-[var(--text-primary)] truncate">{provider.fullName}</p>
         <p className="text-xs text-[var(--text-secondary)] font-mono">{provider.npi}</p>
       </div>
 

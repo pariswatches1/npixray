@@ -82,7 +82,7 @@ export default async function StateSpecialtyLeaderboardPage({
         <ChevronRight className="h-3.5 w-3.5 text-[var(--text-secondary)]" />
         <Link href={`/leaderboard/${stateSlug}`} className="hover:text-[#2F5EA8] transition-colors">{stateName}</Link>
         <ChevronRight className="h-3.5 w-3.5 text-[var(--text-secondary)]" />
-        <span className="text-white font-medium">{specName}</span>
+        <span className="text-[var(--text-primary)] font-medium">{specName}</span>
       </nav>
 
       <div className="mb-8">
