@@ -1,12 +1,17 @@
 import { NextResponse } from "next/server";
-import { getDistinctSpecialties, specialtyToSlug } from "@/lib/db-queries";
+import { SPECIALTY_LIST } from "@/lib/benchmark-data";
+import { specialtyToSlug } from "@/lib/db-queries";
 
-/** Specialties sitemap */
+/**
+ * Specialties sitemap.
+ *
+ * Uses static SPECIALTY_LIST instead of DB queries to ensure
+ * sitemaps are always available — even when DB is slow.
+ */
 export async function GET() {
   const baseUrl = "https://npixray.com";
-  const specialties = await getDistinctSpecialties();
 
-  const urls = specialties
+  const urls = SPECIALTY_LIST
     .map(
       (s) =>
         `  <url><loc>${baseUrl}/specialties/${specialtyToSlug(s)}</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>`

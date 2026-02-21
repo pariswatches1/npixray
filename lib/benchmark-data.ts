@@ -359,3 +359,111 @@ export const STATE_LIST: { abbr: string; name: string }[] = [
   { abbr: "WI", name: "Wisconsin" },
   { abbr: "WY", name: "Wyoming" },
 ];
+
+/**
+ * Top ~200 most commonly billed HCPCS/CPT codes in Medicare.
+ * Used for sitemap generation to avoid DB dependency.
+ * Source: CMS Medicare Physician & Other Practitioners dataset.
+ * These codes are stable — update annually when CMS releases new data.
+ */
+export const TOP_BILLING_CODES: string[] = [
+  // E&M Office/Outpatient Visits (Established)
+  "99211", "99212", "99213", "99214", "99215",
+  // E&M Office/Outpatient Visits (New Patient)
+  "99202", "99203", "99204", "99205",
+  // E&M Hospital Inpatient (Initial)
+  "99221", "99222", "99223",
+  // E&M Hospital Inpatient (Subsequent)
+  "99231", "99232", "99233",
+  // E&M Hospital Discharge
+  "99238", "99239",
+  // E&M Emergency Department
+  "99281", "99282", "99283", "99284", "99285",
+  // E&M Observation
+  "99217", "99218", "99219", "99220",
+  // E&M Nursing Facility
+  "99304", "99305", "99306", "99307", "99308", "99309", "99310",
+  // E&M Home/Residence
+  "99341", "99342", "99344", "99345", "99347", "99348", "99349", "99350",
+  // Chronic Care Management (CCM)
+  "99490", "99491", "99437", "99439",
+  // Remote Patient Monitoring (RPM)
+  "99453", "99454", "99457", "99458",
+  // Behavioral Health Integration (BHI/CoCM)
+  "99484", "99492", "99493", "99494",
+  // Annual Wellness Visits
+  "G0438", "G0439", "G0402",
+  // Transitional Care Management
+  "99495", "99496",
+  // Telehealth/Phone E&M
+  "99441", "99442", "99443",
+  // Prolonged Services
+  "99354", "99355", "99356", "99357", "99417",
+  // Critical Care
+  "99291", "99292",
+  // Consultations (Inpatient)
+  "99251", "99252", "99253", "99254", "99255",
+  // Preventive Medicine
+  "99381", "99382", "99383", "99384", "99385", "99386", "99387",
+  "99391", "99392", "99393", "99394", "99395", "99396", "99397",
+  // Minor Procedures - Skin
+  "10060", "10061", "10120", "10121", "10140", "10160",
+  "11042", "11043", "11044",
+  "11102", "11104", "11106",
+  "11200", "11201",
+  "11300", "11301", "11302", "11303",
+  "11400", "11401", "11402", "11403", "11404", "11406",
+  "11440", "11441", "11442", "11443",
+  "11600", "11601", "11602", "11603", "11604", "11606",
+  "11719", "11720", "11721", "11730", "11740", "11750",
+  // Destruction/Lesion Removal
+  "17000", "17003", "17004", "17110", "17111",
+  // Injections & Joint Procedures
+  "20550", "20551", "20552", "20553",
+  "20600", "20605", "20610", "20611",
+  // Drug Administration
+  "96372", "96373", "96374", "96375",
+  // Immunizations
+  "90471", "90472", "90656", "90658", "90662",
+  // Common Drug Codes
+  "J0585", "J1030", "J1040", "J1050", "J1071", "J3301", "J3303",
+  // ECG/Cardiac
+  "93000", "93005", "93010", "93015", "93016", "93017", "93018",
+  // Echocardiography
+  "93303", "93304", "93306", "93307", "93308", "93350", "93351",
+  // Vascular Studies
+  "93880", "93882", "93922", "93923", "93925", "93926", "93970", "93971",
+  // Pulmonary Function
+  "94010", "94060", "94375", "94664", "94726", "94727", "94729",
+  // Ophthalmology
+  "92004", "92012", "92014", "92015", "92083", "92133", "92134", "92250",
+  // Radiology - Chest/Spine
+  "71046", "71250", "71260", "72148", "72170",
+  // Radiology - Extremities
+  "73030", "73060", "73070", "73080", "73090", "73100", "73110", "73120", "73130",
+  "73560", "73562", "73564", "73590", "73600", "73610", "73620", "73630",
+  // Ultrasound
+  "76512", "76514", "76519", "76770", "76856", "76857",
+  // DEXA
+  "77080", "77081",
+  // Lab - Venipuncture
+  "36415", "36416",
+  // Lab - Panels
+  "80048", "80050", "80053", "80061",
+  // Lab - Urinalysis
+  "81001", "81002", "81003",
+  // Lab - Chemistry
+  "82043", "82947", "82950", "82962", "83036", "84443",
+  // Lab - Hematology
+  "85025", "85027",
+  // Lab - Microbiology
+  "87086", "87088",
+  // Psychiatry/Psychotherapy
+  "90791", "90792",
+  "90832", "90833", "90834", "90836", "90837", "90838",
+  "90839", "90840", "90846", "90847", "90853",
+  // Physical Therapy/Rehab
+  "97110", "97112", "97116", "97140", "97161", "97162", "97163", "97530", "97535",
+  // GI Endoscopy
+  "43239", "43249", "45378", "45380", "45385",
+];

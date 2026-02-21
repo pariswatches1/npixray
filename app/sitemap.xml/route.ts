@@ -1,19 +1,21 @@
 import { NextResponse } from "next/server";
-import { getDistinctStates } from "@/lib/db-queries";
+import { STATE_LIST } from "@/lib/benchmark-data";
 
 /**
  * Sitemap Index — /sitemap.xml
  * Points to sub-sitemaps for each content section.
  * Each sub-sitemap handles up to 50,000 URLs per Google spec.
+ *
+ * Uses static STATE_LIST instead of DB queries to ensure sitemaps
+ * are always available — even when DB is slow or unavailable.
  */
 export async function GET() {
-  const states = await getDistinctStates();
   const baseUrl = "https://npixray.com";
 
-  const providerSitemaps = states
+  const providerSitemaps = STATE_LIST
     .map(
-      (state) =>
-        `  <sitemap><loc>${baseUrl}/api/sitemap-providers/${state.toLowerCase()}</loc></sitemap>`
+      (s) =>
+        `  <sitemap><loc>${baseUrl}/api/sitemap-providers/${s.abbr.toLowerCase()}</loc></sitemap>`
     )
     .join("\n");
 
