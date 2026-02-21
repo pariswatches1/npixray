@@ -30,7 +30,8 @@ import { InlineScanner } from "@/components/seo/inline-scanner";
 import { generateInsight } from "@/lib/ai-insights";
 import { SPECIALTY_BENCHMARKS } from "@/lib/benchmarks";
 
-export const revalidate = 86400; // ISR: revalidate daily
+export const dynamic = "force-dynamic";
+export const revalidate = 86400; // ISR: cache at runtime for 24 hours
 
 export async function generateMetadata({
   params,

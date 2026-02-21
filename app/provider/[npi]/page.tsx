@@ -37,7 +37,8 @@ import { ClaimProfile } from "@/components/provider/claim-profile";
 import { ShareButtons } from "@/components/reports/share-buttons";
 import { UpgradeInlineCTA } from "@/components/paywall/upgrade-gate";
 
-export const revalidate = 86400; // ISR: revalidate every 24 hours
+export const dynamic = "force-dynamic";
+export const revalidate = 86400; // ISR: cache at runtime for 24 hours
 
 // ── Metadata ──────────────────────────────────────────────
 

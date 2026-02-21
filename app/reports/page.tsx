@@ -21,7 +21,8 @@ import {
 import { BENCHMARKS } from "@/lib/benchmark-data";
 import { STATE_LIST } from "@/lib/benchmark-data";
 
-export const revalidate = 86400; // ISR: revalidate every 24 hours
+export const dynamic = "force-dynamic";
+export const revalidate = 86400; // ISR: cache at runtime for 24 hours
 
 export const metadata: Metadata = {
   title: "Medicare Revenue Report Cards 2026 — States, Specialties & National | NPIxray",
