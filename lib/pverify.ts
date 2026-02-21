@@ -323,7 +323,7 @@ export function isPVerifyEnabled(): boolean {
 // ── Response parser ───────────────────────────────────────
 
 function parseEligibilityResponse(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line
   data: any,
   req: EligibilityRequest
 ): EligibilityResponse {
@@ -362,7 +362,7 @@ function parseEligibilityResponse(
   };
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// eslint-disable-next-line
 function parseCopay(data: any): CopayInfo | null {
   if (!data.CopayInNetwork && !data.Copay) return null;
 
@@ -375,7 +375,7 @@ function parseCopay(data: any): CopayInfo | null {
   };
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// eslint-disable-next-line
 function parseDeductible(data: any): DeductibleInfo | null {
   if (!data.IndividualDeductibleInNetwork && !data.IndividualDeductible) return null;
 
@@ -393,7 +393,7 @@ function parseDeductible(data: any): DeductibleInfo | null {
   };
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// eslint-disable-next-line
 function parseOutOfPocket(data: any): OutOfPocketInfo | null {
   if (!data.IndividualOOPInNetwork && !data.IndividualOOPMax) return null;
 
@@ -411,7 +411,7 @@ function parseOutOfPocket(data: any): OutOfPocketInfo | null {
   };
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// eslint-disable-next-line
 function parseCoinsurance(data: any): CoinsuranceInfo | null {
   if (!data.CoinsuranceInNetwork && !data.Coinsurance) return null;
 
