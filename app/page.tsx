@@ -2591,6 +2591,152 @@ export default function NPIxrayHome() {
           </div>
         </section>
 
+        {/* FAQ Section with JSON-LD */}
+        <section id="faq" style={{ maxWidth: 900, margin: "0 auto", padding: "60px 40px 40px" }}>
+          {/* FAQPage JSON-LD */}
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "FAQPage",
+                mainEntity: [
+                  {
+                    "@type": "Question",
+                    name: "What is an NPI number?",
+                    acceptedAnswer: {
+                      "@type": "Answer",
+                      text: "An NPI (National Provider Identifier) is a unique 10-digit number assigned to every healthcare provider in the United States by CMS. It's used for billing, claims, and identification across all health plans. Every doctor, nurse practitioner, and healthcare organization has one.",
+                    },
+                  },
+                  {
+                    "@type": "Question",
+                    name: "Is this really free?",
+                    acceptedAnswer: {
+                      "@type": "Answer",
+                      text: "Yes, 100% free with no limits. Our NPI scanner uses publicly available CMS Medicare data that the government publishes for transparency. There's no login required, no credit card, and you can scan as many NPIs as you want. We offer paid tiers for deeper analysis, but the scan is free forever.",
+                    },
+                  },
+                  {
+                    "@type": "Question",
+                    name: "Where does the data come from?",
+                    acceptedAnswer: {
+                      "@type": "Answer",
+                      text: "We use two public government data sources: the NPPES NPI Registry for provider information (name, specialty, location) and the CMS Medicare Physician & Other Practitioners dataset for billing patterns. This dataset contains over 10 million records covering 1.2M+ providers. No private patient data is ever used.",
+                    },
+                  },
+                  {
+                    "@type": "Question",
+                    name: "How accurate are the revenue estimates?",
+                    acceptedAnswer: {
+                      "@type": "Answer",
+                      text: "Our estimates are based on specialty benchmarks derived from national Medicare averages across 1.2M+ providers. They're directionally accurate for identifying gaps, but your actual numbers will vary based on your payer mix, patient panel, documentation practices, and geographic location. Think of it as a diagnostic tool, not an exact audit.",
+                    },
+                  },
+                  {
+                    "@type": "Question",
+                    name: "Is my data private?",
+                    acceptedAnswer: {
+                      "@type": "Answer",
+                      text: "We only use publicly available CMS data that the government publishes for anyone to access. We don't access any private patient records, EHR data, or protected health information (PHI). Your NPI scan results are generated on the fly and aren't stored or shared with third parties.",
+                    },
+                  },
+                ],
+              }),
+            }}
+          />
+
+          <h2
+            style={{
+              fontSize: 32,
+              fontWeight: 800,
+              textAlign: "center",
+              marginBottom: 12,
+              fontFamily: "var(--font-outfit), 'Outfit', sans-serif",
+              color: "#1A1A2E",
+            }}
+          >
+            Frequently Asked <span style={{ color: "#00B4C5" }}>Questions</span>
+          </h2>
+          <p
+            style={{
+              textAlign: "center",
+              fontSize: 15,
+              color: "#6B7280",
+              marginBottom: 32,
+              maxWidth: 500,
+              margin: "0 auto 32px",
+            }}
+          >
+            Everything you need to know about NPIxray and your revenue scan.
+          </p>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            {[
+              {
+                q: "What is an NPI number?",
+                a: "An NPI (National Provider Identifier) is a unique 10-digit number assigned to every healthcare provider in the United States by CMS. It\u2019s used for billing, claims, and identification across all health plans. Every doctor, nurse practitioner, and healthcare organization has one.",
+              },
+              {
+                q: "Is this really free?",
+                a: "Yes, 100% free with no limits. Our NPI scanner uses publicly available CMS Medicare data that the government publishes for transparency. There\u2019s no login required, no credit card, and you can scan as many NPIs as you want. We offer paid tiers for deeper analysis, but the scan is free forever.",
+              },
+              {
+                q: "Where does the data come from?",
+                a: "We use two public government data sources: the NPPES NPI Registry for provider information (name, specialty, location) and the CMS Medicare Physician & Other Practitioners dataset for billing patterns. This dataset contains over 10 million records covering 1.2M+ providers. No private patient data is ever used.",
+              },
+              {
+                q: "How accurate are the revenue estimates?",
+                a: "Our estimates are based on specialty benchmarks derived from national Medicare averages across 1.2M+ providers. They\u2019re directionally accurate for identifying gaps, but your actual numbers will vary based on your payer mix, patient panel, documentation practices, and geographic location. Think of it as a diagnostic tool, not an exact audit.",
+              },
+              {
+                q: "Is my data private?",
+                a: "We only use publicly available CMS data that the government publishes for anyone to access. We don\u2019t access any private patient records, EHR data, or protected health information (PHI). Your NPI scan results are generated on the fly and aren\u2019t stored or shared with third parties.",
+              },
+            ].map((faq, i) => (
+              <details
+                key={i}
+                style={{
+                  borderRadius: 14,
+                  border: "1px solid rgba(0,0,0,0.06)",
+                  background: "white",
+                  overflow: "hidden",
+                  boxShadow: "0 1px 3px rgba(0,0,0,0.02)",
+                }}
+              >
+                <summary
+                  style={{
+                    padding: "18px 20px",
+                    fontSize: 15,
+                    fontWeight: 600,
+                    cursor: "pointer",
+                    color: "#1A1A2E",
+                    fontFamily: "var(--font-outfit), 'Outfit', sans-serif",
+                    listStyle: "none",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  {faq.q}
+                  <span style={{ color: "#00B4C5", fontSize: 18, marginLeft: 12, flexShrink: 0 }}>+</span>
+                </summary>
+                <div
+                  style={{
+                    padding: "0 20px 18px",
+                    fontSize: 14,
+                    color: "#6B7280",
+                    lineHeight: 1.7,
+                    fontFamily: "var(--font-outfit), 'Outfit', sans-serif",
+                  }}
+                >
+                  {faq.a}
+                </div>
+              </details>
+            ))}
+          </div>
+        </section>
+
         {/* FINAL CTA */}
         <section
           style={{
