@@ -18,16 +18,20 @@ export function PricingCTA({ planId, label, highlight }: PricingCTAProps) {
 
   const userPlan = (session?.user as any)?.plan || "free";
 
+  /** Check if two plans are equivalent (handles legacy name mapping) */
+  function isSamePlan(a: string, b: string): boolean {
+    const normalize = (p: string) => {
+      if (p === "intelligence" || p === "api") return "pro";
+      if (p === "care") return "enterprise";
+      return p;
+    };
+    return normalize(a) === normalize(b);
+  }
+
   async function handleClick() {
     // Free tier — just go to scanner
     if (planId === "free") {
       router.push("/");
-      return;
-    }
-
-    // Care Management — open demo booking
-    if (planId === "care") {
-      window.location.href = "mailto:sales@npixray.com?subject=Care%20Management%20Demo%20Request";
       return;
     }
 
@@ -37,8 +41,8 @@ export function PricingCTA({ planId, label, highlight }: PricingCTAProps) {
       return;
     }
 
-    // Already on this plan
-    if (userPlan === planId) return;
+    // Already on this plan (or equivalent legacy plan)
+    if (isSamePlan(userPlan, planId)) return;
 
     // Logged in — try Stripe checkout
     setLoading(true);
@@ -73,18 +77,21 @@ export function PricingCTA({ planId, label, highlight }: PricingCTAProps) {
   if (planId === "free") {
     buttonText = "Scan Now \u2014 It\u2019s Free";
     icon = <Zap className="h-4 w-4" />;
-  } else if (planId === "care") {
-    buttonText = "Book a Demo";
-    icon = <Calendar className="h-4 w-4" />;
-  } else if (session?.user && userPlan === planId) {
+  } else if (session?.user && isSamePlan(userPlan, planId)) {
     buttonText = "Current Plan";
     icon = <Check className="h-4 w-4" />;
     disabled = true;
-  } else if (session?.user && userPlan === "free" && planId === "intelligence") {
-    buttonText = "Upgrade Now \u2014 $99/mo";
+  } else if (session?.user && userPlan === "free" && planId === "pro") {
+    buttonText = "Start 14-Day Free Trial";
+    icon = <Zap className="h-4 w-4" />;
+  } else if (session?.user && userPlan === "free" && planId === "enterprise") {
+    buttonText = "Start 14-Day Free Trial";
+    icon = <Zap className="h-4 w-4" />;
+  } else if (session?.user && (userPlan === "pro" || userPlan === "intelligence") && planId === "enterprise") {
+    buttonText = "Upgrade to Enterprise";
     icon = <Zap className="h-4 w-4" />;
   } else if (!session?.user && planId !== "free") {
-    buttonText = "Start Free, Then Upgrade";
+    buttonText = "Start 14-Day Free Trial";
     icon = <ArrowRight className="h-4 w-4" />;
   }
 
