@@ -14,29 +14,36 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--border-light)] bg-white/80 backdrop-blur-xl">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
+        <div className="flex h-24 items-center justify-between">
           {/* Logo */}
           <Link href="/" aria-label="NPIxray home">
-            <svg width="200" height="36" viewBox="0 0 200 36" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="thermalLogo" x1="0%" y1="140%" x2="0%" y2="-40%">
-                  <stop offset="0%" stopColor="#1e3a5f"/>
-                  <stop offset="10%" stopColor="#3b82f6"/>
-                  <stop offset="25%" stopColor="#06b6d4"/>
-                  <stop offset="40%" stopColor="#10b981"/>
-                  <stop offset="55%" stopColor="#eab308"/>
-                  <stop offset="70%" stopColor="#f59e0b"/>
-                  <stop offset="85%" stopColor="#ef4444"/>
-                  <stop offset="100%" stopColor="#1e3a5f"/>
-                  <animate attributeName="y1" values="140%;-60%;140%" dur="1.2s" repeatCount="indefinite"/>
-                  <animate attributeName="y2" values="-40%;-240%;-40%" dur="1.2s" repeatCount="indefinite"/>
-                </linearGradient>
-                <clipPath id="logoClip">
-                  <text x="8" y="27" fontFamily="Inter, sans-serif" fontWeight="800" fontSize="28" letterSpacing="-0.5">NPIxray</text>
-                </clipPath>
-              </defs>
-              <rect x="0" y="0" width="200" height="36" fill="url(#thermalLogo)" clipPath="url(#logoClip)"/>
-              <text x="8" y="27" fontFamily="Inter, sans-serif" fontWeight="800" fontSize="28" fill="none" stroke="#1e3a5f" strokeWidth="0.15" letterSpacing="-0.5" opacity="0.06">NPIxray</text>
+            <svg width="380" height="80" viewBox="0 0 380 80" xmlns="http://www.w3.org/2000/svg">
+              <text x="30" y="38" fontFamily="Inter, sans-serif" fontWeight="800" fontSize="36" fill="#1e293b" letterSpacing="-1">NPI</text>
+              <text x="120" y="38" fontFamily="Inter, sans-serif" fontWeight="800" fontSize="36" fill="#3b82f6" letterSpacing="-1">xray</text>
+              {/* EKG heartbeat trace line */}
+              <polyline fill="none" stroke="#3b82f6" strokeWidth="2" strokeLinecap="round" opacity="0.35"
+                points="0,62 35,62 55,62 75,62 90,60 98,64 106,62 125,62 136,48 144,76 152,36 160,72 168,52 176,62 200,62 230,62 260,62 280,62"/>
+              {/* Traveling glow dot along EKG */}
+              <circle r="3.5" fill="#3b82f6" opacity="0.6">
+                <animateMotion dur="2s" repeatCount="indefinite"
+                  path="M0,62 L35,62 L55,62 L75,62 L90,60 L98,64 L106,62 L125,62 L136,48 L144,76 L152,36 L160,72 L168,52 L176,62 L200,62 L230,62 L260,62 L280,62"/>
+              </circle>
+              {/* BPM number pulsing */}
+              <text x="300" y="32" fontFamily="monospace" fontWeight="700" fontSize="28" fill="#ef4444" opacity="0.6">
+                72
+                <animate attributeName="opacity" values="0.4;0.7;0.4" dur="1s" repeatCount="indefinite"/>
+              </text>
+              <text x="338" y="32" fontFamily="monospace" fontWeight="600" fontSize="10" fill="#94a3b8">BPM</text>
+              {/* Beating heart icon */}
+              <path d="M312,44 C312,40 316,38 318,40 C320,38 324,40 324,44 C324,48 318,52 318,54 C318,52 312,48 312,44Z" fill="#ef4444" opacity="0.5">
+                <animate attributeName="opacity" values="0.3;0.6;0.3" dur="1s" repeatCount="indefinite"/>
+                <animateTransform attributeName="transform" type="scale" values="1;1.1;1" dur="1s" repeatCount="indefinite" additive="sum"/>
+              </path>
+              {/* Practice Health label */}
+              <text x="296" y="68" fontFamily="Inter, sans-serif" fontWeight="600" fontSize="8" fill="#10b981" letterSpacing="2">
+                PRACTICE HEALTH
+                <animate attributeName="opacity" values="0.3;0.6;0.3" dur="2s" repeatCount="indefinite"/>
+              </text>
             </svg>
           </Link>
 
