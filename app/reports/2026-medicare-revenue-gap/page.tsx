@@ -38,7 +38,8 @@ import { DataCoverage } from "@/components/seo/data-coverage";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { ScanCTA } from "@/components/seo/scan-cta";
 
-export const revalidate = 86400;
+export const dynamic = "force-dynamic";
+export const revalidate = 86400; // ISR: cache at runtime for 24 hours
 
 export const metadata: Metadata = {
   title: "2026 Medicare Revenue Gap Report — 50-State Analysis | NPIxray",

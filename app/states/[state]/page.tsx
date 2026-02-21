@@ -36,7 +36,8 @@ import { getStateOpportunities } from "@/lib/opportunity-engine";
 import { SPECIALTY_BENCHMARKS } from "@/lib/benchmarks";
 import { DataCoverage } from "@/components/seo/data-coverage";
 
-export const revalidate = 86400; // ISR: revalidate every 24 hours
+export const dynamic = "force-dynamic";
+export const revalidate = 86400; // ISR: cache at runtime for 24 hours
 
 export async function generateMetadata({
   params,

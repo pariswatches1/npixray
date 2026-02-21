@@ -53,7 +53,8 @@ import {
 } from "@/lib/report-utils";
 import { STATE_LIST } from "@/lib/benchmark-data";
 
-export const revalidate = 86400; // ISR: revalidate every 24 hours (was force-dynamic)
+export const dynamic = "force-dynamic";
+export const revalidate = 86400; // ISR: cache at runtime for 24 hours
 
 export function generateStaticParams() {
   return STATE_LIST.map((s) => ({

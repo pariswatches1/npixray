@@ -22,7 +22,8 @@ import { TrendSignals } from "@/components/seo/trend-signals";
 import { InlineScanner } from "@/components/seo/inline-scanner";
 import { generateInsight } from "@/lib/ai-insights";
 
-export const revalidate = 86400; // ISR: revalidate every 24 hours
+export const dynamic = "force-dynamic";
+export const revalidate = 86400; // ISR: cache at runtime for 24 hours
 
 async function findSpecialtyBySlug(slug: string) {
   const benchmarks = await getAllBenchmarks();

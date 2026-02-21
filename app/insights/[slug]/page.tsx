@@ -38,7 +38,8 @@ import { RelatedLinks as SiteRelatedLinks } from "@/components/seo/related-links
 import { InlineScanner } from "@/components/seo/inline-scanner";
 import { DataCoverage } from "@/components/seo/data-coverage";
 
-export const revalidate = 86400; // ISR: revalidate every 24 hours
+export const dynamic = "force-dynamic";
+export const revalidate = 86400; // ISR: cache at runtime for 24 hours
 
 // ── Insight config map ──────────────────────────────────────
 

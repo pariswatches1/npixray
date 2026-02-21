@@ -3,7 +3,8 @@ import Link from "next/link";
 import { MapPin, Users, DollarSign, ArrowRight, Activity } from "lucide-react";
 import { getAllStates, stateAbbrToName, stateToSlug, formatCurrency, formatNumber } from "@/lib/db-queries";
 
-export const revalidate = 86400; // ISR: revalidate every 24 hours
+export const dynamic = "force-dynamic";
+export const revalidate = 86400; // ISR: cache at runtime for 24 hours
 
 export const metadata: Metadata = {
   title: "Medicare Provider Analysis by State — All 50 States | NPIxray",
