@@ -301,7 +301,11 @@ function GridCell3D({ row, col, delay: cellDelay }: GridCell3DProps) {
 // ── Main Homepage Component ──
 export default function NPIxrayHome() {
   const router = useRouter();
+  const [searchMode, setSearchMode] = useState<"npi" | "name">("npi");
   const [npi, setNpi] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [searchState, setSearchState] = useState("");
   const [scanning, setScanning] = useState(false);
   const [hCard, setHCard] = useState<number | null>(null);
   const [hTier, setHTier] = useState<number | null>(null);
@@ -325,12 +329,22 @@ export default function NPIxrayHome() {
   }, [handleMouse]);
 
   const handleScan = () => {
-    if (npi.length === 10) {
+    if (searchMode === "npi" && npi.length === 10) {
       setScanning(true);
       setTimeout(() => {
         router.push(`/scan/${npi}`);
         setScanning(false);
       }, 2000);
+    } else if (searchMode === "name" && lastName.trim().length > 0) {
+      setScanning(true);
+      const params = new URLSearchParams();
+      params.set("last_name", lastName.trim());
+      if (firstName.trim()) params.set("first_name", firstName.trim());
+      if (searchState) params.set("state", searchState);
+      setTimeout(() => {
+        router.push(`/search?${params.toString()}`);
+        setScanning(false);
+      }, 1000);
     }
   };
 
@@ -362,6 +376,17 @@ export default function NPIxrayHome() {
       setEmailSubmitting(false);
     }
   };
+
+  const US_STATES = [
+    "AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA",
+    "KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ",
+    "NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT",
+    "VA","WA","WV","WI","WY","DC",
+  ];
+
+  const scanValid = searchMode === "npi"
+    ? npi.length === 10 && /^\d+$/.test(npi)
+    : lastName.trim().length > 0;
 
   const gaps: GapItem[] = [
     {
@@ -870,6 +895,61 @@ export default function NPIxrayHome() {
                 }}
               />
 
+              {/* NPI / Search by Name toggle */}
+              <div
+                style={{
+                  display: "flex",
+                  gap: 4,
+                  padding: 4,
+                  borderRadius: 10,
+                  background: "rgba(0,0,0,0.04)",
+                  margin: "10px 10px 0 10px",
+                  maxWidth: 260,
+                  position: "relative",
+                  zIndex: 3,
+                }}
+              >
+                <button
+                  onClick={() => setSearchMode("npi")}
+                  style={{
+                    flex: 1,
+                    padding: "8px 16px",
+                    fontSize: 13,
+                    fontWeight: 600,
+                    borderRadius: 8,
+                    border: "none",
+                    cursor: "pointer",
+                    transition: "all 0.2s",
+                    fontFamily: "var(--font-outfit), 'Outfit', sans-serif",
+                    background: searchMode === "npi" ? "#00B4C5" : "transparent",
+                    color: searchMode === "npi" ? "white" : "#6B7280",
+                    boxShadow: searchMode === "npi" ? "0 2px 8px rgba(0,180,197,0.3)" : "none",
+                  }}
+                >
+                  NPI Number
+                </button>
+                <button
+                  onClick={() => setSearchMode("name")}
+                  style={{
+                    flex: 1,
+                    padding: "8px 16px",
+                    fontSize: 13,
+                    fontWeight: 600,
+                    borderRadius: 8,
+                    border: "none",
+                    cursor: "pointer",
+                    transition: "all 0.2s",
+                    fontFamily: "var(--font-outfit), 'Outfit', sans-serif",
+                    background: searchMode === "name" ? "#00B4C5" : "transparent",
+                    color: searchMode === "name" ? "white" : "#6B7280",
+                    boxShadow: searchMode === "name" ? "0 2px 8px rgba(0,180,197,0.3)" : "none",
+                  }}
+                >
+                  Search by Name
+                </button>
+              </div>
+
+              {searchMode === "npi" ? (
               <div
                 style={{
                   display: "flex",
@@ -956,6 +1036,118 @@ export default function NPIxrayHome() {
                   )}
                 </button>
               </div>
+              ) : (
+              /* Name Search Inputs */
+              <div
+                style={{
+                  padding: "10px 10px 6px 10px",
+                  position: "relative",
+                  zIndex: 3,
+                }}
+              >
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 100px", gap: 8, marginBottom: 8 }}>
+                  <input
+                    type="text"
+                    placeholder="First name"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    aria-label="Provider first name"
+                    style={{
+                      padding: "14px 12px",
+                      background: "rgba(0,0,0,0.02)",
+                      border: "1px solid rgba(0,0,0,0.08)",
+                      borderRadius: 10,
+                      outline: "none",
+                      color: "#1A1A2E",
+                      fontSize: 14,
+                      fontFamily: "var(--font-outfit), 'Outfit', sans-serif",
+                    }}
+                  />
+                  <input
+                    type="text"
+                    placeholder="Last name *"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && handleScan()}
+                    aria-label="Provider last name"
+                    style={{
+                      padding: "14px 12px",
+                      background: "rgba(0,0,0,0.02)",
+                      border: "1px solid rgba(0,0,0,0.08)",
+                      borderRadius: 10,
+                      outline: "none",
+                      color: "#1A1A2E",
+                      fontSize: 14,
+                      fontFamily: "var(--font-outfit), 'Outfit', sans-serif",
+                    }}
+                  />
+                  <select
+                    value={searchState}
+                    onChange={(e) => setSearchState(e.target.value)}
+                    aria-label="State"
+                    style={{
+                      padding: "14px 8px",
+                      background: "rgba(0,0,0,0.02)",
+                      border: "1px solid rgba(0,0,0,0.08)",
+                      borderRadius: 10,
+                      outline: "none",
+                      color: searchState ? "#1A1A2E" : "#9CA3AF",
+                      fontSize: 13,
+                      fontFamily: "var(--font-outfit), 'Outfit', sans-serif",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <option value="">State</option>
+                    {US_STATES.map((s) => (
+                      <option key={s} value={s}>{s}</option>
+                    ))}
+                  </select>
+                </div>
+                <button
+                  onClick={handleScan}
+                  disabled={!scanValid || scanning}
+                  aria-label="Search by Name"
+                  style={{
+                    width: "100%",
+                    padding: "16px 32px",
+                    borderRadius: 12,
+                    border: "none",
+                    cursor: scanValid ? "pointer" : "default",
+                    background: scanValid
+                      ? "linear-gradient(135deg, #00B4C5, #0891B2)"
+                      : "#E5E7EB",
+                    color: scanValid ? "white" : "#9CA3AF",
+                    fontSize: 15,
+                    fontWeight: 700,
+                    transition: "all 0.3s",
+                    fontFamily: "var(--font-outfit), 'Outfit', sans-serif",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 8,
+                    boxShadow: scanValid ? "0 6px 24px rgba(0,180,197,0.3)" : "none",
+                  }}
+                >
+                  {scanning ? (
+                    <>
+                      <div
+                        style={{
+                          width: 16,
+                          height: 16,
+                          border: "2.5px solid rgba(255,255,255,0.3)",
+                          borderTopColor: "white",
+                          borderRadius: "50%",
+                          animation: "spin 0.5s linear infinite",
+                        }}
+                      />
+                      Searching...
+                    </>
+                  ) : (
+                    "Search by Name"
+                  )}
+                </button>
+              </div>
+              )}
 
               {/* Scanning progress bar */}
               {scanning && (
@@ -1007,6 +1199,39 @@ export default function NPIxrayHome() {
                   <span style={{ fontSize: 11 }}>{t.icon}</span> {t.text}
                 </span>
               ))}
+            </div>
+
+            {/* Scan entire practice link */}
+            <div style={{ textAlign: "center", marginTop: 14 }}>
+              <Link
+                href="/group"
+                style={{
+                  fontSize: 13,
+                  color: "#00B4C5",
+                  fontWeight: 600,
+                  fontFamily: "var(--font-outfit), 'Outfit', sans-serif",
+                  textDecoration: "none",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 6,
+                  padding: "6px 14px",
+                  borderRadius: 8,
+                  background: "rgba(0,180,197,0.06)",
+                  border: "1px solid rgba(0,180,197,0.12)",
+                  transition: "all 0.2s",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = "rgba(0,180,197,0.1)";
+                  e.currentTarget.style.borderColor = "rgba(0,180,197,0.25)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = "rgba(0,180,197,0.06)";
+                  e.currentTarget.style.borderColor = "rgba(0,180,197,0.12)";
+                }}
+              >
+                {"\u{1F3E5}"} Scan your entire practice
+                <span style={{ fontSize: 14 }}>{"\u2192"}</span>
+              </Link>
             </div>
           </div>
 
