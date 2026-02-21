@@ -52,8 +52,8 @@ function getConfidence(count: number): "high" | "medium" | "low" {
 
 // ── State-Level Opportunities ──────────────────────────
 
-export async function getStateOpportunities(stateAbbr: string): Promise<RevenueOpportunity[]> {
-  const programs = await getStateProgramCounts(stateAbbr);
+export async function getStateOpportunities(stateAbbr: string, prefetchedPrograms?: any): Promise<RevenueOpportunity[]> {
+  const programs = prefetchedPrograms || await getStateProgramCounts(stateAbbr);
   if (programs.totalProviders === 0) return [];
 
   const confidence = getConfidence(programs.totalProviders);

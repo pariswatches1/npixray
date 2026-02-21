@@ -21,11 +21,14 @@ import { AIInsight } from "@/components/seo/ai-insight";
 import { TrendSignals } from "@/components/seo/trend-signals";
 import { InlineScanner } from "@/components/seo/inline-scanner";
 import { generateInsight } from "@/lib/ai-insights";
+import { SPECIALTY_LIST, specialtyToSlug as benchmarkSpecialtyToSlug } from "@/lib/benchmark-data";
 
 export const revalidate = 86400; // ISR: cache at runtime for 24 hours
 
 export function generateStaticParams() {
-  return []; // Don't prerender — generate on first request, then cache via ISR
+  return SPECIALTY_LIST.map((s) => ({
+    specialty: benchmarkSpecialtyToSlug(s),
+  }));
 }
 
 async function findSpecialtyBySlug(slug: string) {
