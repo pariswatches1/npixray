@@ -16,13 +16,28 @@ export function Header() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#2F5EA8]/[0.06] border border-[#2F5EA8]/10 group-hover:bg-[#2F5EA8]/10 transition-colors">
-              <Zap className="h-4 w-4 text-[#2F5EA8]" />
-            </div>
-            <span className="text-lg font-bold tracking-tight text-[var(--text-primary)]">
-              NPI<span className="text-[#2F5EA8]">xray</span>
-            </span>
+          <Link href="/" aria-label="NPIxray home">
+            <svg width="200" height="36" viewBox="0 0 200 36" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="thermalLogo" x1="0%" y1="140%" x2="0%" y2="-40%">
+                  <stop offset="0%" stopColor="#1e3a5f"/>
+                  <stop offset="10%" stopColor="#3b82f6"/>
+                  <stop offset="25%" stopColor="#06b6d4"/>
+                  <stop offset="40%" stopColor="#10b981"/>
+                  <stop offset="55%" stopColor="#eab308"/>
+                  <stop offset="70%" stopColor="#f59e0b"/>
+                  <stop offset="85%" stopColor="#ef4444"/>
+                  <stop offset="100%" stopColor="#1e3a5f"/>
+                  <animate attributeName="y1" values="140%;-60%;140%" dur="1.2s" repeatCount="indefinite"/>
+                  <animate attributeName="y2" values="-40%;-240%;-40%" dur="1.2s" repeatCount="indefinite"/>
+                </linearGradient>
+                <clipPath id="logoClip">
+                  <text x="8" y="27" fontFamily="Inter, sans-serif" fontWeight="800" fontSize="28" letterSpacing="-0.5">NPIxray</text>
+                </clipPath>
+              </defs>
+              <rect x="0" y="0" width="200" height="36" fill="url(#thermalLogo)" clipPath="url(#logoClip)"/>
+              <text x="8" y="27" fontFamily="Inter, sans-serif" fontWeight="800" fontSize="28" fill="none" stroke="#1e3a5f" strokeWidth="0.15" letterSpacing="-0.5" opacity="0.06">NPIxray</text>
+            </svg>
           </Link>
 
           {/* Desktop Nav */}
