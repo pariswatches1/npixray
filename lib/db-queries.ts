@@ -588,11 +588,23 @@ export async function getAllStateAvgPayments(): Promise<{ state: string; avgPaym
 }
 
 /** Same specialty across all states — for cross-state specialty ranking */
-export function getSpecialtyByAllStates(specialty: string): Promise<{ state: string; count: number; avgPayment: number }[]> {
-  if (USE_NEON) return queryAll(`SELECT state, COUNT(*) as count, AVG(total_medicare_payment) as "avgPayment" FROM providers WHERE specialty = ? AND state != '' GROUP BY state HAVING COUNT(*) >= 3 ORDER BY "avgPayment" DESC`, [specialty]).then(r => r.map((x: any) => ({ state: x.state, count: num(x.count), avgPayment: num(x.avgPayment ?? x.avgpayment) })));
-  const db = getDb();
-  if (!db) return Promise.resolve([]);
-  return Promise.resolve(db.prepare("SELECT state, COUNT(*) as count, AVG(total_medicare_payment) as avgPayment FROM providers WHERE specialty = ? AND state != '' GROUP BY state HAVING COUNT(*) >= 3 ORDER BY avgPayment DESC").all(specialty) as any[]);
+const _specByAllStatesCache: Map<string, { data: any; ts: number }> = new Map();
+
+export async function getSpecialtyByAllStates(specialty: string): Promise<{ state: string; count: number; avgPayment: number }[]> {
+  const cached = _specByAllStatesCache.get(specialty);
+  if (cached && Date.now() - cached.ts < CACHE_TTL) {
+    return cached.data;
+  }
+  let result: any[];
+  if (USE_NEON) {
+    result = await queryAll(`SELECT state, COUNT(*) as count, AVG(total_medicare_payment) as "avgPayment" FROM providers WHERE specialty = ? AND state != '' GROUP BY state HAVING COUNT(*) >= 3 ORDER BY "avgPayment" DESC`, [specialty]).then(r => r.map((x: any) => ({ state: x.state, count: num(x.count), avgPayment: num(x.avgPayment ?? x.avgpayment) })));
+  } else {
+    const db = getDb();
+    if (!db) return [];
+    result = db.prepare("SELECT state, COUNT(*) as count, AVG(total_medicare_payment) as avgPayment FROM providers WHERE specialty = ? AND state != '' GROUP BY state HAVING COUNT(*) >= 3 ORDER BY avgPayment DESC").all(specialty) as any[];
+  }
+  _specByAllStatesCache.set(specialty, { data: result, ts: Date.now() });
+  return result;
 }
 
 /** Count of program billers vs total providers in a state */
