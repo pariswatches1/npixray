@@ -6,7 +6,6 @@ import { ReportTabs } from "@/components/reports/report-tabs";
 import {
   getAllStates,
   getAllBenchmarks,
-  getStateTopProviders,
   stateAbbrToName,
   stateToSlug,
   specialtyToSlug,
@@ -15,13 +14,11 @@ import {
 } from "@/lib/db-queries";
 import {
   calculateGrade,
-  calculateCaptureRate,
   estimateMissedRevenueFromBenchmark,
 } from "@/lib/report-utils";
 import { BENCHMARKS } from "@/lib/benchmark-data";
 import { STATE_LIST } from "@/lib/benchmark-data";
 
-export const dynamic = "force-dynamic";
 export const revalidate = 86400; // ISR: cache at runtime for 24 hours
 
 export const metadata: Metadata = {
@@ -47,17 +44,23 @@ export const metadata: Metadata = {
 };
 
 export default async function ReportsIndexPage() {
-  const allStates = await getAllStates();
-  const allBenchmarks = await getAllBenchmarks();
+  const [allStates, allBenchmarks] = await Promise.all([
+    getAllStates(),
+    getAllBenchmarks(),
+  ]);
 
-  // Build state cards with grades
-  const stateCards = (await Promise.all(allStates
+  // National average payment for benchmarking grades
+  const nationalAvg = allBenchmarks.length > 0
+    ? allBenchmarks.reduce((s, b) => s + (b.avg_total_payment || 0), 0) / allBenchmarks.length
+    : 50000;
+
+  // Build state cards with grades — estimated from aggregate data (no per-state provider queries)
+  const stateCards = allStates
     .filter((s) => STATE_LIST.some((sl) => sl.abbr === s.state))
-    .map(async (s) => {
-      const providers = await getStateTopProviders(s.state, 200);
-      const captureRate = providers.length > 0
-        ? calculateCaptureRate(providers, allBenchmarks)
-        : 0.55;
+    .map((s) => {
+      // Estimate capture rate from state avg payment vs national average
+      const ratio = nationalAvg > 0 ? s.avgPayment / nationalAvg : 0.55;
+      const captureRate = Math.min(Math.max(ratio * 0.55, 0.2), 0.95);
       const grade = calculateGrade(captureRate);
       const missedRevenue = estimateMissedRevenueFromBenchmark(
         s.totalProviders,
@@ -73,7 +76,7 @@ export default async function ReportsIndexPage() {
         providers: s.totalProviders,
         missedRevenue,
       };
-    })))
+    })
     .sort((a, b) => {
       const gradeOrder: Record<string, number> = { A: 0, B: 1, C: 2, D: 3, F: 4 };
       return (gradeOrder[a.grade] ?? 5) - (gradeOrder[b.grade] ?? 5);

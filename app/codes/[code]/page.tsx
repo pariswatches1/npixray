@@ -20,8 +20,11 @@ import { RevenueOpportunities } from "@/components/seo/revenue-opportunities";
 import { CodeRevenueImpact } from "@/components/seo/code-revenue-impact";
 import { getCodeOpportunities } from "@/lib/opportunity-engine";
 
-export const dynamic = "force-dynamic";
 export const revalidate = 86400; // ISR: cache at runtime for 24 hours
+
+export function generateStaticParams() {
+  return []; // Don't prerender — generate on first request, then cache via ISR
+}
 
 export async function generateMetadata({
   params,

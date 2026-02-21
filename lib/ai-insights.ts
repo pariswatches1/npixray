@@ -96,59 +96,13 @@ RULES:
 
 /**
  * Generate a unique AI insight paragraph. Returns null if API unavailable.
- * Called at ISR build time — cached for 24h via page revalidation.
+ *
+ * DISABLED at render time to eliminate 3-12s Gemini API latency from page loads.
+ * Pages render instantly without the AI paragraph — the AIInsight component
+ * gracefully handles null. To re-enable, implement a background job that
+ * pre-generates insights into the database, then read from DB here instead.
  */
-export async function generateInsight(ctx: InsightContext): Promise<string | null> {
-  if (!GOOGLE_API_KEY) return null;
-
-  try {
-    const prompt = buildPrompt(ctx);
-
-    // 5-second timeout — fail fast so pages don't hang
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 5_000);
-
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GOOGLE_API_KEY}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: {
-            maxOutputTokens: 350,
-            temperature: 0.9, // Higher temp = more unique per page
-          },
-        }),
-        signal: controller.signal,
-      }
-    );
-
-    clearTimeout(timer);
-
-    if (!response.ok) {
-      console.warn(`[ai-insights] Gemini API error: ${response.status}`);
-      return null;
-    }
-
-    const data = await response.json();
-    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-
-    if (!text) return null;
-
-    // Clean up: remove any markdown formatting, trim whitespace
-    return text
-      .replace(/\*\*/g, "")
-      .replace(/##/g, "")
-      .replace(/\n+/g, " ")
-      .trim();
-  } catch (err) {
-    // Timeout or network error — fail gracefully
-    if (err instanceof DOMException && err.name === "AbortError") {
-      console.warn("[ai-insights] Timed out after 5s — skipping insight");
-    } else {
-      console.warn("[ai-insights] Failed to generate insight:", err);
-    }
-    return null;
-  }
+export async function generateInsight(_ctx: InsightContext): Promise<string | null> {
+  // Skip Gemini API call entirely — page speed > SEO paragraph
+  return null;
 }

@@ -13,7 +13,6 @@ import {
   formatNumber,
 } from "@/lib/db-queries";
 
-export const dynamic = "force-dynamic";
 export const revalidate = 86400; // ISR: cache at runtime for 24 hours
 
 export const metadata: Metadata = {
