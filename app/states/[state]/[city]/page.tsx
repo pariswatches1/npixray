@@ -23,7 +23,7 @@ import {
   formatNumber,
 } from "@/lib/db-queries";
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 86400; // ISR: revalidate every 24 hours
 
 export async function generateMetadata({
   params,
@@ -72,29 +72,25 @@ export default async function CityPage({
   if (!stats || !stats.count) notFound();
 
   const stateName = stateAbbrToName(abbr);
-  const [specialties, providers, stateStats, nationalStats] = await Promise.all([
+  const [specialties, providers, stateStats, nationalStats, insight] = await Promise.all([
     getCitySpecialties(abbr, cityName),
     getCityProviders(abbr, cityName, 100),
     getStateStats(abbr),
     getNationalStats(),
+    generateInsight({
+      type: "city",
+      stateName: stateAbbrToName(abbr),
+      stateAbbr: abbr,
+      city: cityName,
+      providerCount: stats.count,
+      avgPayment: stats.avgPayment,
+      totalPayment: stats.totalPayment,
+    }),
   ]);
 
   const nationalAvg = nationalStats?.totalPayment && nationalStats?.totalProviders
     ? nationalStats.totalPayment / nationalStats.totalProviders
     : 0;
-
-  // Layer 1: AI-generated unique insight for this city
-  const insight = await generateInsight({
-    type: "city",
-    stateName,
-    stateAbbr: abbr,
-    city: cityName,
-    providerCount: stats.count,
-    avgPayment: stats.avgPayment,
-    totalPayment: stats.totalPayment,
-    nationalAvgPayment: nationalAvg || undefined,
-    topSpecialty: specialties.length > 0 ? specialties[0].specialty : undefined,
-  });
 
   // Layer 3: Trend signals (city vs state/national)
   const trendSignals = computeStateTrends({

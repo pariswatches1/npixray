@@ -190,8 +190,11 @@ export async function getStateComparisons(stateAbbr: string): Promise<StateCompa
     .filter(Boolean)
     .slice(0, 4) as NeighborComparison[];
 
-  // Strongest specialty (by avg payment)
-  const stateSpecs = await getStateSpecialties(stateAbbr, 10);
+  // Strongest specialty + program adoption (parallel)
+  const [stateSpecs, programs] = await Promise.all([
+    getStateSpecialties(stateAbbr, 10),
+    getStateProgramCounts(stateAbbr),
+  ]);
   const strongestSpecialty =
     stateSpecs.length > 0
       ? {
@@ -200,9 +203,6 @@ export async function getStateComparisons(stateAbbr: string): Promise<StateCompa
           count: stateSpecs[0].count,
         }
       : null;
-
-  // Program adoption
-  const programs = await getStateProgramCounts(stateAbbr);
 
   const ccmRate = programs.totalProviders > 0 ? programs.ccmBillers / programs.totalProviders : 0;
   const rpmRate = programs.totalProviders > 0 ? programs.rpmBillers / programs.totalProviders : 0;

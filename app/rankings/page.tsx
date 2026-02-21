@@ -21,7 +21,7 @@ import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { InlineScanner } from "@/components/seo/inline-scanner";
 import { DataCoverage } from "@/components/seo/data-coverage";
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 86400; // ISR: revalidate every 24 hours
 
 export const metadata: Metadata = {
   title: "Medicare Provider Rankings — Top Doctors by Revenue | NPIxray",

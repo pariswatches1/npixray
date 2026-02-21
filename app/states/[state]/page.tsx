@@ -77,7 +77,9 @@ export default async function StatePage({
   if (!stats || !stats.totalProviders) notFound();
 
   const stateName = stateAbbrToName(abbr);
-  const [specialties, cities, providers, comparison, opportunities, specialtyGaps, programs, nationalStats] = await Promise.all([
+
+  // Run ALL queries + AI insight in parallel for fastest possible load
+  const [specialties, cities, providers, comparison, opportunities, specialtyGaps, programs, nationalStats, insight] = await Promise.all([
     getStateSpecialties(abbr, 20),
     getStateCities(abbr, 30),
     getStateTopProviders(abbr, 50),
@@ -86,6 +88,15 @@ export default async function StatePage({
     getStateSpecialtyProgramGaps(abbr, 10),
     getStateProgramCounts(abbr),
     getNationalStats(),
+    // AI insight runs in parallel (5s timeout) — page renders even if AI is slow
+    generateInsight({
+      type: "state",
+      stateName,
+      stateAbbr: abbr,
+      providerCount: stats.totalProviders,
+      avgPayment: stats.avgPayment,
+      totalPayment: stats.totalPayment,
+    }),
   ]);
 
   // Compute national benchmark averages for trend signals
@@ -97,29 +108,6 @@ export default async function StatePage({
   const ccmAdoption = programs?.totalProviders > 0 ? programs.ccmBillers / programs.totalProviders : 0;
   const rpmAdoption = programs?.totalProviders > 0 ? programs.rpmBillers / programs.totalProviders : 0;
   const awvAdoption = programs?.totalProviders > 0 ? programs.awvBillers / programs.totalProviders : 0;
-
-  // Layer 1: AI-generated unique insight
-  const insight = await generateInsight({
-    type: "state",
-    stateName,
-    stateAbbr: abbr,
-    providerCount: stats.totalProviders,
-    avgPayment: stats.avgPayment,
-    totalPayment: stats.totalPayment,
-    nationalAvgPayment: nationalStats?.totalPayment && nationalStats?.totalProviders ? nationalStats.totalPayment / nationalStats.totalProviders : undefined,
-    nationalRank: comparison?.nationalRank,
-    totalStates: comparison?.totalStates,
-    ccmAdoption,
-    rpmAdoption,
-    awvAdoption,
-    nationalCcm,
-    nationalRpm,
-    nationalAwv,
-    topSpecialty: specialties.length > 0 ? specialties[0].specialty : undefined,
-    topCity: cities.length > 0 ? cities[0].city : undefined,
-    neighbors: comparison?.neighborComparisons?.map((n: any) => ({ name: n.stateName, avgPayment: n.avgPayment })),
-    opportunities: opportunities?.map((o: any) => ({ title: o.title, estimatedRevenue: o.estimatedRevenue })),
-  });
 
   // Layer 3: Trend signals
   const trendSignals = computeStateTrends({

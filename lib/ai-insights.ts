@@ -104,6 +104,10 @@ export async function generateInsight(ctx: InsightContext): Promise<string | nul
   try {
     const prompt = buildPrompt(ctx);
 
+    // 5-second timeout — fail fast so pages don't hang
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 5_000);
+
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GOOGLE_API_KEY}`,
       {
@@ -116,8 +120,11 @@ export async function generateInsight(ctx: InsightContext): Promise<string | nul
             temperature: 0.9, // Higher temp = more unique per page
           },
         }),
+        signal: controller.signal,
       }
     );
+
+    clearTimeout(timer);
 
     if (!response.ok) {
       console.warn(`[ai-insights] Gemini API error: ${response.status}`);
@@ -136,7 +143,12 @@ export async function generateInsight(ctx: InsightContext): Promise<string | nul
       .replace(/\n+/g, " ")
       .trim();
   } catch (err) {
-    console.warn("[ai-insights] Failed to generate insight:", err);
+    // Timeout or network error — fail gracefully
+    if (err instanceof DOMException && err.name === "AbortError") {
+      console.warn("[ai-insights] Timed out after 5s — skipping insight");
+    } else {
+      console.warn("[ai-insights] Failed to generate insight:", err);
+    }
     return null;
   }
 }

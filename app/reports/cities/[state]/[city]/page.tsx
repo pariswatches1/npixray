@@ -76,14 +76,27 @@ export default async function CityReportPage({
     .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
     .join(" ");
 
-  const [cityStats, citySpecialties, stateStats, nationalStats] = await Promise.all([
-    getCityStats(abbr, cityName),
+  // First get cityStats (fast DB query) so we can pass data to insight
+  const cityStats = await getCityStats(abbr, cityName);
+  if (!cityStats) notFound();
+
+  // Parallelize remaining queries + AI insight
+  const [citySpecialties, stateStats, nationalStats, insight] = await Promise.all([
     getCitySpecialties(abbr, cityName),
     getStateStats(abbr),
     getNationalStats(),
+    generateInsight({
+      type: "city",
+      city: cityName,
+      stateName,
+      stateAbbr: abbr,
+      providerCount: cityStats.count,
+      avgPayment: cityStats.avgPayment,
+      totalPayment: cityStats.totalPayment,
+    }),
   ]);
 
-  if (!cityStats || !stateStats) notFound();
+  if (!stateStats) notFound();
 
   // Grade based on city avg payment vs state avg
   const ratio = cityStats.avgPayment / (stateStats.avgPayment || 1);
@@ -94,18 +107,6 @@ export default async function CityReportPage({
   const nationalAvg = nationalStats.totalProviders > 0
     ? nationalStats.totalPayment / nationalStats.totalProviders
     : 0;
-
-  // AI insight
-  const insight = await generateInsight({
-    type: "city",
-    city: cityName,
-    stateName,
-    stateAbbr: abbr,
-    providerCount: cityStats.count,
-    avgPayment: cityStats.avgPayment,
-    totalPayment: cityStats.totalPayment,
-    nationalAvgPayment: nationalAvg,
-  });
 
   // Trend signals
   const trendSignals = computeStateTrends({

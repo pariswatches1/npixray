@@ -21,7 +21,7 @@ import {
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { ScanCTA } from "@/components/seo/scan-cta";
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 86400; // ISR: revalidate every 24 hours
 
 export const metadata: Metadata = {
   title: "Medicare Data Insights & Reports | NPIxray",

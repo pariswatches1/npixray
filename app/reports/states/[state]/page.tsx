@@ -53,7 +53,7 @@ import {
 } from "@/lib/report-utils";
 import { STATE_LIST } from "@/lib/benchmark-data";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 86400; // ISR: revalidate every 24 hours (was force-dynamic)
 
 export function generateStaticParams() {
   return STATE_LIST.map((s) => ({
@@ -108,12 +108,20 @@ export default async function StateReportPage({
   if (!stats || !stats.totalProviders) notFound();
 
   const stateName = stateAbbrToName(abbr);
-  const [specialties, cities, providers, allBenchmarks, nationalStats] = await Promise.all([
+  const [specialties, cities, providers, allBenchmarks, nationalStats, insight] = await Promise.all([
     getStateSpecialties(abbr, 20),
     getStateCities(abbr, 20),
     getStateTopProviders(abbr, 200),
     getAllBenchmarks(),
     getNationalStats(),
+    generateInsight({
+      type: "state",
+      stateName: stateAbbrToName(abbr),
+      stateAbbr: abbr,
+      providerCount: stats.totalProviders,
+      avgPayment: stats.avgPayment,
+      totalPayment: stats.totalPayment,
+    }),
   ]);
 
   // Calculate grade
@@ -186,20 +194,7 @@ export default async function StateReportPage({
     ? nationalStats.totalPayment / nationalStats.totalProviders
     : 0;
 
-  // AI insight
-  const insight = await generateInsight({
-    type: "state",
-    stateName,
-    stateAbbr: abbr,
-    providerCount: stats.totalProviders,
-    avgPayment: stats.avgPayment,
-    totalPayment: stats.totalPayment,
-    nationalAvgPayment: nationalAvg,
-    ccmAdoption: adoption.ccm,
-    rpmAdoption: adoption.rpm,
-    bhiAdoption: adoption.bhi,
-    awvAdoption: adoption.awv,
-  });
+  // (AI insight already fetched in parallel above)
 
   // Trend signals
   const trendSignals = computeStateTrends({
