@@ -1,23 +1,17 @@
 import { NextResponse } from "next/server";
-import { STATE_LIST } from "@/lib/benchmark-data";
 
 /**
  * Sitemap Index — /sitemap.xml
  * Points to sub-sitemaps for each content section.
  * Each sub-sitemap handles up to 50,000 URLs per Google spec.
  *
- * Uses static STATE_LIST instead of DB queries to ensure sitemaps
- * are always available — even when DB is slow or unavailable.
+ * All sub-sitemaps use static constants — zero DB dependency.
+ * Provider sitemaps removed: they depend on DB queries which fail
+ * on Neon free tier, causing "Couldn't fetch" in Google Search Console.
+ * Provider pages are discoverable via internal links instead.
  */
 export async function GET() {
   const baseUrl = "https://npixray.com";
-
-  const providerSitemaps = STATE_LIST
-    .map(
-      (s) =>
-        `  <sitemap><loc>${baseUrl}/api/sitemap-providers/${s.abbr.toLowerCase()}</loc></sitemap>`
-    )
-    .join("\n");
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -34,7 +28,6 @@ export async function GET() {
   <sitemap><loc>${baseUrl}/sitemap-reports.xml</loc></sitemap>
   <sitemap><loc>${baseUrl}/sitemap-scores.xml</loc></sitemap>
   <sitemap><loc>${baseUrl}/sitemap-acquire.xml</loc></sitemap>
-${providerSitemaps}
 </sitemapindex>`;
 
   return new NextResponse(xml, {
