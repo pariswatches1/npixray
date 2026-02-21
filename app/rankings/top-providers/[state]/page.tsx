@@ -17,7 +17,7 @@ import {
   formatNumber,
 } from "@/lib/db-queries";
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 86400; // ISR: revalidate every 24 hours
 
 export async function generateMetadata({
   params,

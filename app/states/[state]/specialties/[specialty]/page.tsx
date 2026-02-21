@@ -78,12 +78,21 @@ export default async function StateSpecialtyPage({
 
   const stateName = stateAbbrToName(abbr);
 
-  // Parallel data fetching — all layers at once
-  const [providers, benchmarks, comparison, opportunities] = await Promise.all([
+  // Parallel data fetching — all layers at once (including AI insight)
+  const [providers, benchmarks, comparison, opportunities, insight] = await Promise.all([
     getSpecialtyStateProviders(specialtyName, abbr, 50),
     getAllBenchmarks(),
     getStateSpecialtyComparisons(specialtyName, abbr),
     getStateSpecialtyOpportunities(specialtyName, abbr),
+    generateInsight({
+      type: "state-specialty",
+      stateName,
+      stateAbbr: abbr,
+      specialty: specialtyName,
+      providerCount: stats.count,
+      avgPayment: stats.avgPayment,
+      totalPayment: stats.totalPayment,
+    }),
   ]);
 
   const nationalBenchmark = benchmarks.find(
@@ -101,28 +110,6 @@ export default async function StateSpecialtyPage({
   const ccmAdoption = specBenchmark?.ccmAdoptionRate ?? 0;
   const rpmAdoption = specBenchmark?.rpmAdoptionRate ?? 0;
   const awvAdoption = specBenchmark?.awvAdoptionRate ?? 0;
-
-  // Layer 1: AI-generated unique insight
-  const insight = await generateInsight({
-    type: "state-specialty",
-    stateName,
-    stateAbbr: abbr,
-    specialty: specialtyName,
-    providerCount: stats.count,
-    avgPayment: stats.avgPayment,
-    totalPayment: stats.totalPayment,
-    nationalAvgPayment: nationalAvg ?? undefined,
-    nationalRank: comparison?.nationalSpecialtyRank,
-    totalStates: comparison?.totalStatesWithSpecialty,
-    ccmAdoption,
-    rpmAdoption,
-    awvAdoption,
-    nationalCcm,
-    nationalRpm,
-    nationalAwv,
-    neighbors: comparison?.neighborComparisons?.map((n: any) => ({ name: n.stateName, avgPayment: n.avgPayment })),
-    opportunities: opportunities?.map((o: any) => ({ title: o.title, estimatedRevenue: o.estimatedRevenue })),
-  });
 
   // Layer 3: Trend signals for this specialty in this state
   const trendSignals = computeSpecialtyTrends({

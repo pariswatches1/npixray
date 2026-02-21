@@ -10,7 +10,7 @@ import {
   formatNumber,
 } from "@/lib/db-queries";
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 86400; // ISR: revalidate every 24 hours
 
 export const metadata: Metadata = {
   title: "Top Medicare Specialties by Revenue — Rankings | NPIxray",

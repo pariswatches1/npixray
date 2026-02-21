@@ -60,20 +60,21 @@ export default async function SpecialtyPage({
   const benchmark = await findSpecialtyBySlug(slug);
   if (!benchmark) notFound();
 
-  const providers = await getSpecialtyProviders(benchmark.specialty, 50);
-
-  // Layer 1: AI-generated unique insight for this specialty
-  const insight = await generateInsight({
-    type: "specialty",
-    specialty: benchmark.specialty,
-    providerCount: benchmark.provider_count,
-    avgPayment: benchmark.avg_total_payment,
-    totalPayment: benchmark.avg_total_payment * benchmark.provider_count,
-    ccmAdoption: benchmark.ccm_adoption_rate,
-    rpmAdoption: benchmark.rpm_adoption_rate,
-    awvAdoption: benchmark.awv_adoption_rate,
-    bhiAdoption: benchmark.bhi_adoption_rate,
-  });
+  // Run providers query + AI insight in parallel for fastest load
+  const [providers, insight] = await Promise.all([
+    getSpecialtyProviders(benchmark.specialty, 50),
+    generateInsight({
+      type: "specialty",
+      specialty: benchmark.specialty,
+      providerCount: benchmark.provider_count,
+      avgPayment: benchmark.avg_total_payment,
+      totalPayment: benchmark.avg_total_payment * benchmark.provider_count,
+      ccmAdoption: benchmark.ccm_adoption_rate,
+      rpmAdoption: benchmark.rpm_adoption_rate,
+      awvAdoption: benchmark.awv_adoption_rate,
+      bhiAdoption: benchmark.bhi_adoption_rate,
+    }),
+  ]);
 
   // Layer 3: Trend signals for this specialty (vs benchmark targets)
   const trendSignals: { label: string; value: string; delta: number; context?: string }[] = [];

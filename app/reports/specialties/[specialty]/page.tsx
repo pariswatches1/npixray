@@ -45,7 +45,7 @@ import {
 } from "@/lib/report-utils";
 import { SPECIALTY_LIST, BENCHMARKS } from "@/lib/benchmark-data";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 86400; // ISR: revalidate every 24 hours (was force-dynamic)
 
 export function generateStaticParams() {
   return SPECIALTY_LIST.map((s) => ({
@@ -97,8 +97,17 @@ export default async function SpecialtyReportPage({
   const benchmark = await findSpecialtyBySlug(slug);
   if (!benchmark) notFound();
 
-  const providers = await getSpecialtyProviders(benchmark.specialty, 200);
-  const allBenchmarks = await getAllBenchmarks();
+  const [providers, allBenchmarks, insight] = await Promise.all([
+    getSpecialtyProviders(benchmark.specialty, 200),
+    getAllBenchmarks(),
+    generateInsight({
+      type: "specialty",
+      specialty: benchmark.specialty,
+      providerCount: benchmark.provider_count,
+      avgPayment: benchmark.avg_total_payment,
+      totalPayment: benchmark.avg_total_payment * benchmark.provider_count,
+    }),
+  ]);
   const localBenchmark = BENCHMARKS[benchmark.specialty];
 
   // Calculate grade from adoption rates and coding patterns
@@ -200,19 +209,7 @@ export default async function SpecialtyReportPage({
     ? allBenchmarks.reduce((s, b) => s + (b.avg_total_payment || 0), 0) / allBenchmarks.length
     : 0;
 
-  // AI insight
-  const insight = await generateInsight({
-    type: "specialty",
-    specialty: benchmark.specialty,
-    providerCount: benchmark.provider_count,
-    avgPayment: benchmark.avg_total_payment,
-    totalPayment: benchmark.avg_total_payment * benchmark.provider_count,
-    nationalAvgPayment,
-    ccmAdoption: adoption.ccm,
-    rpmAdoption: adoption.rpm,
-    bhiAdoption: adoption.bhi,
-    awvAdoption: adoption.awv,
-  });
+  // (AI insight already fetched in parallel above)
 
   // Trend signals using the proper TrendSignal type (needs value + delta)
   const trendSignals: { label: string; value: string; delta: number; context?: string }[] = [];
