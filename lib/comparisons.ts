@@ -157,7 +157,7 @@ function pctDelta(local: number, reference: number): number {
 
 // ── State Comparisons ──────────────────────────────────
 
-export async function getStateComparisons(stateAbbr: string): Promise<StateComparison | null> {
+export async function getStateComparisons(stateAbbr: string, prefetchedPrograms?: any): Promise<StateComparison | null> {
   const allStates = await getAllStateAvgPayments();
   if (!allStates.length) return null;
 
@@ -190,10 +190,10 @@ export async function getStateComparisons(stateAbbr: string): Promise<StateCompa
     .filter(Boolean)
     .slice(0, 4) as NeighborComparison[];
 
-  // Strongest specialty + program adoption (parallel)
+  // Strongest specialty + program adoption (use prefetched programs if available)
   const [stateSpecs, programs] = await Promise.all([
     getStateSpecialties(stateAbbr, 10),
-    getStateProgramCounts(stateAbbr),
+    prefetchedPrograms ? Promise.resolve(prefetchedPrograms) : getStateProgramCounts(stateAbbr),
   ]);
   const strongestSpecialty =
     stateSpecs.length > 0

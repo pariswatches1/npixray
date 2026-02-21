@@ -26,6 +26,7 @@ import {
   getNationalStats,
   slugToStateAbbr,
   stateAbbrToName,
+  stateToSlug,
   specialtyToSlug,
   cityToSlug,
   formatCurrency,
@@ -35,11 +36,14 @@ import { getStateComparisons } from "@/lib/comparisons";
 import { getStateOpportunities } from "@/lib/opportunity-engine";
 import { SPECIALTY_BENCHMARKS } from "@/lib/benchmarks";
 import { DataCoverage } from "@/components/seo/data-coverage";
+import { STATE_LIST } from "@/lib/benchmark-data";
 
 export const revalidate = 86400; // ISR: cache at runtime for 24 hours
 
 export function generateStaticParams() {
-  return []; // Don't prerender — generate on first request, then cache via ISR
+  return STATE_LIST.map((s) => ({
+    state: stateToSlug(s.abbr),
+  }));
 }
 
 export async function generateMetadata({
@@ -82,15 +86,17 @@ export default async function StatePage({
 
   const stateName = stateAbbrToName(abbr);
 
-  // Run ALL queries + AI insight in parallel for fastest possible load
-  const [specialties, cities, providers, comparison, opportunities, specialtyGaps, programs, nationalStats, insight] = await Promise.all([
+  // Fetch programs FIRST so we can pass it to comparisons + opportunities (avoids 3 duplicate queries)
+  const programs = await getStateProgramCounts(abbr);
+
+  // Run ALL remaining queries + AI insight in parallel for fastest possible load
+  const [specialties, cities, providers, comparison, opportunities, specialtyGaps, nationalStats, insight] = await Promise.all([
     getStateSpecialties(abbr, 20),
     getStateCities(abbr, 30),
     getStateTopProviders(abbr, 50),
-    getStateComparisons(abbr),
-    getStateOpportunities(abbr),
+    getStateComparisons(abbr, programs),
+    getStateOpportunities(abbr, programs),
     getStateSpecialtyProgramGaps(abbr, 10),
-    getStateProgramCounts(abbr),
     getNationalStats(),
     // AI insight runs in parallel (5s timeout) — page renders even if AI is slow
     generateInsight({

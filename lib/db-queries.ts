@@ -386,18 +386,29 @@ export function getCodeTopSpecialties(code: string, limit = 10): any {
 
 // ── Aggregate queries ────────────────────────────────────
 
-export function getNationalStats(): any {
-  if (USE_NEON) return (async () => {
+// In-memory cache for expensive full-table-scan queries (1h TTL)
+const CACHE_TTL = 3600_000; // 1 hour
+let _nationalStatsCache: { data: any; ts: number } | null = null;
+
+export async function getNationalStats(): Promise<any> {
+  if (_nationalStatsCache && Date.now() - _nationalStatsCache.ts < CACHE_TTL) {
+    return _nationalStatsCache.data;
+  }
+  let result: any;
+  if (USE_NEON) {
     const p = await queryOne("SELECT COUNT(*) as c, SUM(total_medicare_payment) as p, SUM(total_services) as s FROM providers");
     const c = await queryOne("SELECT COUNT(*) as c FROM provider_codes");
     if (!p) return null;
-    return { totalProviders: num(p.c), totalPayment: num(p.p), totalServices: num(p.s), totalCodes: num(c?.c) };
-  })();
-  const db = getDb();
-  if (!db) return null;
-  const p = db.prepare("SELECT COUNT(*) as c, SUM(total_medicare_payment) as p, SUM(total_services) as s FROM providers").get() as any;
-  const c = db.prepare("SELECT COUNT(*) as c FROM provider_codes").get() as any;
-  return { totalProviders: p.c, totalPayment: p.p, totalServices: p.s, totalCodes: c.c };
+    result = { totalProviders: num(p.c), totalPayment: num(p.p), totalServices: num(p.s), totalCodes: num(c?.c) };
+  } else {
+    const db = getDb();
+    if (!db) return null;
+    const p = db.prepare("SELECT COUNT(*) as c, SUM(total_medicare_payment) as p, SUM(total_services) as s FROM providers").get() as any;
+    const c = db.prepare("SELECT COUNT(*) as c FROM provider_codes").get() as any;
+    result = { totalProviders: p.c, totalPayment: p.p, totalServices: p.s, totalCodes: c.c };
+  }
+  _nationalStatsCache = { data: result, ts: Date.now() };
+  return result;
 }
 
 export function getTopProvidersByPayment(limit = 100): any {
@@ -558,11 +569,22 @@ export function getMultipleProviders(npis: string[]): any {
 // ── Comparison & Differentiation Queries ────────────────────
 
 /** All states with avg payment + provider count — for national rankings */
-export function getAllStateAvgPayments(): Promise<{ state: string; avgPayment: number; providerCount: number }[]> {
-  if (USE_NEON) return queryAll(`SELECT state, AVG(total_medicare_payment) as "avgPayment", COUNT(*) as "providerCount" FROM providers WHERE state != '' GROUP BY state ORDER BY "avgPayment" DESC`).then(r => r.map((x: any) => ({ state: x.state, avgPayment: num(x.avgPayment ?? x.avgpayment), providerCount: num(x.providerCount ?? x.providercount) })));
-  const db = getDb();
-  if (!db) return Promise.resolve([]);
-  return Promise.resolve(db.prepare("SELECT state, AVG(total_medicare_payment) as avgPayment, COUNT(*) as providerCount FROM providers WHERE state != '' GROUP BY state ORDER BY avgPayment DESC").all() as any[]);
+let _stateAvgCache: { data: any; ts: number } | null = null;
+
+export async function getAllStateAvgPayments(): Promise<{ state: string; avgPayment: number; providerCount: number }[]> {
+  if (_stateAvgCache && Date.now() - _stateAvgCache.ts < CACHE_TTL) {
+    return _stateAvgCache.data;
+  }
+  let result: any[];
+  if (USE_NEON) {
+    result = await queryAll(`SELECT state, AVG(total_medicare_payment) as "avgPayment", COUNT(*) as "providerCount" FROM providers WHERE state != '' GROUP BY state ORDER BY "avgPayment" DESC`).then(r => r.map((x: any) => ({ state: x.state, avgPayment: num(x.avgPayment ?? x.avgpayment), providerCount: num(x.providerCount ?? x.providercount) })));
+  } else {
+    const db = getDb();
+    if (!db) return [];
+    result = db.prepare("SELECT state, AVG(total_medicare_payment) as avgPayment, COUNT(*) as providerCount FROM providers WHERE state != '' GROUP BY state ORDER BY avgPayment DESC").all() as any[];
+  }
+  _stateAvgCache = { data: result, ts: Date.now() };
+  return result;
 }
 
 /** Same specialty across all states — for cross-state specialty ranking */
