@@ -1,15 +1,19 @@
 import { NextResponse } from "next/server";
-import { getTopCodes } from "@/lib/db-queries";
+import { TOP_BILLING_CODES } from "@/lib/benchmark-data";
 
-/** Billing codes sitemap */
+/**
+ * Billing codes sitemap.
+ *
+ * Uses static TOP_BILLING_CODES instead of DB queries to ensure
+ * sitemaps are always available — even when DB is slow.
+ */
 export async function GET() {
   const baseUrl = "https://npixray.com";
-  const codes = await getTopCodes(200);
 
-  const urls = codes
+  const urls = TOP_BILLING_CODES
     .map(
-      (c) =>
-        `  <url><loc>${baseUrl}/codes/${c.hcpcs_code}</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>`
+      (code) =>
+        `  <url><loc>${baseUrl}/codes/${code}</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>`
     )
     .join("\n");
 
