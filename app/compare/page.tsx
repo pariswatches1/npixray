@@ -7,7 +7,6 @@ import {
 } from "@/lib/db-queries";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 
-export const dynamic = "force-dynamic";
 export const revalidate = 86400; // ISR: cache at runtime for 24 hours
 
 export const metadata: Metadata = {

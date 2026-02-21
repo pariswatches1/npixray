@@ -45,7 +45,6 @@ import {
 } from "@/lib/report-utils";
 import { SPECIALTY_LIST, BENCHMARKS } from "@/lib/benchmark-data";
 
-export const dynamic = "force-dynamic";
 export const revalidate = 86400; // ISR: cache at runtime for 24 hours
 
 export function generateStaticParams() {

@@ -12,8 +12,11 @@ import {
   type BenchmarkRow,
 } from "@/lib/db-queries";
 
-export const dynamic = "force-dynamic";
 export const revalidate = 86400; // ISR: cache at runtime for 24 hours
+
+export function generateStaticParams() {
+  return []; // Don't prerender — generate on first request, then cache via ISR
+}
 
 function slugToSpecialtyName(
   slug: string,
