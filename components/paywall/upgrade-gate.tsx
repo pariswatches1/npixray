@@ -9,40 +9,72 @@ interface UpgradeGateProps {
   children: React.ReactNode;
   /** What this locked section contains — displayed in the overlay */
   feature?: string;
-  /** Optional: custom teaser bullets (defaults to Intelligence plan highlights) */
+  /** Optional: custom teaser bullets (defaults to Pro plan highlights) */
   bullets?: string[];
   /** If true, shows a compact inline version instead of full overlay */
   compact?: boolean;
+  /** Minimum tier required: "pro" or "enterprise" (default: "pro") */
+  requiredTier?: "pro" | "enterprise";
 }
 
-const DEFAULT_BULLETS = [
-  "90-day action plan with prioritized steps",
-  "12-month revenue forecast projections",
+const PRO_BULLETS = [
+  "Real-time eligibility verification (500/mo)",
+  "Patient cost estimation",
+  "Enhanced analytics dashboard",
   "AI-powered coding recommendations",
-  "Monthly benchmark tracking & alerts",
   "Email & PDF report exports",
 ];
 
+const ENTERPRISE_BULLETS = [
+  "Unlimited eligibility verification",
+  "Claims processing & submission",
+  "AI-powered coding assistance",
+  "Claims scrubbing & denial management",
+  "Revenue recovery tracking",
+];
+
+/** Check if a plan has at least the given tier level */
+function hasTierAccess(plan: string | undefined, requiredTier: "pro" | "enterprise"): boolean {
+  // Enterprise-level plans
+  if (plan === "enterprise" || plan === "care") {
+    return true;
+  }
+  // Pro-level plans
+  if (requiredTier === "pro" && (plan === "pro" || plan === "intelligence" || plan === "api")) {
+    return true;
+  }
+  return false;
+}
+
 /**
  * Reusable paywall overlay. Wraps children in a blurred locked state
- * unless the user has an Intelligence or Care plan.
+ * unless the user has the required tier (Pro or Enterprise).
  *
  * Usage:
  *   <UpgradeGate feature="Action Plan">
  *     <ActionPlanTab data={data} />
  *   </UpgradeGate>
+ *
+ *   <UpgradeGate feature="Claims Processing" requiredTier="enterprise">
+ *     <ClaimsDashboard />
+ *   </UpgradeGate>
  */
 export function UpgradeGate({
   children,
   feature = "this feature",
-  bullets = DEFAULT_BULLETS,
+  bullets,
   compact = false,
+  requiredTier = "pro",
 }: UpgradeGateProps) {
   const { data: session } = useSession();
   const plan = (session?.user as any)?.plan;
 
-  // Intelligence and Care Management users see content normally
-  const hasAccess = plan === "intelligence" || plan === "care";
+  // Default bullets based on required tier
+  const defaultBullets = requiredTier === "enterprise" ? ENTERPRISE_BULLETS : PRO_BULLETS;
+  const displayBullets = bullets || defaultBullets;
+
+  // Check access using tier hierarchy (supports both old + new plan names)
+  const hasAccess = hasTierAccess(plan, requiredTier);
 
   if (hasAccess) {
     return <>{children}</>;
@@ -78,14 +110,14 @@ export function UpgradeGate({
               Unlock {feature}
             </h3>
             <p className="text-sm text-[var(--text-secondary)] text-center mb-6 leading-relaxed">
-              Upgrade to Intelligence to access {feature.toLowerCase()} and
+              Upgrade to {requiredTier === "enterprise" ? "Enterprise" : "Pro"} to access {feature.toLowerCase()} and
               accelerate your revenue capture.
             </p>
 
             {/* Feature bullets */}
             {!compact && (
               <ul className="space-y-2.5 mb-6">
-                {bullets.map((bullet) => (
+                {displayBullets.map((bullet) => (
                   <li
                     key={bullet}
                     className="flex items-start gap-2.5 text-sm text-[var(--text-secondary)]"
@@ -111,7 +143,7 @@ export function UpgradeGate({
                 className="flex items-center justify-center gap-2 rounded-xl bg-[#2F5EA8] py-3.5 text-sm font-semibold text-white hover:bg-[#264D8C] hover:shadow-lg hover:shadow-[#2F5EA8]/10 transition-all w-full"
               >
                 <Zap className="h-4 w-4" />
-                Upgrade to Intelligence — $99/mo
+                {requiredTier === "enterprise" ? "Upgrade to Enterprise — $499/mo" : "Upgrade to Pro — $199/mo"}
                 <ArrowRight className="h-4 w-4" />
               </Link>
 
@@ -157,14 +189,16 @@ export function UpgradeGate({
 export function UpgradeInlineCTA({
   feature = "advanced insights",
   teaser,
+  requiredTier = "pro",
 }: {
   feature?: string;
   teaser?: string;
+  requiredTier?: "pro" | "enterprise";
 }) {
   const { data: session } = useSession();
   const plan = (session?.user as any)?.plan;
 
-  if (plan === "intelligence" || plan === "care") return null;
+  if (hasTierAccess(plan, requiredTier)) return null;
 
   return (
     <div className="rounded-2xl border border-[#2F5EA8]/10 bg-[#2F5EA8]/[0.04] p-6 my-6">
@@ -193,7 +227,7 @@ export function UpgradeInlineCTA({
             className="inline-flex items-center gap-2 rounded-lg bg-[#2F5EA8] px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#264D8C] transition-all"
           >
             <Zap className="h-4 w-4" />
-            Upgrade to Intelligence — $99/mo
+            {requiredTier === "enterprise" ? "Upgrade to Enterprise — $499/mo" : "Upgrade to Pro — $199/mo"}
           </Link>
         </div>
       </div>

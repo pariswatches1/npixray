@@ -10,13 +10,17 @@ export default function BillingPage() {
   const status = (session?.user as any)?.subscriptionStatus || "none";
 
   const planLabel =
-    plan === "intelligence"
-      ? "Intelligence ($99/mo)"
-      : plan === "api"
-        ? "API Pro ($49/mo)"
-        : plan === "care"
-          ? "Care Management ($299–699/mo)"
-          : "Free";
+    plan === "pro"
+      ? "Pro ($199/mo)"
+      : plan === "enterprise"
+        ? "Enterprise ($499/mo)"
+        : plan === "intelligence"
+          ? "Intelligence ($99/mo)"
+          : plan === "api"
+            ? "API Pro ($49/mo)"
+            : plan === "care"
+              ? "Care Management ($299–699/mo)"
+              : "Free";
 
   const isActive = status === "active";
   const isPastDue = status === "past_due";
