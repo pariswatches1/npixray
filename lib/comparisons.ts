@@ -241,7 +241,8 @@ export async function getStateComparisons(stateAbbr: string, prefetchedPrograms?
 
 export async function getStateSpecialtyComparisons(
   specialty: string,
-  stateAbbr: string
+  stateAbbr: string,
+  prefetchedPrograms?: any
 ): Promise<StateSpecialtyComparison | null> {
   const allStatesForSpec = await getSpecialtyByAllStates(specialty);
   if (!allStatesForSpec.length) return null;
@@ -284,8 +285,8 @@ export async function getStateSpecialtyComparisons(
     awvAdoptionDelta: number;
   } | null = null;
   if (benchmark) {
-    // Get program adoption for this state+specialty
-    const programs = await getStateSpecialtyProgramCounts(specialty, stateAbbr);
+    // Use prefetched programs if available, otherwise query
+    const programs = prefetchedPrograms || await getStateSpecialtyProgramCounts(specialty, stateAbbr);
     const localCcm = programs.totalProviders > 0 ? programs.ccmBillers / programs.totalProviders : 0;
     const localRpm = programs.totalProviders > 0 ? programs.rpmBillers / programs.totalProviders : 0;
     const localAwv = programs.totalProviders > 0 ? programs.awvBillers / programs.totalProviders : 0;

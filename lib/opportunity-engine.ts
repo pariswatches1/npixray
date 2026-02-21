@@ -151,9 +151,10 @@ export async function getStateOpportunities(stateAbbr: string, prefetchedProgram
 
 export async function getStateSpecialtyOpportunities(
   specialty: string,
-  stateAbbr: string
+  stateAbbr: string,
+  prefetchedPrograms?: any
 ): Promise<RevenueOpportunity[]> {
-  const programs = await getStateSpecialtyProgramCounts(specialty, stateAbbr);
+  const programs = prefetchedPrograms || await getStateSpecialtyProgramCounts(specialty, stateAbbr);
   if (programs.totalProviders === 0) return [];
 
   const benchmark = SPECIALTY_BENCHMARKS[specialty];

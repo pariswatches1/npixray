@@ -29,11 +29,22 @@ import { TrendSignals, computeSpecialtyTrends } from "@/components/seo/trend-sig
 import { InlineScanner } from "@/components/seo/inline-scanner";
 import { generateInsight } from "@/lib/ai-insights";
 import { SPECIALTY_BENCHMARKS } from "@/lib/benchmarks";
+import { STATE_LIST, SPECIALTY_LIST, specialtyToSlug as benchmarkSpecialtyToSlug } from "@/lib/benchmark-data";
+import { getStateSpecialtyProgramCounts } from "@/lib/db-queries";
 
 export const revalidate = 86400; // ISR: cache at runtime for 24 hours
 
 export function generateStaticParams() {
-  return []; // Don't prerender — generate on first request, then cache via ISR
+  const params: { state: string; specialty: string }[] = [];
+  for (const s of STATE_LIST) {
+    for (const spec of SPECIALTY_LIST) {
+      params.push({
+        state: s.name.toLowerCase().replace(/\s+/g, "-"),
+        specialty: benchmarkSpecialtyToSlug(spec),
+      });
+    }
+  }
+  return params;
 }
 
 export async function generateMetadata({
@@ -82,12 +93,15 @@ export default async function StateSpecialtyPage({
 
   const stateName = stateAbbrToName(abbr);
 
+  // Fetch programs FIRST so we can pass to both comparisons + opportunities (avoids 2 duplicate queries)
+  const programs = await getStateSpecialtyProgramCounts(specialtyName, abbr);
+
   // Parallel data fetching — all layers at once (including AI insight)
   const [providers, benchmarks, comparison, opportunities, insight] = await Promise.all([
     getSpecialtyStateProviders(specialtyName, abbr, 50),
     getAllBenchmarks(),
-    getStateSpecialtyComparisons(specialtyName, abbr),
-    getStateSpecialtyOpportunities(specialtyName, abbr),
+    getStateSpecialtyComparisons(specialtyName, abbr, programs),
+    getStateSpecialtyOpportunities(specialtyName, abbr, programs),
     generateInsight({
       type: "state-specialty",
       stateName,
