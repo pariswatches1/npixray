@@ -315,6 +315,21 @@ export default async function SpecialtyPage({
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-16">
         <ScanCTA />
       </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: [
+              { "@type": "Question", name: `How many ${benchmark.specialty} providers accept Medicare?`, acceptedAnswer: { "@type": "Answer", text: `There are ${formatNumber(benchmark.provider_count)} ${benchmark.specialty} providers in the CMS Medicare dataset, with an average total payment of ${formatCurrency(benchmark.avg_total_payment)} per provider.` }},
+              { "@type": "Question", name: `What is the average Medicare revenue for ${benchmark.specialty}?`, acceptedAnswer: { "@type": "Answer", text: `The average total Medicare payment for ${benchmark.specialty} is ${formatCurrency(benchmark.avg_total_payment)} per provider, with ${formatNumber(benchmark.avg_medicare_patients)} average Medicare patients.` }},
+              { "@type": "Question", name: `What percentage of ${benchmark.specialty} providers bill CCM and RPM?`, acceptedAnswer: { "@type": "Answer", text: `${(benchmark.ccm_adoption_rate * 100).toFixed(1)}% of ${benchmark.specialty} providers bill CCM (99490) and ${(benchmark.rpm_adoption_rate * 100).toFixed(1)}% bill RPM. These represent significant revenue opportunities for non-adopters.` }},
+            ],
+          }),
+        }}
+      />
     </>
   );
 }

@@ -187,6 +187,21 @@ export default async function CodePage({
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-16">
         <ScanCTA />
       </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: [
+              { "@type": "Question", name: `How many providers bill ${codeUpper}?`, acceptedAnswer: { "@type": "Answer", text: `${formatNumber(stats.totalProviders)} Medicare providers billed ${codeUpper}, generating ${formatCurrency(stats.totalPayment)} in total payments with an average of ${formatCurrency(stats.avgPayment)} per claim.` }},
+              { "@type": "Question", name: `What is the average Medicare payment for ${codeUpper}?`, acceptedAnswer: { "@type": "Answer", text: `The average Medicare payment for ${codeUpper} is ${formatCurrency(stats.avgPayment)} per claim, with providers averaging ${formatNumber(stats.avgServicesPerProvider)} services each.` }},
+              { "@type": "Question", name: `Which specialties bill ${codeUpper} the most?`, acceptedAnswer: { "@type": "Answer", text: `The top specialties billing ${codeUpper} are based on CMS Medicare data. Visit this page to see the full specialty breakdown with provider counts and total services.` }},
+            ],
+          }),
+        }}
+      />
     </>
   );
 }
