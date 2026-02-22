@@ -283,6 +283,23 @@ export default function ToolsIndexPage() {
           </Link>
         </div>
       </section>
+
+      {/* FAQ Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: [
+              { "@type": "Question", name: "Are these Medicare billing tools free?", acceptedAnswer: { "@type": "Answer", text: "Yes, all 12 tools are completely free with no login required. They use public CMS Medicare data to provide instant results." }},
+              { "@type": "Question", name: "What data do these tools use?", acceptedAnswer: { "@type": "Answer", text: "All tools are powered by the CMS Medicare Physician & Other Practitioners dataset, which contains billing data for 1.2M+ providers including CPT codes, services, and payments." }},
+              { "@type": "Question", name: "How accurate are the revenue calculators?", acceptedAnswer: { "@type": "Answer", text: "The calculators use real Medicare reimbursement rates and national specialty benchmarks from CMS data. Results are estimates based on averages and should be used as directional guidance." }},
+              { "@type": "Question", name: "Can I look up any doctor's NPI and billing data?", acceptedAnswer: { "@type": "Answer", text: "Yes. Enter any NPI number in the NPI Lookup tool to see that provider's Medicare billing patterns, top CPT codes, E&M distribution, and care management program participation." }},
+            ],
+          }),
+        }}
+      />
     </>
   );
 }

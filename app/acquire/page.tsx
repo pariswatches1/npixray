@@ -346,6 +346,22 @@ export default async function AcquirePage() {
           <EarlyAccessCTA />
         </div>
       </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: [
+              { "@type": "Question", name: "How does NPIxray identify acquisition targets?", acceptedAnswer: { "@type": "Answer", text: "NPIxray analyzes CMS Medicare billing data for 1.175M+ providers to identify practices with high patient volume but low revenue optimization — meaning significant upside potential for acquirers." }},
+              { "@type": "Question", name: "What data is used for practice valuation?", acceptedAnswer: { "@type": "Answer", text: "All analysis uses the CMS Medicare Physician & Other Practitioners dataset, which includes total services, payments, patient counts, E&M coding patterns, and care management program adoption for every Medicare provider." }},
+              { "@type": "Question", name: "Is this data free to access?", acceptedAnswer: { "@type": "Answer", text: "Yes. All data comes from publicly available CMS datasets. NPIxray provides free market intelligence for healthcare PE firms, hospital systems, and practice aggregators." }},
+              { "@type": "Question", name: "How often is the acquisition data updated?", acceptedAnswer: { "@type": "Answer", text: "The underlying CMS Medicare data is updated annually. NPIxray processes each new release to provide current revenue benchmarks and opportunity analysis." }},
+            ],
+          }),
+        }}
+      />
     </>
   );
 }

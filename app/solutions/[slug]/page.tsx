@@ -1105,6 +1105,21 @@ export default async function SolutionPage({
           </div>
         </section>
       </div>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: [
+              { "@type": "Question", name: `How does NPIxray help ${solution.practiceType}s?`, acceptedAnswer: { "@type": "Answer", text: solution.metaDescription }},
+              { "@type": "Question", name: "Is the NPI scan really free?", acceptedAnswer: { "@type": "Answer", text: "Yes, the NPI revenue scan is completely free with no login required. Enter any NPI number to instantly see E&M coding patterns, missed CCM/RPM/AWV opportunities, and peer benchmarks." }},
+              { "@type": "Question", name: "Where does the billing data come from?", acceptedAnswer: { "@type": "Answer", text: "All data comes from the CMS Medicare Physician & Other Practitioners public dataset, which contains billing records for 1.2M+ providers including CPT codes, services rendered, and payment amounts." }},
+            ],
+          }),
+        }}
+      />
     </>
   );
 }

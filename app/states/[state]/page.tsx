@@ -392,6 +392,21 @@ export default async function StatePage({
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-16">
         <ScanCTA state={stateName} />
       </section>
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: [
+              { "@type": "Question", name: `How many Medicare providers are in ${name}?`, acceptedAnswer: { "@type": "Answer", text: `${name} has ${formatNumber(stats.totalProviders)} Medicare providers with ${formatCurrency(stats.totalPayment)} in total Medicare payments and an average of ${formatCurrency(stats.avgPayment)} per provider.` }},
+              { "@type": "Question", name: `What is the average Medicare payment per provider in ${name}?`, acceptedAnswer: { "@type": "Answer", text: `The average Medicare payment per provider in ${name} is ${formatCurrency(stats.avgPayment)}. This varies significantly by specialty, city, and practice type.` }},
+              { "@type": "Question", name: `How can I compare my ${name} practice to peers?`, acceptedAnswer: { "@type": "Answer", text: `Enter your NPI number in NPIxray's free scanner to instantly see how your billing patterns, E&M coding, and care management adoption compare to other ${name} providers in your specialty.` }},
+            ],
+          }),
+        }}
+      />
     </>
   );
 }
