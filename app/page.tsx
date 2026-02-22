@@ -1483,7 +1483,7 @@ export default function NPIxrayHome() {
               <p style={{ fontSize: '14px', color: '#6B7280' }}>
                 Average revenue missed per practice, per year
               </p>
-              <a
+              <Link
                 href="/scan"
                 style={{
                   display: 'inline-block',
@@ -1497,7 +1497,7 @@ export default function NPIxrayHome() {
                 }}
               >
                 Find Out Your Number →
-              </a>
+              </Link>
             </div>
           </div>
         </section>
