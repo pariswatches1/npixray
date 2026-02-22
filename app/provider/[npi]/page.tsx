@@ -54,14 +54,14 @@ export async function generateMetadata({
   const state = stateAbbrToName(provider.state);
 
   return {
-    title: `${fullName} — ${provider.specialty} in ${city}, ${state} | Medicare Billing Data`,
-    description: `View Medicare billing data for ${fullName}, ${provider.credential || provider.specialty} in ${city}, ${state}. ${formatNumber(provider.total_services)} services, ${formatCurrency(provider.total_medicare_payment)} total Medicare payment. See top billing codes, E&M distribution, and care management programs.`,
+    title: `${fullName}, ${provider.specialty} — ${city}, ${state} Medicare Revenue Profile`,
+    description: `See ${fullName}'s Medicare billing breakdown: ${formatNumber(provider.total_services)} services, ${formatCurrency(provider.total_medicare_payment)} total payment. Compare coding patterns, find missed CCM/RPM/AWV revenue, and benchmark against ${provider.specialty} peers.`,
     alternates: {
       canonical: `https://npixray.com/provider/${npi}`,
     },
     openGraph: {
-      title: `${fullName} — ${provider.specialty} | NPIxray`,
-      description: `Medicare billing profile for ${fullName} in ${city}, ${state}. ${formatNumber(provider.total_beneficiaries)} patients, ${formatCurrency(provider.total_medicare_payment)} total payment.`,
+      title: `${fullName}, ${provider.specialty} — ${city}, ${state} Revenue Profile`,
+      description: `${fullName}'s Medicare billing breakdown: ${formatNumber(provider.total_beneficiaries)} patients, ${formatCurrency(provider.total_medicare_payment)} total payment. See missed revenue opportunities.`,
     },
     twitter: {
       card: "summary_large_image",

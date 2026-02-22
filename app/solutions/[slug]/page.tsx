@@ -63,9 +63,9 @@ const SOLUTIONS: Record<string, SolutionData> = {
     subheadline:
       "You don't need a billing consultant or a team of analysts. NPIxray gives solo providers instant, data-driven revenue insights for free.",
     metaTitle:
-      "NPIxray for Solo Practitioners — Free Billing Analytics for Solo Providers",
+      "Solo Practice Revenue Leaks? Free Billing Scan for Solo Providers",
     metaDescription:
-      "Solo practitioners: see exactly how much revenue you're missing. NPIxray's free NPI scan reveals E&M coding gaps, CCM, RPM, and AWV opportunities — no consultant required.",
+      "Solo practitioners leave $30K–$80K/year on the table. Free NPI scan reveals your E&M coding gaps, missed CCM/RPM/AWV revenue — no consultant needed, instant results.",
     practiceType: "solo practice",
     painPoints: [
       {
@@ -146,9 +146,9 @@ const SOLUTIONS: Record<string, SolutionData> = {
     subheadline:
       "Compare every provider in your group against specialty benchmarks. Find inconsistent coding, identify top performers, and close revenue gaps across your entire practice.",
     metaTitle:
-      "NPIxray for Group Practices — Multi-Provider Billing Analytics & Benchmarking",
+      "Group Practice Billing Analysis — Benchmark Every Provider Free",
     metaDescription:
-      "Group practices: benchmark every provider's billing against peers. NPIxray reveals coding inconsistencies, undercoding patterns, and missed revenue across your entire group.",
+      "Compare every provider in your group against specialty benchmarks. Find coding inconsistencies, undercoding patterns, and missed revenue across your entire practice.",
     practiceType: "group practice",
     painPoints: [
       {
@@ -229,9 +229,9 @@ const SOLUTIONS: Record<string, SolutionData> = {
     subheadline:
       "Maximize every dollar of revenue to serve more patients. NPIxray helps FQHCs identify missed billing opportunities in CCM, RPM, AWV, and E&M coding.",
     metaTitle:
-      "NPIxray for FQHCs — Revenue Optimization for Community Health Centers",
+      "FQHC Revenue Optimization — Free Billing Scan for Health Centers",
     metaDescription:
-      "FQHCs and Community Health Centers: discover missed CCM, RPM, and AWV revenue. NPIxray's free scan shows exactly how to maximize per-patient reimbursement.",
+      "FQHCs and Community Health Centers: discover missed CCM, RPM, and AWV revenue. Free scan shows exactly how to maximize per-patient Medicare reimbursement.",
     practiceType: "FQHC",
     painPoints: [
       {
@@ -312,9 +312,9 @@ const SOLUTIONS: Record<string, SolutionData> = {
     subheadline:
       "Fewer patients means every encounter needs to count. NPIxray helps rural providers discover missed programs and benchmark against similar rural peers.",
     metaTitle:
-      "NPIxray for Rural Practices — Revenue Optimization for Rural Healthcare",
+      "Rural Practice Revenue Guide — Missed Medicare Programs (2026)",
     metaDescription:
-      "Rural practices: maximize revenue per patient with NPIxray. Discover missed CCM, RPM, and AWV programs, and benchmark against similar rural providers.",
+      "Rural practices leave significant revenue uncaptured. Discover missed CCM, RPM, and AWV programs, and benchmark against similar rural providers. Free instant scan.",
     practiceType: "rural practice",
     painPoints: [
       {
@@ -395,9 +395,9 @@ const SOLUTIONS: Record<string, SolutionData> = {
     subheadline:
       "Complex outpatient billing requires sophisticated analysis. NPIxray provides department-level coding insights across all your employed and affiliated providers.",
     metaTitle:
-      "NPIxray for Hospital Outpatient — E&M Coding Analysis & Revenue Optimization",
+      "Hospital Outpatient E&M Coding Gaps — Free Revenue Analysis",
     metaDescription:
-      "Hospital outpatient departments: analyze E&M coding patterns across all providers. NPIxray reveals downcoding, billing inconsistencies, and missed revenue at scale.",
+      "Hospital outpatient departments: analyze E&M coding patterns across all providers. Reveals downcoding, billing inconsistencies, and missed revenue at scale. Free scan.",
     practiceType: "hospital outpatient department",
     painPoints: [
       {
@@ -479,9 +479,9 @@ const SOLUTIONS: Record<string, SolutionData> = {
     subheadline:
       "Win more clients and prove your value with data. NPIxray lets you scan any prospect's NPI to show exactly how much revenue they're missing — before they even sign.",
     metaTitle:
-      "NPIxray for Medical Billing Companies — Client Revenue Analysis Tool",
+      "Medical Billing Companies: Win Clients With Free Revenue Scans",
     metaDescription:
-      "Medical billing companies: scan prospect NPIs to show revenue gaps in proposals. Use NPIxray to demonstrate value, win clients, and identify missed billing opportunities.",
+      "Billing companies: scan prospect NPIs to show revenue gaps in proposals. Demonstrate value, win clients, and identify missed billing opportunities. Free tool.",
     practiceType: "billing company",
     painPoints: [
       {
@@ -563,9 +563,9 @@ const SOLUTIONS: Record<string, SolutionData> = {
     subheadline:
       "Make data-driven decisions about staffing, programs, and revenue targets. NPIxray gives practice managers the analytics they need without expensive BI tools.",
     metaTitle:
-      "NPIxray for Practice Managers — Data-Driven Revenue & Staffing Decisions",
+      "Practice Manager Revenue Tools — Justify Programs With Data",
     metaDescription:
-      "Practice managers: use NPIxray to justify new programs, optimize provider coding, and make data-driven staffing decisions. Free revenue intelligence for healthcare management.",
+      "Practice managers: justify new programs, optimize provider coding, and make data-driven staffing decisions. Free revenue intelligence backed by real CMS billing data.",
     practiceType: "practice",
     painPoints: [
       {
@@ -646,9 +646,9 @@ const SOLUTIONS: Record<string, SolutionData> = {
     subheadline:
       "Whether you're scaling revenue, evaluating acquisitions, or benchmarking competitors, NPIxray gives physician entrepreneurs X-ray vision into any practice's billing data.",
     metaTitle:
-      "NPIxray for Physician Entrepreneurs — Practice Acquisition & Revenue Analysis",
+      "Physician Entrepreneurs: Evaluate Practices Before You Buy",
     metaDescription:
-      "Physician entrepreneurs: evaluate practice acquisitions, benchmark competitors, and scale revenue. NPIxray provides billing intelligence for any NPI number.",
+      "Evaluate practice acquisitions, benchmark competitors, and find revenue upside. Free billing intelligence for any NPI number — powered by real CMS Medicare data.",
     practiceType: "practice",
     painPoints: [
       {
@@ -729,9 +729,9 @@ const SOLUTIONS: Record<string, SolutionData> = {
     subheadline:
       "No billing history? No problem. NPIxray lets new practices benchmark against specialty peers, set realistic revenue targets, and build billing strategies from day one.",
     metaTitle:
-      "NPIxray for New Medical Practices — Revenue Benchmarking & Target Setting",
+      "New Medical Practice? Set Revenue Targets With Real Data",
     metaDescription:
-      "New medical practices: set realistic revenue targets from day one. NPIxray benchmarks against specialty peers to help you build an optimized billing strategy.",
+      "New practices: set realistic revenue targets from day one. Benchmark against specialty peers and build an optimized billing strategy. Free — no login required.",
     practiceType: "new practice",
     painPoints: [
       {
@@ -813,9 +813,9 @@ const SOLUTIONS: Record<string, SolutionData> = {
     subheadline:
       "Different locations, different performance. NPIxray helps multi-site practices identify underperforming locations, standardize coding, and optimize revenue across every site.",
     metaTitle:
-      "NPIxray for Multi-Location Practices — Cross-Site Revenue Comparison & Optimization",
+      "Multi-Location Practice Analytics — Compare Revenue Across Sites",
     metaDescription:
-      "Multi-location practices: compare performance across sites. NPIxray identifies revenue gaps at each location and helps standardize coding for maximum revenue.",
+      "Multi-location practices: compare billing performance across all sites. Identify revenue gaps at each location and standardize coding for maximum reimbursement.",
     practiceType: "multi-location practice",
     painPoints: [
       {

@@ -22,9 +22,9 @@ import { STATE_LIST, SPECIALTY_LIST } from "@/lib/benchmark-data";
 import { stateToSlug, specialtyToSlug } from "@/lib/db-queries";
 
 export const metadata: Metadata = {
-  title: "Medical Practice Acquisition Intelligence 2026 | NPIxray",
+  title: "Find Undervalued Medical Practices to Acquire (2026 Data)",
   description:
-    "Find medical practices worth acquiring. Analyze revenue optimization potential, patient base value, and ROI projections powered by CMS Medicare data for 1.175M+ providers.",
+    "Identify high-potential acquisition targets with revenue upside. Patient base valuation, ROI projections, and market analysis for 1.175M+ Medicare providers. Free to explore.",
   keywords: [
     "medical practice acquisition",
     "healthcare PE",
@@ -41,9 +41,9 @@ export const metadata: Metadata = {
     canonical: "https://npixray.com/acquire",
   },
   openGraph: {
-    title: "Medical Practice Acquisition Intelligence | NPIxray",
+    title: "Find Undervalued Medical Practices to Acquire (2026 Data)",
     description:
-      "Find underperforming practices with massive revenue upside. Data-driven acquisition intelligence for PE firms, hospital systems, and practice aggregators.",
+      "Identify high-potential acquisition targets with revenue upside. Patient base valuation and ROI projections for 1.175M+ providers.",
   },
 };
 
