@@ -411,6 +411,10 @@ async function main() {
     { name: "idx_providers_city", sql: "CREATE INDEX IF NOT EXISTS idx_providers_city ON providers(city)" },
     { name: "idx_providers_name", sql: "CREATE INDEX IF NOT EXISTS idx_providers_name ON providers(last_name, first_name)" },
     { name: "idx_providers_state_city", sql: "CREATE INDEX IF NOT EXISTS idx_providers_state_city ON providers(state, city)" },
+    // Compound indexes for the heavy queries (LCP bottleneck fix)
+    { name: "idx_providers_state_payment", sql: "CREATE INDEX IF NOT EXISTS idx_providers_state_payment ON providers(state, total_medicare_payment DESC)" },
+    { name: "idx_providers_specialty_state", sql: "CREATE INDEX IF NOT EXISTS idx_providers_specialty_state ON providers(specialty, state)" },
+    { name: "idx_providers_specialty_state_payment", sql: "CREATE INDEX IF NOT EXISTS idx_providers_specialty_state_payment ON providers(specialty, state, total_medicare_payment DESC)" },
     { name: "idx_codes_npi", sql: "CREATE INDEX IF NOT EXISTS idx_codes_npi ON provider_codes(npi)" },
     { name: "idx_codes_hcpcs", sql: "CREATE INDEX IF NOT EXISTS idx_codes_hcpcs ON provider_codes(hcpcs_code)" },
   ];

@@ -325,6 +325,9 @@ async function main() {
     CREATE INDEX idx_providers_specialty ON providers(specialty);
     CREATE INDEX idx_providers_state ON providers(state);
     CREATE INDEX idx_providers_name ON providers(last_name, first_name);
+    CREATE INDEX idx_providers_state_payment ON providers(state, total_medicare_payment DESC);
+    CREATE INDEX idx_providers_specialty_state ON providers(specialty, state);
+    CREATE INDEX idx_providers_specialty_state_payment ON providers(specialty, state, total_medicare_payment DESC);
     CREATE INDEX idx_codes_npi ON provider_codes(npi);
     CREATE INDEX idx_codes_hcpcs ON provider_codes(hcpcs_code);
   `);

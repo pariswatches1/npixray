@@ -110,6 +110,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={dmSans.variable}>
       <head>
+        {/* Preconnect to critical origins to reduce connection latency */}
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
         <link rel="alternate" type="text/markdown" href="/llms.txt" title="LLMs.txt — AI-readable site description" />
         <link rel="alternate" type="text/markdown" href="/llms-full.txt" title="LLMs-full.txt — Extended AI-readable site description" />
         <link rel="alternate" type="application/ld+json" href="/api/entity" title="Entity API — Machine-readable entity data" />
