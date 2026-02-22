@@ -7,6 +7,7 @@ import {
   BarChart3,
   ArrowLeftRight,
   Layers,
+  Activity,
   type LucideIcon,
 } from "lucide-react";
 import { getRelatedLinks, type PageType } from "@/lib/internal-links";
@@ -21,6 +22,7 @@ const ICON_MAP: Record<string, LucideIcon> = {
   BarChart3,
   ArrowLeftRight,
   Layers,
+  Activity,
 };
 
 function resolveIcon(name: string): LucideIcon {
@@ -35,6 +37,7 @@ interface RelatedLinksProps {
   context?: {
     state?: string;
     specialty?: string;
+    city?: string;
   };
 }
 
@@ -44,6 +47,7 @@ export function RelatedLinks({ pageType, currentSlug, context }: RelatedLinksPro
   const groups = getRelatedLinks(pageType, {
     state: context?.state,
     specialty: context?.specialty,
+    city: context?.city,
     slug: currentSlug,
   });
 

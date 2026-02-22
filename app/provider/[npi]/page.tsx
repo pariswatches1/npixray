@@ -33,6 +33,7 @@ import {
 import { calculateRevenueScore, estimatePercentile, getScoreTier } from "@/lib/revenue-score";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { ScanCTA } from "@/components/seo/scan-cta";
+import { RelatedLinks } from "@/components/seo/related-links";
 import { ClaimProfile } from "@/components/provider/claim-profile";
 import { ShareButtons } from "@/components/reports/share-buttons";
 import { UpgradeInlineCTA } from "@/components/paywall/upgrade-gate";
@@ -643,32 +644,8 @@ export default async function ProviderProfilePage({
           )}
         </section>
 
-        {/* ── Internal Links ─────────────────────────────── */}
-        <section className="mb-10 border-t border-[var(--border-light)] pt-8">
-          <h3 className="text-sm font-semibold text-[var(--text-secondary)] uppercase tracking-wider mb-4">
-            Explore More
-          </h3>
-          <div className="flex flex-wrap gap-3">
-            <Link
-              href={`/specialties/${specSlug}`}
-              className="rounded-lg border border-[var(--border-light)] bg-white px-4 py-2 text-xs font-medium text-[var(--text-secondary)] hover:text-[#2F5EA8] hover:border-[#2F5EA8]/10 transition-colors"
-            >
-              {provider.specialty} Benchmarks →
-            </Link>
-            <Link
-              href={`/states/${stateSlug}/${citySlug}`}
-              className="rounded-lg border border-[var(--border-light)] bg-white px-4 py-2 text-xs font-medium text-[var(--text-secondary)] hover:text-[#2F5EA8] hover:border-[#2F5EA8]/10 transition-colors"
-            >
-              Providers in {provider.city} →
-            </Link>
-            <Link
-              href={`/states/${stateSlug}`}
-              className="rounded-lg border border-[var(--border-light)] bg-white px-4 py-2 text-xs font-medium text-[var(--text-secondary)] hover:text-[#2F5EA8] hover:border-[#2F5EA8]/10 transition-colors"
-            >
-              {stateName} Overview →
-            </Link>
-          </div>
-        </section>
+        {/* ── Related Links ─────────────────────────────── */}
+        <RelatedLinks pageType="provider" currentSlug={npi} context={{ state: stateSlug, specialty: specSlug, city: citySlug }} />
 
         {/* ── CTA ────────────────────────────────────────── */}
         <ScanCTA providerName={fullName} />
