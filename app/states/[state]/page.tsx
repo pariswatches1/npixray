@@ -60,14 +60,14 @@ export async function generateMetadata({
 
   const name = stateAbbrToName(abbr);
   return {
-    title: `${name} Medicare Billing Data: ${formatNumber(stats.totalProviders)} Providers Exposed (2026)`,
-    description: `How does your ${name} practice compare? See billing data for ${formatNumber(stats.totalProviders)} providers, ${formatCurrency(stats.totalPayment)} total payments, top specialties, and city-by-city breakdowns. Free public CMS data.`,
+    title: `${stateName} Medicare Billing Data: ${formatNumber(stats.totalProviders)} Providers Exposed (2026)`,
+    description: `How does your ${stateName} practice compare? See billing data for ${formatNumber(stats.totalProviders)} providers, ${formatCurrency(stats.totalPayment)} total payments, top specialties, and city-by-city breakdowns. Free public CMS data.`,
     alternates: {
       canonical: `https://npixray.com/states/${slug}`,
     },
     openGraph: {
-      title: `${name} Medicare Billing Data: ${formatNumber(stats.totalProviders)} Providers (2026)`,
-      description: `How does your ${name} practice compare? Billing data for ${formatNumber(stats.totalProviders)} providers, ${formatCurrency(stats.totalPayment)} total payments.`,
+      title: `${stateName} Medicare Billing Data: ${formatNumber(stats.totalProviders)} Providers (2026)`,
+      description: `How does your ${stateName} practice compare? Billing data for ${formatNumber(stats.totalProviders)} providers, ${formatCurrency(stats.totalPayment)} total payments.`,
     },
   };
 }
@@ -400,9 +400,9 @@ export default async function StatePage({
             "@context": "https://schema.org",
             "@type": "FAQPage",
             mainEntity: [
-              { "@type": "Question", name: `How many Medicare providers are in ${name}?`, acceptedAnswer: { "@type": "Answer", text: `${name} has ${formatNumber(stats.totalProviders)} Medicare providers with ${formatCurrency(stats.totalPayment)} in total Medicare payments and an average of ${formatCurrency(stats.avgPayment)} per provider.` }},
-              { "@type": "Question", name: `What is the average Medicare payment per provider in ${name}?`, acceptedAnswer: { "@type": "Answer", text: `The average Medicare payment per provider in ${name} is ${formatCurrency(stats.avgPayment)}. This varies significantly by specialty, city, and practice type.` }},
-              { "@type": "Question", name: `How can I compare my ${name} practice to peers?`, acceptedAnswer: { "@type": "Answer", text: `Enter your NPI number in NPIxray's free scanner to instantly see how your billing patterns, E&M coding, and care management adoption compare to other ${name} providers in your specialty.` }},
+              { "@type": "Question", name: `How many Medicare providers are in ${stateName}?`, acceptedAnswer: { "@type": "Answer", text: `${stateName} has ${formatNumber(stats.totalProviders)} Medicare providers with ${formatCurrency(stats.totalPayment)} in total Medicare payments and an average of ${formatCurrency(stats.avgPayment)} per provider.` }},
+              { "@type": "Question", name: `What is the average Medicare payment per provider in ${stateName}?`, acceptedAnswer: { "@type": "Answer", text: `The average Medicare payment per provider in ${stateName} is ${formatCurrency(stats.avgPayment)}. This varies significantly by specialty, city, and practice type.` }},
+              { "@type": "Question", name: `How can I compare my ${stateName} practice to peers?`, acceptedAnswer: { "@type": "Answer", text: `Enter your NPI number in NPIxray's free scanner to instantly see how your billing patterns, E&M coding, and care management adoption compare to other ${stateName} providers in your specialty.` }},
             ],
           }),
         }}

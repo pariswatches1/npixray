@@ -5,6 +5,7 @@ import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { ScanCTA } from "@/components/seo/scan-cta";
 import { ProviderTable } from "@/components/seo/provider-table";
 import { StatCard } from "@/components/seo/stat-card";
+import { RelatedLinks } from "@/components/seo/related-links";
 import { AIInsight } from "@/components/seo/ai-insight";
 import { TrendSignals, computeStateTrends } from "@/components/seo/trend-signals";
 import { InlineScanner } from "@/components/seo/inline-scanner";
@@ -226,6 +227,9 @@ export default async function CityPage({
           </div>
         </section>
       )}
+
+      {/* Related Links */}
+      <RelatedLinks pageType="city" currentSlug={citySlug} context={{ state: stateSlug }} />
 
       {/* ── Layer 5: Interactive Scanner Widget ──────────── */}
       <section className="border-t border-[var(--border-light)] py-10">

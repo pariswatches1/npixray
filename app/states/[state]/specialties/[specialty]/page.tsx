@@ -10,6 +10,7 @@ import { ConfidenceBadge } from "@/components/seo/confidence-badge";
 import { SpecialtyBenchmarkComparison } from "@/components/seo/benchmark-comparison";
 import { RevenueOpportunities } from "@/components/seo/revenue-opportunities";
 import { DataCoverage } from "@/components/seo/data-coverage";
+import { RelatedLinks } from "@/components/seo/related-links";
 import {
   getSpecialtyByState,
   getSpecialtyStateProviders,
@@ -310,6 +311,9 @@ export default async function StateSpecialtyPage({
           </div>
         </section>
       )}
+
+      {/* Related Links */}
+      <RelatedLinks pageType="state-specialty" currentSlug={specSlug} context={{ state: stateSlug, specialty: specSlug }} />
 
       {/* Data attribution */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4">
