@@ -68,6 +68,11 @@ async function queryOne(sql: string, params: any[] = []): Promise<any | null> {
   return db.prepare(sql).get(...params) ?? null;
 }
 
+// ── Optimized column lists (avoid SELECT *) ─────────────
+// Only fetch columns actually used by ProviderTable + leaderboard + scores pages
+const PROVIDER_LIST_COLS = `npi, first_name, last_name, credential, specialty, city, state,
+  total_beneficiaries, total_services, total_medicare_payment, revenue_score`;
+
 // ── State helpers ────────────────────────────────────────
 
 const STATE_NAMES: Record<string, string> = {
@@ -280,10 +285,10 @@ export function getStateCities(stateAbbr: string, limit = 30): any {
 }
 
 export function getStateTopProviders(stateAbbr: string, limit = 50): any {
-  if (USE_NEON) return queryAll("SELECT * FROM providers WHERE state = ? ORDER BY total_medicare_payment DESC LIMIT ?", [stateAbbr, limit]);
+  if (USE_NEON) return queryAll(`SELECT ${PROVIDER_LIST_COLS} FROM providers WHERE state = ? ORDER BY total_medicare_payment DESC LIMIT ?`, [stateAbbr, limit]);
   const db = getDb();
   if (!db) return [];
-  return db.prepare("SELECT * FROM providers WHERE state = ? ORDER BY total_medicare_payment DESC LIMIT ?").all(stateAbbr, limit);
+  return db.prepare(`SELECT ${PROVIDER_LIST_COLS} FROM providers WHERE state = ? ORDER BY total_medicare_payment DESC LIMIT ?`).all(stateAbbr, limit);
 }
 
 // ── City queries ─────────────────────────────────────────
@@ -296,10 +301,10 @@ export function getCityStats(stateAbbr: string, city: string): any {
 }
 
 export function getCityProviders(stateAbbr: string, city: string, limit = 100): any {
-  if (USE_NEON) return queryAll("SELECT * FROM providers WHERE state = ? AND LOWER(city) = LOWER(?) ORDER BY total_medicare_payment DESC LIMIT ?", [stateAbbr, city, limit]);
+  if (USE_NEON) return queryAll(`SELECT ${PROVIDER_LIST_COLS} FROM providers WHERE state = ? AND LOWER(city) = LOWER(?) ORDER BY total_medicare_payment DESC LIMIT ?`, [stateAbbr, city, limit]);
   const db = getDb();
   if (!db) return [];
-  return db.prepare("SELECT * FROM providers WHERE state = ? AND LOWER(city) = LOWER(?) ORDER BY total_medicare_payment DESC LIMIT ?").all(stateAbbr, city, limit);
+  return db.prepare(`SELECT ${PROVIDER_LIST_COLS} FROM providers WHERE state = ? AND LOWER(city) = LOWER(?) ORDER BY total_medicare_payment DESC LIMIT ?`).all(stateAbbr, city, limit);
 }
 
 export function getCitySpecialties(stateAbbr: string, city: string): any {
@@ -334,10 +339,10 @@ export function getBenchmarkBySpecialty(specialty: string): any {
 }
 
 export function getSpecialtyProviders(specialty: string, limit = 50): any {
-  if (USE_NEON) return queryAll("SELECT * FROM providers WHERE specialty = ? ORDER BY total_medicare_payment DESC LIMIT ?", [specialty, limit]);
+  if (USE_NEON) return queryAll(`SELECT ${PROVIDER_LIST_COLS} FROM providers WHERE specialty = ? ORDER BY total_medicare_payment DESC LIMIT ?`, [specialty, limit]);
   const db = getDb();
   if (!db) return [];
-  return db.prepare("SELECT * FROM providers WHERE specialty = ? ORDER BY total_medicare_payment DESC LIMIT ?").all(specialty, limit);
+  return db.prepare(`SELECT ${PROVIDER_LIST_COLS} FROM providers WHERE specialty = ? ORDER BY total_medicare_payment DESC LIMIT ?`).all(specialty, limit);
 }
 
 export function getSpecialtyByState(specialty: string, stateAbbr: string): any {
@@ -348,17 +353,17 @@ export function getSpecialtyByState(specialty: string, stateAbbr: string): any {
 }
 
 export function getSpecialtyStateProviders(specialty: string, stateAbbr: string, limit = 50): any {
-  if (USE_NEON) return queryAll("SELECT * FROM providers WHERE specialty = ? AND state = ? ORDER BY total_medicare_payment DESC LIMIT ?", [specialty, stateAbbr, limit]);
+  if (USE_NEON) return queryAll(`SELECT ${PROVIDER_LIST_COLS} FROM providers WHERE specialty = ? AND state = ? ORDER BY total_medicare_payment DESC LIMIT ?`, [specialty, stateAbbr, limit]);
   const db = getDb();
   if (!db) return [];
-  return db.prepare("SELECT * FROM providers WHERE specialty = ? AND state = ? ORDER BY total_medicare_payment DESC LIMIT ?").all(specialty, stateAbbr, limit);
+  return db.prepare(`SELECT ${PROVIDER_LIST_COLS} FROM providers WHERE specialty = ? AND state = ? ORDER BY total_medicare_payment DESC LIMIT ?`).all(specialty, stateAbbr, limit);
 }
 
 export function getCitySpecialtyProviders(stateAbbr: string, city: string, specialty: string, limit = 50): any {
-  if (USE_NEON) return queryAll("SELECT * FROM providers WHERE state = ? AND LOWER(city) = LOWER(?) AND specialty = ? ORDER BY total_medicare_payment DESC LIMIT ?", [stateAbbr, city, specialty, limit]);
+  if (USE_NEON) return queryAll(`SELECT ${PROVIDER_LIST_COLS} FROM providers WHERE state = ? AND LOWER(city) = LOWER(?) AND specialty = ? ORDER BY total_medicare_payment DESC LIMIT ?`, [stateAbbr, city, specialty, limit]);
   const db = getDb();
   if (!db) return [];
-  return db.prepare("SELECT * FROM providers WHERE state = ? AND LOWER(city) = LOWER(?) AND specialty = ? ORDER BY total_medicare_payment DESC LIMIT ?").all(stateAbbr, city, specialty, limit);
+  return db.prepare(`SELECT ${PROVIDER_LIST_COLS} FROM providers WHERE state = ? AND LOWER(city) = LOWER(?) AND specialty = ? ORDER BY total_medicare_payment DESC LIMIT ?`).all(stateAbbr, city, specialty, limit);
 }
 
 // ── Code queries ─────────────────────────────────────────
