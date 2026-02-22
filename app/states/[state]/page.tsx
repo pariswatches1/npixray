@@ -58,7 +58,7 @@ export async function generateMetadata({
   const stats = await getStateStats(abbr);
   if (!stats || !stats.totalProviders) return { title: "State Not Found" };
 
-  const name = stateAbbrToName(abbr);
+  const stateName = stateAbbrToName(abbr);
   return {
     title: `${stateName} Medicare Billing Data: ${formatNumber(stats.totalProviders)} Providers Exposed (2026)`,
     description: `How does your ${stateName} practice compare? See billing data for ${formatNumber(stats.totalProviders)} providers, ${formatCurrency(stats.totalPayment)} total payments, top specialties, and city-by-city breakdowns. Free public CMS data.`,
