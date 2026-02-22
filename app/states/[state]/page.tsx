@@ -60,14 +60,14 @@ export async function generateMetadata({
 
   const name = stateAbbrToName(abbr);
   return {
-    title: `${name} Medicare Revenue Analysis — ${formatNumber(stats.totalProviders)} Providers | NPIxray`,
-    description: `${name} Medicare billing data: ${formatNumber(stats.totalProviders)} providers, ${formatCurrency(stats.totalPayment)} total payments, ${formatCurrency(stats.avgPayment)} average per provider. See top specialties, cities, and providers.`,
+    title: `${name} Medicare Billing Data: ${formatNumber(stats.totalProviders)} Providers Exposed (2026)`,
+    description: `How does your ${name} practice compare? See billing data for ${formatNumber(stats.totalProviders)} providers, ${formatCurrency(stats.totalPayment)} total payments, top specialties, and city-by-city breakdowns. Free public CMS data.`,
     alternates: {
       canonical: `https://npixray.com/states/${slug}`,
     },
     openGraph: {
-      title: `${name} Medicare Revenue Analysis | NPIxray`,
-      description: `Explore Medicare billing data for ${formatNumber(stats.totalProviders)} providers in ${name}. ${formatCurrency(stats.totalPayment)} in total Medicare payments.`,
+      title: `${name} Medicare Billing Data: ${formatNumber(stats.totalProviders)} Providers (2026)`,
+      description: `How does your ${name} practice compare? Billing data for ${formatNumber(stats.totalProviders)} providers, ${formatCurrency(stats.totalPayment)} total payments.`,
     },
   };
 }

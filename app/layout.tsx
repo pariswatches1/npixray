@@ -15,11 +15,11 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: "NPIxray — X-Ray Your Practice Revenue | AI Revenue Intelligence",
+    default: "Free NPI Lookup & Revenue Scan — See What You're Missing | NPIxray",
     template: "%s | NPIxray",
   },
   description:
-    "Free AI-powered revenue analysis for medical practices. Enter any NPI number to instantly see missed revenue opportunities in coding, CCM, RPM, BHI, and AWV programs.",
+    "Enter any NPI number and instantly discover how much Medicare revenue your practice is leaving on the table. Free scan — no login required. 1.2M+ providers analyzed.",
   keywords: [
     "NPI lookup",
     "medical practice revenue",
@@ -39,23 +39,23 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://npixray.com",
     siteName: "NPIxray",
-    title: "NPIxray — X-Ray Your Practice Revenue",
+    title: "Free NPI Lookup & Revenue Scan — See What You're Missing",
     description:
-      "Free AI-powered revenue analysis for medical practices. See exactly how much revenue you're leaving on the table.",
+      "Enter any NPI number and instantly discover how much Medicare revenue your practice is leaving on the table. Free scan — no login required.",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "NPIxray Revenue Intelligence Platform",
+        alt: "NPIxray — Free NPI Revenue Scan",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "NPIxray — X-Ray Your Practice Revenue",
+    title: "Free NPI Lookup & Revenue Scan — See What You're Missing",
     description:
-      "Free AI-powered revenue analysis for medical practices. See exactly how much revenue you're leaving on the table.",
+      "Enter any NPI number and instantly discover how much Medicare revenue your practice is leaving on the table. Free scan — no login required.",
     images: ["/og-image.png"],
   },
   alternates: {

@@ -21,9 +21,9 @@ import {
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 
 export const metadata: Metadata = {
-  title: "Free Medicare Billing Tools — Calculators & Lookups",
+  title: "12 Free Medicare Billing Calculators & Tools (2026)",
   description:
-    "Free interactive tools for medical practices: revenue calculators, NPI lookup, CPT code search, specialty comparisons, CCM/RPM/AWV calculators, E&M audit tool, revenue forecasting, practice benchmarking, and Revenue Score comparison.",
+    "Free CCM, RPM, AWV revenue calculators, NPI lookup, CPT code search, E&M audit tool, and practice benchmarks. No login needed — instant results for your practice.",
   keywords: [
     "Medicare billing tools",
     "NPI lookup tool",
@@ -40,9 +40,9 @@ export const metadata: Metadata = {
     canonical: "https://npixray.com/tools",
   },
   openGraph: {
-    title: "Free Medicare Billing Tools | NPIxray",
+    title: "12 Free Medicare Billing Calculators & Tools (2026)",
     description:
-      "Free interactive tools for medical practices. Revenue calculators, NPI lookup, CPT code search, and more.",
+      "Free CCM, RPM, AWV revenue calculators, NPI lookup, CPT code search, E&M audit tool, and practice benchmarks. No login needed.",
   },
 };
 
