@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NPIxray Hero Dashboard</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --primary: #0A6EBD;
+    --primary-light: #1E88E5;
+    --primary-dark: #064A80;
+    --accent: #00C9A7;
+    --accent-warm: #FF6B6B;
+    --bg-deep: #F0F4F8;
+    --bg-card: #FFFFFF;
+    --text-primary: #1A2332;
+    --text-secondary: #5A6B7E;
+    --text-muted: #8A9BB0;
+    --border: #E2E8F0;
+    --shadow: 0 4px 24px rgba(10, 110, 189, 0.08);
+    --shadow-lg: 0 20px 60px rgba(10, 110, 189, 0.12);
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: linear-gradient(160deg, #E8F4FD 0%, #F0F4F8 30%, #FAFBFD 60%, #F5F0FF 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 60px;
+    overflow: hidden;
+  }
+
+  .scene {
+    position: relative;
+    width: 1200px;
+    perspective: 1800px;
+  }
+
+  /* Ambient glow effects */
+  .scene::before {
+    content: '';
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(10,110,189,0.08) 0%, transparent 70%);
+    top: -100px;
+    left: -100px;
+    pointer-events: none;
+  }
+  .scene::after {
+    content: '';
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(0,201,167,0.06) 0%, transparent 70%);
+    bottom: -50px;
+    right: -50px;
+    pointer-events: none;
+  }
+
+  /* Laptop frame */
+  .laptop {
+    position: relative;
+    transform: rotateX(2deg) rotateY(-1deg);
+    transform-style: preserve-3d;
+    animation: floatIn 1.2s ease-out;
+  }
+
+  @keyframes floatIn {
+    from { opacity: 0; transform: rotateX(8deg) rotateY(-3deg) translateY(30px); }
+    to { opacity: 1; transform: rotateX(2deg) rotateY(-1deg) translateY(0); }
+  }
+
+  .laptop-screen {
+    background: #1A2332;
+    border-radius: 16px 16px 0 0;
+    padding: 12px 12px 0;
+    box-shadow: var(--shadow-lg), 0 0 0 1px rgba(0,0,0,0.05);
+    position: relative;
+  }
+
+  .laptop-screen::before {
+    content: '';
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #2A3442;
+  }
+
+  .laptop-base {
+    background: linear-gradient(180deg, #2A3442 0%, #1A2332 100%);
+    height: 18px;
+    border-radius: 0 0 16px 16px;
+    position: relative;
+  }
+  .laptop-base::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 104%;
+    height: 10px;
+    background: linear-gradient(180deg, #D0D5DD, #E8ECF0);
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+
+  /* Dashboard content */
+  .dashboard {
+    background: var(--bg-deep);
+    border-radius: 8px 8px 0 0;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    height: 580px;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    background: linear-gradient(180deg, #0A6EBD 0%, #064A80 100%);
+    padding: 20px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .sidebar-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    margin-bottom: 20px;
+  }
+  .sidebar-logo .logo-icon {
+    width: 32px;
+    height: 32px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+  }
+  .sidebar-logo .logo-icon svg { width: 18px; height: 18px; }
+  .sidebar-logo span {
+    color: #fff;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    color: rgba(255,255,255,0.6);
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+  .nav-item.active {
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+    backdrop-filter: blur(4px);
+  }
+  .nav-item svg { width: 18px; height: 18px; opacity: 0.8; }
+  .nav-item.active svg { opacity: 1; }
+
+  .nav-section {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: rgba(255,255,255,0.3);
+    padding: 16px 12px 6px;
+    font-weight: 600;
+  }
+
+  /* Main content */
+  .main {
+    padding: 20px 24px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .top-bar h1 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.5px;
+  }
+  .top-bar .npi-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg-card);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .npi-badge .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse-dot 2s infinite;
+  }
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* KPI Cards */
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+  .kpi-card {
+    background: var(--bg-card);
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .kpi-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+  }
+  .kpi-card:nth-child(1)::after { background: linear-gradient(90deg, var(--accent), #00E5C3); }
+  .kpi-card:nth-child(2)::after { background: linear-gradient(90deg, var(--accent-warm), #FF8E8E); }
+  .kpi-card:nth-child(3)::after { background: linear-gradient(90deg, var(--primary), var(--primary-light)); }
+  .kpi-card:nth-child(4)::after { background: linear-gradient(90deg, #A78BFA, #C4B5FD); }
+
+  .kpi-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .kpi-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -1px;
+    line-height: 1.1;
+  }
+  .kpi-change {
+    font-size: 11px;
+    font-weight: 600;
+    margin-top: 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+  .kpi-change.up { background: #E6FFF5; color: #059669; }
+  .kpi-change.down { background: #FFF1F0; color: #DC2626; }
+
+  /* Charts area */
+  .charts-row {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 14px;
+  }
+  .chart-card {
+    background: var(--bg-card);
+    border-radius: 12px;
+    padding: 18px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+  }
+  .chart-card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+  .chart-card .chart-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+  }
+
+  /* Revenue gap bar chart */
+  .bar-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    height: 160px;
+    padding-top: 10px;
+    position: relative;
+  }
+  .bar-chart::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 40%;
+    border-top: 1px dashed rgba(10,110,189,0.15);
+  }
+  .bar-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .bar-stack {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+  .bar {
+    width: 70%;
+    border-radius: 4px 4px 2px 2px;
+    transition: all 0.3s;
+    position: relative;
+  }
+  .bar.actual { background: linear-gradient(180deg, var(--primary), var(--primary-dark)); }
+  .bar.gap { background: linear-gradient(180deg, #FF6B6B, #FF8E8E); opacity: 0.7; border-radius: 2px 2px 0 0; }
+  .bar-label {
+    font-size: 9px;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  /* Donut / Pie chart */
+  .donut-area {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .donut-svg {
+    width: 130px;
+    height: 130px;
+    flex-shrink: 0;
+  }
+  .donut-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: var(--text-secondary);
+  }
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+  .legend-val {
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-left: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+  }
+
+  /* Bottom row */
+  .bottom-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  /* Action items */
+  .action-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .action-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: #F8FAFC;
+    border: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+  .action-priority {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .action-priority.high { background: #FF6B6B; }
+  .action-priority.med { background: #FBBF24; }
+  .action-priority.low { background: var(--accent); }
+  .action-amount {
+    margin-left: auto;
+    font-weight: 700;
+    color: var(--accent-warm);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+  }
+
+  /* Line sparkline */
+  .sparkline-row {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .spark-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+  }
+  .spark-item:not(:last-child) {
+    border-bottom: 1px solid var(--border);
+  }
+  .spark-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    min-width: 90px;
+  }
+  .spark-val {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+    min-width: 50px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* Floating elements for depth */
+  .float-badge {
+    position: absolute;
+    background: #fff;
+    border-radius: 12px;
+    padding: 10px 16px;
+    box-shadow: 0 8px 32px rgba(10,110,189,0.15);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    z-index: 10;
+    animation: floatBadge 3s ease-in-out infinite;
+  }
+  .float-badge.top-right {
+    top: -20px;
+    right: -30px;
+    color: var(--accent);
+  }
+  .float-badge.bottom-left {
+    bottom: 30px;
+    left: -36px;
+    color: var(--accent-warm);
+    animation-delay: 1.5s;
+  }
+
+  @keyframes floatBadge {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  .float-badge svg { width: 20px; height: 20px; }
+
+  /* Subtle grid dots background */
+  .bg-dots {
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(10,110,189,0.04) 1px, transparent 1px);
+    background-size: 24px 24px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ===== FLASH SYSTEM ===== */
+  /* Full-screen white flash burst */
+  .flash-whiteout {
+    position: fixed;
+    inset: 0;
+    background: #fff;
+    z-index: 9999;
+    pointer-events: none;
+    animation: flashWhiteout 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @keyframes flashWhiteout {
+    0%   { opacity: 1; }
+    30%  { opacity: 0.95; }
+    50%  { opacity: 0.5; }
+    100% { opacity: 0; }
+  }
+
+  /* Hot-spot bloom — bright circle expands from center */
+  .flash-bloom {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,255,255,0.8) 30%, rgba(200,225,255,0.4) 60%, transparent 80%);
+    z-index: 9998;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    animation: flashBloom 1.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  @keyframes flashBloom {
+    0%   { width: 0; height: 0; opacity: 1; }
+    40%  { width: 180vmax; height: 180vmax; opacity: 0.7; }
+    100% { width: 220vmax; height: 220vmax; opacity: 0; }
+  }
+
+  /* Diagonal light-streak wipe */
+  .flash-streak {
+    position: fixed;
+    inset: 0;
+    z-index: 9997;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .flash-streak::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -120%;
+    width: 60%;
+    height: 250%;
+    background: linear-gradient(
+      105deg,
+      transparent 0%,
+      rgba(255,255,255,0) 35%,
+      rgba(255,255,255,0.5) 45%,
+      rgba(255,255,255,0.9) 50%,
+      rgba(255,255,255,0.5) 55%,
+      rgba(255,255,255,0) 65%,
+      transparent 100%
+    );
+    animation: flashStreak 1.6s 0.15s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    opacity: 0;
+  }
+  @keyframes flashStreak {
+    0%   { left: -120%; opacity: 0; }
+    10%  { opacity: 1; }
+    80%  { opacity: 0.6; }
+    100% { left: 180%; opacity: 0; }
+  }
+
+  /* Lens-flare artifacts */
+  .flash-flares {
+    position: fixed;
+    inset: 0;
+    z-index: 9996;
+    pointer-events: none;
+  }
+  .flare {
+    position: absolute;
+    border-radius: 50%;
+    animation: flareIn 1.8s ease-out forwards;
+    opacity: 0;
+  }
+  .flare-1 {
+    width: 120px; height: 120px;
+    top: 30%; left: 35%;
+    background: radial-gradient(circle, rgba(160,210,255,0.5) 0%, transparent 70%);
+    animation-delay: 0.3s;
+  }
+  .flare-2 {
+    width: 60px; height: 60px;
+    top: 55%; left: 62%;
+    background: radial-gradient(circle, rgba(200,230,255,0.6) 0%, transparent 70%);
+    animation-delay: 0.45s;
+  }
+  .flare-3 {
+    width: 200px; height: 200px;
+    top: 20%; right: 15%;
+    background: radial-gradient(circle, rgba(180,220,255,0.25) 0%, transparent 70%);
+    animation-delay: 0.2s;
+  }
+  .flare-4 {
+    width: 30px; height: 30px;
+    top: 65%; left: 28%;
+    background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, transparent 70%);
+    animation-delay: 0.5s;
+  }
+  .flare-5 {
+    width: 80px; height: 20px;
+    top: 42%; left: 50%;
+    border-radius: 40%;
+    background: radial-gradient(ellipse, rgba(200,230,255,0.5) 0%, transparent 70%);
+    transform: rotate(-15deg);
+    animation-delay: 0.35s;
+  }
+  @keyframes flareIn {
+    0%   { opacity: 0; transform: scale(0.5); }
+    30%  { opacity: 1; transform: scale(1.1); }
+    100% { opacity: 0; transform: scale(1.3); }
+  }
+
+  /* Post-flash shimmer on the laptop screen */
+  .laptop-screen::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%; right: 0; bottom: 0;
+    width: 60%;
+    background: linear-gradient(
+      105deg,
+      transparent 0%,
+      rgba(255,255,255,0) 40%,
+      rgba(255,255,255,0.12) 50%,
+      rgba(255,255,255,0) 60%,
+      transparent 100%
+    );
+    z-index: 20;
+    pointer-events: none;
+    animation: screenShimmer 3s 1.5s ease-in-out forwards;
+    opacity: 0;
+  }
+  @keyframes screenShimmer {
+    0%   { left: -100%; opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 0.5; }
+    100% { left: 200%; opacity: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="flash-whiteout"></div>
+<div class="flash-bloom"></div>
+<div class="flash-streak"></div>
+<div class="flash-flares">
+  <div class="flare flare-1"></div>
+  <div class="flare flare-2"></div>
+  <div class="flare flare-3"></div>
+  <div class="flare flare-4"></div>
+  <div class="flare flare-5"></div>
+</div>
+<div class="bg-dots"></div>
+<div class="scene">
+  <!-- Floating badges -->
+  <div class="float-badge top-right">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+    <span data-countup data-to="32400" data-prefix="+$" data-suffix=" Found" data-comma="true">+$0 Found</span>
+  </div>
+  <div class="float-badge bottom-left">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    <span data-countup data-to="7" data-suffix=" Revenue Gaps">0 Revenue Gaps</span>
+  </div>
+
+  <div class="laptop">
+    <div class="laptop-screen">
+      <div class="dashboard">
+        <!-- Sidebar -->
+        <div class="sidebar">
+          <div class="sidebar-logo">
+            <div class="logo-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18" opacity="0.4"/><circle cx="12" cy="12" r="4"/></svg>
+            </div>
+            <span>NPIxray</span>
+          </div>
+
+          <div class="nav-item active">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+            Dashboard
+          </div>
+          <div class="nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            Revenue Scan
+          </div>
+          <div class="nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Reports
+          </div>
+          <div class="nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+            Settings
+          </div>
+
+          <div class="nav-section">Insights</div>
+          <div class="nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            CPT Analysis
+          </div>
+          <div class="nav-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+            Peer Compare
+          </div>
+        </div>
+
+        <!-- Main -->
+        <div class="main">
+          <div class="top-bar">
+            <h1>Revenue Intelligence</h1>
+            <div class="npi-badge">
+              <div class="dot"></div>
+              NPI: 1234567890
+            </div>
+          </div>
+
+          <!-- KPIs -->
+          <div class="kpi-row">
+            <div class="kpi-card">
+              <div class="kpi-label">Missed Revenue</div>
+              <div class="kpi-value" data-countup data-to="32480" data-prefix="$" data-comma="true">$0</div>
+              <div class="kpi-change down">↓ Opportunity</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">Revenue Gaps</div>
+              <div class="kpi-value" data-countup data-to="7">0</div>
+              <div class="kpi-change down">↑ 2 new</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">Billing Score</div>
+              <div class="kpi-value" data-countup data-to="72" data-suffix="/100">0/100</div>
+              <div class="kpi-change up">↑ 8 pts</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">Peer Rank</div>
+              <div class="kpi-value" data-countup data-to="35" data-prefix="Top " data-suffix="%">Top 0%</div>
+              <div class="kpi-change up">↑ 12%</div>
+            </div>
+          </div>
+
+          <!-- Charts -->
+          <div class="charts-row">
+            <div class="chart-card">
+              <h3>Revenue Gap Analysis by CPT Code</h3>
+              <div class="chart-sub">Your billing vs. peer average — red = missed revenue</div>
+              <div class="bar-chart">
+                <div class="bar-group">
+                  <div class="bar-stack">
+                    <div class="bar gap" data-h="28" style="height:0px"></div>
+                    <div class="bar actual" data-h="80" style="height:0px"></div>
+                  </div>
+                  <div class="bar-label">99213</div>
+                </div>
+                <div class="bar-group">
+                  <div class="bar-stack">
+                    <div class="bar gap" data-h="42" style="height:0px"></div>
+                    <div class="bar actual" data-h="65" style="height:0px"></div>
+                  </div>
+                  <div class="bar-label">99214</div>
+                </div>
+                <div class="bar-group">
+                  <div class="bar-stack">
+                    <div class="bar gap" data-h="18" style="height:0px"></div>
+                    <div class="bar actual" data-h="95" style="height:0px"></div>
+                  </div>
+                  <div class="bar-label">99215</div>
+                </div>
+                <div class="bar-group">
+                  <div class="bar-stack">
+                    <div class="bar gap" data-h="55" style="height:0px"></div>
+                    <div class="bar actual" data-h="48" style="height:0px"></div>
+                  </div>
+                  <div class="bar-label">99395</div>
+                </div>
+                <div class="bar-group">
+                  <div class="bar-stack">
+                    <div class="bar gap" data-h="35" style="height:0px"></div>
+                    <div class="bar actual" data-h="72" style="height:0px"></div>
+                  </div>
+                  <div class="bar-label">99396</div>
+                </div>
+                <div class="bar-group">
+                  <div class="bar-stack">
+                    <div class="bar gap" data-h="22" style="height:0px"></div>
+                    <div class="bar actual" data-h="88" style="height:0px"></div>
+                  </div>
+                  <div class="bar-label">G0439</div>
+                </div>
+                <div class="bar-group">
+                  <div class="bar-stack">
+                    <div class="bar gap" data-h="48" style="height:0px"></div>
+                    <div class="bar actual" data-h="55" style="height:0px"></div>
+                  </div>
+                  <div class="bar-label">96127</div>
+                </div>
+                <div class="bar-group">
+                  <div class="bar-stack">
+                    <div class="bar gap" data-h="15" style="height:0px"></div>
+                    <div class="bar actual" data-h="100" style="height:0px"></div>
+                  </div>
+                  <div class="bar-label">90837</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="chart-card">
+              <h3>Gap Categories</h3>
+              <div class="chart-sub">Revenue gaps by service type</div>
+              <div class="donut-area">
+                <svg class="donut-svg" viewBox="0 0 130 130">
+                  <circle cx="65" cy="65" r="52" fill="none" stroke="#E2E8F0" stroke-width="20"/>
+                  <!-- Segments - animated -->
+                  <circle class="donut-seg" cx="65" cy="65" r="52" fill="none" stroke="#0A6EBD" stroke-width="20"
+                    data-dash="114.6" data-gap="212" stroke-dasharray="0 326.7" stroke-dashoffset="81.7" stroke-linecap="round"/>
+                  <circle class="donut-seg" cx="65" cy="65" r="52" fill="none" stroke="#FF6B6B" stroke-width="20"
+                    data-dash="78.5" data-gap="248" stroke-dasharray="0 326.7" stroke-dashoffset="-33" stroke-linecap="round"/>
+                  <circle class="donut-seg" cx="65" cy="65" r="52" fill="none" stroke="#00C9A7" stroke-width="20"
+                    data-dash="58.9" data-gap="268" stroke-dasharray="0 326.7" stroke-dashoffset="-111.5" stroke-linecap="round"/>
+                  <circle class="donut-seg" cx="65" cy="65" r="52" fill="none" stroke="#A78BFA" stroke-width="20"
+                    data-dash="39.3" data-gap="287" stroke-dasharray="0 326.7" stroke-dashoffset="-170.4" stroke-linecap="round"/>
+                  <!-- Center text -->
+                  <text x="65" y="60" text-anchor="middle" font-family="DM Sans" font-size="16" font-weight="700" fill="#1A2332" data-countup data-to="32.4" data-prefix="$" data-suffix="K" data-decimals="1">$0K</text>
+                  <text x="65" y="76" text-anchor="middle" font-family="DM Sans" font-size="9" fill="#8A9BB0">Total Gap</text>
+                </svg>
+                <div class="donut-legend">
+                  <div class="legend-item">
+                    <div class="legend-dot" style="background:#0A6EBD"></div>
+                    E/M Codes
+                    <span class="legend-val" data-countup data-to="11.4" data-prefix="$" data-suffix="K" data-decimals="1">$0K</span>
+                  </div>
+                  <div class="legend-item">
+                    <div class="legend-dot" style="background:#FF6B6B"></div>
+                    Preventive
+                    <span class="legend-val" data-countup data-to="8.8" data-prefix="$" data-suffix="K" data-decimals="1">$0K</span>
+                  </div>
+                  <div class="legend-item">
+                    <div class="legend-dot" style="background:#00C9A7"></div>
+                    Screenings
+                    <span class="legend-val" data-countup data-to="7.2" data-prefix="$" data-suffix="K" data-decimals="1">$0K</span>
+                  </div>
+                  <div class="legend-item">
+                    <div class="legend-dot" style="background:#A78BFA"></div>
+                    Other
+                    <span class="legend-val" data-countup data-to="5.0" data-prefix="$" data-suffix="K" data-decimals="1">$0K</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom row -->
+          <div class="bottom-row">
+            <div class="chart-card">
+              <h3>Top Action Items</h3>
+              <div class="chart-sub">Highest-impact revenue recovery actions</div>
+              <div class="action-list">
+                <div class="action-item">
+                  <div class="action-priority high"></div>
+                  Increase 99214 visit coding frequency
+                  <span class="action-amount" data-countup data-to="8200" data-prefix="+$" data-comma="true">+$0</span>
+                </div>
+                <div class="action-item">
+                  <div class="action-priority high"></div>
+                  Add annual wellness visits (G0439)
+                  <span class="action-amount" data-countup data-to="6400" data-prefix="+$" data-comma="true">+$0</span>
+                </div>
+                <div class="action-item">
+                  <div class="action-priority med"></div>
+                  Begin depression screening (96127)
+                  <span class="action-amount" data-countup data-to="4800" data-prefix="+$" data-comma="true">+$0</span>
+                </div>
+                <div class="action-item">
+                  <div class="action-priority low"></div>
+                  Review preventive care billing
+                  <span class="action-amount" data-countup data-to="3200" data-prefix="+$" data-comma="true">+$0</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="chart-card">
+              <h3>Peer Comparison</h3>
+              <div class="chart-sub">Your utilization vs. specialty average</div>
+              <div class="sparkline-row">
+                <div class="spark-item">
+                  <span class="spark-label">E/M Level 4</span>
+                  <div style="flex:1;height:6px;background:#E2E8F0;border-radius:3px;position:relative;">
+                    <div class="prog-fill" data-w="58" style="height:100%;width:0%;background:linear-gradient(90deg,var(--primary),var(--primary-light));border-radius:3px;"></div>
+                    <div class="prog-marker" data-left="82" style="position:absolute;top:-1px;left:0%;width:2px;height:8px;background:var(--accent-warm);border-radius:1px;opacity:0;"></div>
+                  </div>
+                  <span class="spark-val" data-countup data-to="58" data-suffix="%">0%</span>
+                </div>
+                <div class="spark-item">
+                  <span class="spark-label">Preventive</span>
+                  <div style="flex:1;height:6px;background:#E2E8F0;border-radius:3px;position:relative;">
+                    <div class="prog-fill" data-w="34" style="height:100%;width:0%;background:linear-gradient(90deg,var(--accent-warm),#FF8E8E);border-radius:3px;"></div>
+                    <div class="prog-marker" data-left="71" style="position:absolute;top:-1px;left:0%;width:2px;height:8px;background:var(--accent-warm);border-radius:1px;opacity:0;"></div>
+                  </div>
+                  <span class="spark-val" data-countup data-to="34" data-suffix="%">0%</span>
+                </div>
+                <div class="spark-item">
+                  <span class="spark-label">Screenings</span>
+                  <div style="flex:1;height:6px;background:#E2E8F0;border-radius:3px;position:relative;">
+                    <div class="prog-fill" data-w="45" style="height:100%;width:0%;background:linear-gradient(90deg,#FBBF24,#FCD34D);border-radius:3px;"></div>
+                    <div class="prog-marker" data-left="68" style="position:absolute;top:-1px;left:0%;width:2px;height:8px;background:var(--accent-warm);border-radius:1px;opacity:0;"></div>
+                  </div>
+                  <span class="spark-val" data-countup data-to="45" data-suffix="%">0%</span>
+                </div>
+                <div class="spark-item">
+                  <span class="spark-label">Chronic Mgmt</span>
+                  <div style="flex:1;height:6px;background:#E2E8F0;border-radius:3px;position:relative;">
+                    <div class="prog-fill" data-w="72" style="height:100%;width:0%;background:linear-gradient(90deg,var(--accent),#00E5C3);border-radius:3px;"></div>
+                    <div class="prog-marker" data-left="75" style="position:absolute;top:-1px;left:0%;width:2px;height:8px;background:var(--accent-warm);border-radius:1px;opacity:0;"></div>
+                  </div>
+                  <span class="spark-val" data-countup data-to="72" data-suffix="%">0%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="laptop-base"></div>
+  </div>
+</div>
+</body>
+<script>
+(function() {
+  const DELAY     = 1200;   // initial flash delay
+  const RISE      = 2200;   // count up / grow
+  const HOLD      = 3000;   // stay at peak
+  const FALL      = 800;    // count down / shrink
+  const PAUSE     = 600;    // rest at zero
+  const CYCLE     = RISE + HOLD + FALL + PAUSE;
+
+  /* --- easing --- */
+  function easeOutExpo(t){ return t===1?1:1-Math.pow(2,-10*t); }
+  function easeInCubic(t){ return t*t*t; }
+
+  /* --- get 0→1 progress for current moment in cycle --- */
+  function P(elapsed){
+    const ph = elapsed % CYCLE;
+    if(ph < RISE)                   return easeOutExpo(ph / RISE);
+    if(ph < RISE+HOLD)              return 1;
+    if(ph < RISE+HOLD+FALL)         return 1 - easeInCubic((ph-RISE-HOLD)/FALL);
+    return 0;
+  }
+
+  /* --- number formatter --- */
+  function fmt(num, o){
+    let s = o.dec>0 ? num.toFixed(o.dec) : Math.round(num).toString();
+    if(o.comma){ const p=s.split('.'); p[0]=p[0].replace(/\B(?=(\d{3})+(?!\d))/g,','); s=p.join('.'); }
+    return (o.pre||'')+s+(o.suf||'');
+  }
+
+  /* --- collect all targets once --- */
+  const nums=[], bars=[], segs=[], progs=[], markers=[];
+
+  document.querySelectorAll('[data-countup]').forEach(el=>{
+    nums.push({
+      el,
+      to:   parseFloat(el.getAttribute('data-to')),
+      pre:  el.getAttribute('data-prefix')||'',
+      suf:  el.getAttribute('data-suffix')||'',
+      dec:  parseInt(el.getAttribute('data-decimals'))||0,
+      comma:el.hasAttribute('data-comma'),
+      svg:  el.tagName==='text'
+    });
+  });
+
+  document.querySelectorAll('[data-h]').forEach(el=>{
+    bars.push({ el, h: parseFloat(el.getAttribute('data-h')) });
+  });
+
+  document.querySelectorAll('.donut-seg').forEach(el=>{
+    segs.push({
+      el,
+      dash: parseFloat(el.getAttribute('data-dash')),
+      gap:  parseFloat(el.getAttribute('data-gap'))
+    });
+  });
+
+  document.querySelectorAll('.prog-fill').forEach(el=>{
+    progs.push({ el, w: parseFloat(el.getAttribute('data-w')) });
+  });
+
+  document.querySelectorAll('.prog-marker').forEach(el=>{
+    markers.push({ el, left: parseFloat(el.getAttribute('data-left')) });
+  });
+
+  /* --- single rAF master loop --- */
+  let origin = null;
+  function tick(ts){
+    if(!origin) origin = ts;
+    const elapsed = ts - origin;
+    const p = P(elapsed);
+
+    // numbers
+    nums.forEach(n=>{
+      const v = p * n.to;
+      const t = fmt(v, n);
+      n.el.textContent = t;
+    });
+
+    // bar heights
+    bars.forEach(b=>{
+      b.el.style.height = (p * b.h) + 'px';
+    });
+
+    // donut segments
+    segs.forEach(s=>{
+      const d = p * s.dash;
+      const g = 326.7 - d;            // circumference remainder
+      s.el.setAttribute('stroke-dasharray', d + ' ' + g);
+    });
+
+    // progress bar widths
+    progs.forEach(pr=>{
+      pr.el.style.width = (p * pr.w) + '%';
+    });
+
+    // peer avg markers
+    markers.forEach(m=>{
+      m.el.style.left = (p * m.left) + '%';
+      m.el.style.opacity = p > 0.1 ? 1 : 0;
+    });
+
+    requestAnimationFrame(tick);
+  }
+
+  setTimeout(()=> requestAnimationFrame(tick), DELAY);
+})();
+</script>
+</html>

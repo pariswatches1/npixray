@@ -1299,6 +1299,14 @@ export default function NPIxrayHome() {
           </div>
         </section>
 
+        <iframe
+          src="/hero-dashboard.html"
+          style={{ width: '100%', height: '820px', border: 'none', display: 'block' }}
+          scrolling="no"
+          loading="lazy"
+          title="NPIxray Dashboard Preview"
+        />
+
         {/* REVENUE GAPS */}
         <section style={{ maxWidth: 1280, margin: "0 auto", padding: "80px 40px" }}>
           <div style={{ textAlign: "center", marginBottom: 52 }}>
@@ -1464,67 +1472,32 @@ export default function NPIxrayHome() {
               boxShadow: "0 8px 40px rgba(0,180,197,0.06)",
             }}
           >
-            {/* 3D grid overlay */}
-            <div style={{ position: "absolute", inset: 0, opacity: 0.5, perspective: "600px" }}>
-              <div
+            <iframe
+              src="/revenue-metrics.html"
+              style={{ width: '100%', height: '700px', border: 'none', display: 'block' }}
+              scrolling="no"
+              loading="lazy"
+              title="NPIxray Revenue Analysis"
+            />
+            <div style={{ textAlign: 'center', padding: '24px 0' }}>
+              <p style={{ fontSize: '14px', color: '#6B7280' }}>
+                Average revenue missed per practice, per year
+              </p>
+              <Link
+                href="/scan"
                 style={{
-                  position: "absolute",
-                  inset: 0,
-                  transform: "rotateX(50deg)",
-                  transformOrigin: "center center",
-                }}
-              >
-                {[...Array(4)].map((_, r) =>
-                  [...Array(4)].map((_, c) => (
-                    <GridCell3D key={`${r}-${c}`} row={r} col={c} delay={(r + c) * 0.5} />
-                  ))
-                )}
-              </div>
-            </div>
-            <div style={{ position: "relative", zIndex: 1 }}>
-              <div
-                style={{
-                  fontSize: "clamp(38px, 5vw, 60px)",
-                  fontWeight: 900,
-                  fontFamily: "var(--font-jetbrains), 'JetBrains Mono', monospace",
-                  letterSpacing: "-0.03em",
-                }}
-              >
-                <span style={{ color: "#E11D48" }}>$</span>50,000{" "}
-                <span style={{ color: "#CBD5E1" }}>&ndash;</span> $250,000
-              </div>
-              <div style={{ fontSize: 17, color: "#6B7280", marginTop: 8 }}>
-                average revenue missed per practice, per year
-              </div>
-              <button
-                onClick={scrollToScan}
-                style={{
-                  marginTop: 24,
-                  padding: "14px 36px",
-                  borderRadius: 11,
-                  border: "none",
-                  background: "linear-gradient(135deg, #00B4C5, #0891B2)",
-                  color: "white",
-                  fontSize: 15,
+                  display: 'inline-block',
+                  marginTop: '16px',
+                  padding: '12px 32px',
+                  borderRadius: '12px',
                   fontWeight: 700,
-                  cursor: "pointer",
-                  transition: "all 0.3s",
-                  fontFamily: "var(--font-outfit), 'Outfit', sans-serif",
-                  boxShadow: "0 6px 24px rgba(0,180,197,0.25)",
-                }}
-                onMouseEnter={(e) => {
-                  (e.target as HTMLElement).style.transform = "translateY(-3px) scale(1.02)";
-                  (e.target as HTMLElement).style.boxShadow =
-                    "0 10px 36px rgba(0,180,197,0.35)";
-                }}
-                onMouseLeave={(e) => {
-                  (e.target as HTMLElement).style.transform = "translateY(0) scale(1)";
-                  (e.target as HTMLElement).style.boxShadow =
-                    "0 6px 24px rgba(0,180,197,0.25)";
+                  color: '#fff',
+                  background: 'linear-gradient(135deg, #FF6B6B, #FF4757)',
+                  textDecoration: 'none'
                 }}
               >
-                Find Out Your Number &rarr;
-              </button>
+                Find Out Your Number →
+              </Link>
             </div>
           </div>
         </section>

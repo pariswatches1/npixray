@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NPIxray - Revenue Metrics</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --primary: #0A6EBD;
+    --primary-light: #1E88E5;
+    --accent: #00C9A7;
+    --accent-warm: #FF6B6B;
+    --text: #1A2332;
+    --text-secondary: #5A6B7E;
+    --text-muted: #8A9BB0;
+    --border: #E2E8F0;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: linear-gradient(135deg, #F0F4F8, #FAFBFD);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 40px;
+  }
+
+  /* ===== FLASH SYSTEM ===== */
+  .flash-whiteout {
+    position: fixed;
+    inset: 0;
+    background: #fff;
+    z-index: 9999;
+    pointer-events: none;
+    animation: flashWhiteout 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @keyframes flashWhiteout {
+    0%   { opacity: 1; }
+    30%  { opacity: 0.95; }
+    50%  { opacity: 0.5; }
+    100% { opacity: 0; }
+  }
+
+  .flash-bloom {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,255,255,0.8) 30%, rgba(200,225,255,0.4) 60%, transparent 80%);
+    z-index: 9998;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    animation: flashBloom 1.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  @keyframes flashBloom {
+    0%   { width: 0; height: 0; opacity: 1; }
+    40%  { width: 180vmax; height: 180vmax; opacity: 0.7; }
+    100% { width: 220vmax; height: 220vmax; opacity: 0; }
+  }
+
+  .flash-streak {
+    position: fixed;
+    inset: 0;
+    z-index: 9997;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .flash-streak::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -120%;
+    width: 60%;
+    height: 250%;
+    background: linear-gradient(
+      105deg,
+      transparent 0%,
+      rgba(255,255,255,0) 35%,
+      rgba(255,255,255,0.5) 45%,
+      rgba(255,255,255,0.9) 50%,
+      rgba(255,255,255,0.5) 55%,
+      rgba(255,255,255,0) 65%,
+      transparent 100%
+    );
+    animation: flashStreak 1.6s 0.15s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    opacity: 0;
+  }
+  @keyframes flashStreak {
+    0%   { left: -120%; opacity: 0; }
+    10%  { opacity: 1; }
+    80%  { opacity: 0.6; }
+    100% { left: 180%; opacity: 0; }
+  }
+
+  .flash-flares {
+    position: fixed;
+    inset: 0;
+    z-index: 9996;
+    pointer-events: none;
+  }
+  .flare {
+    position: absolute;
+    border-radius: 50%;
+    animation: flareIn 1.8s ease-out forwards;
+    opacity: 0;
+  }
+  .flare-1 {
+    width: 120px; height: 120px;
+    top: 30%; left: 35%;
+    background: radial-gradient(circle, rgba(160,210,255,0.5) 0%, transparent 70%);
+    animation-delay: 0.3s;
+  }
+  .flare-2 {
+    width: 60px; height: 60px;
+    top: 55%; left: 62%;
+    background: radial-gradient(circle, rgba(200,230,255,0.6) 0%, transparent 70%);
+    animation-delay: 0.45s;
+  }
+  .flare-3 {
+    width: 200px; height: 200px;
+    top: 20%; right: 15%;
+    background: radial-gradient(circle, rgba(180,220,255,0.25) 0%, transparent 70%);
+    animation-delay: 0.2s;
+  }
+  .flare-4 {
+    width: 30px; height: 30px;
+    top: 65%; left: 28%;
+    background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, transparent 70%);
+    animation-delay: 0.5s;
+  }
+  .flare-5 {
+    width: 80px; height: 20px;
+    top: 42%; left: 50%;
+    border-radius: 40%;
+    background: radial-gradient(ellipse, rgba(200,230,255,0.5) 0%, transparent 70%);
+    transform: rotate(-15deg);
+    animation-delay: 0.35s;
+  }
+  @keyframes flareIn {
+    0%   { opacity: 0; transform: scale(0.5); }
+    30%  { opacity: 1; transform: scale(1.1); }
+    100% { opacity: 0; transform: scale(1.3); }
+  }
+
+  /* Post-flash shimmer on the card */
+  .metrics-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+      105deg,
+      transparent 0%,
+      rgba(255,255,255,0) 40%,
+      rgba(255,255,255,0.25) 50%,
+      rgba(255,255,255,0) 60%,
+      transparent 100%
+    );
+    z-index: 20;
+    pointer-events: none;
+    border-radius: 24px;
+    animation: cardShimmer 3s 1.5s ease-in-out forwards;
+    opacity: 0;
+  }
+  @keyframes cardShimmer {
+    0%   { left: -100%; opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 0.5; }
+    100% { left: 200%; opacity: 0; }
+  }
+
+  .metrics-card {
+    width: 1100px;
+    background: #fff;
+    border-radius: 24px;
+    padding: 52px 56px;
+    box-shadow: 0 4px 40px rgba(10,110,189,0.06);
+    position: relative;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-header h2 {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -0.8px;
+  }
+  .section-header p {
+    font-size: 15px;
+    color: var(--text-secondary);
+    margin-top: 6px;
+  }
+
+  .big-range {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+  .big-range .dollar {
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--accent-warm);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .big-range .amount {
+    font-size: 52px;
+    font-weight: 800;
+    color: var(--accent-warm);
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: -2px;
+    line-height: 1;
+  }
+  .big-range .to {
+    font-size: 20px;
+    color: var(--text-muted);
+    margin: 0 4px;
+    font-weight: 500;
+  }
+  .big-range .suffix {
+    font-size: 16px;
+    color: var(--text-muted);
+    font-weight: 500;
+    margin-left: 4px;
+  }
+
+  /* Revenue spectrum bar */
+  .spectrum-section {
+    margin-bottom: 40px;
+  }
+  .spectrum-label-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .spectrum-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .spectrum-bar {
+    height: 40px;
+    border-radius: 12px;
+    background: linear-gradient(90deg, 
+      #00C9A7 0%, 
+      #FFD93D 35%,
+      #FF9F43 55%,
+      #FF6B6B 75%,
+      #E74C3C 100%
+    );
+    position: relative;
+    overflow: visible;
+    box-shadow: inset 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .spectrum-marker {
+    position: absolute;
+    top: -8px;
+    bottom: -8px;
+    width: 4px;
+    background: var(--text);
+    border-radius: 2px;
+    box-shadow: 0 0 0 3px #fff, 0 0 0 5px rgba(0,0,0,0.1);
+  }
+  .spectrum-marker.low { left: 18%; }
+  .spectrum-marker.high { left: 65%; }
+  .spectrum-range-fill {
+    position: absolute;
+    top: -12px;
+    bottom: -12px;
+    left: 18%;
+    width: 47%;
+    border: 2px solid var(--text);
+    border-radius: 6px;
+    background: rgba(26,35,50,0.06);
+  }
+  .spectrum-range-label {
+    position: absolute;
+    top: -36px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--text);
+    color: #fff;
+    padding: 4px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    white-space: nowrap;
+    letter-spacing: -0.3px;
+  }
+  .spectrum-range-label::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 8px;
+    background: var(--text);
+    border-radius: 1px;
+    transform: translateX(-50%) rotate(45deg);
+  }
+  .spectrum-ticks {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    padding: 0 2%;
+  }
+  .spectrum-tick {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+  }
+
+  /* Metric cards grid */
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+
+  .metric-card {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.2s;
+  }
+  .metric-card:hover {
+    border-color: rgba(10,110,189,0.2);
+    box-shadow: 0 4px 20px rgba(10,110,189,0.06);
+  }
+  .metric-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .metric-card:nth-child(1)::before { background: linear-gradient(90deg, var(--accent-warm), #FF8E8E); }
+  .metric-card:nth-child(2)::before { background: linear-gradient(90deg, var(--primary), var(--primary-light)); }
+  .metric-card:nth-child(3)::before { background: linear-gradient(90deg, var(--accent), #00E5C3); }
+
+  .metric-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+  .metric-card:nth-child(1) .metric-icon { background: rgba(255,107,107,0.1); }
+  .metric-card:nth-child(2) .metric-icon { background: rgba(10,110,189,0.1); }
+  .metric-card:nth-child(3) .metric-icon { background: rgba(0,201,167,0.1); }
+  .metric-icon svg { width: 22px; height: 22px; }
+
+  .metric-card .label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 6px;
+  }
+  .metric-card .value {
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    font-family: 'JetBrains Mono', monospace;
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+  .metric-card:nth-child(1) .value { color: var(--accent-warm); }
+  .metric-card:nth-child(2) .value { color: var(--primary); }
+  .metric-card:nth-child(3) .value { color: var(--accent); }
+  .metric-card .desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+  }
+
+  /* Mini chart inside metric card */
+  .mini-chart {
+    margin-top: 14px;
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: 36px;
+  }
+  .mini-bar {
+    flex: 1;
+    border-radius: 2px;
+    min-height: 4px;
+  }
+
+  /* Bottom comparison */
+  .comparison {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 24px;
+    align-items: center;
+    background: linear-gradient(135deg, #F8FAFC, #F0F4F8);
+    border-radius: 16px;
+    padding: 28px 32px;
+    border: 1px solid var(--border);
+  }
+  .comp-side {
+    text-align: center;
+  }
+  .comp-label {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+  .comp-left .comp-label { color: var(--text-muted); }
+  .comp-right .comp-label { color: var(--accent); }
+  .comp-value {
+    font-size: 36px;
+    font-weight: 800;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: -1.5px;
+  }
+  .comp-left .comp-value { color: var(--text-muted); }
+  .comp-right .comp-value { color: var(--accent); }
+  .comp-sub {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
+  .comp-vs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .comp-vs .arrow {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    border: 1px solid var(--border);
+  }
+  .comp-vs .arrow svg { width: 24px; height: 24px; color: var(--accent); }
+  .comp-vs span {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+</style>
+</head>
+<body>
+<div class="flash-whiteout"></div>
+<div class="flash-bloom"></div>
+<div class="flash-streak"></div>
+<div class="flash-flares">
+  <div class="flare flare-1"></div>
+  <div class="flare flare-2"></div>
+  <div class="flare flare-3"></div>
+  <div class="flare flare-4"></div>
+  <div class="flare flare-5"></div>
+</div>
+<div class="metrics-card">
+  <div class="section-header">
+    <div>
+      <h2>Missed Revenue Analysis</h2>
+      <p>Average practice leaves significant revenue uncaptured annually</p>
+    </div>
+    <div class="big-range">
+      <span class="dollar">$</span><span class="amount" data-countup data-to="15" data-suffix="K">0K</span>
+      <span class="to">–</span>
+      <span class="dollar">$</span><span class="amount" data-countup data-to="40" data-suffix="K">0K</span>
+      <span class="suffix">/ year</span>
+    </div>
+  </div>
+
+  <!-- Revenue Spectrum -->
+  <div class="spectrum-section">
+    <div class="spectrum-label-row">
+      <span class="spectrum-label">Low Gap</span>
+      <span class="spectrum-label">Typical Range</span>
+      <span class="spectrum-label">High Gap</span>
+    </div>
+    <div class="spectrum-bar">
+      <div class="spectrum-range-fill" data-anim-fill style="left:18%;width:0%;opacity:0">
+        <div class="spectrum-range-label" data-countup-dual data-to1="15" data-to2="40">$0K – $0K / yr typical</div>
+      </div>
+    </div>
+    <div class="spectrum-ticks">
+      <span class="spectrum-tick">$0</span>
+      <span class="spectrum-tick">$10K</span>
+      <span class="spectrum-tick">$20K</span>
+      <span class="spectrum-tick">$30K</span>
+      <span class="spectrum-tick">$40K</span>
+      <span class="spectrum-tick">$50K</span>
+      <span class="spectrum-tick">$60K+</span>
+    </div>
+  </div>
+
+  <!-- Key Metrics -->
+  <div class="metrics-grid">
+    <div class="metric-card">
+      <div class="metric-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#FF6B6B" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+      </div>
+      <div class="label">Avg. Revenue Gap</div>
+      <div class="value" data-countup data-to="27400" data-prefix="$" data-comma="true">$0</div>
+      <div class="desc">The average practice misses this amount annually from under-coded visits and missed services.</div>
+      <div class="mini-chart">
+        <div class="mini-bar" data-h="45" style="height:0%;background:rgba(255,107,107,0.15)"></div>
+        <div class="mini-bar" data-h="60" style="height:0%;background:rgba(255,107,107,0.2)"></div>
+        <div class="mini-bar" data-h="52" style="height:0%;background:rgba(255,107,107,0.25)"></div>
+        <div class="mini-bar" data-h="75" style="height:0%;background:rgba(255,107,107,0.3)"></div>
+        <div class="mini-bar" data-h="68" style="height:0%;background:rgba(255,107,107,0.35)"></div>
+        <div class="mini-bar" data-h="85" style="height:0%;background:rgba(255,107,107,0.4)"></div>
+        <div class="mini-bar" data-h="78" style="height:0%;background:rgba(255,107,107,0.5)"></div>
+        <div class="mini-bar" data-h="92" style="height:0%;background:rgba(255,107,107,0.6)"></div>
+        <div class="mini-bar" data-h="100" style="height:0%;background:rgba(255,107,107,0.7)"></div>
+        <div class="mini-bar" data-h="88" style="height:0%;background:rgba(255,107,107,0.65)"></div>
+      </div>
+    </div>
+
+    <div class="metric-card">
+      <div class="metric-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#0A6EBD" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      </div>
+      <div class="label">Providers Analyzed</div>
+      <div class="value" data-countup data-to="1.17" data-decimals="2" data-suffix="M">0M</div>
+      <div class="desc">CMS Medicare billing data powers our peer comparisons for accurate benchmarks.</div>
+      <div class="mini-chart">
+        <div class="mini-bar" data-h="30" style="height:0%;background:rgba(10,110,189,0.12)"></div>
+        <div class="mini-bar" data-h="42" style="height:0%;background:rgba(10,110,189,0.15)"></div>
+        <div class="mini-bar" data-h="55" style="height:0%;background:rgba(10,110,189,0.2)"></div>
+        <div class="mini-bar" data-h="68" style="height:0%;background:rgba(10,110,189,0.25)"></div>
+        <div class="mini-bar" data-h="72" style="height:0%;background:rgba(10,110,189,0.3)"></div>
+        <div class="mini-bar" data-h="80" style="height:0%;background:rgba(10,110,189,0.35)"></div>
+        <div class="mini-bar" data-h="88" style="height:0%;background:rgba(10,110,189,0.45)"></div>
+        <div class="mini-bar" data-h="94" style="height:0%;background:rgba(10,110,189,0.55)"></div>
+        <div class="mini-bar" data-h="97" style="height:0%;background:rgba(10,110,189,0.6)"></div>
+        <div class="mini-bar" data-h="100" style="height:0%;background:rgba(10,110,189,0.7)"></div>
+      </div>
+    </div>
+
+    <div class="metric-card">
+      <div class="metric-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#00C9A7" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      </div>
+      <div class="label">Avg. Actions Found</div>
+      <div class="value" data-countup-range data-to1="5" data-to2="8">0–0</div>
+      <div class="desc">Concrete, prioritized revenue recovery steps with dollar amounts per opportunity.</div>
+      <div class="mini-chart">
+        <div class="mini-bar" data-h="100" style="height:0%;background:rgba(0,201,167,0.5);border-radius:3px"></div>
+        <div class="mini-bar" data-h="88" style="height:0%;background:rgba(0,201,167,0.45);border-radius:3px"></div>
+        <div class="mini-bar" data-h="72" style="height:0%;background:rgba(0,201,167,0.4);border-radius:3px"></div>
+        <div class="mini-bar" data-h="60" style="height:0%;background:rgba(0,201,167,0.35);border-radius:3px"></div>
+        <div class="mini-bar" data-h="48" style="height:0%;background:rgba(0,201,167,0.3);border-radius:3px"></div>
+        <div class="mini-bar" data-h="36" style="height:0%;background:rgba(0,201,167,0.25);border-radius:3px"></div>
+        <div class="mini-bar" data-h="24" style="height:0%;background:rgba(0,201,167,0.2);border-radius:3px"></div>
+        <div class="mini-bar" data-h="18" style="height:0%;background:rgba(0,201,167,0.15);border-radius:3px"></div>
+        <div class="mini-bar" data-h="12" style="height:0%;background:rgba(0,201,167,0.1);border-radius:3px"></div>
+        <div class="mini-bar" data-h="8" style="height:0%;background:rgba(0,201,167,0.08);border-radius:3px"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Before / After comparison -->
+  <div class="comparison">
+    <div class="comp-side comp-left">
+      <div class="comp-label">Without NPIxray</div>
+      <div class="comp-value" data-countup data-to="218" data-prefix="$" data-suffix="K">$0K</div>
+      <div class="comp-sub">Average annual billing</div>
+    </div>
+    <div class="comp-vs">
+      <span>After</span>
+      <div class="arrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </div>
+      <span>NPIxray</span>
+    </div>
+    <div class="comp-side comp-right">
+      <div class="comp-label">With NPIxray</div>
+      <div class="comp-value" data-countup data-to="245" data-prefix="$" data-suffix="K">$0K</div>
+      <div class="comp-sub">Optimized annual billing</div>
+    </div>
+  </div>
+</div>
+</body>
+<script>
+(function() {
+  const DELAY     = 1200;
+  const RISE      = 2200;
+  const HOLD      = 3000;
+  const FALL      = 800;
+  const PAUSE     = 600;
+  const CYCLE     = RISE + HOLD + FALL + PAUSE;
+
+  function easeOutExpo(t){ return t===1?1:1-Math.pow(2,-10*t); }
+  function easeInCubic(t){ return t*t*t; }
+
+  function P(elapsed){
+    const ph = elapsed % CYCLE;
+    if(ph < RISE)                   return easeOutExpo(ph / RISE);
+    if(ph < RISE+HOLD)              return 1;
+    if(ph < RISE+HOLD+FALL)         return 1 - easeInCubic((ph-RISE-HOLD)/FALL);
+    return 0;
+  }
+
+  function fmt(num, o){
+    let s = o.dec>0 ? num.toFixed(o.dec) : Math.round(num).toString();
+    if(o.comma){ const p=s.split('.'); p[0]=p[0].replace(/\B(?=(\d{3})+(?!\d))/g,','); s=p.join('.'); }
+    return (o.pre||'')+s+(o.suf||'');
+  }
+
+  /* collect targets */
+  const nums=[], ranges=[], duals=[], miniBars=[];
+  const spectrumFill = document.querySelector('[data-anim-fill]');
+
+  document.querySelectorAll('[data-countup]').forEach(el=>{
+    nums.push({
+      el, to: parseFloat(el.getAttribute('data-to')),
+      pre: el.getAttribute('data-prefix')||'',
+      suf: el.getAttribute('data-suffix')||'',
+      dec: parseInt(el.getAttribute('data-decimals'))||0,
+      comma: el.hasAttribute('data-comma')
+    });
+  });
+
+  document.querySelectorAll('[data-countup-range]').forEach(el=>{
+    ranges.push({
+      el, to1: parseFloat(el.getAttribute('data-to1')),
+      to2: parseFloat(el.getAttribute('data-to2'))
+    });
+  });
+
+  document.querySelectorAll('[data-countup-dual]').forEach(el=>{
+    duals.push({
+      el, to1: parseFloat(el.getAttribute('data-to1')),
+      to2: parseFloat(el.getAttribute('data-to2'))
+    });
+  });
+
+  document.querySelectorAll('.mini-bar[data-h]').forEach(el=>{
+    miniBars.push({ el, h: parseFloat(el.getAttribute('data-h')) });
+  });
+
+  /* master loop */
+  let origin = null;
+  function tick(ts){
+    if(!origin) origin = ts;
+    const elapsed = ts - origin;
+    const p = P(elapsed);
+
+    // numbers
+    nums.forEach(n=>{
+      n.el.textContent = fmt(p * n.to, n);
+    });
+
+    // ranges (5–8 style)
+    ranges.forEach(r=>{
+      r.el.textContent = Math.round(p * r.to1) + '–' + Math.round(p * r.to2);
+    });
+
+    // dual ($15K – $40K style)
+    duals.forEach(d=>{
+      d.el.textContent = '$' + Math.round(p * d.to1) + 'K – $' + Math.round(p * d.to2) + 'K / yr typical';
+    });
+
+    // mini chart bars (height %)
+    miniBars.forEach(b=>{
+      b.el.style.height = (p * b.h) + '%';
+    });
+
+    // spectrum range fill
+    if(spectrumFill){
+      spectrumFill.style.width = (p * 47) + '%';
+      spectrumFill.style.opacity = p > 0.05 ? 1 : 0;
+    }
+
+    requestAnimationFrame(tick);
+  }
+
+  setTimeout(()=> requestAnimationFrame(tick), DELAY);
+})();
+</script>
+</html>
